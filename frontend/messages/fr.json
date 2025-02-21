@@ -2,5 +2,9 @@
   "HomePage": {
     "title": "Bienvenue sur Chariot!",
     "about": "L'outil ultime pour le JDR."
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, fr {🇫🇷 Français} en {🇺🇸 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
   }
 }
