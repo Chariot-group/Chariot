@@ -4,7 +4,6 @@
     "about": "The ultimate roleplay tool."
   },
   "LocaleSwitcher": {
-    "label": "Change language",
     "locale": "{locale, select, fr {🇫🇷 French} en {🇺🇸 English} es {🇪🇸 Spanish} other {🏴‍☠️ Unknown}}"
   }
 }

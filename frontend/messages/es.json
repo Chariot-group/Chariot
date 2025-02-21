@@ -4,7 +4,6 @@
     "about": "La herramienta definitiva para el rol."
   },
   "LocaleSwitcher": {
-    "label": "Change language",
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
   }
 }
