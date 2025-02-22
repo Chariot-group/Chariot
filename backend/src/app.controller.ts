@@ -12,12 +12,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    this.logger.log("Lancement du serveur 'info'", this.SERVICE);
-    this.logger.debug("Lancement du serveur 'info'", this.SERVICE);
-    this.logger.error("Lancement du serveur 'info'", this.SERVICE);
-    this.logger.fatal("Lancement du serveur 'info'", this.SERVICE);
-    this.logger.verbose("Lancement du serveur 'info'", this.SERVICE);
-    this.logger.warn("Lancement du serveur 'info'", this.SERVICE);
+    this.logger.log("Say Hello World", this.SERVICE);
     return this.appService.getHello();
   }
 }
