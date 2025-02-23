@@ -1,0 +1,9 @@
+{
+  "HomePage": {
+    "title": "Bienvenido a Chariot!",
+    "about": "La herramienta definitiva para el rol."
+  },
+  "LocaleSwitcher": {
+    "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
+  }
+}
