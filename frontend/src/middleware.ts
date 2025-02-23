@@ -1,9 +1,16 @@
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing";
+import { locales } from "./i18n/locales.generated"; // Assure-toi que ce fichier est bien généré
+import { NextRequest } from "next/server";
 
-export default createMiddleware(routing);
+export default function middleware(req: NextRequest) {
+  const intlMiddleware = createMiddleware({
+    locales,
+    defaultLocale: "fr", // Remplace par ta locale par défaut
+  });
+
+  return intlMiddleware(req);
+}
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ["/", "/(en|fr|es)/:path*"],
+  matcher: ["/((?!api|_next|.*\\..*).*)"], // Ignore les fichiers statiques
 };
