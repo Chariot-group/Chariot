@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run generate:locales && next dev",
+    "prebuild": "npm run generate:locales",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate:locales": "npx ts-node scripts/generateLocales.ts"
   },
   "dependencies": {
     "@radix-ui/react-select": "^2.1.6",
