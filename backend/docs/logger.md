@@ -4,6 +4,20 @@
 
 Ce projet utilise [Winston](https://github.com/winstonjs/winston) comme logger pour assurer une gestion centralisée et flexible des logs. Winston est déjà installé et initialisé.
 
+## Fichier de logs
+
+Les logs sont stocké dans `logger/logs/{combine|error}.log` seulement dans un environnement de production. En environnement de développement, les logs sont affichées en console. Pour changer l'environnement, il suffit de changer la variable d'environnement (`ENV`) du `.env`.
+
+### combine.log
+
+Ce fichier regroupe toutes les logs de type `info`, `warn`ou `error`.
+
+### error.log
+
+Ce fichier regroupe seulement les logs de type `error`.
+
+Les logs d'erreur apparraisent donc dans `combine.log` ET `error.log`.
+
 ## Utilisation dans un Service ou un Contrôleur
 
 Injectez le logger Winston dans n'importe quel service ou contrôleur et ajoutez un contexte pour mieux identifier l'origine des logs :
@@ -23,7 +37,9 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    this.logger.log("Say hello world", this.SERVICE_NAME);
+    this.logger.log("Info hello world", this.SERVICE_NAME); // Apparait comme info dans combine.log
+    this.logger.warn("Warning hello world", this.SERVICE_NAME); // Apparait comme warn dans combine.log
+    this.logger.error("Error hello world", this.SERVICE_NAME); // Apparait comme error dans combine.log et error.log
     return this.appService.getHello();
   }
 }
@@ -31,21 +47,9 @@ export class AppController {
 
 L'ajout du deuxième paramètre (`this.SERVICE_NAME`) permet de spécifier un contexte pour chaque log, facilitant ainsi le suivi et le débogage.
 
-## Niveaux de Log
-
-Winston propose plusieurs niveaux de logs par défaut :
-
-- `error` : Erreur grave
-- `warn` : Avertissement
-- `info` : Information générale
-- `http` : Logs HTTP
-- `verbose` : Messages détaillés
-- `debug` : Messages de debug
-- `silly` : Messages très détaillés
-
 ## Bonnes Pratiques
 
-- Toujours utiliser le logger au lieu de `console.log`.
+- Toujours utiliser le logger au lieu de `console.log` (même si cela fonctionne).
 - Définir des niveaux de logs appropriés pour faciliter le débogage.
 - Ajouter un contexte aux logs pour identifier leur provenance.
 - Ne pas loguer d’informations sensibles (ex: mots de passe, tokens).
