@@ -2,7 +2,7 @@ import { createLogger, format, transports } from "winston";
 
 // custom log display format
 const customFormat = format.printf(({timestamp, level, stack, message}) => {
-    return `${timestamp} - [${level.toUpperCase().padEnd(5)}] - ${message || stack}`
+    return `${timestamp} - ${level}: ${message || stack}`
 })
 
 const options = {
@@ -22,7 +22,11 @@ const options = {
 // for development environment
 const devLogger = {
     format: format.combine(
-        format.timestamp(),
+        format.timestamp({
+            format: 'YYYY-MM-DD hh:mm:ss.SSS A',
+        }),
+        format.colorize({all: true}),
+        format.align(),
         format.errors({stack: true}),
         customFormat
     ),
@@ -32,7 +36,9 @@ const devLogger = {
 // for production environment
 const prodLogger = {
     format: format.combine(
-        format.timestamp(),
+        format.timestamp({
+            format: 'YYYY-MM-DD hh:mm:ss.SSS A',
+        }),
         format.errors({stack: true}),
         format.json()
     ),

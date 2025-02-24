@@ -8,6 +8,8 @@ Ce projet utilise [Winston](https://github.com/winstonjs/winston) comme logger p
 
 Les logs sont stocké dans `logger/logs/{combine|error}.log` seulement dans un environnement de production. En environnement de développement, les logs sont affichées en console. Pour changer l'environnement, il suffit de changer la variable d'environnement (`ENV`) du `.env`.
 
+En production seulement les logs de type `info`, `warn`ou `error` sont remontées. En développement tous les niveaux de logs sont affichées en console.
+
 ### combine.log
 
 Ce fichier regroupe toutes les logs de type `info`, `warn`ou `error`.
