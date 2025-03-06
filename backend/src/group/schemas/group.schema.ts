@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+import { Character } from 'src/character/schemas/character.schema';
 
 export type GroupDocument = Group & Document;
 
@@ -15,8 +16,8 @@ export class Group {
     @Prop({ required: true, default: true })
     active: boolean;
 
-    @Prop({ required: true, default: [] })
-    characters: [string];
+    @Prop({ type: [{ type: Types.ObjectId, ref: 'Character' }], default: [], required: true })
+    characters: Character[];
 
     @Prop({ default: null })
     deletedAt?: Date;
