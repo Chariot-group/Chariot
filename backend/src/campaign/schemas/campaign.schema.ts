@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Groups } from './sub/groups.schema';
 
 export type CampaignDocument = Campaign & Document;
 
@@ -11,6 +12,9 @@ export class Campaign {
 
     @Prop({ required: false })
     description: string;
+
+    @Prop({ type: Groups, required: true })
+    groups: Groups;
 
     @Prop({ default: null })
     deletedAt?: Date;
