@@ -3,6 +3,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
+import { CharacterModule } from './character/character.module';
+import { GroupModule } from './group/group.module';
+import { CampaignModule } from './campaign/campaign.module';
 
 @Module({
   imports: [
@@ -10,6 +14,10 @@ import { MongooseModule } from '@nestjs/mongoose';
       isGlobal: true, // Permet d'accéder aux variables du env dans tous les modules
     }),
     MongooseModule.forRoot(process.env.MONGO_URL),
+    UserModule,
+    CharacterModule,
+    GroupModule,
+    CampaignModule,
   ],
   controllers: [AppController],
   providers: [AppService, Logger],
