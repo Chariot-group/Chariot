@@ -10,7 +10,7 @@ async function bootstrap() {
       instance: instance
     })
   });
-  await app.listen(process.env.API_PORT ?? 3000);
+  await app.listen(9000);
 
   console.log('Chariot API running on port:', process.env.API_PORT ?? 3000);
 }
