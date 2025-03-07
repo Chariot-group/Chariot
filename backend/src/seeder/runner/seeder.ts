@@ -15,8 +15,11 @@ async function bootstrap() {
   Logger.log('Application context created', SERVICE_NAME);
   Logger.log('Database currently being filled', SERVICE_NAME);
 
+  const args = process.argv.slice(2);
+  const clean = args.includes('--clean');
+
   const seederService = app.get(SeederService);
-  await seederService.seed();
+  await seederService.seed(clean);
 
   const end: number = Date.now();
   Logger.log(`Database ready (${end - start}ms)`, SERVICE_NAME);
