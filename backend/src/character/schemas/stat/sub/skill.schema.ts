@@ -54,7 +54,7 @@ export class Skills {
     performance: number;
     
     @Prop({ default: 0 })
-    Persuasion: number;
+    persuasion: number;
 
 }
   
