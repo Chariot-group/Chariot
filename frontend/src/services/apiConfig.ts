@@ -3,8 +3,6 @@ import axios from "axios";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
-console.log("url", url);
-
 const apiClient = (contentType: string) => {
   const instance = axios.create({
     baseURL: url,
