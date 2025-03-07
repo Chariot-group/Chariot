@@ -1,4 +1,4 @@
-import { Prop } from "@nestjs/mongoose";
+import { Prop, SchemaFactory } from "@nestjs/mongoose";
 import { Damage } from "./damage.schema";
 import { Actions } from "../actions.schema";
 
@@ -13,11 +13,8 @@ export class Action {
     @Prop({ required: true })
     attackBonus: number;
   
-    @Prop({ type: Damage, required: true })
+    @Prop({ type: SchemaFactory.createForClass(Damage), required: true })
     damage: Damage;
-
-    @Prop({ type: Actions, required: true })
-    actions: Actions;
   
     @Prop({ required: true })
     range: string;

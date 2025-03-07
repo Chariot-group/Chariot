@@ -11,10 +11,10 @@ export class User {
     username: string;
 
     @Prop({ required: true })
-    email: number;
+    email: string;
 
     @Prop({ required: true })
-    password: number;
+    password: string;
 
     @Prop({ type: [{ type: Types.ObjectId, ref: 'Campaign' }], default: [], required: true })
     campaigns: Campaign[];

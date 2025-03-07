@@ -1,0 +1,158 @@
+[
+  {
+    "name": "Goblin",
+    "classification": {
+      "type": "humanoid",
+      "subtype": "goblinoid",
+      "alignment": "neutral evil",
+      "size": "Small"
+    },
+    "stats": {
+      "maxHitPoints": 7,
+      "currentHitPoints": 3,
+      "tempHitPoints": 5,
+      "hitDice": "2d6",
+      "armorClass": 15,
+      "speed": {
+        "walk": 30
+      },
+      "abilityScores": {
+        "strength": 8,
+        "dexterity": 14,
+        "constitution": 10,
+        "intelligence": 10,
+        "wisdom": 8,
+        "charisma": 8
+      },
+      "savingThrows": {
+        "dexterity": 4
+      },
+      "skills": {
+        "stealth": 6
+      },
+      "senses": {
+        "darkvision": 60,
+        "passivePerception": 9
+      }
+    },
+    "combat": {
+      "challengeRating": 0.25,
+      "experiencePoints": 50,
+      "resistances": [],
+      "immunities": [],
+      "vulnerabilities": []
+    },
+    "traits": {
+      "languages": ["Common", "Goblin"],
+      "abilities": [
+        {
+          "name": "Nimble Escape",
+          "description": "The goblin can take the Disengage or Hide action as a bonus action on each of its turns."
+        }
+      ]
+    },
+    "actions": {
+      "standard": [
+        {
+          "name": "Scimitar",
+          "type": "melee",
+          "attackBonus": 4,
+          "damage": {
+            "dice": "1d6",
+            "type": "slashing"
+          },
+          "range": "5 feet"
+        },
+        {
+          "name": "Shortbow",
+          "type": "ranged",
+          "attackBonus": 4,
+          "damage": {
+            "dice": "1d6",
+            "type": "piercing"
+          },
+          "range": "80/320 feet"
+        }
+      ],
+      "legendary": [],
+      "lair": []
+    }
+  },
+  {
+    "name": "Owlbear",
+    "classification": {
+      "type": "monstrosity",
+      "subtype": null,
+      "alignment": "unaligned",
+      "size": "Large"
+    },
+    "stats": {
+      "maxHitPoints": 59,
+      "currentHitPoints": 59,
+      "tempHitPoints": 0,
+      "hitDice": "7d10",
+      "armorClass": 13,
+      "speed": {
+        "walk": 40
+      },
+      "abilityScores": {
+        "strength": 20,
+        "dexterity": 12,
+        "constitution": 17,
+        "intelligence": 3,
+        "wisdom": 12,
+        "charisma": 7
+      },
+      "savingThrows": {},
+      "skills": {
+        "perception": 3
+      },
+      "senses": {
+        "darkvision": 60,
+        "passivePerception": 13
+      }
+    },
+    "combat": {
+      "challengeRating": 3,
+      "experiencePoints": 700,
+      "resistances": [],
+      "immunities": [],
+      "vulnerabilities": []
+    },
+    "traits": {
+      "languages": [],
+      "abilities": [
+        {
+          "name": "Keen Sight and Smell",
+          "description": "The owlbear has advantage on Wisdom (Perception) checks that rely on sight or smell."
+        }
+      ]
+    },
+    "actions": {
+      "standard": [
+        {
+          "name": "Beak",
+          "type": "melee",
+          "attackBonus": 7,
+          "damage": {
+            "dice": "1d10+5",
+            "type": "piercing"
+          },
+          "range": "5 feet"
+        },
+        {
+          "name": "Claws",
+          "type": "melee",
+          "attackBonus": 7,
+          "damage": {
+            "dice": "2d8+5",
+            "type": "slashing"
+          },
+          "range": "5 feet"
+        }
+      ],
+      "legendary": [],
+      "lair": []
+    }
+  }
+]
