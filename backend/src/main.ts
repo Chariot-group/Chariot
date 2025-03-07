@@ -11,11 +11,13 @@ async function bootstrap() {
     }),
   });
 
-  app.enableCors({
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-  });
+  if (process.env.ENV === 'dev') {
+    app.enableCors({
+      origin: `${process.env.FRONTEND_URL}`,
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      credentials: true,
+    });
+  }
 
   await app.listen(process.env.API_PORT ?? 3000);
 
