@@ -14,20 +14,20 @@ export class Character {
     @Prop({ required: true })
     name: string;
 
-    @Prop({ type: Classification, required: true })
+    @Prop({ type: SchemaFactory.createForClass(Classification), required: true })
     classification: Classification;
 
-    @Prop({ type: Stats, required: true })
+    @Prop({ type: SchemaFactory.createForClass(Stats), required: true })
     stats: Stats;
 
-    @Prop({ type: Combat, required: true })
+    @Prop({ type: SchemaFactory.createForClass(Combat), required: true })
     combat: Combat;
 
-    @Prop({ type: Traits, required: true })
-    traits: Traits;
+    @Prop({ type: [SchemaFactory.createForClass(Traits)], required: true, default: [] })
+    traits: Traits[];
 
-    @Prop({ type: Actions, required: true })
-    actions: Actions;
+    @Prop({ type: [SchemaFactory.createForClass(Actions)], required: true, default: [] })
+    actions: Actions[];
 
     @Prop({ default: null })
     deletedAt?: Date;

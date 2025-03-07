@@ -1,4 +1,4 @@
-import { Prop } from "@nestjs/mongoose";
+import { Prop, SchemaFactory } from "@nestjs/mongoose";
 import { Speed } from "./sub/speed.schema";
 import { AbilityScores } from "./sub/abilityScores.schema";
 import { SavingThrows } from "./sub/savingThrows.schema";
@@ -22,18 +22,18 @@ export class Stats {
     @Prop({ required: true })
     armorClass: number;
   
-    @Prop({ type: Speed, required: true })
+    @Prop({ type: SchemaFactory.createForClass(Speed), required: true })
     speed: Speed;
   
-    @Prop({ type: AbilityScores, required: true })
+    @Prop({ type: SchemaFactory.createForClass(AbilityScores), required: true })
     abilityScores: AbilityScores;
   
-    @Prop({ type: SavingThrows })
+    @Prop({ type: SchemaFactory.createForClass(SavingThrows) })
     savingThrows?: SavingThrows;
   
-    @Prop({ type: Skills })
+    @Prop({ type: SchemaFactory.createForClass(Skills) })
     skills?: Skills;
   
-    @Prop({ type: Senses, required: true })
+    @Prop({ type: SchemaFactory.createForClass(Senses), required: true })
     senses: Senses;
 }
