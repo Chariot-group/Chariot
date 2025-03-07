@@ -8,7 +8,7 @@ import { Campaign, CampaignDocument } from 'src/campaign/schemas/campaign.schema
 import { Character, CharacterDocument } from 'src/character/schemas/character.schema';
 import { Group, GroupDocument } from 'src/group/schemas/group.schema';
 import {User, UserDocument } from 'src/user/schemas/user.schema';
-
+import 'reflect-metadata';
 @Injectable()
 export class SeederService {
     constructor(
@@ -22,19 +22,21 @@ export class SeederService {
         const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
         
         const shuffled = [...jsonData].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, faker.number.int({min: 0, max: 6}));
+        return shuffled.slice(0, faker.number.int({min: 0, max: shuffled.length}));
     };
 
-    readonly SERVICE_NAME: string = "SEEDER_SERVICE";
+    readonly SERVICE_NAME: string = this.constructor.name;
 
-    async seed() {
+    async seed(clean: boolean) {
 
-        Logger.log('Cleaning database...', this.SERVICE_NAME);
-        await this.userModel.deleteMany({});
-        await this.campaignModel.deleteMany({});
-        await this.groupModel.deleteMany({});
-        await this.characterModel.deleteMany({});
-        Logger.log('Database cleaned', this.SERVICE_NAME);
+        if(clean){
+            Logger.log('Cleaning database...', this.SERVICE_NAME);
+            await this.userModel.deleteMany({});
+            await this.campaignModel.deleteMany({});
+            await this.groupModel.deleteMany({});
+            await this.characterModel.deleteMany({});
+            Logger.log('Database cleaned', this.SERVICE_NAME);
+        }
 
         const userCount = faker.number.int({min: 4, max: 8});
 
