@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CampaignService } from './campaigns.service';
+import { CampaignService } from './campaign.service';
 
 describe('CampaignService', () => {
   let service: CampaignService;

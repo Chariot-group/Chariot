@@ -6,8 +6,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { CharacterModule } from './character/character.module';
 import { GroupModule } from './group/group.module';
-import { CampaignModule } from './campaigns/campaigns.module';
+import { CampaignModule } from './campaign/campaign.module';
 import { SeederModule } from './seeder/seeder.module';
+import { ResponseService } from './response/response.service';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { SeederModule } from './seeder/seeder.module';
     SeederModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Logger],
+  providers: [AppService, Logger, ResponseService],
 })
 export class AppModule {}
