@@ -1,8 +1,8 @@
 import { createLogger, format, transports } from "winston";
 
 // custom log display format
-const customFormat = format.printf(({timestamp, level, stack, message}) => {
-    return `${timestamp} - ${level}: ${message || stack}`
+const customFormat = format.printf(({timestamp, level, stack, message, context}) => {
+    return `${timestamp} - ${level}: [${context}] ${message || stack}`
 })
 
 const options = {
