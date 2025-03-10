@@ -6,8 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { CharacterModule } from './character/character.module';
 import { GroupModule } from './group/group.module';
-import { CampaignModule } from './campaign/campaign.module';
-import { SeederService } from './seeder/seeder.service';
+import { CampaignModule } from './campaigns/campaigns.module';
 import { SeederModule } from './seeder/seeder.module';
 
 @Module({
