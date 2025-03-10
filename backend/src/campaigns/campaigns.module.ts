@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { CampaignService } from './campaign.service';
-import { CampaignController } from './campaign.controller';
+import { CampaignService } from './campaigns.service';
+import { CampaignController } from './campaigns.controller';
 
 @Module({
   controllers: [CampaignController],
