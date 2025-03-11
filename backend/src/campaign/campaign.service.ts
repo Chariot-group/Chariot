@@ -33,9 +33,9 @@ export class CampaignService {
 
       const start: number = Date.now();
       const campaing = await this.campaignModel.findById(id)
-        .populate('groups.main')
-        .populate('groups.pnj')
-        .populate('groups.archived')
+        .populate({path: 'groups.main', populate: {path: 'characters'}})
+        .populate({path: 'groups.pnj', populate: {path: 'characters'}})
+        .populate({path: 'groups.archived', populate: {path: 'characters'}})
         .exec();
       const end: number = Date.now();
 

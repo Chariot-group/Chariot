@@ -3,18 +3,18 @@ import { Prop, Schema } from "@nestjs/mongoose";
 @Schema()
 export class Speed {
     
-    @Prop({ required: true })
-    walk: number;
+    @Prop({ required: false })
+    walk?: number;
 
-    @Prop({ required: true })
-    climb: number;
+    @Prop({ required: false })
+    climb?: number;
 
-    @Prop({ required: true })
-    swim: number;
+    @Prop({ required: false })
+    swim?: number;
 
-    @Prop({ required: true })
-    fly: number;
+    @Prop({ required: false })
+    fly?: number;
 
-    @Prop({ required: true })
-    burrow: number;
+    @Prop({ required: false })
+    burrow?: number;
 }
