@@ -23,18 +23,18 @@ export class Stats {
     @Prop({ required: true })
     armorClass: number;
   
-    @Prop({ type: SchemaFactory.createForClass(Speed), required: true })
+    @Prop({ type: Speed, required: true })
     speed: Speed;
   
-    @Prop({ type: SchemaFactory.createForClass(AbilityScores), required: true })
+    @Prop({ type: AbilityScores, required: true })
     abilityScores: AbilityScores;
   
-    @Prop({ type: SchemaFactory.createForClass(SavingThrows) })
+    @Prop({ type: SavingThrows })
     savingThrows?: SavingThrows;
   
-    @Prop({ type: SchemaFactory.createForClass(Skills) })
+    @Prop({ type: Skills })
     skills?: Skills;
   
-    @Prop({ type: SchemaFactory.createForClass(Senses), required: true })
+    @Prop({ type: Senses, required: true })
     senses: Senses;
 }
