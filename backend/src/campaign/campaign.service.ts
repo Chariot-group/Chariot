@@ -27,12 +27,16 @@ export class CampaignService {
     try{
 
       if(!Types.ObjectId.isValid(id)){
-        this.logger.error(`Erreur lors de la récupération de la campagne #${id}`, "L'id n'est pas un id valide pour mongoose", this.SERVICE_NAME);
+        this.logger.error(`Erreur lors de la récupération de la campagne #${id}: L'id n'est pas un id valide pour mongoose`, null, this.SERVICE_NAME);
         return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("mongoose_id_not_valid", "critique")]);
       }
 
       const start: number = Date.now();
-      const campaing = await this.campaignModel.findOne({_id: id}).exec();
+      const campaing = await this.campaignModel.findById(id)
+        .populate('groups.main')
+        .populate('groups.pnj')
+        .populate('groups.archived')
+        .exec();
       const end: number = Date.now();
 
       if(!campaing){
@@ -41,10 +45,10 @@ export class CampaignService {
       }
 
       this.logger.verbose(`Campagne #${id} trouvé en ${end - start} ms`, this.SERVICE_NAME);
-      return ResponseService.sendResponse(`Campagne #${id} tropuvé avec succès`, campaing, []);
+      return ResponseService.sendResponse(`Campagne #${id} trouvé avec succès`, campaing, []);
 
     }catch(error){
-      this.logger.error(`Erreur lors de la récupération de la campagne #${id}`, error.message, this.SERVICE_NAME);
+      this.logger.error(`Erreur lors de la récupération de la campagne #${id}: ${error.message}`, null, this.SERVICE_NAME);
       return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("internal_error", "critique")]);
     }
   }

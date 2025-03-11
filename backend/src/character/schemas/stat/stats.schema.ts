@@ -1,10 +1,11 @@
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Speed } from "./sub/speed.schema";
 import { AbilityScores } from "./sub/abilityScores.schema";
 import { SavingThrows } from "./sub/savingThrows.schema";
 import { Skills } from "./sub/skill.schema";
 import { Senses } from "./sub/sense.schema";
 
+@Schema()
 export class Stats {
 
     @Prop({ required: true })
