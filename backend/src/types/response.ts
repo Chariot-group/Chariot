@@ -6,5 +6,5 @@ export default interface IResponse {
 
 export interface IError {
     code: string,
-    type: "critique" | "info" | "warning"
+    type: "critical" | "info" | "warning"
 }

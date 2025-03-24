@@ -13,7 +13,7 @@ export class ResponseService {
         }
     }
 
-    static setError(code: string, type: "critique" | "info" | "warning"): IError{
+    static setError(code: string, type: "critical" | "info" | "warning"): IError{
         return {
             code: code,
             type: type
