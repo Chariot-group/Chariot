@@ -61,7 +61,4 @@ export class CampaignService {
     return `This action removes a #${id} campaign`;
   }
 }
-function setError(): import("src/types/response").IError {
-  throw new Error('Function not implemented.');
-}
 
