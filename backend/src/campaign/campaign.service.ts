@@ -6,7 +6,7 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import IResponse from 'src/types/response';
 import { ResponseService } from 'src/response/response.service';
-import { ErrorsService } from 'src/errors/errors.service';
+import { MessageService } from 'src/errors/message.service';
 
 @Injectable()
 export class CampaignService {
@@ -16,11 +16,13 @@ export class CampaignService {
 
   private readonly logger = new Logger(CampaignService.name);
   private readonly SERVICE_NAME = CampaignService.name;
-  private readonly errorsService = new ErrorsService();
+  private readonly errorsService = new MessageService();
 
-  private readonly MONGOOSE_ERROR_ID: string = "mongoose_id_error";
-  private readonly RESOURCE_NOT_FIND: string = "resource_not_find";
-  private readonly RESOURCE_FIND: string = "resource_find";
+  private readonly MONGOOSE_ERROR_ID: string = "external_mongoose_id_error";
+  private readonly RESOURCE_NOT_FIND: string = "external_resource_not_find";
+  private readonly RESOURCE_FIND: string = "external_resource_find";
+  private readonly RESOURCE_NOT_FIND_LOG: string = "internal_resource_not_find";
+  private readonly RESOURCE_FIND_LOG: string = "internal_resource_find";
 
   create(createCampaignDto: CreateCampaignDto) {
     return 'This action adds a new campaign';
@@ -35,7 +37,7 @@ export class CampaignService {
 
       if(!Types.ObjectId.isValid(id)){
         this.logger.error(this.errorsService.getErrorMessage(this.MONGOOSE_ERROR_ID, [id]), null, this.SERVICE_NAME);
-        return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campaign', id]), {}, [ResponseService.setError("mongoose_id_not_valid", "critical")]);
+        return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), {}, [ResponseService.setError("mongoose_id_not_valid", "critical")]);
       }
 
       const start: number = Date.now();
@@ -47,16 +49,16 @@ export class CampaignService {
       const end: number = Date.now();
 
       if(!campaign){
-        this.logger.error(`Campagne #${id} introuvable`, null, this.SERVICE_NAME);
-        return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campaign', id]), {}, [ResponseService.setError("invalid_campaign_id", "critical")]);
+        this.logger.error(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), null, this.SERVICE_NAME);
+        return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), {}, [ResponseService.setError("invalid_campaign_id", "critical")]);
       }
 
-      this.logger.verbose(`Campagne #${id} trouvé en ${end - start} ms`, this.SERVICE_NAME);
-      return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_FIND, ['Campagne', id]), campaign, []);
+      this.logger.verbose(this.errorsService.getErrorMessage(this.RESOURCE_FIND_LOG, ['Campagne', id, (end - start).toString()]), this.SERVICE_NAME);
+      return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_FIND, ['la campagne', id]), campaign, []);
 
     }catch(error){
-      this.logger.error(`Erreur lors de la récupération de la campagne #${id}: ${error.message}`, null, this.SERVICE_NAME);
-      return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campaign', id]), {}, [ResponseService.setError("internal_error", "critical")]);
+      this.logger.error(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND_LOG, ['la campagne', id, error.message]), null, this.SERVICE_NAME);
+      return ResponseService.sendResponse(this.errorsService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), {}, [ResponseService.setError("internal_error", "critical")]);
     }
   }
 

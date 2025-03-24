@@ -9,7 +9,7 @@ import { GroupModule } from './group/group.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { SeederModule } from './seeder/seeder.module';
 import { ResponseService } from './response/response.service';
-import { ErrorsService } from './errors/errors.service';
+import { ErrorsService } from './errors/message.service';
 
 @Module({
   imports: [
