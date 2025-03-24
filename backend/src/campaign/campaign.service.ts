@@ -28,7 +28,7 @@ export class CampaignService {
 
       if(!Types.ObjectId.isValid(id)){
         this.logger.error(`Erreur lors de la récupération de la campagne #${id}: L'id n'est pas un id valide pour mongoose`, null, this.SERVICE_NAME);
-        return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("mongoose_id_not_valid", "critique")]);
+        return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("mongoose_id_not_valid", "critical")]);
       }
 
       const start: number = Date.now();
@@ -41,7 +41,7 @@ export class CampaignService {
 
       if(!campaign){
         this.logger.error(`Campagne #${id} introuvable`, null, this.SERVICE_NAME);
-        return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("invalid_campaign_id", "critique")]);
+        return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("invalid_campaign_id", "critical")]);
       }
 
       this.logger.verbose(`Campagne #${id} trouvé en ${end - start} ms`, this.SERVICE_NAME);
@@ -49,7 +49,7 @@ export class CampaignService {
 
     }catch(error){
       this.logger.error(`Erreur lors de la récupération de la campagne #${id}: ${error.message}`, null, this.SERVICE_NAME);
-      return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("internal_error", "critique")]);
+      return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("internal_error", "critical")]);
     }
   }
 
