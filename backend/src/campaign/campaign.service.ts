@@ -32,20 +32,20 @@ export class CampaignService {
       }
 
       const start: number = Date.now();
-      const campaing = await this.campaignModel.findById(id)
+      const campaign = await this.campaignModel.findById(id)
         .populate({path: 'groups.main', populate: {path: 'characters'}})
         .populate({path: 'groups.pnj', populate: {path: 'characters'}})
         .populate({path: 'groups.archived', populate: {path: 'characters'}})
         .exec();
       const end: number = Date.now();
 
-      if(!campaing){
+      if(!campaign){
         this.logger.error(`Campagne #${id} introuvable`, null, this.SERVICE_NAME);
-        return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("invalid_campaing_id", "critique")]);
+        return ResponseService.sendResponse(`Impossible de trouver la campagne #${id}`, {}, [ResponseService.setError("invalid_campaign_id", "critique")]);
       }
 
       this.logger.verbose(`Campagne #${id} trouvé en ${end - start} ms`, this.SERVICE_NAME);
-      return ResponseService.sendResponse(`Campagne #${id} trouvé avec succès`, campaing, []);
+      return ResponseService.sendResponse(`Campagne #${id} trouvé avec succès`, campaign, []);
 
     }catch(error){
       this.logger.error(`Erreur lors de la récupération de la campagne #${id}: ${error.message}`, null, this.SERVICE_NAME);
