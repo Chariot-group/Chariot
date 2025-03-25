@@ -48,9 +48,6 @@ export class CampaignService {
           : (sort[query.sort] = 1);
       }
 
-      console.log('sort', sort);
-      console.log('sort', query.sort);
-
       const totalItems = await this.campaignModel.countDocuments(filter);
 
       const start: number = Date.now();
