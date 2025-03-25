@@ -1,9 +1,10 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Character, CharacterDocument } from './schemas/character.schema';
 import { Model, SortOrder } from 'mongoose';
+import { $ } from '@faker-js/faker/dist/airline-CBNP41sR';
 @Injectable()
 export class CharacterService {
 
@@ -17,7 +18,7 @@ export class CharacterService {
     return 'This action adds a new character';
   }
 
-  async findAll(query: {page?: number, offset?: number, name?: string, sort?: string}, campaign?: string) {
+  async findAll(query: {page?: number, offset?: number, name?: string, sort?: string}, groupId?: string) {
     try{
       console.log(query.page, query.sort);
       let {name = "", page = 1, offset = 10} = query;
@@ -25,8 +26,11 @@ export class CharacterService {
       if(query.sort){
         query.sort.startsWith("-") ? sort[query.sort.substring(1)] = 'desc' : sort[query.sort] = 'asc';
       }
-      const filters = {name: { $regex: `${name}`, $options: 'i' }, deletedAt: null};
-
+      const filters = {name: { $regex: `${name}`, $options: 'i' }, deletedAt: { $eq: null }};
+      if(groupId){
+        filters['groups'] = { $in: [groupId] };
+      }
+      console.log(filters)
       const start: number = Date.now();
       const characters = await this.characterModel.find(filters)
                                                   .sort(sort)
@@ -47,6 +51,9 @@ export class CharacterService {
         }
       }
     }catch(error){
+      const message = `Error while fetching characters: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
     }
   }
 
