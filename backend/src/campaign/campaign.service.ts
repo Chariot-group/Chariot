@@ -35,7 +35,10 @@ export class CampaignService {
       const { page = 1, offset = 10, label = '' } = query;
       const skip = (page - 1) * offset;
 
-      const filter = { label: { $regex: `${label}`, $options: 'i' } };
+      const filter = {
+        label: { $regex: `${label}`, $options: 'i' },
+        deletedAt: { $eq: null },
+      };
 
       const sort: { [key: string]: 1 | -1 } = { updatedAt: -1 };
 
