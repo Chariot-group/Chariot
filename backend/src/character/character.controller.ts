@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe 
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 
 @Controller('characters')
 export class CharacterController {
@@ -13,7 +14,7 @@ export class CharacterController {
   }
 
   @Get()
-  findAll(@Query("page", ParseIntPipe) page?: number, @Query('offset', ParseIntPipe) offset?: number, @Query('name') name?: string, @Query('sort') sort?: string) {
+  findAll(@Query("page", ParseNullableIntPipe) page?: number, @Query('offset', ParseNullableIntPipe) offset?: number, @Query('name') name?: string, @Query('sort') sort?: string) {
     return this.characterService.findAll({page, offset, name, sort});
   }
 
