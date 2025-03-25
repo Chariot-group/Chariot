@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Campaign, CampaignSchema } from 'src/campaign/schemas/campaign.schema';
-import { Character, CharacterSchema } from 'src/character/schemas/character.schema';
-import { Group, GroupSchema } from 'src/group/schemas/group.schema';
-import { User, UserSchema } from 'src/user/schemas/user.schema';
+import { Campaign, CampaignSchema } from '@/campaign/schemas/campaign.schema';
+import { Character, CharacterSchema } from '@/character/schemas/character.schema';
+import { Group, GroupSchema } from '@/group/schemas/group.schema';
+import { User, UserSchema } from '@/user/schemas/user.schema';
 import { SeederService } from './seeder.service';
 
 @Module({
