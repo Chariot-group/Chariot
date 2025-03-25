@@ -1,24 +1,22 @@
-import * as Toastr from "toastr"; 
-
-Toastr.options.positionClass = "toast-top-right";
-Toastr.options.timeOut = 5000;
+// src/lib/toast.ts
+import { toast } from "react-toastify";
 
 export const showToast = (message: string, type: "success" | "error" | "info" | "warning") => {
   switch (type) {
     case "success":
-      Toastr.success(message);
+      toast.success(message);
       break;
     case "error":
-      Toastr.error(message);
+      toast.error(message);
       break;
     case "info":
-      Toastr.info(message);
+      toast.info(message);
       break;
     case "warning":
-      Toastr.warning(message);
+      toast.warning(message);
       break;
     default:
-      Toastr.info(message);
+      toast(message);
       break;
   }
 };

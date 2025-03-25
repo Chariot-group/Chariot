@@ -1,15 +1,10 @@
-"use client"
-import React, { useEffect } from "react";
-import "toastr/build/toastr.min.css";
-import { showToast } from "@/lib/toast";
+"use client";
 
-const ToastContainer: React.FC = () => {
-  useEffect(() => {
-  }, []);
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-  return (
-    <div id="toast-container"></div>
-  );
+const CustomToastContainer = () => {
+  return <ToastContainer position="top-right" autoClose={5000} hideProgressBar />;
 };
 
-export default ToastContainer;
+export default CustomToastContainer;
