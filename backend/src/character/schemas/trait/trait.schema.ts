@@ -5,6 +5,6 @@ export class Traits {
     @Prop({ type: [String], required: true })
     languages: string[];
   
-    @Prop({ type: [SchemaFactory.createForClass(Ability)], default: [] })
+    @Prop({ type: [Ability], default: [] })
     abilities: Ability[];
 }
