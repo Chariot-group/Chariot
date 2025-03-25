@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
 import { Locale } from "@/i18n/locales.generated";
+import ToastContainer from '@/components/modules/toastR/ToastContainer';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,8 +47,11 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <LocaleSwitcher />
-          {children}
+          <ToastContainer />
+          {children} 
         </NextIntlClientProvider>
+       
+
       </body>
     </html>
   );
