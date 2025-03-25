@@ -1,6 +1,7 @@
-import { Prop } from '@nestjs/mongoose';
+import { Prop, Schema } from '@nestjs/mongoose';
 
 export class Classification {
+
     @Prop({ required: true })
     type: string;
   

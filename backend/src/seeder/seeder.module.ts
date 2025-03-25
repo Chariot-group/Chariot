@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Mongoose } from 'mongoose';
 import { Campaign, CampaignSchema } from 'src/campaign/schemas/campaign.schema';
 import { Character, CharacterSchema } from 'src/character/schemas/character.schema';
 import { Group, GroupSchema } from 'src/group/schemas/group.schema';

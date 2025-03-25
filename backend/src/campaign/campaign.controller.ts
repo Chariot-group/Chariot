@@ -3,7 +3,7 @@ import { CampaignService } from './campaign.service';
 import { CreateCampaignDto } from './dto/create-campaign.dto';
 import { UpdateCampaignDto } from './dto/update-campaign.dto';
 
-@Controller('campaign')
+@Controller('campaigns')
 export class CampaignController {
   constructor(private readonly campaignService: CampaignService) {}
 
@@ -19,7 +19,7 @@ export class CampaignController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.campaignService.findOne(+id);
+    return this.campaignService.findOne(id);
   }
 
   @Patch(':id')

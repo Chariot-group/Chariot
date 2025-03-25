@@ -13,7 +13,7 @@ export class Action {
     @Prop({ required: true })
     attackBonus: number;
   
-    @Prop({ type: SchemaFactory.createForClass(Damage), required: true })
+    @Prop({ type: Damage, required: true })
     damage: Damage;
   
     @Prop({ required: true })

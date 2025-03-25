@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { Character } from 'src/character/schemas/character.schema';
+import mongoose from 'mongoose';
 
 export type GroupDocument = Group & Document;
 
@@ -16,7 +17,7 @@ export class Group {
     @Prop({ required: true, default: true })
     active: boolean;
 
-    @Prop({ type: [{ type: Types.ObjectId, ref: 'Character' }], default: [], required: true })
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Character' }], default: [], required: true })
     characters: Character[];
 
     @Prop({ default: null })
