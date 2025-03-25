@@ -1,7 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CampaignService } from './campaign.service';
-import { CreateCampaignDto } from './dto/create-campaign.dto';
-import { UpdateCampaignDto } from './dto/update-campaign.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { CampaignService } from '@/campaign/campaign.service';
+import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
+import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
+import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 
 @Controller('campaigns')
 export class CampaignController {
@@ -13,8 +24,13 @@ export class CampaignController {
   }
 
   @Get()
-  findAll() {
-    return this.campaignService.findAll();
+  findAll(
+    @Query('page', ParseNullableIntPipe) page?: number,
+    @Query('offset', ParseNullableIntPipe) offset?: number,
+    @Query('sort') sort?: string,
+    @Query('label') label?: string,
+  ) {
+    return this.campaignService.findAll({ page, offset, sort, label });
   }
 
   @Get(':id')
@@ -23,7 +39,10 @@ export class CampaignController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCampaignDto: UpdateCampaignDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateCampaignDto: UpdateCampaignDto,
+  ) {
     return this.campaignService.update(+id, updateCampaignDto);
   }
 
