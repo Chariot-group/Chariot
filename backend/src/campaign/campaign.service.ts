@@ -1,62 +1,115 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { CreateCampaignDto } from './dto/create-campaign.dto';
-import { UpdateCampaignDto } from './dto/update-campaign.dto';
-import { Campaign, CampaignDocument } from './schemas/campaign.schema';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+  Res,
+} from '@nestjs/common';
+import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
+import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
+import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import IResponse from 'src/types/response';
-import { ResponseService } from 'src/response/response.service';
 
 @Injectable()
 export class CampaignService {
-
   constructor(
-    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>){}
+    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
+  ) {}
 
   private readonly logger = new Logger(CampaignService.name);
   private readonly SERVICE_NAME = CampaignService.name;
-
-  private readonly MONGOOSE_ERROR_ID: string = "external_mongoose_id_error";
-  private readonly RESOURCE_NOT_FIND: string = "external_resource_not_find";
-  private readonly RESOURCE_FIND: string = "external_resource_find";
-  private readonly RESOURCE_NOT_FIND_LOG: string = "internal_resource_not_find";
-  private readonly RESOURCE_FIND_LOG: string = "internal_resource_find";
 
   create(createCampaignDto: CreateCampaignDto) {
     return 'This action adds a new campaign';
   }
 
-  findAll() {
-    return `This action returns all campaign`;
-  }
+  async findAll(query: {
+    page?: number;
+    offset?: number;
+    sort?: string;
+    label?: string;
+  }) {
+    try {
+      const { page = 1, offset = 10, label = '' } = query;
+      const skip = (page - 1) * offset;
 
-  async findOne(id: string): Promise<IResponse> {
-    try{
+      const filter = {
+        label: { $regex: `${label}`, $options: 'i' },
+        deletedAt: { $eq: null },
+      };
 
-      if(!Types.ObjectId.isValid(id)){
-        this.logger.error(ResponseService.getErrorMessage(this.MONGOOSE_ERROR_ID, ['la campagne', id]), null, this.SERVICE_NAME);
-        return ResponseService.sendResponse(ResponseService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), {}, [ResponseService.setError("mongoose_id_not_valid", "critical")]);
+      const sort: { [key: string]: 1 | -1 } = { updatedAt: -1 };
+
+      if (query.sort) {
+        query.sort.startsWith('-')
+          ? (sort[query.sort.substring(1)] = -1)
+          : (sort[query.sort] = 1);
       }
 
+      const totalItems = await this.campaignModel.countDocuments(filter);
+
       const start: number = Date.now();
-      const campaign = await this.campaignModel.findById(id)
-        .populate({path: 'groups.main', populate: {path: 'characters'}})
-        .populate({path: 'groups.pnj', populate: {path: 'characters'}})
-        .populate({path: 'groups.archived', populate: {path: 'characters'}})
+      const campaigns = await this.campaignModel
+        .find(filter)
+        .skip(skip)
+        .limit(offset)
+        .sort(sort)
         .exec();
       const end: number = Date.now();
 
-      if(!campaign){
-        this.logger.error(ResponseService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), null, this.SERVICE_NAME);
-        return ResponseService.sendResponse(ResponseService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), {}, [ResponseService.setError("invalid_campaign_id", "critical")]);
+      const message = `Campaigns found in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: campaigns,
+        pagination: {
+          page,
+          offset,
+          totalItems,
+        },
+      };
+    } catch (error) {
+      const message = `Error while fetching campaigns: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
+  }
+
+  async findOne(id: string) {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        const message = `Error while fetching campaign ${id}: Id is not a valid mongoose id`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
       }
 
-      this.logger.verbose(ResponseService.getErrorMessage(this.RESOURCE_FIND_LOG, ['Campagne', id, (end - start).toString()]), this.SERVICE_NAME);
-      return ResponseService.sendResponse(ResponseService.getErrorMessage(this.RESOURCE_FIND, ['la campagne', id]), campaign, []);
+      const start: number = Date.now();
+      const campaign = await this.campaignModel
+        .findById(id)
+        .populate({ path: 'groups.main', populate: { path: 'characters' } })
+        .populate({ path: 'groups.pnj', populate: { path: 'characters' } })
+        .populate({ path: 'groups.archived', populate: { path: 'characters' } })
+        .exec();
+      const end: number = Date.now();
 
-    }catch(error){
-      this.logger.error(ResponseService.getErrorMessage(this.RESOURCE_NOT_FIND_LOG, ['la campagne', id, error.message]), null, this.SERVICE_NAME);
-      return ResponseService.sendResponse(ResponseService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), {}, [ResponseService.setError("internal_error", "critical")]);
+      if (!campaign) {
+        const message = `Campaign ${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      const message = `Campaign found in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: campaign,
+      };
+    } catch (error) {
+      const message = `Error while fetching campaign ${id}: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
     }
   }
 
@@ -68,4 +121,3 @@ export class CampaignService {
     return `This action removes a #${id} campaign`;
   }
 }
-

@@ -4,10 +4,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Campaign, CampaignDocument } from 'src/campaign/schemas/campaign.schema';
-import { Character, CharacterDocument } from 'src/character/schemas/character.schema';
-import { Group, GroupDocument } from 'src/group/schemas/group.schema';
-import {User, UserDocument } from 'src/user/schemas/user.schema';
+import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
+import { Character, CharacterDocument } from '@/character/schemas/character.schema';
+import { Group, GroupDocument } from '@/group/schemas/group.schema';
+import {User, UserDocument } from '@/user/schemas/user.schema';
 import 'reflect-metadata';
 @Injectable()
 export class SeederService {

@@ -4,8 +4,6 @@ import { UpdateCharacterDto } from './dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Character, CharacterDocument } from './schemas/character.schema';
 import { Model, SortOrder } from 'mongoose';
-import { ResponseService } from 'src/response/response.service';
-import IResponse from 'src/types/response';
 @Injectable()
 export class CharacterService {
 
