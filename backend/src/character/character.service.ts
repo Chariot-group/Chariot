@@ -4,12 +4,14 @@ import { UpdateCharacterDto } from './dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Character, CharacterDocument } from './schemas/character.schema';
 import { Model, SortOrder, Types } from 'mongoose';
+import { Group } from '@/group/schemas/group.schema';
 
 @Injectable()
 export class CharacterService {
 
   constructor(
-      @InjectModel(Character.name) private characterModel: Model<CharacterDocument>){}
+      @InjectModel(Character.name) private characterModel: Model<CharacterDocument>,
+      @InjectModel(Group.name) private groupModel: Model<CharacterDocument>){}
 
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
@@ -73,14 +75,20 @@ export class CharacterService {
       }
 
       const start: number = Date.now();
-      const character = await this.characterModel.updateOne({_id: id}, {deletedAt: new Date()}).exec();
-      const end: number = Date.now();
 
+      const character = await this.characterModel.findById(id).exec();
       if (!character) {
         const message = `Character #${id} not found`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new NotFoundException(message);
       }
+      character.deletedAt = new Date();
+      character.groups.forEach(async (groupId) => {
+        await this.groupModel.updateOne({ _id: groupId }, { $pull: { characters: id } }).exec();
+      });
+      await character.save();
+
+      const end: number = Date.now();
       
       const message = `Character delete in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
