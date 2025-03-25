@@ -32,6 +32,14 @@ export class CampaignService {
         ...campaignData,
         groups,
       });
+      const totalGroups = campaign.groups.main.concat(
+        campaign.groups.npc,
+        campaign.groups.archived,
+      );
+      await this.groupModel.updateMany(
+        { _id: { $in: totalGroups } },
+        { $set: { campaign: campaign._id } },
+      );
       campaign.save();
       const end: number = Date.now();
 
