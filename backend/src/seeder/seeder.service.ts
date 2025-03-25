@@ -78,7 +78,13 @@ export class SeederService {
           const mainGroup = await this.groupModel.create({
             label: faker.company.name(),
             description: faker.lorem.paragraph({ min: 0, max: 3 }),
+            active: faker.number.int({ min: 0, max: 1 }) === 1,
             characters: mainCharacters.map((c) => c._id),
+          });
+
+          mainCharacters.forEach((c: CharacterDocument) => {
+            c.groups.push(mainGroup.id);
+            c.save();
           });
 
           mainGroups.push(mainGroup._id);
@@ -92,7 +98,13 @@ export class SeederService {
           const npcGroup = await this.groupModel.create({
             label: faker.company.name(),
             description: faker.lorem.paragraph({ min: 0, max: 3 }),
+            active: faker.number.int({ min: 0, max: 1 }) === 1,
             characters: npcCharacters.map((c) => c._id),
+          });
+
+          npcCharacters.forEach((c: CharacterDocument) => {
+            c.groups.push(npcGroup.id);
+            c.save();
           });
 
           npcGroups.push(npcGroup._id);
@@ -106,7 +118,13 @@ export class SeederService {
           const archivedGroup = await this.groupModel.create({
             label: faker.company.name(),
             description: faker.lorem.paragraph({ min: 0, max: 3 }),
+            active: faker.number.int({ min: 0, max: 1 }) === 1,
             characters: archivedCharacters.map((c) => c._id),
+          });
+
+          archivedCharacters.forEach((c: CharacterDocument) => {
+            c.groups.push(archivedGroup.id);
+            c.save();
           });
 
           archivedGroups.push(archivedGroup._id);
