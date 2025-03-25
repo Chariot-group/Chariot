@@ -30,7 +30,6 @@ export class CharacterService {
       if(groupId){
         filters['groups'] = { $in: [groupId] };
       }
-      console.log(filters)
       const start: number = Date.now();
       const characters = await this.characterModel.find(filters)
                                                   .sort(sort)
