@@ -11,18 +11,41 @@ import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
 import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { Group, GroupDocument } from '@/group/schemas/group.schema';
 
 @Injectable()
 export class CampaignService {
   constructor(
     @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
   ) {}
 
   private readonly logger = new Logger(CampaignService.name);
   private readonly SERVICE_NAME = CampaignService.name;
 
-  create(createCampaignDto: CreateCampaignDto) {
-    return 'This action adds a new campaign';
+  async create(createCampaignDto: CreateCampaignDto) {
+    try {
+      const { groups, ...campaignData } = createCampaignDto;
+
+      const start: number = Date.now();
+      const campaign = await this.campaignModel.create({
+        ...campaignData,
+        groups,
+      });
+      campaign.save();
+      const end: number = Date.now();
+
+      const message = `Campaign created in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: campaign,
+      };
+    } catch (error) {
+      const message = `Error while creating campaign: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   async findAll(query: {
@@ -89,7 +112,7 @@ export class CampaignService {
       const campaign = await this.campaignModel
         .findById(id)
         .populate({ path: 'groups.main', populate: { path: 'characters' } })
-        .populate({ path: 'groups.pnj', populate: { path: 'characters' } })
+        .populate({ path: 'groups.npc', populate: { path: 'characters' } })
         .populate({ path: 'groups.archived', populate: { path: 'characters' } })
         .exec();
       const end: number = Date.now();

@@ -5,13 +5,21 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Campaign, CampaignSchema } from './schemas/campaign.schema';
 import { Logger } from 'winston';
 import { Groups, GroupsSchema } from './schemas/sub/groups.schema';
+import { GroupModule } from '@/group/group.module';
+import { group } from 'console';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      {name: Campaign.name, schema: CampaignSchema},
-      {name: Groups.name, schema: GroupsSchema}
-    ])
+      { name: Campaign.name, schema: CampaignSchema },
+      { name: Groups.name, schema: GroupsSchema },
+    ]),
+    GroupModule,
+  ],
+  exports: [
+    MongooseModule.forFeature([
+      { name: Campaign.name, schema: CampaignSchema },
+    ]),
   ],
   controllers: [CampaignController],
   providers: [CampaignService, Logger],
