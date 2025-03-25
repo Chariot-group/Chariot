@@ -9,7 +9,6 @@ import { GroupModule } from './group/group.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { SeederModule } from './seeder/seeder.module';
 import { ResponseService } from './response/response.service';
-import { ErrorsService } from './errors/message.service';
 
 @Module({
   imports: [
@@ -24,6 +23,6 @@ import { ErrorsService } from './errors/message.service';
     SeederModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Logger, ResponseService, ErrorsService],
+  providers: [AppService, Logger, ResponseService],
 })
 export class AppModule {}
