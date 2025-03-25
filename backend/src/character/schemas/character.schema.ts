@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { Classification } from './classification/classification.schema';
 import { Stats } from './stat/stats.schema';
 import { Combat } from './combat/combat.schema';
 import { Traits } from './trait/trait.schema';
 import { Actions } from './actions/actions.schema';
+import { Group } from '@/group/schemas/group.schema';
 
 export type CharacterDocument = Character & Document;
 
@@ -28,6 +29,9 @@ export class Character {
 
     @Prop({ type: [Actions], required: true, default: [] })
     actions: Actions[];
+
+    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }], default: [], required: true })
+    groups: Group[];
 
     @Prop({ default: null })
     deletedAt?: Date;
