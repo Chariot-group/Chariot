@@ -3,7 +3,7 @@ import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 
-@Controller('character')
+@Controller('characters')
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
@@ -29,6 +29,6 @@ export class CharacterController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.characterService.remove(+id);
+    return this.characterService.remove(id);
   }
 }
