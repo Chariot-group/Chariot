@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Types } from "mongoose";
-import { Group } from "src/group/schemas/group.schema";
+import { Group } from "@/group/schemas/group.schema";
 import mongoose from 'mongoose';
 
 @Schema()
