@@ -34,7 +34,7 @@ export class CampaignService {
     try{
 
       if(!Types.ObjectId.isValid(id)){
-        this.logger.error(ResponseService.getErrorMessage(this.MONGOOSE_ERROR_ID, [id]), null, this.SERVICE_NAME);
+        this.logger.error(ResponseService.getErrorMessage(this.MONGOOSE_ERROR_ID, ['la campagne', id]), null, this.SERVICE_NAME);
         return ResponseService.sendResponse(ResponseService.getErrorMessage(this.RESOURCE_NOT_FIND, ['la campagne', id]), {}, [ResponseService.setError("mongoose_id_not_valid", "critical")]);
       }
 

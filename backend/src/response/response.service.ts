@@ -15,7 +15,7 @@ export class ResponseService {
         },
         {
             code: "external_mongoose_id_error",
-            message: "Erreur lors de la récupération de la campagne #${?}: L'id n'est pas un id valide pour mongoose"
+            message: "Erreur lors de la récupération de {?} #${?}: L'id n'est pas un id valide pour mongoose"
         },
         {
             code: "internal_resource_not_find",
