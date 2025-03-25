@@ -64,6 +64,11 @@ export class SeederService {
                         characters: mainCharacters.map(c => c._id),
                     });
 
+                    mainCharacters.forEach((c: CharacterDocument) => {
+                        c.groups.push(mainGroup.id);
+                        c.save();
+                    });
+
                     mainGroups.push(mainGroup._id);
                 }
 
@@ -77,6 +82,11 @@ export class SeederService {
                         characters: pnjCharacters.map(c => c._id),
                     });
 
+                    pnjCharacters.forEach((c: CharacterDocument) => {
+                        c.groups.push(pnjGroup.id);
+                        c.save();
+                    });
+
                     pnjGroups.push(pnjGroup._id);
                 }
             
@@ -88,6 +98,11 @@ export class SeederService {
                         description: faker.lorem.paragraph({min: 0, max: 3}),
                         active: faker.number.int({min: 0, max: 1}) === 1,
                         characters: archivedCharacters.map(c => c._id),
+                    });
+
+                    archivedCharacters.forEach((c: CharacterDocument) => {
+                        c.groups.push(archivedGroup.id);
+                        c.save();
                     });
 
                     archivedGroups.push(archivedGroup._id);
