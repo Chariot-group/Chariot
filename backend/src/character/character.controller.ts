@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
@@ -13,8 +13,8 @@ export class CharacterController {
   }
 
   @Get()
-  findAll() {
-    return this.characterService.findAll();
+  findAll(@Query("page", ParseIntPipe) page?: number, @Query('offset', ParseIntPipe) offset?: number, @Query('name') name?: string, @Query('sort') sort?: string) {
+    return this.characterService.findAll({page, offset, name, sort});
   }
 
   @Get(':id')
