@@ -14,9 +14,6 @@ export class Group {
     @Prop({ required: false })
     description: string;
 
-    @Prop({ required: true, default: true })
-    active: boolean;
-
     @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Character' }], default: [], required: true })
     characters: Character[];
 
