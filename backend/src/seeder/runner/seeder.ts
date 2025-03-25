@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../../app.module';
-import { SeederService } from 'src/seeder/seeder.service';
+import { SeederService } from '@/seeder/seeder.service';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {

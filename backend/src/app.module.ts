@@ -8,7 +8,6 @@ import { CharacterModule } from './character/character.module';
 import { GroupModule } from './group/group.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { SeederModule } from './seeder/seeder.module';
-import { ResponseService } from './response/response.service';
 
 @Module({
   imports: [
@@ -23,6 +22,6 @@ import { ResponseService } from './response/response.service';
     SeederModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Logger, ResponseService],
+  providers: [AppService, Logger],
 })
 export class AppModule {}
