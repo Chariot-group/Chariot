@@ -26,21 +26,32 @@ export class CampaignService {
   async create(createCampaignDto: CreateCampaignDto) {
     try {
       const { groups, ...campaignData } = createCampaignDto;
+      const totalGroups = groups.main.concat(groups.npc, groups.archived);
+
+      const groupCheckPromises = totalGroups.map((groupId) =>
+        this.groupModel.findById(groupId).exec(),
+      );
+      const groupCheckResults = await Promise.all(groupCheckPromises);
+      // Si un ou plusieurs groupes ne sont pas trouvés, on log et on lève une erreur
+      const invalidGroups = groupCheckResults.filter((group) => !group);
+      if (invalidGroups.length > 0) {
+        const invalidGroupIds = totalGroups.filter(
+          (_, index) => !groupCheckResults[index],
+        );
+        const message = `Invalid group IDs: ${invalidGroupIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
 
       const start: number = Date.now();
       const campaign = await this.campaignModel.create({
         ...campaignData,
         groups,
       });
-      const totalGroups = campaign.groups.main.concat(
-        campaign.groups.npc,
-        campaign.groups.archived,
-      );
       await this.groupModel.updateMany(
-        { _id: { $in: totalGroups } },
-        { $set: { campaign: campaign._id } },
+        { _id: { $in: totalGroups.map((id) => id) } },
+        { $addToSet: { campaigns: campaign._id } },
       );
-      campaign.save();
       const end: number = Date.now();
 
       const message = `Campaign created in ${end - start}ms`;
@@ -50,6 +61,9 @@ export class CampaignService {
         data: campaign,
       };
     } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
       const message = `Error while creating campaign: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
