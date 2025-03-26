@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 
-@Controller('character')
+@Controller('characters')
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
@@ -13,8 +14,8 @@ export class CharacterController {
   }
 
   @Get()
-  findAll() {
-    return this.characterService.findAll();
+  findAll(@Query("page", ParseNullableIntPipe) page?: number, @Query('offset', ParseNullableIntPipe) offset?: number, @Query('name') name?: string, @Query('sort') sort?: string) {
+    return this.characterService.findAll({page, offset, name, sort});
   }
 
   @Get(':id')
@@ -29,6 +30,6 @@ export class CharacterController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.characterService.remove(+id);
+    return this.characterService.remove(id);
   }
 }

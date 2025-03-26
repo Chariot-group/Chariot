@@ -1,11 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
+import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
+import { CharacterService } from '@/character/character.service';
 
 @Controller('groups')
 export class GroupController {
-  constructor(private readonly groupService: GroupService) {}
+  constructor(
+    private readonly groupService: GroupService,
+    private readonly characterService: CharacterService
+  ) {}
 
   @Post()
   create(@Body() createGroupDto: CreateGroupDto) {
@@ -15,6 +20,11 @@ export class GroupController {
   @Get()
   findAll() {
     return this.groupService.findAll();
+  }
+
+  @Get(':id/characters')
+  findAllCharacters(@Param('id') id: string, @Query("page", ParseNullableIntPipe) page?: number, @Query('offset', ParseNullableIntPipe) offset?: number, @Query('name') name?: string, @Query('sort') sort?: string) {
+    return this.characterService.findAll({page, offset, name, sort}, id);
   }
 
   @Get(':id')
