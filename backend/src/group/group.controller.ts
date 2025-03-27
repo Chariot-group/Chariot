@@ -18,7 +18,7 @@ export class GroupController {
   }
 
   @Get()
-  findAll(@Query('page') page: number, @Query('offset') offset: number, @Query('label') label: string, @Query('sort') sort: string,) {
+  findAll(@Query('page', ParseNullableIntPipe) page?: number, @Query('offset',ParseNullableIntPipe) offset?: number, @Query('label') label?: string, @Query('sort') sort?: string,) {
       return this.groupService.findAll({ page, offset, label, sort });
     }
 
