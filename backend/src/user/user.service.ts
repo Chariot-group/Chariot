@@ -1,4 +1,10 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -7,13 +13,10 @@ import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class UserService {
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-    constructor(
-      @InjectModel(User.name) private userModel: Model<UserDocument>,
-    ) {}
-  
-    private readonly SERVICE_NAME = UserService.name;
-    private readonly logger = new Logger(this.SERVICE_NAME);
+  private readonly SERVICE_NAME = UserService.name;
+  private readonly logger = new Logger(this.SERVICE_NAME);
 
   create(createUserDto: CreateUserDto) {
     return 'This action adds a new user';
@@ -28,7 +31,7 @@ export class UserService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    try{
+    try {
       if (!Types.ObjectId.isValid(id)) {
         const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
         this.logger.error(message, null, this.SERVICE_NAME);
@@ -44,20 +47,26 @@ export class UserService {
         .populate('campaigns')
         .exec();
       const end: number = Date.now();
-      
+
       if (!user || userUpdate.modifiedCount === 0) {
         const message = `User #${id} not found`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new NotFoundException(message);
       }
-      
+
       const message = `User update in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
         data: user,
       };
-    }catch(error){
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
       const message = `Error while updating user: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
