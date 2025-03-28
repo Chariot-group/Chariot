@@ -85,7 +85,53 @@ export class UserService {
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        const message = `Error while deleting user #${id}: Id is not a valid mongoose id`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+
+      const user = await this.userModel.findById(id).exec();
+
+      if (!user) {
+        const message = `User #${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      if (user.deletedAt) {
+        const message = `User #${id} already deleted`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
+      user.deletedAt = new Date();
+      await user.save();
+
+      const end: number = Date.now();
+
+      const message = `User delete in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: user,
+      };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof GoneException
+      ) {
+        throw error;
+      }
+
+      const message = `Error while deleting character ${id}: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 }
