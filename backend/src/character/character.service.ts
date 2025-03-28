@@ -24,8 +24,21 @@ export class CharacterService {
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  create(createCharacterDto: CreateCharacterDto) {
-    return 'This action adds a new character';
+  async create(createCharacterDto: CreateCharacterDto) {
+    try {
+      const start = Date.now();
+      const newCharacter = new this.characterModel(createCharacterDto);
+      const savedCharacter = await newCharacter.save();
+      const end = Date.now();
+
+      const message = (`Character created in ${end - start}ms`);
+      return { 
+        message,
+        data : savedCharacter};
+    } catch (error) {
+      this.logger.error(`Error creating character: ${error.message}`);
+      throw new InternalServerErrorException('Une erreur est survenue lors de la création du personnage');
+    }
   }
 
   async findAll(

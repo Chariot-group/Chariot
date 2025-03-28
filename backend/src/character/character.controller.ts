@@ -9,7 +9,7 @@ export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
   @Post()
-  create(@Body() createCharacterDto: CreateCharacterDto) {
+  async createCharacter(@Body() createCharacterDto: CreateCharacterDto) {
     return this.characterService.create(createCharacterDto);
   }
 
