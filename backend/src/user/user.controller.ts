@@ -7,10 +7,12 @@ import {
   Param,
   Delete,
   BadRequestException,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 
 @Controller('users')
 export class UserController {
@@ -22,8 +24,13 @@ export class UserController {
   }
 
   @Get()
-  findAll() {
-    return this.userService.findAll();
+  findAll(
+    @Query('page', ParseNullableIntPipe) page?: number,
+    @Query('offset', ParseNullableIntPipe) offset?: number,
+    @Query('sort') sort?: string,
+    @Query('email') email?: string,
+  ) {
+    return this.userService.findAll({ page, offset, sort, email });
   }
 
   @Get(':id')

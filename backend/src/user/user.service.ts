@@ -22,8 +22,56 @@ export class UserService {
     return 'This action adds a new user';
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll(query: {
+    page?: number;
+    offset?: number;
+    sort?: string;
+    email?: string;
+  }) {
+    try {
+      const { page = 1, offset = 10, email = '' } = query;
+      const skip = (page - 1) * offset;
+
+      const filter = {
+        email: { $regex: `${email}`, $options: 'i' },
+        deletedAt: { $eq: null },
+      };
+
+      const sort: { [key: string]: 1 | -1 } = { updatedAt: -1 };
+
+      if (query.sort) {
+        query.sort.startsWith('-')
+          ? (sort[query.sort.substring(1)] = -1)
+          : (sort[query.sort] = 1);
+      }
+
+      const totalItems = await this.userModel.countDocuments(filter);
+
+      const start: number = Date.now();
+      const users = await this.userModel
+        .find(filter)
+        .skip(skip)
+        .limit(offset)
+        .sort(sort)
+        .exec();
+      const end: number = Date.now();
+
+      const message = `Users found in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: users,
+        pagination: {
+          page,
+          offset,
+          totalItems,
+        },
+      };
+    } catch (error) {
+      const message = `Error while fetching users: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   findOne(id: number) {
