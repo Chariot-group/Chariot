@@ -48,6 +48,6 @@ export class CampaignController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.campaignService.remove(+id);
+    return this.campaignService.remove(id);
   }
 }
