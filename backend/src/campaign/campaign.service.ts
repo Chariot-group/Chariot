@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  GoneException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -162,7 +163,60 @@ export class CampaignService {
     return `This action updates a #${id} campaign`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} campaign`;
+  async remove(id: string) {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        const message = `Error while deleting campaign #${id}: Id is not a valid mongoose id`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+
+      const campaign = await this.campaignModel.findById(id).exec();
+      if (!campaign) {
+        const message = `Campaign #${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      if (campaign.deletedAt) {
+        const message = `Campaign #${id} already deleted`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
+      campaign.deletedAt = new Date();
+      campaign.groups.main.forEach(async (groupId) => {
+        await this.groupModel
+          .updateOne({ _id: groupId }, { $pull: { campaign: id } })
+          .exec();
+      });
+      campaign.groups.main = [];
+      campaign.groups.npc = [];
+      campaign.groups.archived = [];
+      await campaign.save();
+
+      const end: number = Date.now();
+
+      const message = `Campaign delete in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: campaign,
+      };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof GoneException
+      ) {
+        throw error;
+      }
+
+      const message = `Error while deleting character ${id}: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 }
