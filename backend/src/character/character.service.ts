@@ -1,4 +1,11 @@
-import { BadRequestException, Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+  GoneException,
+} from '@nestjs/common';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -8,10 +15,11 @@ import { Group } from '@/group/schemas/group.schema';
 
 @Injectable()
 export class CharacterService {
-
   constructor(
-      @InjectModel(Character.name) private characterModel: Model<CharacterDocument>,
-      @InjectModel(Group.name) private groupModel: Model<CharacterDocument>){}
+    @InjectModel(Character.name)
+    private characterModel: Model<CharacterDocument>,
+    @InjectModel(Group.name) private groupModel: Model<CharacterDocument>,
+  ) {}
 
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
@@ -20,23 +28,32 @@ export class CharacterService {
     return 'This action adds a new character';
   }
 
-  async findAll(query: {page?: number, offset?: number, name?: string, sort?: string}, groupId?: string) {
-    try{
+  async findAll(
+    query: { page?: number; offset?: number; name?: string; sort?: string },
+    groupId?: string,
+  ) {
+    try {
       console.log(query.page, query.sort);
-      let {name = "", page = 1, offset = 10} = query;
+      let { name = '', page = 1, offset = 10 } = query;
       let sort: { [key: string]: SortOrder } = { updatedAt: 'asc' };
-      if(query.sort){
-        query.sort.startsWith("-") ? sort[query.sort.substring(1)] = 'desc' : sort[query.sort] = 'asc';
+      if (query.sort) {
+        query.sort.startsWith('-')
+          ? (sort[query.sort.substring(1)] = 'desc')
+          : (sort[query.sort] = 'asc');
       }
-      const filters = {name: { $regex: `${name}`, $options: 'i' }, deletedAt: { $eq: null }};
-      if(groupId){
+      const filters = {
+        name: { $regex: `${name}`, $options: 'i' },
+        deletedAt: { $eq: null },
+      };
+      if (groupId) {
         filters['groups'] = { $in: [groupId] };
       }
       const start: number = Date.now();
-      const characters = await this.characterModel.find(filters)
-                                                  .sort(sort)
-                                                  .limit(offset)
-                                                  .skip((page - 1) * offset);
+      const characters = await this.characterModel
+        .find(filters)
+        .sort(sort)
+        .limit(offset)
+        .skip((page - 1) * offset);
       const nbCharacters = await this.characterModel.countDocuments(filters);
       const end: number = Date.now();
 
@@ -48,10 +65,10 @@ export class CharacterService {
         pagination: {
           page: page,
           offset: offset,
-          total: nbCharacters
-        }
-      }
-    }catch(error){
+          total: nbCharacters,
+        },
+      };
+    } catch (error) {
       const message = `Error while fetching characters: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
@@ -67,7 +84,7 @@ export class CharacterService {
   }
 
   async remove(id: string) {
-    try{
+    try {
       if (!Types.ObjectId.isValid(id)) {
         const message = `Error while deleting character #${id}: Id is not a valid mongoose id`;
         this.logger.error(message, null, this.SERVICE_NAME);
@@ -82,21 +99,37 @@ export class CharacterService {
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new NotFoundException(message);
       }
+
+      if (character.deletedAt) {
+        const message = `Character #${id} already deleted`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
       character.deletedAt = new Date();
       character.groups.forEach(async (groupId) => {
-        await this.groupModel.updateOne({ _id: groupId }, { $pull: { characters: id } }).exec();
+        await this.groupModel
+          .updateOne({ _id: groupId }, { $pull: { characters: id } })
+          .exec();
       });
       await character.save();
 
       const end: number = Date.now();
-      
+
       const message = `Character delete in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
         data: character,
       };
-    }catch(error){
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof GoneException
+      ) {
+        throw error;
+      }
       const message = `Error while deleting character ${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
