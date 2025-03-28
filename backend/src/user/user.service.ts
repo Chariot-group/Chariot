@@ -37,15 +37,25 @@ export class UserService {
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new BadRequestException(message);
       }
+      let user = await this.userModel.findById(id);
+
+      if (!user) {
+        const message = `User #${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      if (user.deletedAt) {
+        const message = `User #${id} already deleted`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
 
       const start: number = Date.now();
       const userUpdate = await this.userModel
         .updateOne({ _id: id }, updateUserDto)
         .exec();
-      const user = await this.userModel
-        .findById(id)
-        .populate('campaigns')
-        .exec();
+      user = await this.userModel.findById(id).populate('campaigns').exec();
       const end: number = Date.now();
 
       if (!user || userUpdate.modifiedCount === 0) {
@@ -63,6 +73,7 @@ export class UserService {
     } catch (error) {
       if (
         error instanceof NotFoundException ||
+        error instanceof GoneException ||
         error instanceof BadRequestException
       ) {
         throw error;
