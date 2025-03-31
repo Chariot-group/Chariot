@@ -24,8 +24,51 @@ export class CampaignService {
   private readonly logger = new Logger(CampaignService.name);
   private readonly SERVICE_NAME = CampaignService.name;
 
-  create(createCampaignDto: CreateCampaignDto) {
-    return 'This action adds a new campaign';
+  async create(createCampaignDto: CreateCampaignDto) {
+    try {
+      const { groups, ...campaignData } = createCampaignDto;
+      const totalGroups = groups.main.concat(groups.npc, groups.archived);
+
+      const groupCheckPromises = totalGroups.map((groupId) =>
+        this.groupModel.findById(groupId).exec(),
+      );
+      const groupCheckResults = await Promise.all(groupCheckPromises);
+      // Si un ou plusieurs groupes ne sont pas trouvés, on log et on lève une erreur
+      const invalidGroups = groupCheckResults.filter((group) => !group);
+      if (invalidGroups.length > 0) {
+        const invalidGroupIds = totalGroups.filter(
+          (_, index) => !groupCheckResults[index],
+        );
+        const message = `Invalid group IDs: ${invalidGroupIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+      const campaign = await this.campaignModel.create({
+        ...campaignData,
+        groups,
+      });
+      await this.groupModel.updateMany(
+        { _id: { $in: totalGroups.map((id) => id) } },
+        { $addToSet: { campaigns: campaign._id } },
+      );
+      const end: number = Date.now();
+
+      const message = `Campaign created in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: campaign,
+      };
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      const message = `Error while creating campaign: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   async findAll(query: {
@@ -92,7 +135,7 @@ export class CampaignService {
       const campaign = await this.campaignModel
         .findById(id)
         .populate({ path: 'groups.main', populate: { path: 'characters' } })
-        .populate({ path: 'groups.pnj', populate: { path: 'characters' } })
+        .populate({ path: 'groups.npc', populate: { path: 'characters' } })
         .populate({ path: 'groups.archived', populate: { path: 'characters' } })
         .exec();
       const end: number = Date.now();
@@ -164,7 +207,7 @@ export class CampaignService {
           .exec();
       });
       campaign.groups.main = [];
-      campaign.groups.pnj = [];
+      campaign.groups.npc = [];
       campaign.groups.archived = [];
       await campaign.save();
 
