@@ -103,6 +103,12 @@ export class CampaignService {
         throw new NotFoundException(message);
       }
 
+      if (campaign.deletedAt) {
+        const message = `Campaign ${id} is gone`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
       const message = `Campaign found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
@@ -110,6 +116,14 @@ export class CampaignService {
         data: campaign,
       };
     } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof GoneException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+
       const message = `Error while fetching campaign ${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
