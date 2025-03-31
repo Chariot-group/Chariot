@@ -5,7 +5,6 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
-  GoneException,
 } from '@nestjs/common';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { UpdateUserDto } from '@/user/dto/update-user.dto';
@@ -39,7 +38,7 @@ export class UserService {
         deletedAt: { $eq: null },
       };
 
-      const sort: { [key: string]: 1 | -1 } = { updatedAt: -1 };
+      const sort: { [key: string]: 1 | -1 } = { updatedAt: 1 };
 
       if (query.sort) {
         query.sort.startsWith('-')
