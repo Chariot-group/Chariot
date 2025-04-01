@@ -13,7 +13,6 @@ export class GroupController {
   ) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   create(@Body() createGroupDto: CreateGroupDto) {
     return this.groupService.create(createGroupDto);
   }
