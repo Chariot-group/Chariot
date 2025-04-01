@@ -5,5 +5,10 @@
   },
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
+  },
+  "CampaignListPanel": {
+    "title": "Tus campañas",
+    "search": "Buscar una campaña",
+    "createTooltip": "Añadir campaña"
   }
 }
