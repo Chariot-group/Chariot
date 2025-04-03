@@ -31,7 +31,6 @@ export class UserService {
         this.campaignModel.findById(campaignId).exec(),
       );
       const campaignCheckResults = await Promise.all(campaignCheckPromises);
-      // Si un ou plusieurs groupes ne sont pas trouvés, on log et on lève une erreur
       const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
       if (invalidCampaigns.length > 0) {
         const invalidCampaignIds = campaigns.filter(
@@ -180,6 +179,22 @@ export class UserService {
         const message = `User #${id} already deleted`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new GoneException(message);
+      }
+
+      const { campaigns = [], ...userData } = updateUserDto;
+
+      const campaignCheckPromises = campaigns.map((campaignId) =>
+        this.campaignModel.findById(campaignId).exec(),
+      );
+      const campaignCheckResults = await Promise.all(campaignCheckPromises);
+      const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
+      if (invalidCampaigns.length > 0) {
+        const invalidCampaignIds = campaigns.filter(
+          (_, index) => !campaignCheckResults[index],
+        );
+        const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
       }
 
       const start: number = Date.now();
