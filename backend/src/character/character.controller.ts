@@ -20,7 +20,7 @@ export class CharacterController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.characterService.findOne(+id);
+    return this.characterService.findOne(id);
   }
 
   @Patch(':id')
