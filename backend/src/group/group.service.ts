@@ -17,11 +17,13 @@ import {
   Character,
   CharacterDocument,
 } from '@/character/schemas/character.schema';
+import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
 
 @Injectable()
 export class GroupService {
   constructor(
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
+    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
     @InjectModel(Character.name)
     private characterModel: Model<CharacterDocument>,
   ) {}
@@ -29,8 +31,73 @@ export class GroupService {
   private readonly SERVICE_NAME = GroupService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  create(createGroupDto: CreateGroupDto) {
-    return 'This action adds a new group';
+  async create(createGroupDto: CreateGroupDto) {
+    try {
+      const { characters = [], campaigns, ...groupData } = createGroupDto;
+
+      const characterCheckPromises = characters.map((characterId) =>
+        this.characterModel.findById(characterId).exec(),
+      );
+      const characterCheckResults = await Promise.all(characterCheckPromises);
+      const invalidCharacters = characterCheckResults.filter((character) => !character);
+      if (invalidCharacters.length > 0) {
+        const invalidCharacterIds = characters.filter(
+          (_, index) => !characterCheckResults[index],
+        );
+        const message = `Invalid characters IDs: ${invalidCharacterIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const campaignCheckPromises = campaigns.map((campaign) =>
+        this.campaignModel.findById(campaign.idCampaign).exec(),
+      );
+      const campaignCheckResults = await Promise.all(campaignCheckPromises);
+      const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
+      if (invalidCampaigns.length > 0) {
+        const invalidCampaignIds = campaigns.map((campaign) => campaign.idCampaign).filter(
+          (_, index) => !campaignCheckResults[index],
+        );
+        const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+      const group = await this.groupModel.create({
+        ...groupData,
+        characters,
+        campaigns: campaigns.map((campaign) => campaign.idCampaign),
+      });
+
+      await this.characterModel.updateMany(
+        { _id: { $in: characters.map((id) => id) } },
+        { $addToSet: { groups: group._id } },
+      );
+      campaigns.forEach(async (campaign) => {
+        const type = campaign.type;
+        const campaignId = campaign.idCampaign;
+        await this.campaignModel.updateMany(
+          { _id: campaignId },
+          { $addToSet: { [`groups.${type}`]: group._id } },
+        );
+      });
+      const end: number = Date.now();
+
+      const message = `Group created in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: group,
+      };
+    }catch(error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      const errorMessage = `Error while creating group: ${error.message}`;
+      this.logger.error(errorMessage);
+      throw new InternalServerErrorException(errorMessage);
+    }
   }
 
   async findAll(
