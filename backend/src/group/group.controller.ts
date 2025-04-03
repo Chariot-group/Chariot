@@ -34,7 +34,7 @@ export class GroupController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
-    return this.groupService.update(+id, updateGroupDto);
+    return this.groupService.update(id, updateGroupDto);
   }
 
   @Delete(':id')
