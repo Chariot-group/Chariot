@@ -152,8 +152,53 @@ export class GroupService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} group`;
+  async findOne(id: string) {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        const message = `Error while fetching group ${id}: Id is not a valid mongoose id`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+      const group = await this.groupModel
+        .findById(id)
+        .populate('characters')
+        .populate('campaigns')
+        .exec();
+      const end: number = Date.now();
+
+      if (!group) {
+        const message = `Group ${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      if (group.deletedAt) {
+        const message = `Group ${id} is gone`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
+      const message = `Group found in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: group,
+      };
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof GoneException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+
+      const message = `Error while fetching group ${id}: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   update(id: number, updateGroupDto: UpdateGroupDto) {
