@@ -11,16 +11,58 @@ import { UpdateUserDto } from '@/user/dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@/user/schemas/user.schema';
 import { Model, Types } from 'mongoose';
+import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>
+  ) {}
 
   private readonly SERVICE_NAME = UserService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const { campaigns = [], ...userData } = createUserDto;
+
+      const campaignCheckPromises = campaigns.map((campaignId) =>
+        this.campaignModel.findById(campaignId).exec(),
+      );
+      const campaignCheckResults = await Promise.all(campaignCheckPromises);
+      // Si un ou plusieurs groupes ne sont pas trouvés, on log et on lève une erreur
+      const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
+      if (invalidCampaigns.length > 0) {
+        const invalidCampaignIds = campaigns.filter(
+          (_, index) => !campaignCheckResults[index],
+        );
+        const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+      const user = await this.userModel.create({
+        ...userData,
+        campaigns,
+      });
+      const end: number = Date.now();
+
+      const message = `User created in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: user,
+      };
+    } catch (error) {
+      if (error instanceof BadRequestException) {
+        throw error;
+      }
+      const message = `Error while creating campaign: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   async findAll(query: {
