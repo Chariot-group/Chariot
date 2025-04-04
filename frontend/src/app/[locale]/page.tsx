@@ -1,13 +1,13 @@
-"use client"
+"use client";
+import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel";
 import HealthCheck from "@/components/modules/monitoring/HealthCheck";
 import { useToast } from "@/hooks/useToast";
 import { useTranslations } from "next-intl";
 
 export default function Home() {
   const t = useTranslations("HomePage");
-  const {success, error, info, warning} = useToast();
+  const { success, error, info, warning } = useToast();
   return (
-    
     <div>
       <HealthCheck />
       <h1>{t("title")}</h1>
@@ -24,6 +24,9 @@ export default function Home() {
       <button onClick={() => warning("C'est un message d'avertissement !")}>
         Afficher un toast d'avertissement
       </button>
+      <div className="w-1/4">
+        <CampaignListPanel />
+      </div>
     </div>
   );
 }
