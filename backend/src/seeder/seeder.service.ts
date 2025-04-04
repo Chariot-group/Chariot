@@ -130,6 +130,12 @@ export class SeederService {
           archivedGroups.push(archivedGroup._id);
         }
 
+        const usersCount = faker.number.int({ min: 1, max: userCount });
+        const campaignUsers = await this.userModel.aggregate([
+          { $sample: { size: usersCount } }, // Sélection aléatoire
+          { $project: { _id: 1 } }, // Ne garder que les IDs
+        ]);
+
         const campaign = await this.campaignModel.create({
           label: faker.lorem.words(3),
           description: faker.lorem.paragraph({ min: 0, max: 3 }),
@@ -138,7 +144,13 @@ export class SeederService {
             npc: npcGroups,
             archived: archivedGroups,
           },
+          users: campaignUsers.map((u) => u._id),
         });
+
+        await this.userModel.updateMany(
+          { _id: { $in: campaignUsers.map((u) => u._id) } },
+          { $addToSet: { campaigns: campaign._id } },
+        );
 
         mainGroups.forEach(async (g: ObjectId) => {
           await this.groupModel.updateOne(
