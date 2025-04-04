@@ -16,5 +16,6 @@ import { Campaign, CampaignSchema } from '@/campaign/schemas/campaign.schema';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}
