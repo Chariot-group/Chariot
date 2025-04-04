@@ -176,7 +176,7 @@ export class UserService {
       }
 
       if (user.deletedAt) {
-        const message = `User #${id} already deleted`;
+        const message = `User #${id} deleted`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new GoneException(message);
       }
