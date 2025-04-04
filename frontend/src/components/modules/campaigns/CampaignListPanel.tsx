@@ -26,7 +26,7 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
   const [cardHeight, setCardHeight] = useState(0);
 
   const fetchCampaigns = useCallback(
-    async (nextPage = 1) => {
+    async (search: string, nextPage = 1) => {
       if (loading) return;
       setLoading(true);
 
@@ -34,6 +34,7 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
         const response = await CampaignService.getAllCampaigns({
           page: nextPage,
           offset,
+          label: search,
         });
         setCampaigns((prev) => [...prev, ...response.data]);
         setPage(nextPage);
@@ -53,8 +54,9 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
   }, []);
 
   useEffect(() => {
-    fetchCampaigns(1);
-  }, []);
+    setCampaigns([]);
+    fetchCampaigns(search, 1);
+  }, [search]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,7 +65,7 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
       const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
 
       if (scrollTop + clientHeight >= scrollHeight - 1) {
-        fetchCampaigns(page + 1);
+        fetchCampaigns(search, page + 1);
       }
     };
 
@@ -111,7 +113,7 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
           className="grid grid-cols-3 gap-4 overflow-y-auto"
           style={{
             height: cardHeight
-              ? `${(Math.ceil(offset / 3) + 1) * cardHeight}px`
+              ? `${(Math.ceil(offset / 6) + 1) * cardHeight}px`
               : "auto",
           }}
         >
@@ -123,15 +125,26 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
               <Plus className="size-16" />
             </Card>
           </Link>
-          {campaigns.map((campaign) => (
-            <Link href="/" key={campaign._id} title={campaign.label}>
-              <Card className="flex flex-col items-center justify-center gap-3 mb-2 aspect-square">
-                <h3 className="text-7xl text-center">
-                  {getInitials(campaign.label)}
-                </h3>
-              </Card>
-            </Link>
-          ))}
+          {campaigns.length > 0 &&
+            campaigns.map((campaign) => (
+              <Link href="/" key={campaign._id} title={campaign.label}>
+                <Card className="flex flex-col items-center justify-center gap-3 mb-2 aspect-square">
+                  <h3 className="text-7xl text-center">
+                    {getInitials(campaign.label)}
+                  </h3>
+                </Card>
+              </Link>
+            ))}
+          {loading && (
+            <div className="flex justify-center items-center">
+              <div className="size-5 border-4 border-t-transparent border-gray-500 border-solid rounded-full animate-spin"></div>
+            </div>
+          )}
+          {campaigns.length === 0 && !loading && (
+            <div className="flex items-center justify-center w-full h-full">
+              <p className="text-gray-500">{t("noCampaigns")}</p>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

@@ -1,6 +1,6 @@
 import { APIContentType } from "@/constants/APIContentType";
 import apiClient from "./apiConfig";
-import { ICampaign } from "@/models/campaigns/ICampaign";
+// import { ICampaign } from "@/models/campaigns/ICampaign";
 
 const moduleUrl = "/campaigns";
 
@@ -8,7 +8,7 @@ const CampaignService = {
   async getAllCampaigns(query: {
     page?: number;
     offset?: number;
-    search?: string;
+    label?: string;
     sort?: string;
   }) {
     try {
