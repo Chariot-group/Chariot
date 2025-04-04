@@ -9,6 +9,7 @@
   "CampaignListPanel": {
     "title": "Vos campagnes",
     "search": "Rechercher une campagne",
-    "createTooltip": "Ajouter une campagne"
+    "createTooltip": "Ajouter une campagne",
+    "noCampaigns": "Aucune campagne trouvée"
   }
 }
