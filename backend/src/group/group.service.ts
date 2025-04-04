@@ -206,6 +206,15 @@ export class GroupService {
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new NotFoundException(message);
         }
+        const deletedCharacters = characterCheckResults.filter((character) => character.deletedAt);
+        if (deletedCharacters.length > 0) {
+          const deletedCharacterIds = characters.filter(
+            (_, index) => characterCheckResults[index].deletedAt,
+          );
+          const message = `These characters are already deleted: ${deletedCharacterIds.join(', ')}`;
+          this.logger.error(message, null, this.SERVICE_NAME);
+          throw new GoneException(message);
+        }
       }else{
         characters = group.characters.map((character) => character._id.toString());
       }
@@ -235,6 +244,15 @@ export class GroupService {
           const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new NotFoundException(message);
+        }
+        const deletedCampaigns = campaignCheckResults.filter((campaign) => campaign.deletedAt);
+        if (deletedCampaigns.length > 0) {
+          const deletedCampaignIds = campaigns.filter(
+            (_, index) => campaignCheckResults[index].deletedAt,
+          ).map((campaign) => campaign.idCampaign);
+          const message = `These campaigns are already deleted: ${deletedCampaignIds.join(', ')}`;
+          this.logger.error(message, null, this.SERVICE_NAME);
+          throw new GoneException(message);
         }
         campaignIds = campaigns.map((campaign) => campaign.idCampaign);
       }else {
