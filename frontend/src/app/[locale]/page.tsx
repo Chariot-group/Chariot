@@ -25,7 +25,8 @@ export default function Home() {
         Afficher un toast d'avertissement
       </button>
       <div className="w-1/4">
-        <CampaignListPanel />
+        {/* The height depends on the number of items (offset)  */}
+        <CampaignListPanel offset={23} />
       </div>
     </div>
   );

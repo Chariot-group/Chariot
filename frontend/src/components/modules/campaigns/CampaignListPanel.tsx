@@ -86,7 +86,7 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
       <CardContent>
         <div
           ref={containerRef}
-          className="grid grid-cols-3 gap-4 overflow-y-auto"
+          className="grid grid-cols-3 gap-4 overflow-y-auto scrollbar-hide"
           style={{
             height:
               campaigns.length > 0 && cardHeight
