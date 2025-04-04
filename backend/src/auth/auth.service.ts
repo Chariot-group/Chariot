@@ -26,7 +26,7 @@ export class AuthService {
             }
 
             const start = Date.now();
-            const token = this.jwtService.sign({iss: process.env.BACKEND_URL, sub: user._id, aud: process.env.BACKEND_URL });
+            const token = this.jwtService.sign({iss: process.env.BACKEND_URL, sub: user._id, aud: process.env.FRONTEND_URL });
             const end = Date.now();
 
             const message = `User logged in ${end - start}ms`;
