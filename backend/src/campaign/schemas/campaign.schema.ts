@@ -17,7 +17,9 @@ export class Campaign {
   groups: Groups;
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    type: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    ],
     default: [],
   })
   users: User[];
