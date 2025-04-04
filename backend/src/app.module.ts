@@ -8,6 +8,7 @@ import { CharacterModule } from './character/character.module';
 import { GroupModule } from './group/group.module';
 import { CampaignModule } from './campaign/campaign.module';
 import { SeederModule } from './seeder/seeder.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SeederModule } from './seeder/seeder.module';
     GroupModule,
     CampaignModule,
     SeederModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, Logger],
