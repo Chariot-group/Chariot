@@ -182,6 +182,17 @@ export class GroupService {
 
       //Vérification ids characters
       if(characters) {
+        const invalidIds = [];
+        characters.forEach((character) => {
+          if (!Types.ObjectId.isValid(character)) {
+            invalidIds.push(character);
+          }
+        });
+        if(invalidIds.length > 0) {
+          const message = `These are not valid mongoose Ids: ${invalidIds.join(', ')}`;
+          this.logger.error(message, null, this.SERVICE_NAME);
+          throw new BadRequestException(message);
+        }
         const characterCheckPromises = characters.map((characterId) =>
           this.characterModel.findById(characterId).exec(),
         );
@@ -193,7 +204,7 @@ export class GroupService {
           );
           const message = `Invalid characters IDs: ${invalidCharacterIds.join(', ')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
-          throw new BadRequestException(message);
+          throw new NotFoundException(message);
         }
       }else{
         characters = group.characters.map((character) => character._id.toString());
@@ -201,6 +212,17 @@ export class GroupService {
 
       let campaignIds: string[] = [];
       if(campaigns) {
+        const invalidIds = [];
+        campaigns.forEach((campaign) => {
+          if (!Types.ObjectId.isValid(campaign.idCampaign)) {
+            invalidIds.push(campaign.idCampaign);
+          }
+        });
+        if(invalidIds.length > 0) {
+          const message = `These are not valid mongoose Ids: ${invalidIds.join(', ')}`;
+          this.logger.error(message, null, this.SERVICE_NAME);
+          throw new BadRequestException(message);
+        }
         const campaignCheckPromises = campaigns.map((campaign) =>
           this.campaignModel.findById(campaign.idCampaign).exec(),
         );
@@ -212,7 +234,7 @@ export class GroupService {
           );
           const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
-          throw new BadRequestException(message);
+          throw new NotFoundException(message);
         }
         campaignIds = campaigns.map((campaign) => campaign.idCampaign);
       }else {
