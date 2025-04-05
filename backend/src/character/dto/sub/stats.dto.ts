@@ -1,4 +1,4 @@
-import { IsNumber, IsObject, IsOptional } from 'class-validator';
+import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class StatsDto {
   @IsNumber()
@@ -12,6 +12,10 @@ export class StatsDto {
   @IsNumber()
   @IsOptional()
   tempHitPoints: number;
+
+  @IsString()
+  @IsOptional()
+  hitDice: string;
 
   @IsNumber()
   @IsOptional()
