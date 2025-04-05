@@ -123,8 +123,52 @@ export class CharacterService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} character`;
+  async findOne(id: string) {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+      const character = await this.characterModel
+        .findById(id)
+        .populate('groups')
+        .exec();
+      const end: number = Date.now();
+
+      if (!character) {
+        const message = `Character ${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      if (character.deletedAt) {
+        const message = `Character ${id} is gone`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
+      const message = `Character found in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: character,
+      };
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof GoneException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+
+      const message = `Error while fetching character ${id}: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   update(id: number, updateCharacterDto: UpdateCharacterDto) {
