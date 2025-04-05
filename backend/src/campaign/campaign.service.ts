@@ -175,91 +175,97 @@ export class CampaignService {
 
   async update(id: string, updateCampaignDto: UpdateCampaignDto) {
     try {
+      // Validate ID
       if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while updating campaign ${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
+        throw new BadRequestException(`Invalid campaign ID: ${id}`);
       }
 
-      const start: number = Date.now();
+      const start = Date.now();
 
-      // Check if campaign exists and is not deleted
-      const campaign = await this.campaignModel.findById(id).exec();
-      if (!campaign) {
-        const message = `Campaign ${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
+      // Find existing campaign
+      const existingCampaign = await this.campaignModel.findById(id);
+      if (!existingCampaign) {
+        throw new NotFoundException(`Campaign ${id} not found`);
       }
 
-      if (campaign.deletedAt) {
-        const message = `Campaign ${id} is gone`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
+      if (existingCampaign.deletedAt) {
+        throw new GoneException(`Campaign ${id} has been deleted`);
       }
 
-      // Verify that the label cannot be modified
-      if (updateCampaignDto.label && updateCampaignDto.label !== campaign.label) {
-        const message = `Cannot modify campaign label`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
+      // Handle label update attempt
+      if (updateCampaignDto.label && updateCampaignDto.label !== existingCampaign.label) {
+        throw new BadRequestException('Campaign label cannot be modified');
       }
 
-      // Check groups if present in the update
+      // Handle groups update if present
       if (updateCampaignDto.groups) {
         const { main = [], npc = [], archived = [] } = updateCampaignDto.groups;
-        const totalGroups = [...main, ...npc, ...archived];
+        const newGroupIds = [...main, ...npc, ...archived];
+        const currentGroupIds = [
+          ...existingCampaign.groups.main,
+          ...existingCampaign.groups.npc,
+          ...existingCampaign.groups.archived
+        ].map(id => id.toString());
 
-        const groupCheckPromises = totalGroups.map((groupId) =>
-          this.groupModel.findById(groupId).exec(),
-        );
-        const groupCheckResults = await Promise.all(groupCheckPromises);
-        
-        const invalidGroups = groupCheckResults.filter((group) => !group);
-        if (invalidGroups.length > 0) {
-          const invalidGroupIds = totalGroups.filter(
-            (_, index) => !groupCheckResults[index],
+        // Validate all new groups exist
+        const groupsExist = await this.groupModel.find({
+          _id: { $in: newGroupIds }
+        }).select('_id').lean();
+
+        if (groupsExist.length !== newGroupIds.length) {
+          const existingIds = groupsExist.map(g => g._id.toString());
+          const invalidIds = newGroupIds.filter(id => !existingIds.includes(id));
+          throw new BadRequestException(`Invalid group IDs: ${invalidIds.join(', ')}`);
+        }
+
+        // Remove campaign from old groups
+        const groupsToRemove = currentGroupIds.filter(id => !newGroupIds.includes(id));
+        if (groupsToRemove.length > 0) {
+          await this.groupModel.updateMany(
+            { _id: { $in: groupsToRemove } },
+            { $pull: { campaigns: id } }
           );
-          const message = `Invalid group IDs: ${invalidGroupIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
-          throw new BadRequestException(message);
+        }
+
+        // Add campaign to new groups
+        const groupsToAdd = newGroupIds.filter(id => !currentGroupIds.includes(id));
+        if (groupsToAdd.length > 0) {
+          await this.groupModel.updateMany(
+            { _id: { $in: groupsToAdd } },
+            { $addToSet: { campaigns: id } }
+          );
         }
       }
 
-      // Update the campaign
+      // Update campaign
       const updatedCampaign = await this.campaignModel
         .findByIdAndUpdate(
           id,
-          { 
+          {
             ...updateCampaignDto,
-            updatedAt: new Date() // Force update of updatedAt
+            updatedAt: new Date()
           },
           { new: true }
         )
-        .populate({ path: 'groups.main', populate: { path: 'characters' } })
-        .populate({ path: 'groups.npc', populate: { path: 'characters' } })
-        .populate({ path: 'groups.archived', populate: { path: 'characters' } })
-        .exec();
+        .populate([
+          { path: 'groups.main', populate: { path: 'characters' } },
+          { path: 'groups.npc', populate: { path: 'characters' } },
+          { path: 'groups.archived', populate: { path: 'characters' } }
+        ]);
 
-      const end: number = Date.now();
+      const end = Date.now();
 
-      const message = `Campaign updated in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
       return {
-        message,
-        data: updatedCampaign,
+        message: `Campaign updated in ${end - start}ms`,
+        data: updatedCampaign
       };
     } catch (error) {
-      if (
-        error instanceof BadRequestException ||
-        error instanceof NotFoundException ||
-        error instanceof GoneException
-      ) {
+      if (error instanceof BadRequestException || 
+          error instanceof NotFoundException || 
+          error instanceof GoneException) {
         throw error;
       }
-
-      const message = `Error while updating campaign ${id}: ${error.message}`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new InternalServerErrorException(message);
+      throw new InternalServerErrorException(`Error updating campaign: ${error.message}`);
     }
   }
 
