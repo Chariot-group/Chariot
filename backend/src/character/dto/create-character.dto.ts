@@ -1,1 +1,43 @@
-export class CreateCharacterDto {}
+import { IsString, IsOptional, IsMongoId, ValidateNested, IsArray } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ClassificationDto } from './sub/classification.dto';
+import { StatsDto } from './sub/stats.dto';
+import { CombatDto } from './sub/combat.dto';
+import { TraitsDto } from './sub/traits.dto';
+import { ActionsDto } from './sub/actions.dto';
+
+export class CreateCharacterDto {
+  @IsString()
+  @IsOptional()
+  name: string;
+
+  @IsMongoId({each:true})
+  @IsArray() 
+  @IsOptional()
+  groups?: string[];
+
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => ClassificationDto)
+  classification: ClassificationDto;
+
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => StatsDto)
+  stats: StatsDto;
+
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => CombatDto)
+  combat: CombatDto;
+
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => TraitsDto)
+  traits: TraitsDto;
+
+  @ValidateNested()
+  @IsOptional()
+  @Type(() => ActionsDto)
+  actions: ActionsDto;
+}
