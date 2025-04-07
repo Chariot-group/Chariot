@@ -10,6 +10,7 @@
     "title": "Vos campagnes",
     "search": "Rechercher une campagne",
     "createTooltip": "Ajouter une campagne",
-    "noCampaigns": "Aucune campagne trouvée"
+    "noCampaigns": "Aucune campagne trouvée",
+    "error": "Erreur lors du chargement des campagnes"
   }
 }

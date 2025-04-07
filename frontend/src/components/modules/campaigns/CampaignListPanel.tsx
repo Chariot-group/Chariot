@@ -3,6 +3,7 @@ import Loading from "@/components/common/Loading";
 import SearchInput from "@/components/common/SearchBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
+import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import CampaignService from "@/services/campaignService";
 import { getInitials } from "@/utils/stringUtils";
@@ -18,6 +19,8 @@ interface Props {
 const CampaignListPanel = ({ offset = 8 }: Props) => {
   const currentLocale = useLocale();
   const t = useTranslations("CampaignListPanel");
+
+  const { error } = useToast();
 
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
 
@@ -50,7 +53,8 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
           });
         }
         setPage(nextPage);
-      } catch (error) {
+      } catch (err) {
+        error(t("error"));
         console.error("Error fetching campaigns:", error);
       } finally {
         setLoading(false);
