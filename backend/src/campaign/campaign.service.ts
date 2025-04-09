@@ -24,7 +24,7 @@ export class CampaignService {
   private readonly logger = new Logger(CampaignService.name);
   private readonly SERVICE_NAME = CampaignService.name;
 
-  async create(createCampaignDto: CreateCampaignDto) {
+  async create(createCampaignDto: CreateCampaignDto, userId: string) {
     try {
       const { groups, ...campaignData } = createCampaignDto;
       const totalGroups = groups.main.concat(groups.npc, groups.archived);
@@ -48,6 +48,7 @@ export class CampaignService {
       const campaign = await this.campaignModel.create({
         ...campaignData,
         groups,
+        createdBy: userId,
       });
       await this.groupModel.updateMany(
         { _id: { $in: totalGroups.map((id) => id) } },

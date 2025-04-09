@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
   Query,
-  ParseIntPipe,
+  Req,
 } from '@nestjs/common';
 import { CampaignService } from '@/campaign/campaign.service';
 import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
@@ -19,8 +19,10 @@ export class CampaignController {
   constructor(private readonly campaignService: CampaignService) {}
 
   @Post()
-  create(@Body() createCampaignDto: CreateCampaignDto) {
-    return this.campaignService.create(createCampaignDto);
+  create(@Req() request, @Body() createCampaignDto: CreateCampaignDto) {
+    const userId = request.user.userId;
+    
+    return this.campaignService.create(createCampaignDto, userId);
   }
 
   @Get()
