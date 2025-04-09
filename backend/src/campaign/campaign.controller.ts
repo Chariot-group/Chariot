@@ -13,10 +13,14 @@ import { CampaignService } from '@/campaign/campaign.service';
 import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
+import { GroupService } from '@/group/group.service';
 
 @Controller('campaigns')
 export class CampaignController {
-  constructor(private readonly campaignService: CampaignService) {}
+  constructor(
+    private readonly campaignService: CampaignService,
+    private readonly groupService: GroupService
+  ) {}
 
   @Post()
   create(@Body() createCampaignDto: CreateCampaignDto) {
@@ -31,6 +35,17 @@ export class CampaignController {
     @Query('label') label?: string,
   ) {
     return this.campaignService.findAll({ page, offset, sort, label });
+  }
+
+  @Get(':id/groups')
+  findAllGroups(
+    @Param('id') id: string,
+    @Query('page', ParseNullableIntPipe) page?: number,
+    @Query('offset', ParseNullableIntPipe) offset?: number,
+    @Query('sort') sort?: string,
+    @Query('label') label?: string,
+  ) {
+    return this.groupService.findAll({ page, offset, sort, label }, id);
   }
 
   @Get(':id')
