@@ -32,7 +32,7 @@ export class GroupService {
   private readonly SERVICE_NAME = GroupService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  async create(createGroupDto: CreateGroupDto) {
+  async create(createGroupDto: CreateGroupDto, userId: string) {
     try {
       const { characters = [], campaigns, ...groupData } = createGroupDto;
 
@@ -40,7 +40,9 @@ export class GroupService {
         this.characterModel.findById(characterId).exec(),
       );
       const characterCheckResults = await Promise.all(characterCheckPromises);
-      const invalidCharacters = characterCheckResults.filter((character) => !character);
+      const invalidCharacters = characterCheckResults.filter(
+        (character) => !character,
+      );
       if (invalidCharacters.length > 0) {
         const invalidCharacterIds = characters.filter(
           (_, index) => !characterCheckResults[index],
@@ -54,11 +56,13 @@ export class GroupService {
         this.campaignModel.findById(campaign.idCampaign).exec(),
       );
       const campaignCheckResults = await Promise.all(campaignCheckPromises);
-      const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
+      const invalidCampaigns = campaignCheckResults.filter(
+        (campaign) => !campaign,
+      );
       if (invalidCampaigns.length > 0) {
-        const invalidCampaignIds = campaigns.map((campaign) => campaign.idCampaign).filter(
-          (_, index) => !campaignCheckResults[index],
-        );
+        const invalidCampaignIds = campaigns
+          .map((campaign) => campaign.idCampaign)
+          .filter((_, index) => !campaignCheckResults[index]);
         const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new BadRequestException(message);
@@ -69,6 +73,7 @@ export class GroupService {
         ...groupData,
         characters,
         campaigns: campaigns.map((campaign) => campaign.idCampaign),
+        createdBy: userId,
       });
 
       await this.characterModel.updateMany(
@@ -91,7 +96,7 @@ export class GroupService {
         message,
         data: group,
       };
-    }catch(error) {
+    } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
       }
@@ -205,13 +210,16 @@ export class GroupService {
   async update(id: string, updateGroupDto: UpdateGroupDto) {
     try {
       let { characters, campaigns, ...groupData } = updateGroupDto;
-      
+
       if (!Types.ObjectId.isValid(id)) {
         const message = `Error while updating group #${id}: Id is not a valid mongoose id`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new BadRequestException(message);
       }
-      let group = await this.groupModel.findById(id).populate('campaigns').exec();
+      let group = await this.groupModel
+        .findById(id)
+        .populate('campaigns')
+        .exec();
 
       if (!group) {
         const message = `Group #${id} not found`;
@@ -226,14 +234,14 @@ export class GroupService {
       }
 
       //Vérification ids characters
-      if(characters) {
+      if (characters) {
         const invalidIds = [];
         characters.forEach((character) => {
           if (!Types.ObjectId.isValid(character)) {
             invalidIds.push(character);
           }
         });
-        if(invalidIds.length > 0) {
+        if (invalidIds.length > 0) {
           const message = `These are not valid mongoose Ids: ${invalidIds.join(', ')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new BadRequestException(message);
@@ -242,7 +250,9 @@ export class GroupService {
           this.characterModel.findById(characterId).exec(),
         );
         const characterCheckResults = await Promise.all(characterCheckPromises);
-        const invalidCharacters = characterCheckResults.filter((character) => !character);
+        const invalidCharacters = characterCheckResults.filter(
+          (character) => !character,
+        );
         if (invalidCharacters.length > 0) {
           const invalidCharacterIds = characters.filter(
             (_, index) => !characterCheckResults[index],
@@ -251,7 +261,9 @@ export class GroupService {
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new NotFoundException(message);
         }
-        const deletedCharacters = characterCheckResults.filter((character) => character.deletedAt);
+        const deletedCharacters = characterCheckResults.filter(
+          (character) => character.deletedAt,
+        );
         if (deletedCharacters.length > 0) {
           const deletedCharacterIds = characters.filter(
             (_, index) => characterCheckResults[index].deletedAt,
@@ -260,19 +272,21 @@ export class GroupService {
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new GoneException(message);
         }
-      }else{
-        characters = group.characters.map((character) => character._id.toString());
+      } else {
+        characters = group.characters.map((character) =>
+          character._id.toString(),
+        );
       }
 
       let campaignIds: string[] = [];
-      if(campaigns) {
+      if (campaigns) {
         const invalidIds = [];
         campaigns.forEach((campaign) => {
           if (!Types.ObjectId.isValid(campaign.idCampaign)) {
             invalidIds.push(campaign.idCampaign);
           }
         });
-        if(invalidIds.length > 0) {
+        if (invalidIds.length > 0) {
           const message = `These are not valid mongoose Ids: ${invalidIds.join(', ')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new BadRequestException(message);
@@ -281,46 +295,59 @@ export class GroupService {
           this.campaignModel.findById(campaign.idCampaign).exec(),
         );
         const campaignCheckResults = await Promise.all(campaignCheckPromises);
-        const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
+        const invalidCampaigns = campaignCheckResults.filter(
+          (campaign) => !campaign,
+        );
         if (invalidCampaigns.length > 0) {
-          const invalidCampaignIds = campaigns.map((campaign) => campaign.idCampaign).filter(
-            (_, index) => !campaignCheckResults[index],
-          );
+          const invalidCampaignIds = campaigns
+            .map((campaign) => campaign.idCampaign)
+            .filter((_, index) => !campaignCheckResults[index]);
           const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new NotFoundException(message);
         }
-        const deletedCampaigns = campaignCheckResults.filter((campaign) => campaign.deletedAt);
+        const deletedCampaigns = campaignCheckResults.filter(
+          (campaign) => campaign.deletedAt,
+        );
         if (deletedCampaigns.length > 0) {
-          const deletedCampaignIds = campaigns.filter(
-            (_, index) => campaignCheckResults[index].deletedAt,
-          ).map((campaign) => campaign.idCampaign);
+          const deletedCampaignIds = campaigns
+            .filter((_, index) => campaignCheckResults[index].deletedAt)
+            .map((campaign) => campaign.idCampaign);
           const message = `These campaigns are already deleted: ${deletedCampaignIds.join(', ')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new GoneException(message);
         }
         campaignIds = campaigns.map((campaign) => campaign.idCampaign);
-      }else {
-        campaignIds = group.campaigns.map((campaign) => campaign._id.toString());
+      } else {
+        campaignIds = group.campaigns.map((campaign) =>
+          campaign._id.toString(),
+        );
       }
 
       const charactersToRemove = group.characters.filter(
-        (oldCharacter) => !characters.some((newCharacters) => newCharacters === oldCharacter._id.toString()),
+        (oldCharacter) =>
+          !characters.some(
+            (newCharacters) => newCharacters === oldCharacter._id.toString(),
+          ),
       );
 
       const start: number = Date.now();
       const groupUpdate = await this.groupModel
         .updateOne(
-          { _id: id }, 
+          { _id: id },
           {
             ...groupData,
             characters,
             campaigns: campaignIds,
-          }
+          },
         )
         .exec();
-      group = await this.groupModel.findById(id).populate('campaigns').populate('characters').exec();
-      
+      group = await this.groupModel
+        .findById(id)
+        .populate('campaigns')
+        .populate('characters')
+        .exec();
+
       await this.characterModel.updateMany(
         { _id: { $in: characters.map((id) => id) } },
         { $addToSet: { groups: id } },
@@ -330,17 +357,17 @@ export class GroupService {
         { $pull: { groups: id } },
       );
 
-      if(campaigns){
+      if (campaigns) {
         campaigns.forEach(async (newCampaign) => {
-          ["main", "npc", "archived"].forEach(async (type) => {
+          ['main', 'npc', 'archived'].forEach(async (type) => {
             const campaignId = newCampaign.idCampaign;
             await this.campaignModel.updateMany(
               { _id: campaignId },
               { $pull: { [`groups.${type}`]: id } },
             );
-          })
-        })
-  
+          });
+        });
+
         campaigns.forEach(async (campaign) => {
           const type = campaign.type;
           const campaignId = campaign.idCampaign;

@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { GroupService } from './group.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
@@ -9,22 +19,35 @@ import { CharacterService } from '@/character/character.service';
 export class GroupController {
   constructor(
     private readonly groupService: GroupService,
-    private readonly characterService: CharacterService
+    private readonly characterService: CharacterService,
   ) {}
 
   @Post()
-  create(@Body() createGroupDto: CreateGroupDto) {
-    return this.groupService.create(createGroupDto);
+  create(@Req() request, @Body() createGroupDto: CreateGroupDto) {
+    const userId = request.user.userId;
+
+    return this.groupService.create(createGroupDto, userId);
   }
 
   @Get()
-  findAll(@Query('page', ParseNullableIntPipe) page?: number, @Query('offset',ParseNullableIntPipe) offset?: number, @Query('label') label?: string, @Query('sort') sort?: string,) {
-      return this.groupService.findAll({ page, offset, label, sort });
+  findAll(
+    @Query('page', ParseNullableIntPipe) page?: number,
+    @Query('offset', ParseNullableIntPipe) offset?: number,
+    @Query('label') label?: string,
+    @Query('sort') sort?: string,
+  ) {
+    return this.groupService.findAll({ page, offset, label, sort });
   }
 
   @Get(':id/characters')
-  findAllCharacters(@Param('id') id: string, @Query("page", ParseNullableIntPipe) page?: number, @Query('offset', ParseNullableIntPipe) offset?: number, @Query('name') name?: string, @Query('sort') sort?: string) {
-    return this.characterService.findAll({page, offset, name, sort}, id);
+  findAllCharacters(
+    @Param('id') id: string,
+    @Query('page', ParseNullableIntPipe) page?: number,
+    @Query('offset', ParseNullableIntPipe) offset?: number,
+    @Query('name') name?: string,
+    @Query('sort') sort?: string,
+  ) {
+    return this.characterService.findAll({ page, offset, name, sort }, id);
   }
 
   @Get(':id')
