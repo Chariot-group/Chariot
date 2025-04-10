@@ -11,10 +11,14 @@ import { UpdateUserDto } from '@/user/dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@/user/schemas/user.schema';
 import { Model, Types } from 'mongoose';
+import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
+  ) {}
 
   private readonly SERVICE_NAME = UserService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
@@ -119,6 +123,37 @@ export class UserService {
     }
   }
 
+  
+  async findByEmail(email: string) {
+    try {
+      const start: number = Date.now();
+      const user = await this.userModel.findOne({email: email}).exec();
+      const end: number = Date.now();
+
+      if (!user) {
+        const message = `User ${email} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        return null;
+      }
+
+      if (user.deletedAt) {
+        const message = `User ${email} is gone`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        return null;
+      }
+
+      const message = `User found in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+
+      return user;
+
+    } catch (error) {
+      const message = `Error while getting user: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      return null;
+    }
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     try {
       if (!Types.ObjectId.isValid(id)) {
@@ -135,9 +170,28 @@ export class UserService {
       }
 
       if (user.deletedAt) {
-        const message = `User #${id} already deleted`;
+        const message = `User #${id} deleted`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new GoneException(message);
+      }
+
+      const { campaigns } = updateUserDto;
+
+      const campaignsCheckPromises = campaigns.map((campaignId) =>
+        this.campaignModel.findById(campaignId).exec(),
+      );
+      const campaignsCheckResults = await Promise.all(campaignsCheckPromises);
+      // If one or more campaigns are not found, log and throw an error
+      const invalidCampaigns = campaignsCheckResults.filter(
+        (campaign) => !campaign,
+      );
+      if (invalidCampaigns.length > 0) {
+        const invalidCampainIds = campaigns.filter(
+          (_, index) => !campaignsCheckResults[index],
+        );
+        const message = `Invalid campaigns IDs: ${invalidCampainIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
       }
 
       const start: number = Date.now();

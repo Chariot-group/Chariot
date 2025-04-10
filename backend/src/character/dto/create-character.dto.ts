@@ -10,28 +10,33 @@ export class CreateCharacterDto {
   @IsString()
   name: string;
 
-  @IsOptional()
   @IsMongoId({each:true})
-  @IsArray()
+  @IsArray() 
+  @IsOptional()
   groups?: string[];
 
   @ValidateNested()
+  @IsOptional()
   @Type(() => ClassificationDto)
   classification: ClassificationDto;
 
   @ValidateNested()
+  @IsOptional()
   @Type(() => StatsDto)
   stats: StatsDto;
 
   @ValidateNested()
+  @IsOptional()
   @Type(() => CombatDto)
   combat: CombatDto;
 
   @ValidateNested()
+  @IsOptional()
   @Type(() => TraitsDto)
   traits: TraitsDto;
 
   @ValidateNested()
+  @IsOptional()
   @Type(() => ActionsDto)
   actions: ActionsDto;
 }

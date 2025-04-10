@@ -20,7 +20,7 @@ export class GroupController {
   @Get()
   findAll(@Query('page', ParseNullableIntPipe) page?: number, @Query('offset',ParseNullableIntPipe) offset?: number, @Query('label') label?: string, @Query('sort') sort?: string,) {
       return this.groupService.findAll({ page, offset, label, sort });
-    }
+  }
 
   @Get(':id/characters')
   findAllCharacters(@Param('id') id: string, @Query("page", ParseNullableIntPipe) page?: number, @Query('offset', ParseNullableIntPipe) offset?: number, @Query('name') name?: string, @Query('sort') sort?: string) {
@@ -29,12 +29,12 @@ export class GroupController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.groupService.findOne(+id);
+    return this.groupService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
-    return this.groupService.update(+id, updateGroupDto);
+    return this.groupService.update(id, updateGroupDto);
   }
 
   @Delete(':id')

@@ -20,11 +20,59 @@ export class CharacterService {
     @InjectModel(Group.name) private groupModel: Model<CharacterDocument>,
   ) {}
 
+  private async validateGroupRelations(groupIds: string[]): Promise<void> {
+    if (!groupIds || groupIds.length === 0) return;
+
+    for (const groupId of groupIds) {
+      if (!Types.ObjectId.isValid(groupId)) {
+        throw new BadRequestException(`Invalid group ID: ${groupId}`);
+      }
+
+      const group = await this.groupModel.findById(groupId).exec();
+      
+      if (!group) {
+        throw new NotFoundException(`Group not found: ${groupId}`);
+      }
+
+      if (group.deletedAt) {
+        throw new GoneException(`Group already deleted: ${groupId}`);
+      }
+    }
+  }
+
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  create(createCharacterDto: CreateCharacterDto) {
-    return 'This action adds a new character';
+  async create(createCharacterDto: CreateCharacterDto) {
+    try {
+      const start = Date.now();
+
+      if (createCharacterDto.groups) {
+        for (const groupId of createCharacterDto.groups) {
+          if (!Types.ObjectId.isValid(groupId)) {
+            throw new BadRequestException(`Invalid group ID format: ${groupId}`);
+          }
+        }
+        await this.validateGroupRelations(createCharacterDto.groups);
+      }
+
+      const newCharacter = new this.characterModel(createCharacterDto);
+      const savedCharacter = await newCharacter.save();
+      const end = Date.now();
+
+      const message = (`Character created in ${end - start}ms`);
+      return { 
+        message,
+        data : savedCharacter};
+    } catch (error) {
+      if (error instanceof BadRequestException || 
+          error instanceof NotFoundException || 
+          error instanceof GoneException) {
+        throw error;
+      }
+      this.logger.error(`Error creating character: ${error.message}`);
+      throw new InternalServerErrorException('Une erreur est survenue lors de la création du personnage');
+    }
   }
 
   async findAll(
@@ -73,8 +121,52 @@ export class CharacterService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} character`;
+  async findOne(id: string) {
+    try {
+      if (!Types.ObjectId.isValid(id)) {
+        const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start: number = Date.now();
+      const character = await this.characterModel
+        .findById(id)
+        .populate('groups')
+        .exec();
+      const end: number = Date.now();
+
+      if (!character) {
+        const message = `Character ${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      if (character.deletedAt) {
+        const message = `Character ${id} is gone`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
+      const message = `Character found in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+        data: character,
+      };
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof GoneException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+
+      const message = `Error while fetching character ${id}: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {

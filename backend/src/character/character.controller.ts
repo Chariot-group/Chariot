@@ -9,7 +9,7 @@ export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
   @Post()
-  create(@Body() createCharacterDto: CreateCharacterDto) {
+  createCharacter(@Body() createCharacterDto: CreateCharacterDto) {
     return this.characterService.create(createCharacterDto);
   }
 
@@ -20,7 +20,7 @@ export class CharacterController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.characterService.findOne(+id);
+    return this.characterService.findOne(id);
   }
 
   @Patch(':id')
