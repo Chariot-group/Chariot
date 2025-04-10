@@ -20,6 +20,7 @@ export default function LanguageSwitcher() {
   const t = useTranslations("LocaleSwitcher");
 
   const handleChange = (newLocale: string) => {
+    console.log('change')
     const pathSegments = pathname.split("/");
     pathSegments[1] = newLocale; // Mise à jour de la locale dans l'URL
     const newPath = pathSegments.join("/");

@@ -3,6 +3,9 @@ import { locales } from "./i18n/locales.generated"; // Assure-toi que ce fichier
 import { NextRequest } from "next/server";
 
 export default function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname.startsWith("/auth/login")) {
+    return;
+  }
   const intlMiddleware = createMiddleware({
     locales,
     defaultLocale: "fr", // Remplace par ta locale par défaut
