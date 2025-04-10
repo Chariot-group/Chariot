@@ -30,7 +30,6 @@ export class CharacterService {
       }
 
       const group = await this.groupModel.findById(groupId).exec();
-      
       if (!group) {
         throw new NotFoundException(`Group not found: ${groupId}`);
       }
@@ -44,35 +43,45 @@ export class CharacterService {
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  async create(createCharacterDto: CreateCharacterDto) {
+  async create(createCharacterDto: CreateCharacterDto, userId: string) {
     try {
       const start = Date.now();
 
       if (createCharacterDto.groups) {
         for (const groupId of createCharacterDto.groups) {
           if (!Types.ObjectId.isValid(groupId)) {
-            throw new BadRequestException(`Invalid group ID format: ${groupId}`);
+            throw new BadRequestException(
+              `Invalid group ID format: ${groupId}`,
+            );
           }
         }
         await this.validateGroupRelations(createCharacterDto.groups);
       }
 
-      const newCharacter = new this.characterModel(createCharacterDto);
+      const newCharacter = new this.characterModel({
+        ...createCharacterDto,
+        createdBy: userId,
+      });
       const savedCharacter = await newCharacter.save();
       const end = Date.now();
 
-      const message = (`Character created in ${end - start}ms`);
-      return { 
+      const message = `Character created in ${end - start}ms`;
+      return {
         message,
-        data : savedCharacter};
+        data: savedCharacter,
+      };
     } catch (error) {
-      if (error instanceof BadRequestException || 
-          error instanceof NotFoundException || 
-          error instanceof GoneException) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof GoneException
+      ) {
         throw error;
       }
       this.logger.error(`Error creating character: ${error.message}`);
-      throw new InternalServerErrorException('Une erreur est survenue lors de la création du personnage');
+      throw new InternalServerErrorException(
+        'Une erreur est survenue lors de la création du personnage',
+      );
     }
   }
 
@@ -81,7 +90,6 @@ export class CharacterService {
     groupId?: string,
   ) {
     try {
-      console.log(query.page, query.sort);
       let { name = '', page = 1, offset = 10 } = query;
       let sort: { [key: string]: SortOrder } = { updatedAt: 'asc' };
       if (query.sort) {

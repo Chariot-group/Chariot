@@ -6,11 +6,12 @@ import { Combat } from './combat/combat.schema';
 import { Traits } from './trait/trait.schema';
 import { Actions } from './actions/actions.schema';
 import { Group } from '@/group/schemas/group.schema';
+import { BaseSchema } from '@/common/schemas/base-schema';
 
 export type CharacterDocument = Character & Document;
 
 @Schema({timestamps: true})
-export class Character {
+export class Character extends BaseSchema {
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, auto: true })
     _id: mongoose.Schema.Types.ObjectId;
