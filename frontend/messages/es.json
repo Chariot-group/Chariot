@@ -5,5 +5,12 @@
   },
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
+  },
+  "GroupListPanel": {
+    "title": "Tus grupos",
+    "search": "Buscar un grupo",
+    "create": "Agregar un grupo",
+    "noGroups": "No se encontraron grupos",
+    "error": "Error al cargar los grupos"
   }
 }
