@@ -8,12 +8,15 @@ import {
   Delete,
   Query,
   ParseIntPipe,
+  Logger,
+  BadRequestException,
 } from '@nestjs/common';
 import { CampaignService } from '@/campaign/campaign.service';
 import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 import { GroupService } from '@/group/group.service';
+import { Types } from 'mongoose';
 
 @Controller('campaigns')
 export class CampaignController {
@@ -21,6 +24,9 @@ export class CampaignController {
     private readonly campaignService: CampaignService,
     private readonly groupService: GroupService
   ) {}
+
+  private readonly SERVICE_NAME = CampaignController.name;
+  private readonly logger = new Logger(this.SERVICE_NAME);
 
   @Post()
   create(@Body() createCampaignDto: CreateCampaignDto) {
@@ -38,14 +44,18 @@ export class CampaignController {
   }
 
   @Get(':id/groups')
-  findAllGroups(
+  async findAllGroups(
     @Param('id') id: string,
     @Query('page', ParseNullableIntPipe) page?: number,
     @Query('offset', ParseNullableIntPipe) offset?: number,
     @Query('sort') sort?: string,
     @Query('label') label?: string,
   ) {
-    return this.groupService.findAll({ page, offset, sort, label }, id);
+    let checkCampaginId = await this.campaignService.findOne(id);
+    if (checkCampaginId.data) {
+      return this.groupService.findAll({ page, offset, sort, label }, id);
+    }
+
   }
 
   @Get(':id')
