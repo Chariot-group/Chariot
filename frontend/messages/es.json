@@ -7,7 +7,12 @@
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
   },
   "GroupListPanel": {
-    "title": "Tus grupos",
+    "title": {
+      "main": "Principales",
+      "pnj": "PNJ",
+      "default": "Tus grupos",
+      "archive": "Archivados"
+    },
     "search": "Buscar un grupo",
     "create": "Agregar un grupo",
     "noGroups": "No se encontraron grupos",

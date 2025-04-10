@@ -8,10 +8,10 @@
   },
   "GroupListPanel": {
     "title": {
-      "main": "Vos groupes",
+      "main": "Principaux",
       "pnj": "PNJ",
-      "players": "Joueurs",
-      "archive": "Archived"
+      "default": "Vos groupes",
+      "archive": "Supprimés"
     },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",

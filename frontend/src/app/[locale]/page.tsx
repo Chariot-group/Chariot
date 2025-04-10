@@ -10,10 +10,16 @@ export default function Home() {
   return (
     <div className="flex flex-row">
       <div className="w-1/4 h-[100vh]">
-        <GroupListPanel offset={15} pathTitle="title.main" idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
+        <GroupListPanel offset={15} pathTitle="title.default" idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
       </div>
       <div className="w-1/4 h-[100vh] bg-card">
-        <GroupListPanel reverse={true} grabbled={true} pathTitle="title.pnj" offset={15} idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
+        <GroupListPanel reverse={true} grabbled={true} pathTitle="title.main" offset={15} idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
+      </div>
+      <div className="w-1/4 h-[100vh]">
+        <GroupListPanel grabbled={true} pathTitle="title.archive" addable={false} offset={15} idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
+      </div>
+      <div className="w-1/4 h-[100vh] bg-card">
+        <GroupListPanel reverse={true} pathTitle="title.pnj" addable={false} offset={15} idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
       </div>
     </div>
   );

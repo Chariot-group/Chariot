@@ -20,8 +20,9 @@ interface Props {
     reverse?: boolean;
     pathTitle: string;
     grabbled?: boolean;
+    addable?: boolean;
 }
-export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, pathTitle, grabbled = false }: Props) {
+export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, pathTitle, grabbled = false, addable = true }: Props) {
 
     const currentLocal = useLocale();
     const t = useTranslations('GroupListPanel');
@@ -85,7 +86,7 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
         </CardHeader>
         <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
             <div className="flex flex-col gap-3">
-              {!reverse && 
+              {addable && 
               <Link href="/groups/add" title={t("create")}>
                 <Card
                   ref={cardRef}
