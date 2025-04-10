@@ -24,7 +24,4 @@ export default function Home() {
     </div>
   );
 }
-function useTranslations(arg0: string) {
-  throw new Error("Function not implemented.");
-}
 
