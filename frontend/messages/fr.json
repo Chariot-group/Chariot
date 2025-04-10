@@ -7,7 +7,12 @@
     "locale": "{locale, select, fr {🇫🇷 Français} en {🇺🇸 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
   },
   "GroupListPanel": {
-    "title": "Vos groupes",
+    "title": {
+      "main": "Vos groupes",
+      "pnj": "PNJ",
+      "players": "Joueurs",
+      "archive": "Archived"
+    },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",
     "noGroups": "Aucun groupe trouvé",

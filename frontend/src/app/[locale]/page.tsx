@@ -8,10 +8,17 @@ export default function Home() {
   const [group, setGroupSelected] = useState<IGroup | null>(null);
 
   return (
-    <div>
+    <div className="flex flex-row">
       <div className="w-1/4 h-[100vh]">
-        <GroupListPanel offset={15} idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
+        <GroupListPanel offset={15} pathTitle="title.main" idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
+      </div>
+      <div className="w-1/4 h-[100vh] bg-card">
+        <GroupListPanel reverse={true} grabbled={true} pathTitle="title.pnj" offset={15} idCampaign={"67f3b87778c8af6eab094ca9"} groupSelected={group} setGroupSelected={setGroupSelected} />
       </div>
     </div>
   );
 }
+function useTranslations(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+

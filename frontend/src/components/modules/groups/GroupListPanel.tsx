@@ -10,14 +10,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
+import { Grip } from "lucide-react";
 
 interface Props {
     offset?: number;
     idCampaign: string;
     groupSelected: IGroup | null;
     setGroupSelected: (group: IGroup | null) => void;
+    reverse?: boolean;
+    pathTitle: string;
+    grabbled?: boolean;
 }
-export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected }: Props) {
+export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, pathTitle, grabbled = false }: Props) {
 
     const currentLocal = useLocale();
     const t = useTranslations('GroupListPanel');
@@ -71,15 +75,17 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
     return (
       <div className="w-full h-full flex flex-col">
         <CardHeader className="flex-none h-auto items-center gap-3">
-          <CardTitle className="text-foreground font-bold">{t("title")}</CardTitle>
+          <CardTitle className="text-foreground font-bold">{t(pathTitle)}</CardTitle>
           <SearchInput
             value={search}
             onChange={setSearch}
             placeholder={t("search")}
+            reverse={reverse}
           />
         </CardHeader>
         <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
             <div className="flex flex-col gap-3">
+              {!reverse && 
               <Link href="/groups/add" title={t("create")}>
                 <Card
                   ref={cardRef}
@@ -87,16 +93,16 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
                 >
                   <span className="text-background font-bold">{t("create")}</span>
                 </Card>
-              </Link>
+              </Link>}
               {loading && <Loading />}
-              {groups.length > 0 &&
+              {groups.length > 0  &&
                 groups.map((group) => (
-                  <Link href="/" key={group._id}>
-                    <Card className={`justify-center flex p-2 gap-3 border-ring shadow-md hover:border-2 ${groupSelected?._id === group._id ? "border-2" : "border"}`} onClick={() => setGroupSelected(group)}>
-                      <span className="text-foreground font-bold">{group.label}</span>
-                    </Card>
-                  </Link>
-                ))}
+                  <Card key={group._id} className={`flex p-2 gap-3 border-ring shadow-md hover:border-2 ${reverse ? "bg-background" : "bg-card"} ${grabbled ? "justify-between cursor-grab" : "justify-center"} ${groupSelected?._id === group._id ? "border-2" : "border"}`} onClick={() => setGroupSelected(group)}>
+                    <span className="text-foreground font-bold">{group.label}</span>
+                    {grabbled && <Grip />}
+                  </Card>
+                ))
+              }
               {groups.length === 0 && !loading && (
                 <div className="row-start-2 col-span-3 flex items-top justify-center">
                   <p className="text-gray-500">{t("noGroups")}</p>
