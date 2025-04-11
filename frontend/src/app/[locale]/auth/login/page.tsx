@@ -26,7 +26,7 @@ export default function LoginPage() {
         if(loading) return;
         setLoading(true);
         try {
-            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if(!emailRegex.test(email)){
                 error(t("errors.invalidEmail"));
                 return;

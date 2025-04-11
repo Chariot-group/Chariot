@@ -1,8 +1,8 @@
-import { User } from '@/user/schemas/user.schema';
 import { UserService } from '@/user/user.service';
 import { Injectable, InternalServerErrorException, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { SignInDto } from './dto/signIn.dto';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -18,8 +18,7 @@ export class AuthService {
     async signIn(signInDto: SignInDto) {
         try{
             const user = await this.userService.findByEmail(signInDto.email);
-
-            if (!user || user?.password !== signInDto.password) {
+            if (!user || !bcrypt.compare(signInDto.password, user.password)) {
                 const message = `Email or password is incorrect`;
                 this.logger.error(message, null, this.SERVICE_NAME);
                 throw new UnauthorizedException(message);
