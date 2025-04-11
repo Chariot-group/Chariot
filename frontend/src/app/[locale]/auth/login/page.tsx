@@ -10,8 +10,11 @@ import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
 import { setCookie } from "nookies";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher"
+import { useTranslations } from "next-intl"
 
 export default function LoginPage() {
+
+    const t = useTranslations("LoginPage");
 
     const [loading, setLoading] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
@@ -23,11 +26,18 @@ export default function LoginPage() {
         if(loading) return;
         setLoading(true);
         try {
+            let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailRegex.test(email)){
+                error(t("errors.invalidEmail"));
+                return;
+            }
+
             const response = await authService.login({email, password});
             if(response.statusCode && response.statusCode !== 200) {
-                error("Login or password is incorrect");
+                error(t("errors.invalidCredentials"));
+                return;
             }else{
-                success("Login successful");
+                success(t("success.login"));
                 setCookie(null, "accessToken", response.access_token, {
                     maxAge: 24 * 60 * 60, // 30 days
                     path: "/",
@@ -36,7 +46,7 @@ export default function LoginPage() {
             }
         } catch (err) {
             console.log(err);
-            error("An error occurred while logging in.");
+            error(t("errors.internal"));
         } finally {
             setLoading(false);
         }
@@ -53,15 +63,15 @@ export default function LoginPage() {
             <Card className="w-[40%] shadow-md relative">
                 <LocaleSwitcher className="absolute right-0 border-none shadow-none" />
                 <div className="p-6 w-full flex flex-col items-center justify-center gap-[5dvh]">
-                    <h1 className="text-xl font-bold">Welcome to Chariot !</h1>
+                    <h1 className="text-xl font-bold">{t("title")}</h1>
                     <div className="w-full flex flex-col gap-[5dvh] items-center justify-center">
                         <div className="w-[50%] flex flex-col gap-4">
-                            <Input placeholder="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-background" />
-                            <Input placeholder="Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-background" />
+                            <Input placeholder={t("email")} type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-background" />
+                            <Input placeholder={t("password")} type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-background" />
                         </div>
                         { 
                             !loading &&
-                            <Button className="w-[20%]" onClick={() => login()}>Login</Button>
+                            <Button className="w-[20%]" onClick={() => login()}>{t("login")}</Button>
                         }
                         { 
                             loading &&
@@ -73,7 +83,7 @@ export default function LoginPage() {
                 </div>
             </Card>
             <div className="w-[40%] flex flex-col items-left">
-                <p className="text-sm text-foreground">No account yet? <Link target="_blank" href="#">Try our free trial</Link></p>
+                <p className="text-sm text-foreground">{t("noAccount.text")} <Link target="_blank" href="#">{t("noAccount.link")}</Link></p>
             </div>
         </div>
     )
