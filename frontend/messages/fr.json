@@ -9,9 +9,9 @@
   "GroupListPanel": {
     "title": {
       "main": "Principaux",
-      "pnj": "PNJ",
+      "npc": "PNJ",
       "default": "Vos groupes",
-      "archive": "Supprimés"
+      "archived": "Supprimés"
     },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",

@@ -9,9 +9,9 @@
   "GroupListPanel": {
     "title": {
       "main": "Main",
-      "pnj": "NPC",
+      "npc": "NPC",
       "default": "Your groups",
-      "archive": "Archived"
+      "archived": "Archived"
     },
     "search": "Search a group",
     "create": "Add a group",

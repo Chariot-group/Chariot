@@ -18,10 +18,9 @@ import { Grip } from "lucide-react";
  * groupSelected: IGroup | null, // Groupe selectionné
  * setGroupSelected: (group: IGroup | null) => void, // Fonction pour mettre à jour le groupe selectionné
  * reverse: boolean = false, // Si vrai, les couleurs de fond sont inversé
- * pathTitle: string, // Titre du panel
+ * type: string, // Titre de groupe à afficher
  * grabbled: boolean = false, // Si vrai, le curseur est en mode grab et une icône de grip est affichée
  * addable: boolean = true, // Si vrai, le bouton d'ajout de groupe est affiché
- * containIn: string[] = [] // Liste des id des groupes à afficher
  */
 interface Props {
     offset?: number;
@@ -29,12 +28,11 @@ interface Props {
     groupSelected: IGroup | null;
     setGroupSelected: (group: IGroup | null) => void;
     reverse?: boolean;
-    pathTitle: string;
+    type?: "all" | "main" | "npc" | "archived";
     grabbled?: boolean;
     addable?: boolean;
-    containIn?: string[];
 }
-export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, pathTitle, grabbled = false, addable = true, containIn = [] }: Props) {
+export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, type = "all", grabbled = false, addable = true }: Props) {
 
     const currentLocal = useLocale();
     const t = useTranslations('GroupListPanel');
@@ -59,21 +57,16 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
               {
                 page: nextPage,
                 offset,
-                label: search
+                label: search,
+                type,
               }, idCampaign);
-            const data = response.data.filter((group: { _id: string; }) => {
-                if (containIn.length > 0) {
-                    return containIn.includes(group._id);
-                }
-                return true;
-            });
             if(reset) {
-                setGroups(data || []);
-                setGroupSelected(data[0]);
+                setGroups(response.data || []);
+                setGroupSelected(response.data[0]);
             }else {
                 setGroups((prev) => {
                   //Fix un bug surement dû au seeder.
-                    return [...prev, ...data.filter((newGroup: { _id: string; }) => !prev.some(existingGroup => existingGroup._id === newGroup._id))];
+                    return [...prev, ...response.data.filter((newGroup: { _id: string; }) => !prev.some(existingGroup => existingGroup._id === newGroup._id))];
                 });
             }
             setPage(nextPage);
@@ -94,7 +87,7 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
     return (
       <div className="w-full h-full flex flex-col">
         <CardHeader className="flex-none h-auto items-center gap-3">
-          <CardTitle className="text-foreground font-bold">{t(pathTitle)}</CardTitle>
+          <CardTitle className="text-foreground font-bold">{t(type === "all" ? "title.default" : `title.${type}`)}</CardTitle>
           <SearchInput
             value={search}
             onChange={setSearch}

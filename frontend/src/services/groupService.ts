@@ -5,7 +5,7 @@ const END_POINT = "/campaigns/:id/groups"
 
 const GroupService = {
 
-    async getAllGroups(query: {page?: number, offset?: number, label?: string, sort?: string}, idCampaingn: string) {
+    async getAllGroups(query: {page?: number, offset?: number, label?: string, sort?: string, type: string}, idCampaingn: string) {
         try{
             const response = await apiClient(APIContentType.JSON).get(END_POINT.replace(':id', idCampaingn), {
                 params: query
