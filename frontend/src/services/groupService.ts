@@ -1,8 +1,7 @@
 import { APIContentType } from "@/constants/APIContentType";
 import apiClient from "./apiConfig";
 
-//TODO: Refactor this to use /campaigns/:id/groups
-const END_POINT = "/groups"
+const END_POINT = "/campaigns/:id/groups"
 
 const GroupService = {
 

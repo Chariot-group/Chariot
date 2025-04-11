@@ -12,6 +12,17 @@ import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
 import { Grip } from "lucide-react";
 
+/**
+ * offset: number = 8, // Nombre de groupes à afficher par page
+ * idCampaign: string, // ID de la campagne des groupes
+ * groupSelected: IGroup | null, // Groupe selectionné
+ * setGroupSelected: (group: IGroup | null) => void, // Fonction pour mettre à jour le groupe selectionné
+ * reverse: boolean = false, // Si vrai, les couleurs de fond sont inversé
+ * pathTitle: string, // Titre du panel
+ * grabbled: boolean = false, // Si vrai, le curseur est en mode grab et une icône de grip est affichée
+ * addable: boolean = true, // Si vrai, le bouton d'ajout de groupe est affiché
+ * containIn: string[] = [] // Liste des id des groupes à afficher
+ */
 interface Props {
     offset?: number;
     idCampaign: string;
@@ -21,8 +32,9 @@ interface Props {
     pathTitle: string;
     grabbled?: boolean;
     addable?: boolean;
+    containIn?: string[];
 }
-export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, pathTitle, grabbled = false, addable = true }: Props) {
+export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, pathTitle, grabbled = false, addable = true, containIn = [] }: Props) {
 
     const currentLocal = useLocale();
     const t = useTranslations('GroupListPanel');
@@ -49,13 +61,19 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
                 offset,
                 label: search
               }, idCampaign);
+            const data = response.data.filter((group: { _id: string; }) => {
+                if (containIn.length > 0) {
+                    return containIn.includes(group._id);
+                }
+                return true;
+            });
             if(reset) {
-                setGroups(response.data);
-                setGroupSelected(response.data[0]);
+                setGroups(data || []);
+                setGroupSelected(data[0]);
             }else {
                 setGroups((prev) => {
                   //Fix un bug surement dû au seeder.
-                    return [...prev, ...response.data.filter((newGroup: { _id: string; }) => !prev.some(existingGroup => existingGroup._id === newGroup._id))];
+                    return [...prev, ...data.filter((newGroup: { _id: string; }) => !prev.some(existingGroup => existingGroup._id === newGroup._id))];
                 });
             }
             setPage(nextPage);
