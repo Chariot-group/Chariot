@@ -9,6 +9,7 @@ import authService from "@/services/authService"
 import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
 import { setCookie } from "nookies";
+import LocaleSwitcher from "@/components/locale/LocaleSwitcher"
 
 export default function LoginPage() {
 
@@ -49,7 +50,8 @@ export default function LoginPage() {
     
     return (
         <div className="w-full h-[100dvh] gap-2 flex flex-col items-center justify-center bg-background">
-            <Card className="w-[40%] shadow-md">
+            <Card className="w-[40%] shadow-md relative">
+                <LocaleSwitcher className="absolute right-0 border-none shadow-none" />
                 <div className="p-6 w-full flex flex-col items-center justify-center gap-[5dvh]">
                     <h1 className="text-xl font-bold">Welcome to Chariot !</h1>
                     <div className="w-full flex flex-col gap-[5dvh] items-center justify-center">
