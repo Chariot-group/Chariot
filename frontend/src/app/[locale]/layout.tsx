@@ -43,7 +43,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning={true}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <LocaleSwitcher />

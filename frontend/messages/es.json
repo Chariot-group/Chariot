@@ -5,5 +5,12 @@
   },
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
+  },
+  "CharacterListPanel": {
+    "title": "Lista de personajes",
+    "search": "Buscar un personaje",
+    "create": "Agregar un personaje",
+    "noCharacters": "No se encontraron personajes",
+    "error": "Error al cargar los personajes"
   }
 }
