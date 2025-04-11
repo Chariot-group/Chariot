@@ -81,7 +81,6 @@ export class CharacterService {
     groupId?: string,
   ) {
     try {
-      console.log(query.page, query.sort);
       let { name = '', page = 1, offset = 10 } = query;
       let sort: { [key: string]: SortOrder } = { updatedAt: 'asc' };
       if (query.sort) {

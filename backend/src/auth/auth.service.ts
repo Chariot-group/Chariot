@@ -18,7 +18,8 @@ export class AuthService {
     async signIn(signInDto: SignInDto) {
         try{
             const user = await this.userService.findByEmail(signInDto.email);
-            if (!user || !bcrypt.compare(signInDto.password, user.password)) {
+            const checkPassword = await bcrypt.compare(signInDto.password, user.password);
+            if (!user || !checkPassword) {
                 const message = `Email or password is incorrect`;
                 this.logger.error(message, null, this.SERVICE_NAME);
                 throw new UnauthorizedException(message);

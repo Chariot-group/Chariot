@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/hooks/useToast"
 import authService from "@/services/authService"
 import Link from "next/link"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { setCookie } from "nookies";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher"
 import { useTranslations } from "next-intl"
@@ -18,7 +18,18 @@ export default function LoginPage() {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
+    const emailRef = useRef<string>("");
     const [password, setPassword] = useState<string>("");
+    const passwordRef = useRef<string>("");
+
+    const updateEmail = (email: string) => {
+        emailRef.current = email;
+        setEmail(email);
+    }
+    const updatePassword = (password: string) => {
+        passwordRef.current = password;
+        setPassword(password);
+    }
 
     const { error, success } = useToast();
 
@@ -27,12 +38,12 @@ export default function LoginPage() {
         setLoading(true);
         try {
             let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            if(!emailRegex.test(email)){
+            if(!emailRegex.test(emailRef.current)){
                 error(t("errors.invalidEmail"));
                 return;
             }
 
-            const response = await authService.login({email, password});
+            const response = await authService.login({email: emailRef.current, password: passwordRef.current});
             if(response.statusCode && response.statusCode !== 200) {
                 error(t("errors.invalidCredentials"));
                 return;
@@ -66,8 +77,8 @@ export default function LoginPage() {
                     <h1 className="text-xl font-bold">{t("title")}</h1>
                     <div className="w-full flex flex-col gap-[5dvh] items-center justify-center">
                         <div className="w-[50%] flex flex-col gap-4">
-                            <Input placeholder={t("email")} type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-background" />
-                            <Input placeholder={t("password")} type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="bg-background" />
+                            <Input placeholder={t("email")} type="email" value={email} onChange={(e) => updateEmail(e.target.value)} className="bg-background" />
+                            <Input placeholder={t("password")} type="password" value={password} onChange={(e) => updatePassword(e.target.value)} className="bg-background" />
                         </div>
                         { 
                             !loading &&
