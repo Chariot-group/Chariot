@@ -23,5 +23,12 @@
     "success": {
       "login": "Login successful !"
     }
+  },
+  "CharacterListPanel": {
+    "title": "Character List",
+    "search": "Search a character",
+    "create": "Add a character",
+    "noCharacters": "No characters found",
+    "error": "Error loading characters"
   }
 }
