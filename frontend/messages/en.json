@@ -12,5 +12,42 @@
     "createTooltip": "Add a campaign",
     "noCampaigns": "No campaigns found",
     "error": "Error loading campaigns"
+  },
+  "LoginPage": {
+    "title": "Welcome to Chariot!",
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "noAccount": {
+      "text": "Don't have an account ?",
+      "link": "Enjoy free access !"
+    },
+    "errors": {
+      "invalidEmail": "The email is invalid",
+      "invalidCredentials": "Email or password invalid",
+      "internal": "An error occurred when we tried to log you in"
+    },
+    "success": {
+      "login": "Login successful !"
+    }
+  },
+  "CharacterListPanel": {
+    "title": "Character List",
+    "search": "Search a character",
+    "create": "Add a character",
+    "noCharacters": "No characters found",
+    "error": "Error loading characters"
+  },
+  "GroupListPanel": {
+    "title": {
+      "main": "Main",
+      "npc": "NPC",
+      "default": "Your groups",
+      "archived": "Archived"
+    },
+    "search": "Search a group",
+    "create": "Add a group",
+    "noGroups": "No groups found",
+    "error": "Error loading groups"
   }
 }

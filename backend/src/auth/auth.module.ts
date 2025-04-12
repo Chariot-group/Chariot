@@ -10,7 +10,7 @@ import { Algorithm } from 'jsonwebtoken';
   imports: [
     UserModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule, UserModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         global: true,

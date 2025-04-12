@@ -25,7 +25,7 @@ export class CharacterController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
-    return this.characterService.update(+id, updateCharacterDto);
+    return this.characterService.update(id, updateCharacterDto);
   }
 
   @Delete(':id')

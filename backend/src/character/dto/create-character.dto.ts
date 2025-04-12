@@ -8,7 +8,6 @@ import { ActionsDto } from './sub/actions.dto';
 
 export class CreateCharacterDto {
   @IsString()
-  @IsOptional()
   name: string;
 
   @IsMongoId({each:true})

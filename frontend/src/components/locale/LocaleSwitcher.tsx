@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/select";
 import { useLocale, useTranslations } from "next-intl";
 
-export default function LanguageSwitcher() {
+interface LocaleSwitcherProps {
+  className?: string;
+}
+export default function LanguageSwitcher({className = ""}: LocaleSwitcherProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -28,7 +31,7 @@ export default function LanguageSwitcher() {
 
   return (
     <Select onValueChange={handleChange} value={currentLocale}>
-      <SelectTrigger className="w-[150px]">
+      <SelectTrigger className={className + " w-auto"}>
         <SelectValue placeholder="Select language" />
       </SelectTrigger>
       <SelectContent>
