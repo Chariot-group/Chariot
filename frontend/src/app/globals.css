@@ -8,7 +8,6 @@ body {
 
 @layer base {
   :root {
-    /* More yellowed background (aged parchment) */
     --background: 40 70% 90%;
     --foreground: 20 80% 12%;
 
