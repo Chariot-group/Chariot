@@ -12,8 +12,8 @@ const useInfiniteScroll = (
       if (!containerRef.current || loading) return;
 
       const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+
       if (scrollTop + clientHeight >= scrollHeight - 1) {
-        console.log("findAll");
         findAll(search, page + 1);
       }
     };

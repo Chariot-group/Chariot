@@ -6,6 +6,31 @@
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
   },
+  "LoginPage": {
+    "title": "Bienvenido a Chariot!",
+    "login": "Iniciar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "noAccount": {
+      "text": "¿No tienes una cuenta ?",
+      "link": "¡Disfruta del acceso gratuito !"
+    },
+    "errors": {
+      "invalidEmail": "El correo electrónico es inválido",
+      "invalidCredentials": "Correo electrónico o contraseña inválidos",
+      "internal": "Ocurrió un error al intentar iniciar sesión"
+    },
+    "success": {
+      "login": "¡ Inicio de sesión exitoso !"
+    }
+  },
+  "CharacterListPanel": {
+    "title": "Lista de personajes",
+    "search": "Buscar un personaje",
+    "create": "Agregar un personaje",
+    "noCharacters": "No se encontraron personajes",
+    "error": "Error al cargar los personajes"
+  },
   "GroupListPanel": {
     "title": {
       "main": "Principales",
