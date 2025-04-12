@@ -1,7 +1,7 @@
 import { APIContentType } from "@/constants/APIContentType";
 import apiClient from "./apiConfig";
 
-const END_POINT = "/groups/:id/characters";
+const END_POINT = "/groups";
 
 const CharacterService = {
   async getAllCharacters(query: {
@@ -11,7 +11,7 @@ const CharacterService = {
     sort?: string;
   }, idGroup: string) {
     try {
-      const response = await apiClient(APIContentType.JSON).get(END_POINT.replace(':id', idGroup), {
+      const response = await apiClient(APIContentType.JSON).get(`${END_POINT}/${idGroup}/characters`, {
         params: query,
       });
 
