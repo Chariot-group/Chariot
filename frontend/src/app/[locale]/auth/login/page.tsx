@@ -11,7 +11,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { setCookie } from "nookies";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher"
 import { useTranslations } from "next-intl"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
 
