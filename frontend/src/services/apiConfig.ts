@@ -15,37 +15,7 @@ const apiClient = (contentType: string) => {
     },
   });
 
-  instance.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    async (error) => {
-    
-      const errorMessage = error.response?.data?.message || error.message || "Une erreur est survenue.";
-      
-      toast.error(errorMessage);
-
-      await logErrorToBackend(error);
-
-      return Promise.reject(error);
-    }
-  );
-
   return instance;
 };
-
-
-const logErrorToBackend = async (error: any) => {
-  try {
-    await axios.post("/api/logError", {
-      message: error.message,
-      stack: error.stack,
-      type: error.name,
-    });
-  } catch (e) {
-    console.error("Impossible d'envoyer l'erreur au serveur.", e);
-  }
-};
-
 
 export default apiClient;
