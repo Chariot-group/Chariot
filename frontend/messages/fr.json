@@ -30,5 +30,17 @@
     "create": "Ajouter un personnage",
     "noCharacters": "Aucun personnage trouvé",
     "error": "Erreur lors du chargement des personnages"
+  },
+  "GroupListPanel": {
+    "title": {
+      "main": "Principaux",
+      "npc": "PNJ",
+      "default": "Vos groupes",
+    "archived": "Archivés"
+    },
+    "search": "Rechercher un groupe",
+    "create": "Ajouter un groupe",
+    "noGroups": "Aucun groupe trouvé",
+    "error": "Erreur lors du chargement des groupes"
   }
 }
