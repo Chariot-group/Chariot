@@ -5,7 +5,6 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
-  Res,
 } from '@nestjs/common';
 import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
@@ -24,25 +23,40 @@ export class CampaignService {
   private readonly logger = new Logger(CampaignService.name);
   private readonly SERVICE_NAME = CampaignService.name;
 
+  private async validateGroupRelations(
+    groupIds: string[],
+    type: 'Main' | 'NPC' | 'Archived',
+  ): Promise<void> {
+    if (!groupIds || groupIds.length === 0) return;
+
+    for (const groupId of groupIds) {
+      if (!Types.ObjectId.isValid(groupId)) {
+        throw new BadRequestException(`Invalid ${type} group ID: ${groupId}`);
+      }
+
+      const group = await this.groupModel.findById(groupId).exec();
+
+      if (!group) {
+        throw new NotFoundException(`${type} group not found: ${groupId}`);
+      }
+
+      if (group.deletedAt) {
+        throw new GoneException(`${type} group deleted: ${groupId}`);
+      }
+    }
+  }
+
   async create(createCampaignDto: CreateCampaignDto) {
     try {
       const { groups, ...campaignData } = createCampaignDto;
       const totalGroups = groups.main.concat(groups.npc, groups.archived);
 
-      const groupCheckPromises = totalGroups.map((groupId) =>
-        this.groupModel.findById(groupId).exec(),
+      await this.validateGroupRelations(createCampaignDto.groups.main, 'Main');
+      await this.validateGroupRelations(createCampaignDto.groups.npc, 'NPC');
+      await this.validateGroupRelations(
+        createCampaignDto.groups.archived,
+        'Archived',
       );
-      const groupCheckResults = await Promise.all(groupCheckPromises);
-      // Si un ou plusieurs groupes ne sont pas trouvés, on log et on lève une erreur
-      const invalidGroups = groupCheckResults.filter((group) => !group);
-      if (invalidGroups.length > 0) {
-        const invalidGroupIds = totalGroups.filter(
-          (_, index) => !groupCheckResults[index],
-        );
-        const message = `Invalid group IDs: ${invalidGroupIds.join(', ')}`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
 
       const start: number = Date.now();
       const campaign = await this.campaignModel.create({
@@ -62,7 +76,11 @@ export class CampaignService {
         data: campaign,
       };
     } catch (error) {
-      if (error instanceof BadRequestException) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof GoneException ||
+        error instanceof NotFoundException
+      ) {
         throw error;
       }
       const message = `Error while creating campaign: ${error.message}`;

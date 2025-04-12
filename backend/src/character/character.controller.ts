@@ -9,7 +9,7 @@ export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
 
   @Post()
-  create(@Body() createCharacterDto: CreateCharacterDto) {
+  createCharacter(@Body() createCharacterDto: CreateCharacterDto) {
     return this.characterService.create(createCharacterDto);
   }
 
@@ -25,7 +25,7 @@ export class CharacterController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCharacterDto: UpdateCharacterDto) {
-    return this.characterService.update(+id, updateCharacterDto);
+    return this.characterService.update(id, updateCharacterDto);
   }
 
   @Delete(':id')
