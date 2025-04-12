@@ -29,7 +29,8 @@ export class UserService {
     try {
       const { campaigns = [], password, ...userData } = createUserDto;
 
-      const checkUser = this.userModel.findOne({ email: userData.email }).exec();
+      const checkUser = await this.userModel.findOne({ email: userData.email }).exec();
+      console.log(checkUser);
       if (checkUser) {
         const message = `User with email ${userData.email} already exists`;
         this.logger.error(message, null, this.SERVICE_NAME);
