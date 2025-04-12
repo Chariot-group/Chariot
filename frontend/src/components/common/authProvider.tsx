@@ -19,6 +19,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+    setIsLoading(true);
     const hasToken = document.cookie.includes('accessToken');
 
     if (!hasToken && !pathname.includes('/auth/login')) {
