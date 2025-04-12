@@ -5,5 +5,23 @@
   },
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 French} en {🇺🇸 English} es {🇪🇸 Spanish} other {🏴‍☠️ Unknown}}"
+  },
+  "LoginPage": {
+    "title": "Welcome to Chariot!",
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "noAccount": {
+      "text": "Don't have an account ?",
+      "link": "Enjoy free access !"
+    },
+    "errors": {
+      "invalidEmail": "The email is invalid",
+      "invalidCredentials": "Email or password invalid",
+      "internal": "An error occurred when we tried to log you in"
+    },
+    "success": {
+      "login": "Login successful !"
+    }
   }
 }

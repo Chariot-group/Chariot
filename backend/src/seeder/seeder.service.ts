@@ -12,6 +12,8 @@ import {
 import { Group, GroupDocument } from '@/group/schemas/group.schema';
 import { User, UserDocument } from '@/user/schemas/user.schema';
 import 'reflect-metadata';
+import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class SeederService {
   constructor(
@@ -176,10 +178,12 @@ export class SeederService {
         campaigns.push(campaign._id);
       }
 
+      let password = faker.internet.password();
+      let hashPassword = await bcrypt.hash(password, 10);
       await this.userModel.create({
-        username: faker.person.fullName(),
+        username: faker.person.fullName() + ` (${password})`,
         email: faker.internet.email(),
-        password: faker.internet.password(),
+        password: hashPassword,
         campaigns: campaigns,
       });
     }
