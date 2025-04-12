@@ -30,5 +30,17 @@
     "create": "Add a character",
     "noCharacters": "No characters found",
     "error": "Error loading characters"
+  },
+  "GroupListPanel": {
+    "title": {
+      "main": "Main",
+      "npc": "NPC",
+      "default": "Your groups",
+      "archived": "Archived"
+    },
+    "search": "Search a group",
+    "create": "Add a group",
+    "noGroups": "No groups found",
+    "error": "Error loading groups"
   }
 }
