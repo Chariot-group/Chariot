@@ -63,12 +63,6 @@ export default function LoginPage() {
         }
     }, [loading]);
 
-    useEffect(() => {
-        if (document.cookie.includes("accessToken")) {
-            document.location.href = "/";
-        }
-    }, []);
-    
     return (
         <div className="w-full h-[100dvh] gap-2 flex flex-col items-center justify-center bg-background">
             <Card className="w-[40%] shadow-md relative">
@@ -94,7 +88,7 @@ export default function LoginPage() {
                 </div>
             </Card>
             <div className="w-[40%] flex flex-col items-left">
-                <p className="text-sm text-foreground">{t("noAccount.text")} <Link target="_blank" href="#">{t("noAccount.link")}</Link></p>
+                <p className="text-sm text-foreground">{t("noAccount.text")} <Link target="_blank" href="#" className="hover:underline">{t("noAccount.link")}</Link></p>
             </div>
         </div>
     )
