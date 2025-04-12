@@ -6,17 +6,23 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import CampaignService from "@/services/campaignService";
-import { getInitials } from "@/utils/stringUtils";
-import { Plus } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 interface Props {
   offset?: number;
+  selectedCampaign: ICampaign | null;
+  setSelectedCampaign: (campaign: ICampaign | null) => void;
+  addable?: boolean;
 }
 
-const CampaignListPanel = ({ offset = 8 }: Props) => {
+const CampaignListPanel = ({
+  offset = 8,
+  selectedCampaign,
+  setSelectedCampaign,
+  addable = true,
+}: Props) => {
   const currentLocale = useLocale();
   const t = useTranslations("CampaignListPanel");
 
@@ -78,44 +84,46 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
   }, [currentLocale, search]);
 
   return (
-    <Card className="h'full shadow-md p-4">
-      <CardHeader className="flex items-center justify-between gap-3">
-        <CardTitle>{t("title")}</CardTitle>
+    <div className="w-full h-full flex flex-col">
+      <CardHeader className="flex-none h-auto items-center gap-3">
+        <CardTitle className="text-foreground font-bold">
+          {t("title")}
+        </CardTitle>
         <SearchInput
           value={search}
           onChange={setSearch}
           placeholder={t("search")}
         />
-      </CardHeader>
-      <CardContent>
-        <div
-          ref={containerRef}
-          className="grid grid-cols-3 gap-4 overflow-y-auto scrollbar-hide"
-          style={{
-            height:
-              campaigns.length > 0 && cardHeight
-                ? `${(Math.ceil(offset / 6) + 1) * cardHeight}px`
-                : "auto",
-          }}
-        >
-          <Link href="/campaigns/add" title={t("createTooltip")}>
+        {addable && (
+          <Link className="w-full" href="/campaigns/add" title={t("create")}>
             <Card
               ref={cardRef}
-              className="flex flex-col items-center justify-center gap-3 aspect-square hover:border-2 hover:border-primary"
+              className="bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary shadow-md"
             >
-              <Plus className="size-16" />
+              <span className="text-background font-bold">{t("create")}</span>
             </Card>
           </Link>
+        )}
+      </CardHeader>
+      <CardContent
+        ref={containerRef}
+        className="flex-1 h-auto overflow-auto scrollbar-hide"
+      >
+        <div className="flex flex-col gap-3">
           {loading && <Loading />}
           {campaigns.length > 0 &&
             campaigns.map((campaign) => (
-              <Link href="/" key={campaign._id} title={campaign.label}>
-                <Card className="flex flex-col items-center justify-center gap-3 aspect-square hover:border-2 hover:border-primary">
-                  <h3 className="text-4xl text-center">
-                    {getInitials(campaign.label)}
-                  </h3>
-                </Card>
-              </Link>
+              <Card
+                key={campaign._id}
+                className={`flex p-2 gap-3 border-ring shadow-md hover:border-2 bg-background ${
+                  selectedCampaign?._id === campaign._id ? "border-2" : "border"
+                }`}
+                onClick={() => setSelectedCampaign(campaign)}
+              >
+                <span className="text-foreground font-bold">
+                  {campaign.label}
+                </span>
+              </Card>
             ))}
           {campaigns.length === 0 && !loading && (
             <div className="row-start-2 col-span-3 flex items-top justify-center">
@@ -124,7 +132,7 @@ const CampaignListPanel = ({ offset = 8 }: Props) => {
           )}
         </div>
       </CardContent>
-    </Card>
+    </div>
   );
 };
 

@@ -5,14 +5,20 @@ import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { IGroup } from "@/models/groups/IGroup";
 import ICharacter from "@/models/characters/ICharacter";
 import { useState } from "react";
+import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel";
+import { ICampaign } from "@/models/campaigns/ICampaign";
 
 export default function Home() {
   const [group, setGroupSelected] = useState<IGroup | null>(null);
 
   const [character, setCharacterSelected] = useState<ICharacter | null>(null);
+  const [selectedCampaign, setSelectedCampaign] = useState<ICampaign | null>(
+    null
+  );
 
   return (
     <div className="flex flex-row">
+      <LocaleSwitcher />
       <div className="w-1/4 h-[100vh]">
         <GroupListPanel
           offset={15}
@@ -60,6 +66,13 @@ export default function Home() {
           idGroup={"67f8edf28b4d04f3d0c07a15"}
           characterSelected={character}
           setCharacterSelected={setCharacterSelected}
+        />
+      </div>
+      <div className="w-1/4 h-[100vh] bg-card">
+        <CampaignListPanel
+          offset={15}
+          selectedCampaign={selectedCampaign}
+          setSelectedCampaign={setSelectedCampaign}
         />
       </div>
     </div>
