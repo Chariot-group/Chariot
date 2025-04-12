@@ -11,7 +11,7 @@
       "main": "Principaux",
       "npc": "PNJ",
       "default": "Vos groupes",
-      "archived": "Supprimés"
+    "archived": "Archivés"
     },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",
