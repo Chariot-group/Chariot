@@ -42,5 +42,8 @@
     "create": "Agregar un grupo",
     "noGroups": "No se encontraron grupos",
     "error": "Error al cargar los grupos"
+  },
+  "Global": {
+    "new": "Nuevo"
   }
 }
