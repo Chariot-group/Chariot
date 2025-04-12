@@ -19,7 +19,7 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>
+    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
   ) {}
 
   private readonly SERVICE_NAME = UserService.name;
@@ -29,8 +29,10 @@ export class UserService {
     try {
       const { campaigns = [], password, ...userData } = createUserDto;
 
-      const checkUser = await this.userModel.findOne({ email: userData.email }).exec();
-      console.log(checkUser);
+      const checkUser = await this.userModel
+        .findOne({ email: userData.email })
+        .exec();
+
       if (checkUser) {
         const message = `User with email ${userData.email} already exists`;
         this.logger.error(message, null, this.SERVICE_NAME);
@@ -41,7 +43,9 @@ export class UserService {
         this.campaignModel.findById(campaignId).exec(),
       );
       const campaignCheckResults = await Promise.all(campaignCheckPromises);
-      const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
+      const invalidCampaigns = campaignCheckResults.filter(
+        (campaign) => !campaign,
+      );
       if (invalidCampaigns.length > 0) {
         const invalidCampaignIds = campaigns.filter(
           (_, index) => !campaignCheckResults[index],
@@ -81,7 +85,11 @@ export class UserService {
         data: user,
       };
     } catch (error) {
-      if (error instanceof BadRequestException || error instanceof ConflictException) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof GoneException ||
+        error instanceof ConflictException
+      ) {
         throw error;
       }
       const message = `Error while creating campaign: ${error.message}`;
@@ -186,11 +194,10 @@ export class UserService {
     }
   }
 
-  
   async findByEmail(email: string) {
     try {
       const start: number = Date.now();
-      const user = await this.userModel.findOne({email: email}).exec();
+      const user = await this.userModel.findOne({ email: email }).exec();
       const end: number = Date.now();
 
       if (!user) {
@@ -209,7 +216,6 @@ export class UserService {
       this.logger.verbose(message, this.SERVICE_NAME);
 
       return user;
-
     } catch (error) {
       const message = `Error while getting user: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
@@ -244,7 +250,9 @@ export class UserService {
         this.campaignModel.findById(campaignId).exec(),
       );
       const campaignCheckResults = await Promise.all(campaignCheckPromises);
-      const invalidCampaigns = campaignCheckResults.filter((campaign) => !campaign);
+      const invalidCampaigns = campaignCheckResults.filter(
+        (campaign) => !campaign,
+      );
       if (invalidCampaigns.length > 0) {
         const invalidCampaignIds = campaigns.filter(
           (_, index) => !campaignCheckResults[index],
@@ -252,6 +260,18 @@ export class UserService {
         const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new BadRequestException(message);
+      }
+
+      const goneCampaigns = campaignCheckResults.filter(
+        (campaign) => campaign.deletedAt !== null,
+      );
+      if (goneCampaigns.length > 0) {
+        const goneCampaignIds = campaigns.filter(
+          (_, index) => campaignCheckResults[index].deletedAt !== null,
+        );
+        const message = `Gone campaign IDs: ${goneCampaignIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
       }
 
       const start: number = Date.now();
