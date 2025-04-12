@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   GoneException,
   Injectable,
   InternalServerErrorException,
@@ -28,6 +29,13 @@ export class UserService {
     try {
       const { campaigns = [], password, ...userData } = createUserDto;
 
+      const checkUser = this.userModel.findOne({ email: userData.email }).exec();
+      if (checkUser) {
+        const message = `User with email ${userData.email} already exists`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new ConflictException(message);
+      }
+
       const campaignCheckPromises = campaigns.map((campaignId) =>
         this.campaignModel.findById(campaignId).exec(),
       );
@@ -40,6 +48,17 @@ export class UserService {
         const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new BadRequestException(message);
+      }
+      const goneCampaigns = campaignCheckResults.filter(
+        (campaign) => campaign.deletedAt !== null,
+      );
+      if (goneCampaigns.length > 0) {
+        const goneCampaignIds = campaigns.filter(
+          (_, index) => campaignCheckResults[index].deletedAt !== null,
+        );
+        const message = `Gone campaign IDs: ${goneCampaignIds.join(', ')}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
       }
 
       // Hash the password
@@ -61,7 +80,7 @@ export class UserService {
         data: user,
       };
     } catch (error) {
-      if (error instanceof BadRequestException) {
+      if (error instanceof BadRequestException || error instanceof ConflictException) {
         throw error;
       }
       const message = `Error while creating campaign: ${error.message}`;
