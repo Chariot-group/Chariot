@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
 import { Locale } from "@/i18n/locales.generated";
 import ToastContainer from '@/components/modules/toastR/ToastContainer';
 import { AuthProvider } from "@/components/common/authProvider";
@@ -44,11 +43,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning={true}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
-            <LocaleSwitcher />
             <ToastContainer />
             {children} 
           </AuthProvider>
