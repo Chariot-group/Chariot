@@ -50,7 +50,7 @@ export class CampaignController {
     @Query('offset', ParseNullableIntPipe) offset?: number,
     @Query('sort') sort?: string,
     @Query('label') label?: string,
-    @Query('type') type?: string
+    @Query('type') type: "all" | "main" | "npc" | "archived" = "all"
   ) {
     let checkCampaginId = await this.campaignService.findOne(id);
     if (checkCampaginId.data) {
