@@ -30,6 +30,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(false)
   }, [pathname, router, locale])
 
+  if(isLoading){
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="loader"></div>
+      </div>
+    )
+  }
   return (
     <AuthContext.Provider value={{ isLoading }}>
       {children}
