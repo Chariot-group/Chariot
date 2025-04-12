@@ -207,6 +207,14 @@ export class CharacterService {
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new BadRequestException(message);
         }
+
+        const goneGroups = groupCheckResults.filter((group) => group.deletedAt);
+        if (goneGroups.length > 0) {
+          const goneGroupIds = goneGroups.map((group) => group._id.toString());
+          const message = `Gone group IDs: ${goneGroupIds.join(', ')}`;
+          this.logger.error(message, null, this.SERVICE_NAME);
+          throw new GoneException(message);
+        }
       }else{
         groups = character.groups.map((group) => group._id.toString());
       }
