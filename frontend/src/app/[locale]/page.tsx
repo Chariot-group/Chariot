@@ -1,4 +1,5 @@
 "use client"
+import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
 import CharacterListPanel from "@/components/modules/characters/CharacterListPanel";
 import HealthCheck from "@/components/modules/monitoring/HealthCheck";
 import { useToast } from "@/hooks/useToast";
