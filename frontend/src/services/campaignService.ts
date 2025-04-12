@@ -1,6 +1,5 @@
 import { APIContentType } from "@/constants/APIContentType";
 import apiClient from "./apiConfig";
-// import { ICampaign } from "@/models/campaigns/ICampaign";
 
 const moduleUrl = "/campaigns";
 
