@@ -103,7 +103,7 @@ export class GroupService {
 
   async findAll(
     query: { page?: number; offset?: number; label?: string; sort?: string },
-    campaignId?: string, type: string = "all",
+    campaignId?: string, type: "all" | "main" | "npc" | "archived" = "all",
   ) {
     try {
       const { label = '', page = 1, offset = 10, sort = 'updatedAt' } = query;
@@ -136,7 +136,7 @@ export class GroupService {
             ...(campaign.groups?.archived || []).map((group: any) => group.toString())
           ];
         } else {
-          groupIds = campaign.groups?.[type] || [];
+          groupIds = (campaign.groups?.[type] || []).map((group: any) => group.toString());
         }
 
         filters['campaigns'] = { $in: [campaignId] };
