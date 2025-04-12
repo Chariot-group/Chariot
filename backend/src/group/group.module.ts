@@ -21,6 +21,7 @@ import {
   ],
   exports: [
     MongooseModule.forFeature([{ name: Group.name, schema: GroupSchema }]),
+    GroupService,
   ],
   controllers: [GroupController],
   providers: [GroupService],
