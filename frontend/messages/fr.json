@@ -6,6 +6,14 @@
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 Français} en {🇺🇸 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
   },
+  "CampaignListPanel": {
+    "title": "Vos campagnes",
+    "search": "Rechercher une campagne",
+    "createTooltip": "Ajouter une campagne",
+    "noCampaigns": "Aucune campagne trouvée",
+    "error": "Erreur lors du chargement des campagnes",
+    "create": "Ajouter une campagne"
+  },
   "LoginPage": {
     "title": "Bienvenue sur Chariot!",
     "login": "Se connecter",
@@ -36,7 +44,7 @@
       "main": "Principaux",
       "npc": "PNJ",
       "default": "Vos groupes",
-    "archived": "Archivés"
+      "archived": "Archivés"
     },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",

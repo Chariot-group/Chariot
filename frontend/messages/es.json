@@ -6,6 +6,14 @@
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
   },
+  "CampaignListPanel": {
+    "title": "Tus campañas",
+    "search": "Buscar una campaña",
+    "createTooltip": "Añadir campaña",
+    "noCampaigns": "No se encontraron campañas",
+    "error": "Error al cargar las campañas",
+    "create": "Añadir campaña"
+  },
   "LoginPage": {
     "title": "Bienvenido a Chariot!",
     "login": "Iniciar sesión",

@@ -6,7 +6,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Locale } from "@/i18n/locales.generated";
-import ToastContainer from '@/components/modules/toastR/ToastContainer';
+import ToastContainer from "@/components/modules/toastR/ToastContainer";
 import { AuthProvider } from "@/components/common/authProvider";
 
 const geistSans = Geist({
@@ -48,11 +48,9 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
             <ToastContainer />
-            {children} 
+            {children}
           </AuthProvider>
         </NextIntlClientProvider>
-       
-
       </body>
     </html>
   );

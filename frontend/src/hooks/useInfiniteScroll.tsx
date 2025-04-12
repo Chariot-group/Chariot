@@ -30,4 +30,5 @@ const useInfiniteScroll = (
     };
   }, [page, findAll]);
 };
+
 export default useInfiniteScroll;
