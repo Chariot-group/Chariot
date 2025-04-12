@@ -12,25 +12,15 @@ import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
 import { Grip } from "lucide-react";
 
-/**
- * offset: number = 8, // Nombre de groupes à afficher par page
- * idCampaign: string, // ID de la campagne des groupes
- * groupSelected: IGroup | null, // Groupe selectionné
- * setGroupSelected: (group: IGroup | null) => void, // Fonction pour mettre à jour le groupe selectionné
- * reverse: boolean = false, // Si vrai, les couleurs de fond sont inversé
- * type: string, // Titre de groupe à afficher
- * grabbled: boolean = false, // Si vrai, le curseur est en mode grab et une icône de grip est affichée
- * addable: boolean = true, // Si vrai, le bouton d'ajout de groupe est affiché
- */
 interface Props {
-    offset?: number;
-    idCampaign: string;
-    groupSelected: IGroup | null;
-    setGroupSelected: (group: IGroup | null) => void;
-    reverse?: boolean;
-    type?: "all" | "main" | "npc" | "archived";
-    grabbled?: boolean;
-    addable?: boolean;
+    offset?: number; // Nombre de groupes à afficher par page
+    idCampaign: string; // ID de la campagne des groupes
+    groupSelected: IGroup | null; // Groupe selectionné
+    setGroupSelected: (group: IGroup | null) => void; // Fonction pour mettre à jour le groupe selectionné
+    reverse?: boolean; // Si vrai, les couleurs de fond sont inversé
+    type?: "all" | "main" | "npc" | "archived"; // Titre de groupe à afficher
+    grabbled?: boolean; // Si vrai, le curseur est en mode grab et une icône de grip est affichée
+    addable?: boolean; // Si vrai, le bouton d'ajout de groupe est affiché
 }
 export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, setGroupSelected, reverse = false, type = "all", grabbled = false, addable = true }: Props) {
 
