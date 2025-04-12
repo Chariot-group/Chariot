@@ -79,10 +79,6 @@ export class GroupService {
     try {
       const { characters = [], campaigns, ...groupData } = createGroupDto;
 
-      // const characterCheckPromises = characters.map((characterId) =>
-      //   this.characterModel.findById(characterId).exec(),
-      // );
-
       await this.validateCharacterRelations(characters);
       await this.validatecampaignRelations(
         campaigns.map((campaign) => campaign.idCampaign),
