@@ -11,10 +11,12 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { setCookie } from "nookies";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher"
 import { useTranslations } from "next-intl"
+import { useRouter } from "next/router"
 
 export default function LoginPage() {
 
     const t = useTranslations("LoginPage");
+    const router = useRouter();
 
     const [loading, setLoading] = useState<boolean>(false);
     const [email, setEmail] = useState<string>("");
@@ -53,7 +55,7 @@ export default function LoginPage() {
                     maxAge: 24 * 60 * 60, // 30 days
                     path: "/",
                 });
-                document.location.href = "/";
+                router.push("/");
             }
         } catch (err) {
             console.log(err);
