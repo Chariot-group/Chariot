@@ -12,6 +12,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@/user/schemas/user.schema';
 import { Model, Types } from 'mongoose';
 import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -25,7 +26,7 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     try {
-      const { campaigns = [], ...userData } = createUserDto;
+      const { campaigns = [], password, ...userData } = createUserDto;
 
       const campaignCheckPromises = campaigns.map((campaignId) =>
         this.campaignModel.findById(campaignId).exec(),
@@ -41,9 +42,14 @@ export class UserService {
         throw new BadRequestException(message);
       }
 
+      // Hash the password
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
+
       const start: number = Date.now();
       const user = await this.userModel.create({
         ...userData,
+        password: hashedPassword,
         campaigns,
       });
       const end: number = Date.now();
