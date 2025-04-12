@@ -9,6 +9,10 @@ export type GroupDocument = Group & Document;
 
 @Schema({ timestamps: true })
 export class Group extends BaseSchema {
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, auto: true })
+  _id: mongoose.Schema.Types.ObjectId;
+
   @Prop({ required: true })
   label: string;
 

@@ -5,5 +5,42 @@
   },
   "LocaleSwitcher": {
     "locale": "{locale, select, fr {🇫🇷 Français} en {🇺🇸 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
+  },
+  "LoginPage": {
+    "title": "Bienvenue sur Chariot!",
+    "login": "Se connecter",
+    "email": "Email",
+    "password": "Mot de passe",
+    "noAccount": {
+      "text": "Vous n'avez pas de compte ?",
+      "link": "Profitez de l'accès gratuit !"
+    },
+    "errors": {
+      "invalidEmail": "L'email est invalide",
+      "invalidCredentials": "Email ou mot de passe invalide",
+      "internal": "Une erreur c'est produite quand nous avons essayé de vous connecter"
+    },
+    "success": {
+      "login": "Connexion réussie !"
+    }
+  },
+  "CharacterListPanel": {
+    "title": "Liste des personnages",
+    "search": "Rechercher un personnage",
+    "create": "Ajouter un personnage",
+    "noCharacters": "Aucun personnage trouvé",
+    "error": "Erreur lors du chargement des personnages"
+  },
+  "GroupListPanel": {
+    "title": {
+      "main": "Principaux",
+      "npc": "PNJ",
+      "default": "Vos groupes",
+    "archived": "Archivés"
+    },
+    "search": "Rechercher un groupe",
+    "create": "Ajouter un groupe",
+    "noGroups": "Aucun groupe trouvé",
+    "error": "Erreur lors du chargement des groupes"
   }
 }

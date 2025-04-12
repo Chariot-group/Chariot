@@ -108,7 +108,7 @@ export class GroupService {
 
   async findAll(
     query: { page?: number; offset?: number; label?: string; sort?: string },
-    campaignId?: string,
+    campaignId?: string, type: "all" | "main" | "npc" | "archived" = "all",
   ) {
     try {
       const { label = '', page = 1, offset = 10, sort = 'updatedAt' } = query;
@@ -126,7 +126,26 @@ export class GroupService {
       };
 
       if (campaignId) {
+        const campaign = await this.campaignModel.findById(campaignId).lean();
+        if(!campaign) {
+          const message = `Error while fetching groups: Campaign ${campaignId} not found`;
+          this.logger.error(message, null, this.SERVICE_NAME);
+          throw new NotFoundException(message);
+        }
+        
+        let groupIds: string[] = [];
+        if (type === 'all') {
+          groupIds = [
+            ...(campaign.groups?.main || []).map((group: any) => group.toString()),
+            ...(campaign.groups?.npc || []).map((group: any) => group.toString()),
+            ...(campaign.groups?.archived || []).map((group: any) => group.toString())
+          ];
+        } else {
+          groupIds = (campaign.groups?.[type] || []).map((group: any) => group.toString());
+        }
+
         filters['campaigns'] = { $in: [campaignId] };
+        filters['_id'] = { $in: groupIds };
       }
 
       const start: number = Date.now();
