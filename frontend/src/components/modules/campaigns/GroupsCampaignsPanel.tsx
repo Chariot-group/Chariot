@@ -16,11 +16,6 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
 
     const [group, setGroupSelected] = useState<IGroup | null>(null);
 
-    const handleGroupDrop = (group: IGroup, targetType: string) => {
-        console.log(`Groupe déplacé : ${group.label}, vers la liste : ${targetType}`);
-        // Ajoutez ici la logique pour mettre à jour les données côté serveur ou local
-    };
-
     return(
         <div className="w-full h-full flex flex-col">
             <div className="flex flex-row justify-between items-center">
