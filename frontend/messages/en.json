@@ -11,7 +11,8 @@
     "search": "Search a campaign",
     "createTooltip": "Add a campaign",
     "noCampaigns": "No campaigns found",
-    "error": "Error loading campaigns"
+    "error": "Error loading campaigns",
+    "create": "Add a campaign"
   },
   "LoginPage": {
     "title": "Welcome to Chariot!",

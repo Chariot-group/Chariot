@@ -11,7 +11,8 @@
     "search": "Rechercher une campagne",
     "createTooltip": "Ajouter une campagne",
     "noCampaigns": "Aucune campagne trouvée",
-    "error": "Erreur lors du chargement des campagnes"
+    "error": "Erreur lors du chargement des campagnes",
+    "create": "Ajouter une campagne"
   },
   "LoginPage": {
     "title": "Bienvenue sur Chariot!",
