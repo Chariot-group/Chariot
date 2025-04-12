@@ -1,4 +1,5 @@
 "use client"
+import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
 import HealthCheck from "@/components/modules/monitoring/HealthCheck";
 import { useToast } from "@/hooks/useToast";
 import { useTranslations } from "next-intl";
@@ -9,6 +10,7 @@ export default function Home() {
   return (
     
     <div>
+      <LocaleSwitcher />
       <HealthCheck />
       <h1>{t("title")}</h1>
       <p>{t("about")}</p>
