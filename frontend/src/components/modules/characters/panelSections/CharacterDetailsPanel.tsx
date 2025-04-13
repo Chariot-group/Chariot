@@ -13,6 +13,7 @@ import IStats from "@/models/characters/stat/IStats";
 import ICombat from "@/models/characters/combat/ICombat";
 import IActions from "@/models/characters/actions/IActions";
 import ActionsSection from "./actions/ActionsSection";
+import TraitsSection from "./traits/TraitsSection";
 
 interface ICharacterDetailsPanelProps {
     character: ICharacter;
@@ -27,6 +28,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     const [stats, setStats] = useState<IStats>(character.stats);
     const [combat, setCombat] = useState<ICombat>(character.combat);
     const [action, setAction] = useState<IActions>(character.actions[0]);
+    const [trait, setTrait] = useState(character.traits[0]);
 
     useEffect(() => {
         cancelRef.current = true;
@@ -35,6 +37,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
         setStats(character.stats);
         setCombat(character.combat);
         setAction(character.actions[0]);
+        setTrait(character.traits[0]);
         // Attendre que le composant soit monté avant de mettre à jour le state
         (async () => {
             await new Promise(resolve => setTimeout(resolve, 0));
@@ -45,12 +48,12 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     const [global, setGlobal] = useState<boolean>(true);
     const [combatNav, setCombatNav] = useState<boolean>(false);
     const [actionsNav, setActionsNav] = useState<boolean>(false);
-    const [traits, setTraits] = useState<boolean>(false);
+    const [traitsNav, setTraitsNav] = useState<boolean>(false);
     const updateTab = (tab: "global" | "combat" | "actions" | "traits") => {
         setGlobal(tab === "global");
         setCombatNav(tab === "combat");
         setActionsNav(tab === "actions");
-        setTraits(tab === "traits");
+        setTraitsNav(tab === "traits");
     }
 
     const onChange = () => {
@@ -59,12 +62,13 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
         character.stats = stats;
         character.combat = combat;
         character.actions[0] = action;
+        character.traits[0] = trait;
         console.log(character);
     }
     useEffect(() => {
         if (cancelRef.current) return;
         onChange();
-    }, [classification, stats, combat, action]);
+    }, [classification, stats, combat, action, trait]);
 
   return (
     <Card className="flex flex-col h-full gap-3 p-5">
@@ -76,7 +80,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
                 <span className={`cursor-pointer underline-offset-4 ${global ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('global')}>{t("navigation.global")}</span>
                 <span className={`cursor-pointer underline-offset-4 ${combatNav ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('combat')}>{t("navigation.combat")}</span>
                 <span className={`cursor-pointer underline-offset-4 ${actionsNav ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('actions')}>{t("navigation.actions")}</span>
-                <span className={`cursor-pointer underline-offset-4 ${traits ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('traits')}>{t("navigation.traits")}</span>
+                <span className={`cursor-pointer underline-offset-4 ${traitsNav ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('traits')}>{t("navigation.traits")}</span>
             </div>
             <Button variant={"link"}>{t("actions.characterDelete")}</Button>
         </div>
@@ -97,8 +101,8 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
                 )
             }
             {
-                traits && (
-                    <h1>Traits</h1>
+                traitsNav && (
+                    <TraitsSection trait={trait} setTrait={setTrait} />
                 )
             }
         </div>

@@ -80,7 +80,9 @@
       },
       "traits": {
         "languages": "Languages",
-        "abilities": "Abilities"
+        "noLanguages": "No languages",
+        "abilities": "Abilities",
+        "noAbilities": "No abilities"
       }
     },
     "labels": {
