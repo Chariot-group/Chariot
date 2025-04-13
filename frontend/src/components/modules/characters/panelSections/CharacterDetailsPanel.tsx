@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ICharacter from "@/models/characters/ICharacter";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import GlobalSection from "./global/GlobalSection";
 import IClassification from "@/models/characters/classification/IClassification";
 import CombatSection from "./combat/CombatSection";
@@ -14,6 +14,8 @@ import ICombat from "@/models/characters/combat/ICombat";
 import IActions from "@/models/characters/actions/IActions";
 import ActionsSection from "./actions/ActionsSection";
 import TraitsSection from "./traits/TraitsSection";
+import CharacterService from "@/services/CharacterService";
+import { useToast } from "@/hooks/useToast";
 
 interface ICharacterDetailsPanelProps {
     character: ICharacter;
@@ -21,6 +23,7 @@ interface ICharacterDetailsPanelProps {
 export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
+    const { error } = useToast();
 
     const cancelRef = useRef<boolean>(false);
     const [name, setName] = useState<string>(character.name);
@@ -56,6 +59,21 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
         setTraitsNav(tab === "traits");
     }
 
+    const updateCharacters = useCallback(
+        async (updateCharacter: ICharacter) => {
+          try {
+            const response = await CharacterService.updateCharacter(character._id, updateCharacter);
+            
+            character = updateCharacter;
+            console.log("Character updated:", response);
+          } catch (err) {
+            error(t("error"));
+            console.error("Error fetching characters:", error);
+          }
+        },
+        []
+      );
+
     const onChange = () => {
         character.name = name;
         character.classification = classification;
@@ -63,7 +81,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
         character.combat = combat;
         character.actions[0] = action;
         character.traits[0] = trait;
-        console.log(character);
+        updateCharacters(character);
     }
     useEffect(() => {
         if (cancelRef.current) return;
