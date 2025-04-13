@@ -69,7 +69,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
             </div>
             <Button variant={"link"}>Supprimer</Button>
         </div>
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full flex-1 h-auto overflow-auto scrollbar-hide">
             {
                 global && (
                     <GlobalSection classification={classification} setClassification={setClassification} stats={stats} setStats={setStats}/>

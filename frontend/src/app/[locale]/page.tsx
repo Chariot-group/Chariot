@@ -71,7 +71,7 @@ export default function Home() {
         </div>
       </div>
       <div className="flex flex-row gap-10 h-[70vh] p-5">
-        <div className="w-1/4 bg-card">
+        <div className="w-1/5 bg-card">
           <CharacterListPanel
             offset={15}
             idGroup={"67f8edf28b4d04f3d0c07a15"}
@@ -81,7 +81,7 @@ export default function Home() {
         </div>
         {
           character && (
-            <div className="w-3/4">
+            <div className="w-3/5">
               <CharacterDetailsPanel character={character} />
             </div>
           )

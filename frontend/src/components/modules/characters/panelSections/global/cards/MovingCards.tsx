@@ -35,18 +35,16 @@ export default function InformationsCard({ speed, setSpeed }: IGlobalSectionProp
     return (
         <div className="flex flex-row gap-3">
 
-            {/* Informations */}
             <Card className="flex flex-col gap-2 bg-background p-5">
                 <h3 className="text-foreground">{t("categories.global.moving")}</h3>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"walk"} type={"text"} label={t("labels.stats.speed.walk")} placeholder={t("placeholders.stats.speed.walk")} value={walk} setValue={setWalk} />
-                    <Champs onChange={onChange} color="card" id={"swim"} type={"text"} label={t("labels.stats.speed.swim")} placeholder={t("placeholders.stats.speed.swim")} value={swim} setValue={setSwim} />
-                    <Champs onChange={onChange} color="card" id={"climb"} type={"text"} label={t("labels.stats.speed.climb")} placeholder={t("placeholders.stats.maxHP")} value={climb} setValue={setClimb} />
-                    
+                    <Champs onChange={onChange} color="card" id={"walk"} type={"number"} label={t("labels.stats.speed.walk")} placeholder={t("placeholders.stats.speed.walk")} value={walk} setValue={setWalk} />
+                    <Champs onChange={onChange} color="card" id={"swim"} type={"number"} label={t("labels.stats.speed.swim")} placeholder={t("placeholders.stats.speed.swim")} value={swim} setValue={setSwim} />
+                    <Champs onChange={onChange} color="card" id={"climb"} type={"number"} label={t("labels.stats.speed.climb")} placeholder={t("placeholders.stats.maxHP")} value={climb} setValue={setClimb} />
                 </div>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"maxHP"} type={"text"} label={t("labels.stats.speed.fly")} placeholder={t("placeholders.stats.speed.fly")} value={fly} setValue={setFly} />
-                    <Champs onChange={onChange} color="card" id={"maxHP"} type={"text"} label={t("labels.stats.speed.burrow")} placeholder={t("placeholders.stats.speed.burrow")} value={burrow} setValue={setBurrow} />
+                    <Champs onChange={onChange} color="card" id={"maxHP"} type={"number"} label={t("labels.stats.speed.fly")} placeholder={t("placeholders.stats.speed.fly")} value={fly} setValue={setFly} />
+                    <Champs onChange={onChange} color="card" id={"maxHP"} type={"number"} label={t("labels.stats.speed.burrow")} placeholder={t("placeholders.stats.speed.burrow")} value={burrow} setValue={setBurrow} />
                 </div>
             </Card>
 

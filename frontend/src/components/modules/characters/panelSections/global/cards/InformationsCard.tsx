@@ -35,16 +35,15 @@ export default function InformationsCard({ stats, setStats }: IGlobalSectionProp
     return (
         <div className="flex flex-row gap-3">
 
-            {/* Informations */}
             <Card className="flex flex-col gap-2 bg-background p-5">
                 <h3 className="text-foreground">{t("categories.global.informations")}</h3>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"maxHP"} type={"text"} label={t("labels.stats.maxHP")} placeholder={t("placeholders.stats.maxHP")} value={maxHitPoints} setValue={setMaxHP} />
-                    <Champs onChange={onChange} color="card" id={"currentHP"} type={"text"} label={t("labels.stats.currentHP")} placeholder={t("placeholders.stats.currentHP")} value={currentHitPoints} setValue={setCurrentHP} />
-                    <Champs onChange={onChange} color="card" id={"tempHP"} type={"text"} label={t("labels.stats.tempHP")} placeholder={t("placeholders.stats.tempHP")} value={tempHitPoints} setValue={setHitDice} />
+                    <Champs onChange={onChange} color="card" id={"maxHP"} type={"number"} label={t("labels.stats.maxHP")} placeholder={t("placeholders.stats.maxHP")} value={maxHitPoints} setValue={setMaxHP} />
+                    <Champs onChange={onChange} color="card" id={"currentHP"} type={"number"} label={t("labels.stats.currentHP")} placeholder={t("placeholders.stats.currentHP")} value={currentHitPoints} setValue={setCurrentHP} />
+                    <Champs onChange={onChange} color="card" id={"tempHP"} type={"number"} label={t("labels.stats.tempHP")} placeholder={t("placeholders.stats.tempHP")} value={tempHitPoints} setValue={setHitDice} />
                 </div>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"armorClass"} type={"text"} label={t("labels.stats.armorClass")} placeholder={t("placeholders.stats.armorClass")} value={armorClass} setValue={setArmorClass} />
+                    <Champs onChange={onChange} color="card" id={"armorClass"} type={"number"} label={t("labels.stats.armorClass")} placeholder={t("placeholders.stats.armorClass")} value={armorClass} setValue={setArmorClass} />
                     <Champs onChange={onChange} color="card" id={"hitDice"} type={"text"} label={t("labels.stats.hitDice")} placeholder={t("placeholders.stats.hitDice")} value={hitDice} setValue={setHitDice} />
                 </div>
             </Card>

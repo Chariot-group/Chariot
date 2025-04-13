@@ -33,7 +33,6 @@ export default function ClassificationCard({ classification, setClassification }
     return (
         <div className="flex flex-row gap-3">
 
-            {/* Classification */}
             <Card className="flex flex-col gap-2 bg-background p-5">
                 <h3 className="text-foreground">{t("categories.global.classification")}</h3>
                 <div className="flex flex-row gap-2">
