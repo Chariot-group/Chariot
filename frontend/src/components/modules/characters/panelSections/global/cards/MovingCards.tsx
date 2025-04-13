@@ -6,11 +6,11 @@ import ISpeed from "@/models/characters/stat/sub/ISpeed";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface IMovingCardProps {
     speed: ISpeed;
     setSpeed: (classification: ISpeed) => void;
 }
-export default function InformationsCard({ speed, setSpeed }: IGlobalSectionProps) {
+export default function MovingCard({ speed, setSpeed }: IMovingCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

@@ -5,11 +5,11 @@ import LanguagesCard from "./card/LanguagesCard";
 import { useEffect, useRef, useState } from "react";
 import AbilitiesCard from "./card/AbilitiesCard";
 
-interface IGlobalSectionProps {
+interface ITraitsSectionProps {
     trait: ITrait;
     setTrait: (combat: ITrait) => void;
 }
-export default function TraitsSection({ trait, setTrait }: IGlobalSectionProps) {
+export default function TraitsSection({ trait, setTrait }: ITraitsSectionProps) {
 
     const [languages, setLanguages] = useState<string[]>(trait.languages);
     const [abilities, setAbilities] = useState(trait.abilities);

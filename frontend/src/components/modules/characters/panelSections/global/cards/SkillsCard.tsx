@@ -6,11 +6,11 @@ import ISkills from "@/models/characters/stat/sub/ISkills";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface ISkillsProps {
     skills: ISkills | undefined;
     setSkills: (classification: ISkills) => void;
 }
-export default function InformationsCard({ skills, setSkills }: IGlobalSectionProps) {
+export default function SkillsCard({ skills, setSkills }: ISkillsProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

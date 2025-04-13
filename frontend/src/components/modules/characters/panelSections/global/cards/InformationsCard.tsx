@@ -6,11 +6,11 @@ import IStats from "@/models/characters/stat/IStats";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface IInformationsCardProps {
     stats: IStats;
     setStats: (classification: IStats) => void;
 }
-export default function InformationsCard({ stats, setStats }: IGlobalSectionProps) {
+export default function InformationsCard({ stats, setStats }: IInformationsCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

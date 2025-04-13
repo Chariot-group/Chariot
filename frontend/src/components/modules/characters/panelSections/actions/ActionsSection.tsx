@@ -1,18 +1,15 @@
 "use client"
 
 import { useTranslations } from "next-intl";
-import IAction from "@/models/characters/actions/IActions";
 import IActions from "@/models/characters/actions/IActions";
-import { Card } from "@/components/ui/card";
-import Champs from "@/components/common/Champs";
 import { ActionCard } from "./cards/ActionCard";
 import { Button } from "@/components/ui/button";
 
-interface IGlobalSectionProps {
+interface IActionsSectionProps {
     actions: IActions;
     setActions: (actions: IActions) => void;
 }
-export default function ActionsSection({ actions, setActions }: IGlobalSectionProps) {
+export default function ActionsSection({ actions, setActions }: IActionsSectionProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

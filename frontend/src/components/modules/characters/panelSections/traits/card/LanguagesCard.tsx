@@ -1,19 +1,16 @@
 "use client"
 
-import Champs from "@/components/common/Champs";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import ICombat from "@/models/characters/combat/ICombat";
-import { Car, Trash2Icon } from "lucide-react";
+import { Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface ILanguagesCardProps {
     languages: string[];
     setLanguges: (languages: string[]) => void;
 }
-export default function LanguagesCard({ languages, setLanguges }: IGlobalSectionProps) {
+export default function LanguagesCard({ languages, setLanguges }: ILanguagesCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -63,12 +60,12 @@ export default function LanguagesCard({ languages, setLanguges }: IGlobalSection
     )
 }
 
-interface ILanguagesCardProps {
+interface ILanguageCardProps {
     language: string;
     onDelete: () => void;
     onChange: (value: string) => void;
 }
-function LanguageCard( { language, onDelete, onChange }: ILanguagesCardProps) {
+function LanguageCard( { language, onDelete, onChange }: ILanguageCardProps) {
 
     return (
         <Card className="flex flex-row gap-2 p-3 bg-card items-center justify-between">

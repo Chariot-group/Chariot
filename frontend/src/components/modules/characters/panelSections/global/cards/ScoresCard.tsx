@@ -1,22 +1,19 @@
 "use client"
 
-import Champs from "@/components/common/Champs";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import IAbilityScores from "@/models/characters/stat/sub/IAbilityScores";
 import ISavingThrows from "@/models/characters/stat/sub/ISavingThrows";
-import ISenses from "@/models/characters/stat/sub/ISenses";
-import ISpeed from "@/models/characters/stat/sub/ISpeed";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface IScoresCardProps {
     abilityScores: IAbilityScores;
     setAbilityScores: (abilityScores: IAbilityScores) => void;
     savingThrows: ISavingThrows | undefined;
     setSavingThrows: (savingThrows: ISavingThrows) => void;
 }
-export default function InformationsCard({ abilityScores, setAbilityScores, savingThrows, setSavingThrows }: IGlobalSectionProps) {
+export default function ScoresCard({ abilityScores, setAbilityScores, savingThrows, setSavingThrows }: IScoresCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

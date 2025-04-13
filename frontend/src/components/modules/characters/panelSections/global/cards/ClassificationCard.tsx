@@ -6,11 +6,11 @@ import IClassification from "@/models/characters/classification/IClassification"
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface IClassificationCardProps {
     classification: IClassification;
     setClassification: (classification: IClassification) => void;
 }
-export default function ClassificationCard({ classification, setClassification }: IGlobalSectionProps) {
+export default function ClassificationCard({ classification, setClassification }: IClassificationCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

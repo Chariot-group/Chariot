@@ -6,11 +6,11 @@ import ICombat from "@/models/characters/combat/ICombat";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface IInformationsCardProps {
     combat: ICombat;
     setCombat: (combat: ICombat) => void;
 }
-export default function InformationsCard({ combat, setCombat }: IGlobalSectionProps) {
+export default function InformationsCard({ combat, setCombat }: IInformationsCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

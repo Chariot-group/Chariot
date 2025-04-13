@@ -4,7 +4,6 @@ import Champs from "@/components/common/Champs";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import IAction from "@/models/characters/actions/sub/IAction";
-import IDamage from "@/models/characters/actions/sub/IDamage";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 

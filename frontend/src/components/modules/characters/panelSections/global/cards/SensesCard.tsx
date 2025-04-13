@@ -3,15 +3,14 @@
 import Champs from "@/components/common/Champs";
 import { Card } from "@/components/ui/card";
 import ISenses from "@/models/characters/stat/sub/ISenses";
-import ISpeed from "@/models/characters/stat/sub/ISpeed";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-interface IGlobalSectionProps {
+interface ISensesProps {
     senses: ISenses;
     setSenses: (classification: ISenses) => void;
 }
-export default function InformationsCard({ senses, setSenses }: IGlobalSectionProps) {
+export default function SensesCard({ senses, setSenses }: ISensesProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
