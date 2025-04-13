@@ -23,9 +23,6 @@ export default function LanguagesCard({ languages, setLanguges }: IGlobalSection
         setLanguges(newLanguages);
     }
 
-    useEffect(() => {
-    }, [languages]);
-
     return (
         <div className="flex flex-row h-full gap-3">
 
