@@ -64,7 +64,7 @@ export default function InformationsCard({ skills, setSkills }: IGlobalSectionPr
         <div className="flex flex-row gap-3">
 
             <Card className="flex flex-col gap-2 bg-background p-5">
-                <h3 className="text-foreground">{t("categories.global.moving")}</h3>
+                <h3 className="text-foreground">{t("categories.global.skills")}</h3>
                 <div className="flex flex-row gap-2">
                     <Champs onChange={onChange} color="card" id={"athletic"} type={"number"} label={t("labels.stats.skills.athletics")} placeholder={t("placeholders.stats.skills.athletics")} value={athletics} setValue={setAthletics} />
                     <Champs onChange={onChange} color="card" id={"acrobatics"} type={"number"} label={t("labels.stats.skills.acrobatics")} placeholder={t("placeholders.stats.skills.acrobatics")} value={acrobatics} setValue={setAcrobatics} />
