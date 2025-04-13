@@ -40,7 +40,6 @@ export default function InformationsCard({ stats, setStats }: IGlobalSectionProp
                 <div className="flex flex-row gap-2">
                     <Champs onChange={onChange} color="card" id={"maxHP"} type={"number"} label={t("labels.stats.maxHP")} placeholder={t("placeholders.stats.maxHP")} value={maxHitPoints} setValue={setMaxHP} />
                     <Champs onChange={onChange} color="card" id={"currentHP"} type={"number"} label={t("labels.stats.currentHP")} placeholder={t("placeholders.stats.currentHP")} value={currentHitPoints} setValue={setCurrentHP} />
-                    <Champs onChange={onChange} color="card" id={"tempHP"} type={"number"} label={t("labels.stats.tempHP")} placeholder={t("placeholders.stats.tempHP")} value={tempHitPoints} setValue={setHitDice} />
                 </div>
                 <div className="flex flex-row gap-2">
                     <Champs onChange={onChange} color="card" id={"armorClass"} type={"number"} label={t("labels.stats.armorClass")} placeholder={t("placeholders.stats.armorClass")} value={armorClass} setValue={setArmorClass} />
