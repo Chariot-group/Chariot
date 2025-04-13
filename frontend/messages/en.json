@@ -50,5 +50,182 @@
     "create": "Add a group",
     "noGroups": "No groups found",
     "error": "Error loading groups"
+  },
+  "CharacterDetailsPanel": {
+    "navigation": {
+      "global": "General",
+      "combat": "Combat",
+      "actions": "Actions",
+      "traits": "Traits"
+    },
+    "actions": {
+      "characterDelete": "Delete character",
+      "actionsAdd": "Add action",
+      "languagesAdd": "Add language",
+      "abilitiesAdd": "Add ability"
+    },
+    "categories": {
+      "global": {
+        "classification": "Classification",
+        "informations": "Information",
+        "moving": "Movement",
+        "skills": "Skills",
+        "senses": "Senses"
+      },
+      "traits": {
+        "languages": "Languages",
+        "abilities": "Abilities"
+      }
+    },
+    "labels": {
+      "name": "Name",
+      "classification": {
+        "type": "Type",
+        "alignment": "Alignment",
+        "subType": "Subtype",
+        "size": "Size"
+      },
+      "stats": {
+        "maxHP": "Max HP",
+        "currentHP": "Current HP",
+        "tempHP": "Temporary HP",
+        "hitDice": "Hit Dice",
+        "armorClass": "Armor Class",
+        "speed": {
+          "walk": "Walk",
+          "fly": "Fly",
+          "swim": "Swim",
+          "climb": "Climb",
+          "burrow": "Burrow"
+        },
+        "abilityScores": {
+          "strength": "Strength",
+          "dexterity": "Dexterity",
+          "constitution": "Constitution",
+          "intelligence": "Intelligence",
+          "wisdom": "Wisdom",
+          "charisma": "Charisma"
+        },
+        "skills": {
+          "athletics": "Athletics",
+          "acrobatics": "Acrobatics",
+          "sleightOfHand": "Sleight of Hand",
+          "stealth": "Stealth",
+          "arcana": "Arcana",
+          "history": "History",
+          "investigation": "Investigation",
+          "nature": "Nature",
+          "religion": "Religion",
+          "animalHandling": "Animal Handling",
+          "insight": "Insight",
+          "medicine": "Medicine",
+          "perception": "Perception",
+          "survival": "Survival",
+          "deception": "Deception",
+          "intimidation": "Intimidation",
+          "performance": "Performance",
+          "persuasion": "Persuasion"
+        },
+        "senses": {
+          "nightVision": "Darkvision",
+          "passivePerception": "Passive Perception"
+        }
+      },
+      "combat": {
+        "challengeRating": "Challenge Rating",
+        "experiencePoints": "Experience Points",
+        "resistances": "Resistances",
+        "immunities": "Immunities",
+        "vulnerabilities": "Vulnerabilities"
+      },
+      "traits": {
+        "languages": "Languages",
+        "abilities": {
+          "name": "Name",
+          "description": "Description"
+        }
+      },
+      "actions": {
+        "name": "Name",
+        "type": "Type",
+        "attackBonus": "Attack Bonus",
+        "damage": {
+          "dice": "Dice",
+          "type": "Type"
+        },
+        "range": "Range"
+      }
+    },
+    "placeholders": {
+      "name": "Goblin",
+      "classification": {
+        "type": "Humanoid",
+        "alignment": "Neutral - Evil",
+        "subType": "goblinoid",
+        "size": "Small"
+      },
+      "stats": {
+        "maxHP": "7",
+        "currentHP": "3",
+        "tempHP": "5",
+        "hitDice": "2d6",
+        "armorClass": "15",
+        "speed": {
+          "walk": "30",
+          "fly": "0",
+          "swim": "0",
+          "climb": "0",
+          "burrow": "0"
+        },
+        "abilityScores": "Ability Score",
+        "savingThrows": "Saving Throw",
+        "skills": {
+          "athletics": "6",
+          "acrobatics": "0",
+          "sleightOfHand": "0",
+          "stealth": "0",
+          "arcana": "0",
+          "history": "0",
+          "investigation": "0",
+          "nature": "0",
+          "religion": "0",
+          "animalHandling": "0",
+          "insight": "0",
+          "medicine": "0",
+          "perception": "0",
+          "survival": "0",
+          "deception": "0",
+          "intimidation": "0",
+          "performance": "0",
+          "persuasion": "0"
+        },
+        "senses": {
+          "nightVision": "60",
+          "passivePerception": "9"
+        }
+      },
+      "combat": {
+        "challengeRating": "0.25",
+        "experiencePoints": "50"
+      },
+      "traits": {
+        "languages": "Common, Goblin",
+        "abilities": {
+          "name": "Nimble Escape",
+          "description": "When the goblin is hit by an attack, it can use its reaction to move 10 feet in a direction of its choice."
+        }
+      },
+      "actions": {
+        "name": "Scimitar",
+        "type": "Melee",
+        "attackBonus": "Attack Bonus",
+        "damage": {
+          "dice": "1d6",
+          "type": "Slashing"
+        },
+        "range": "5"
+      }
+    }
   }
+
 }
