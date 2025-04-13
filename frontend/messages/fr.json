@@ -61,8 +61,11 @@
     "actions":{
       "characterDelete": "Supprimer le personnage",
       "actionsAdd": "Ajouter une action",
+      "actionsDelete": "Supprimer l'action",
       "languagesAdd": "Ajouter une langue",
-      "abilitiesAdd": "Ajouter une capacité"
+      "languagesDelete": "Supprimer la langue",
+      "abilitiesAdd": "Ajouter une capacité",
+      "abilitiesDelete": "Supprimer la capacité"
     },
     "categories": {
       "global": {

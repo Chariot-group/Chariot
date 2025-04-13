@@ -61,8 +61,11 @@
     "actions": {
       "characterDelete": "Delete character",
       "actionsAdd": "Add action",
+      "actionsDelete": "Delete action",
       "languagesAdd": "Add language",
-      "abilitiesAdd": "Add ability"
+      "languagesDelete": "Delete language",
+      "abilitiesAdd": "Add ability",
+      "abilitiesDelete": "Delete ability"
     },
     "categories": {
       "global": {
