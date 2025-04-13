@@ -7,8 +7,8 @@ interface IChampsProps {
     type: string;
     label: string;
     placeholder: string;
-    value: string | null;
-    setValue: (value: string) => void;
+    value: any | null;
+    setValue: (value: any) => void;
     onChange: () => void;
     color?: string;
 }

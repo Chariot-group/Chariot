@@ -19,11 +19,13 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     const cancelRef = useRef<boolean>(false);
     const [name, setName] = useState<string>(character.name);
     const [classification, setClassification] = useState<IClassification>(character.classification);
+    const [stats, setStats] = useState(character.stats);
 
     useEffect(() => {
         cancelRef.current = true;
         setName(character.name);
         setClassification(character.classification);
+        setStats(character.stats);
         // Attendre que le composant soit monté avant de mettre à jour le state
         (async () => {
             await new Promise(resolve => setTimeout(resolve, 0));
@@ -45,12 +47,13 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     const onChange = () => {
         character.name = name;
         character.classification = classification;
+        character.stats = stats;
         console.log(character);
     }
     useEffect(() => {
         if (cancelRef.current) return;
         onChange();
-    }, [classification]);
+    }, [classification, stats]);
 
   return (
     <Card className="flex flex-col h-full gap-3 p-5">
@@ -69,7 +72,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
         <div className="flex flex-col h-full">
             {
                 global && (
-                    <GlobalSection classification={classification} setClassification={setClassification} />
+                    <GlobalSection classification={classification} setClassification={setClassification} stats={stats} setStats={setStats}/>
                 )
             }
             {
