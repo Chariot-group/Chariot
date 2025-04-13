@@ -35,7 +35,7 @@ export default function InformationsCard({ stats, setStats }: IGlobalSectionProp
     return (
         <div className="flex flex-row gap-3">
 
-            <Card className="flex flex-col gap-2 bg-background p-5">
+            <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.global.informations")}</h3>
                 <div className="flex flex-row gap-2">
                     <Champs onChange={onChange} color="card" id={"maxHP"} type={"number"} label={t("labels.stats.maxHP")} placeholder={t("placeholders.stats.maxHP")} value={maxHitPoints} setValue={setMaxHP} />

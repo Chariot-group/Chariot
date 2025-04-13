@@ -33,7 +33,7 @@ export default function ClassificationCard({ classification, setClassification }
     return (
         <div className="flex flex-row gap-3">
 
-            <Card className="flex flex-col gap-2 bg-background p-5">
+            <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.global.classification")}</h3>
                 <div className="flex flex-row gap-2">
                     <Champs onChange={onChange} color="card" id={"type"} type={"text"} label={t("labels.classification.type")} placeholder={t("placeholders.classification.type")} value={type} setValue={setType} />

@@ -36,8 +36,6 @@ export default function GlobalSection({ classification, setClassification, stats
                         <SkillsCard skills={stats.skills} setSkills={(skills) => setStats({ ...stats, skills })} />
                     </div>
                 </div>
-                <div className="flex flex-row gap-3">
-                </div>
             </div>
             <div className="flex flex-col w-1/3">
                 

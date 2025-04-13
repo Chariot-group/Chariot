@@ -30,7 +30,7 @@ export default function InformationsCard({ senses, setSenses }: IGlobalSectionPr
     return (
         <div className="flex flex-row gap-3">
 
-            <Card className="flex flex-col gap-2 bg-background p-5">
+            <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.global.senses")}</h3>
                 <div className="flex flex-row gap-2">
                     <Champs onChange={onChange} color="card" id={"nightVision"} type={"number"} label={t("labels.stats.senses.nightVision")} placeholder={t("placeholders.stats.senses.nightVision")} value={darkvision} setValue={setDarkvision} />

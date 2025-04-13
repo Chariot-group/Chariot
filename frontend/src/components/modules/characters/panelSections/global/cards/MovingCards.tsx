@@ -35,7 +35,7 @@ export default function InformationsCard({ speed, setSpeed }: IGlobalSectionProp
     return (
         <div className="flex flex-row gap-3">
 
-            <Card className="flex flex-col gap-2 bg-background p-5">
+            <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.global.moving")}</h3>
                 <div className="flex flex-row gap-2">
                     <Champs onChange={onChange} color="card" id={"walk"} type={"number"} label={t("labels.stats.speed.walk")} placeholder={t("placeholders.stats.speed.walk")} value={walk} setValue={setWalk} />
