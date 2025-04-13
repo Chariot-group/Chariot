@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import GlobalSection from "./global/GlobalSection";
 import IClassification from "@/models/characters/classification/IClassification";
+import CombatSection from "./combat/CombatSection";
 
 interface ICharacterDetailsPanelProps {
     character: ICharacter;
@@ -20,12 +21,14 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     const [name, setName] = useState<string>(character.name);
     const [classification, setClassification] = useState<IClassification>(character.classification);
     const [stats, setStats] = useState(character.stats);
+    const [combat, setCombat] = useState(character.combat);
 
     useEffect(() => {
         cancelRef.current = true;
         setName(character.name);
         setClassification(character.classification);
         setStats(character.stats);
+        setCombat(character.combat);
         // Attendre que le composant soit monté avant de mettre à jour le state
         (async () => {
             await new Promise(resolve => setTimeout(resolve, 0));
@@ -34,12 +37,12 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     }, [character]);
 
     const [global, setGlobal] = useState<boolean>(true);
-    const [combat, setCombat] = useState<boolean>(false);
+    const [combatNav, setCombatNav] = useState<boolean>(false);
     const [actions, setActions] = useState<boolean>(false);
     const [traits, setTraits] = useState<boolean>(false);
     const updateTab = (tab: "global" | "combat" | "actions" | "traits") => {
         setGlobal(tab === "global");
-        setCombat(tab === "combat");
+        setCombatNav(tab === "combat");
         setActions(tab === "actions");
         setTraits(tab === "traits");
     }
@@ -48,12 +51,13 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
         character.name = name;
         character.classification = classification;
         character.stats = stats;
+        character.combat = combat;
         console.log(character);
     }
     useEffect(() => {
         if (cancelRef.current) return;
         onChange();
-    }, [classification, stats]);
+    }, [classification, stats, combat]);
 
   return (
     <Card className="flex flex-col h-full gap-3 p-5">
@@ -63,7 +67,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
             </div>
             <div className="flex flex-row items-center gap-2 text-foreground">
                 <span className={`cursor-pointer underline-offset-4 ${global ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('global')}>{t("navigation.global")}</span>
-                <span className={`cursor-pointer underline-offset-4 ${combat ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('combat')}>{t("navigation.combat")}</span>
+                <span className={`cursor-pointer underline-offset-4 ${combatNav ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('combat')}>{t("navigation.combat")}</span>
                 <span className={`cursor-pointer underline-offset-4 ${actions ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('actions')}>{t("navigation.actions")}</span>
                 <span className={`cursor-pointer underline-offset-4 ${traits ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('traits')}>{t("navigation.traits")}</span>
             </div>
@@ -76,8 +80,8 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
                 )
             }
             {
-                combat && (
-                    <h1>Combat</h1>
+                combatNav && (
+                    <CombatSection combat={combat} setCombat={setCombat} />
                 )
             }
             {

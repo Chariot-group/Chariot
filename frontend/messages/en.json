@@ -72,6 +72,9 @@
         "skills": "Skills",
         "senses": "Senses"
       },
+      "combat": {
+        "stats": "Stats"
+      },
       "traits": {
         "languages": "Languages",
         "abilities": "Abilities"

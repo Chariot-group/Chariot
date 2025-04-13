@@ -72,6 +72,9 @@
         "skills": "Habilidades",
         "senses": "Sentidos"
       },
+      "combat": {
+        "stats": "Estadísticas"
+      },
       "traits": {
         "languages": "Idiomas",
         "abilities": "Habilidades"
