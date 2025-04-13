@@ -37,7 +37,7 @@ export default function GlobalSection({ classification, setClassification, stats
             </div>
             <div className="flex flex-row gap-3">
                 <SensesCard senses={stats.senses} setSenses={(senses) => setStats({ ...stats, senses })} />
-                <ScoresCard />
+                <ScoresCard abilityScores={stats.abilityScores} setAbilityScores={(abilityScores) => setStats({ ...stats, abilityScores })} savingThrows={stats.savingThrows} setSavingThrows={(savingThrows) => setStats({ ...stats, savingThrows })} />
             </div>
         </div>
     )
