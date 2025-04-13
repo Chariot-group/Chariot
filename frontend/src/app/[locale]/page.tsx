@@ -70,7 +70,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="flex flex-row gap-10 h-[50vh] p-5">
+      <div className="flex flex-row gap-10 h-[70vh] p-5">
         <div className="w-1/4 bg-card">
           <CharacterListPanel
             offset={15}
