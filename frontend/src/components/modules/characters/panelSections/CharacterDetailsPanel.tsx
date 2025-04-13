@@ -62,10 +62,8 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     const updateCharacters = useCallback(
         async (updateCharacter: ICharacter) => {
           try {
-            const response = await CharacterService.updateCharacter(character._id, updateCharacter);
-            
+            await CharacterService.updateCharacter(character._id, updateCharacter);
             character = updateCharacter;
-            console.log("Character updated:", response);
           } catch (err) {
             error(t("error"));
             console.error("Error fetching characters:", error);
