@@ -234,5 +234,9 @@
         "range": "5"
       }
     }
+  },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Initier un combat"
   }
 }
