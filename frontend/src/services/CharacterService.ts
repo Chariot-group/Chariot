@@ -25,6 +25,21 @@ const CharacterService = {
       return "error";
     }
   },
+
+  async updateCharacter(id: string, data: any) {
+    try {
+      const response = await apiClient(APIContentType.JSON).patch(`/characters/${id}`, data);
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return "error";
+    }
+  }
 };
 
 export default CharacterService;
