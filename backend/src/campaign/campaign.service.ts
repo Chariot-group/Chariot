@@ -193,6 +193,14 @@ export class CampaignService {
 
   async update(id: string, updateCampaignDto: UpdateCampaignDto) {
     try {
+
+      await this.validateGroupRelations(updateCampaignDto.groups.main, 'Main');
+      await this.validateGroupRelations(updateCampaignDto.groups.npc, 'NPC');
+      await this.validateGroupRelations(
+        updateCampaignDto.groups.archived,
+        'Archived',
+      );
+
       // Validate ID
       if (!Types.ObjectId.isValid(id)) {
         throw new BadRequestException(`Invalid campaign ID: ${id}`);
@@ -224,17 +232,6 @@ export class CampaignService {
           ...existingCampaign.groups.npc,
           ...existingCampaign.groups.archived
         ].map(id => id.toString());
-
-        // Validate all new groups exist
-        const groupsExist = await this.groupModel.find({
-          _id: { $in: newGroupIds }
-        }).select('_id').lean();
-
-        if (groupsExist.length !== newGroupIds.length) {
-          const existingIds = groupsExist.map(g => g._id.toString());
-          const invalidIds = newGroupIds.filter(id => !existingIds.includes(id));
-          throw new BadRequestException(`Invalid group IDs: ${invalidIds.join(', ')}`);
-        }
 
         // Remove campaign from old groups
         const groupsToRemove = currentGroupIds.filter(id => !newGroupIds.includes(id));
