@@ -1,6 +1,6 @@
 "use client"
 
-import Champs from "@/components/common/Champs";
+import Champs from "@/components/common/Field";
 import { Card } from "@/components/ui/card";
 import IStats from "@/models/characters/stat/IStats";
 import { useTranslations } from "next-intl";

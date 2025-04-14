@@ -12,7 +12,7 @@ interface IChampsProps {
     onChange: () => void;
     color?: string;
 }
-export default function Champs({ id, type, label, placeholder, value, setValue, color = "background", onChange }: IChampsProps) {
+export default function Field({ id, type, label, placeholder, value, setValue, color = "background", onChange }: IChampsProps) {
 
     const [pending, setPending] = useState(false);
 

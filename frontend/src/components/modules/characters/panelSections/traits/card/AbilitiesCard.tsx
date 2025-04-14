@@ -1,6 +1,6 @@
 "use client"
 
-import Champs from "@/components/common/Champs";
+import Champs from "@/components/common/Field";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
