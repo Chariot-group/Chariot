@@ -11,14 +11,13 @@ import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-interface Props {
+interface ICharacterListPanelProps {
   offset?: number;
   characterSelected: ICharacter | null;
   setCharacterSelected: (group: ICharacter | null) => void;
   idGroup: string;
 }
-
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, idGroup }: Props) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, idGroup }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 

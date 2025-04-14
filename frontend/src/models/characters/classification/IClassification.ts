@@ -1,6 +1,6 @@
 export default interface IClassification {
     type: string;
-    subType: string;
+    subtype: string;
     alignment: string;
     size: string;
 }

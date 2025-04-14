@@ -50,5 +50,190 @@
     "create": "Agregar un grupo",
     "noGroups": "No se encontraron grupos",
     "error": "Error al cargar los grupos"
+  },
+  "CharacterDetailsPanel": {
+    "navigation": {
+      "global": "General",
+      "combat": "Combate",
+      "actions": "Acciones",
+      "traits": "Rasgos"
+    },
+    "actions": {
+      "characterDelete": "Eliminar personaje",
+      "actionsAdd": "Agregar acción",
+      "actionsDelete": "Eliminar acción",
+      "languagesAdd": "Agregar idioma",
+      "languagesDelete": "Eliminar idioma",
+      "abilitiesAdd": "Agregar habilidad",
+      "abilitiesDelete": "Eliminar habilidad"
+    },
+    "categories": {
+      "global": {
+        "classification": "Clasificación",
+        "informations": "Información",
+        "moving": "Movimiento",
+        "skills": "Habilidades",
+        "senses": "Sentidos"
+      },
+      "combat": {
+        "stats": "Estadísticas"
+      },
+      "traits": {
+        "languages": "Idiomas",
+        "noLanguage": "Sin idioma",
+        "abilities": "Habilidades",
+        "noAbilities": "Sin habilidades"
+      }
+    },
+    "labels": {
+      "name": "Nombre",
+      "classification": {
+        "type": "Tipo",
+        "alignment": "Alineación",
+        "subType": "Subtipo",
+        "size": "Tamaño"
+      },
+      "stats": {
+        "maxHP": "PV máx",
+        "currentHP": "PV actuales",
+        "tempHP": "PV temporales",
+        "hitDice": "Dados de golpe",
+        "armorClass": "Clase de armadura",
+        "speed": {
+          "walk": "Caminar",
+          "fly": "Volar",
+          "swim": "Nadar",
+          "climb": "Escalar",
+          "burrow": "Excavar"
+        },
+        "abilityScores": {
+          "strength": "Fuerza",
+          "dexterity": "Destreza",
+          "constitution": "Constitución",
+          "intelligence": "Inteligencia",
+          "wisdom": "Sabiduría",
+          "charisma": "Carisma"
+        },
+        "skills": {
+          "athletics": "Atletismo",
+          "acrobatics": "Acrobacias",
+          "sleightOfHand": "Trucos de manos",
+          "stealth": "Sigilo",
+          "arcana": "Arcanos",
+          "history": "Historia",
+          "investigation": "Investigación",
+          "nature": "Naturaleza",
+          "religion": "Religión",
+          "animalHandling": "Manejo de animales",
+          "insight": "Perspicacia",
+          "medicine": "Medicina",
+          "perception": "Percepción",
+          "survival": "Supervivencia",
+          "deception": "Engaño",
+          "intimidation": "Intimidación",
+          "performance": "Actuación",
+          "persuasion": "Persuasión"
+        },
+        "senses": {
+          "nightVision": "Visión nocturna",
+          "passivePerception": "Percepción pasiva"
+        }
+      },
+      "combat": {
+        "challengeRating": "Nivel de desafío",
+        "experiencePoints": "Puntos de experiencia",
+        "resistances": "Resistencias",
+        "immunities": "Inmunidades",
+        "vulnerabilities": "Vulnerabilidades"
+      },
+      "traits": {
+        "languages": "Idiomas",
+        "abilities": {
+          "name": "Nombre",
+          "description": "Descripción"
+        }
+      },
+      "actions": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "attackBonus": "Bonificación de ataque",
+        "damage": {
+          "dice": "Dado",
+          "type": "Tipo"
+        },
+        "range": "Alcance"
+      }
+    },
+    "placeholders": {
+      "name": "Goblin",
+      "classification": {
+        "type": "Humanoide",
+        "alignment": "Neutral - Malvado",
+        "subType": "goblinoide",
+        "size": "Pequeño"
+      },
+      "stats": {
+        "maxHP": "7",
+        "currentHP": "3",
+        "tempHP": "5",
+        "hitDice": "2d6",
+        "armorClass": "15",
+        "speed": {
+          "walk": "30",
+          "fly": "0",
+          "swim": "0",
+          "climb": "0",
+          "burrow": "0"
+        },
+        "abilityScores": "Puntaje de habilidad",
+        "savingThrows": "Tiradas de salvación",
+        "skills": {
+          "athletics": "6",
+          "acrobatics": "0",
+          "sleightOfHand": "0",
+          "stealth": "0",
+          "arcana": "0",
+          "history": "0",
+          "investigation": "0",
+          "nature": "0",
+          "religion": "0",
+          "animalHandling": "0",
+          "insight": "0",
+          "medicine": "0",
+          "perception": "0",
+          "survival": "0",
+          "deception": "0",
+          "intimidation": "0",
+          "performance": "0",
+          "persuasion": "0"
+        },
+        "senses": {
+          "nightVision": "60",
+          "passivePerception": "9"
+        }
+      },
+      "combat": {
+        "challengeRating": "0.25",
+        "experiencePoints": "50"
+      },
+      "traits": {
+        "languages": "Común, Goblin",
+        "abilities": {
+          "name": "La gran escapada",
+          "description": "Cuando el goblin recibe un ataque, puede usar su reacción para moverse 10 pies en una dirección de su elección."
+        }
+      },
+      "actions": {
+        "name": "Cimitarra",
+        "type": "Cuerpo a cuerpo",
+        "attackBonus": "Bonificación de ataque",
+        "damage": {
+          "dice": "1d6",
+          "type": "Cortante"
+        },
+        "range": "5"
+      }
+    }
   }
+
 }
