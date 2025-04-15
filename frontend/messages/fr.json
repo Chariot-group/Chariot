@@ -234,5 +234,41 @@
         "range": "5"
       }
     }
+  },
+  "Global": {
+    "cancel": "Annuler"
+  },
+  "CampaignDetails": {
+    "errors": "Erreur lors de la mise à jour de la campagne",
+    "labels": {
+      "description": "Description"
+    },
+    "placeholders": {
+      "description": "Une campagne épique dans un monde fantastique où les héros se battent contre des forces obscures."
+    },
+    "actions": {
+      "delete": "Supprimer la campagne"
+    }
+  },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Initier un combat"
+  },
+  "GroupDetailsPanel": {
+    "error": "Erreur lors de la mise à jour du groupe",
+    "actions": {
+      "groupDelete": "Supprimer le groupe",
+      "findCampaign": "Trouver sa campagne"
+    },
+    "labels": {
+      "name": "Nom du groupe",
+      "type": "Type",
+      "description": "Description"
+    },
+    "placeholders": {
+      "name": "Nom du groupe",
+      "type": "Groupe principal",
+      "description": "Description du groupe"
+    }
   }
 }

@@ -234,6 +234,41 @@
         "range": "5"
       }
     }
+  },
+  "Global": {
+    "cancel": "Cancel"
+  },
+  "CampaignDetails": {
+    "errors": "Error updating campaign",
+    "labels": {
+      "description": "Description"
+    },
+    "placeholders": {
+      "description": "A great campaign"
+    },
+    "actions": {
+      "delete": "Delete campaign"
+    }
+  },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Launch a battle"
+  },
+  "GroupDetailsPanel": {
+    "error": "Error updating the group",
+    "actions": {
+      "groupDelete": "Delete group",
+      "findCampaign": "Find its campaign"
+    },
+    "labels": {
+      "name": "Group name",
+      "type": "Type",
+      "description": "Description"
+    },
+    "placeholders": {
+      "name": "Group name",
+      "type": "Main group",
+      "description": "Group description"
+    }
   }
-
 }
