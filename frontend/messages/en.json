@@ -234,6 +234,22 @@
         "range": "5"
       }
     }
+  },
+  "GroupDetailsPanel": {
+    "error": "Error updating the group",
+    "actions": {
+      "groupDelete": "Delete group",
+      "findCampaign": "Find its campaign"
+    },
+    "labels": {
+      "name": "Group name",
+      "type": "Type",
+      "description": "Description"
+    },
+    "placeholders": {
+      "name": "Group name",
+      "type": "Main group",
+      "description": "Group description"
+    }
   }
-
 }

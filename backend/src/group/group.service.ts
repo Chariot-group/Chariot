@@ -289,8 +289,10 @@ export class GroupService {
           campaigns.map((campaign) => campaign.idCampaign),
         );
       }
-
-      const campaignIds = campaigns.map((campaign) => campaign.idCampaign);
+      let campaignIds = group.campaigns.map((campaign) => campaign._id.toString());
+      if( campaigns) {
+        campaignIds = campaigns.map((campaign) => campaign.idCampaign);
+      }
 
       let charactersToRemove = [];
       if (characters) {
