@@ -49,6 +49,7 @@
     "search": "Search a group",
     "create": "Add a group",
     "noGroups": "No groups found",
+    "dropHere": "Drop here to add in the group",
     "error": "Error loading groups"
   },
   "CharacterDetailsPanel": {
@@ -284,5 +285,17 @@
   "GroupPage": {
     "yourCharacters": "Your characters",
     "addCharacter": "Add character"
+  },
+  "CampaignModal": {
+    "title": "Create a campaign",
+    "subTitles": {
+      "info": "To create a campaign, we need the campaign name.",
+      "warning": "Please note! You will not be able to modify it afterwards."
+    },
+    "placeholder": "Campaign name",
+    "actions": {
+      "create": "Create a campaign",
+      "cancel": "Cancel"
+    }
   }
 }

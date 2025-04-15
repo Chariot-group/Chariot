@@ -49,6 +49,7 @@
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",
     "noGroups": "Aucun groupe trouvé",
+    "dropHere": "Déposez ici pour ajouter au groupe",
     "error": "Erreur lors du chargement des groupes"
   },
   "CharacterDetailsPanel": {
@@ -58,7 +59,7 @@
       "actions": "Actions",
       "traits": "Traits"
     },
-    "actions":{
+    "actions": {
       "characterDelete": "Supprimer le personnage",
       "actionsAdd": "Ajouter une action",
       "actionsDelete": "Supprimer l'action",
@@ -284,5 +285,17 @@
   "GroupPage": {
     "yourCharacters": "Vos personnages",
     "addCharacter": "Ajouter un personnage"
+  },
+  "CampaignModal": {
+    "title": "Créer une campagne",
+    "subTitles": {
+      "info": "Pour créer une campagne, nous avons besoin du nom de celle-ci.",
+      "warning": "Attention ! Vous ne pourrez pas la modifier par la suite."
+    },
+    "placeholder": "Nom de la campagne",
+    "actions": {
+      "create": "Créer une campagne",
+      "cancel": "Annuler"
+    }
   }
 }
