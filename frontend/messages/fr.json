@@ -246,6 +246,26 @@
     "actions": {
       "delete": "Supprimer la campagne"
     }
-
+  },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Initier un combat"
+  },
+  "GroupDetailsPanel": {
+    "error": "Erreur lors de la mise à jour du groupe",
+    "actions": {
+      "groupDelete": "Supprimer le groupe",
+      "findCampaign": "Trouver sa campagne"
+    },
+    "labels": {
+      "name": "Nom du groupe",
+      "type": "Type",
+      "description": "Description"
+    },
+    "placeholders": {
+      "name": "Nom du groupe",
+      "type": "Groupe principal",
+      "description": "Description du groupe"
+    }
   }
 }
