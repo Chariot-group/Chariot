@@ -270,5 +270,9 @@
       "type": "Groupe principal",
       "description": "Description du groupe"
     }
+  },
+  "GroupPage": {
+    "yourCharacters": "Vos personnages",
+    "addCharacter": "Ajouter un personnage"
   }
 }

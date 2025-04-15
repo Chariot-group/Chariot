@@ -12,8 +12,8 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface GroupDetailsPanelProps {
-    group: IGroup;
-    setGroup: (group: IGroup) => void;
+    group: IGroup | null;
+    setGroup: (group: IGroup | null) => void;
     idCampaign: string;
 } 
 export default function GroupDetailsPanel({ group, setGroup, idCampaign }: GroupDetailsPanelProps) {
@@ -22,11 +22,14 @@ export default function GroupDetailsPanel({ group, setGroup, idCampaign }: Group
     const { error } = useToast();
     const router = useRouter();
 
+    if(!group) return;
+
     const cancelRef = useRef<boolean>(false);
     const [label, setLabel] = useState<string>(group.label);
     const [description, setDescription] = useState<string>(group.description);
 
     useEffect(() => {
+        if(!group) return;
         cancelRef.current = true;
         setLabel(group.label);
         setDescription(group.description);
@@ -39,6 +42,7 @@ export default function GroupDetailsPanel({ group, setGroup, idCampaign }: Group
 
     const updateGroup = useCallback(
         async (updateGroup: Partial<IGroup>) => {
+        if(!group) return;
           try {
             let response = await GroupService.updateCharacter(group._id, updateGroup);
             group = response.data;
@@ -51,6 +55,7 @@ export default function GroupDetailsPanel({ group, setGroup, idCampaign }: Group
     );
 
     const onChange = () => {
+        if(!group) return;
         group.label = label;
         group.description = description;
         updateGroup({label, description});
@@ -66,17 +71,17 @@ export default function GroupDetailsPanel({ group, setGroup, idCampaign }: Group
     }
 
     return (
-        <div className="flex flex-col h-full gap-3 p-5">
+        <div className="flex flex-col h-full w-full gap-3 p-5">
             <div className="flex flex-row gap-3 justify-between">
                 <Field color="card" id={"label"} type={"text"} label={t("labels.name")} placeholder={"placeholders.name"} value={label} setValue={setLabel} onChange={onChange} />
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-row gap-3">
                     <Button onClick={findCampaign}>{t("actions.findCampaign")}</Button>
                     <Button variant={"link"}>{t("actions.groupDelete")}</Button>
                 </div>
             </div>
             <div className="w-full">
                 <Label htmlFor={"description"} className="text-foreground">{t("labels.description")}</Label>
-                <Textarea className="h-[10dvh] bg-card" placeholder={t("placeholders.description")} value={description} onChange={(e) => setDescription(e.target.value)}/>
+                <Textarea className="rounded-xl h-[13vh] resize-none bg-card border-ring" placeholder={t("placeholders.description")} value={description} onChange={(e) => setDescription(e.target.value)}/>
             </div>
         </div>
     );

@@ -11,6 +11,7 @@ import Link from "next/link";
 import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
 import { Grip } from "lucide-react";
+import { group } from "console";
 
 interface Props {
     offset?: number; // Nombre de groupes à afficher par page
@@ -99,7 +100,7 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
               {loading && <Loading />}
               {groups.length > 0  &&
                 groups.map((group) => (
-                  <Card key={group._id} className={`flex p-2 gap-3 border-ring shadow-md hover:border-2 ${reverse ? "bg-background" : "bg-card"} ${grabbled ? "justify-between cursor-grab" : "justify-center"} ${groupSelected?._id === group._id ? "border-2" : "border"}`} onClick={() => setGroupSelected(group)}>
+                  <Card key={group._id} className={`cursor-pointer flex p-2 gap-3 border-ring shadow-md hover:border-2 ${reverse ? "bg-background" : "bg-card"} ${grabbled ? "justify-between cursor-grab" : "justify-center"} ${groupSelected?._id === group._id ? "border-2" : "border"}`} onClick={() => setGroupSelected(group)}>
                     <span className="text-foreground font-bold">{group.label}</span>
                     {grabbled && <Grip />}
                   </Card>
