@@ -8,8 +8,10 @@ import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/useToast";
+import { ICampaign } from "@/models/campaigns/ICampaign";
 import ICharacter from "@/models/characters/ICharacter";
 import { IGroup } from "@/models/groups/IGroup";
+import CampaignService from "@/services/campaignService";
 import CharacterService from "@/services/CharacterService";
 import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
@@ -23,6 +25,8 @@ export default function CampaignGroupsPage() {
 
     const [groupSelected, setGroupSelected] = useState<IGroup | null>(null);
     const [characterSelected, setCharacterSelected] = useState<ICharacter | null>(null);
+
+    const [campaign, setCampaign] = useState<ICampaign | null>(null);
 
     const [newCharacter, setNewCharacter] = useState<ICharacter | null>(null);
 
@@ -84,6 +88,23 @@ export default function CampaignGroupsPage() {
             }
         }, []
     );
+
+    const findCampaign = useCallback(
+        async (campaignId: string) => {
+            try {
+                let response = await CampaignService.findOne(campaignId);
+                setCampaign(response.data);
+            } catch (err) {
+                error(t("error"));
+                console.error("Error fetching characters:", error);
+            }
+        }, []
+    );
+
+    useEffect(() => {
+        if(!campaignId) return;
+        findCampaign(campaignId.toString());
+    }, []);
 
     useEffect(() => {
         if(newCharacter) {
@@ -210,7 +231,7 @@ export default function CampaignGroupsPage() {
 
     return (
         <div className="w-full flex flex-col">
-            <Header campaign={null} />
+            <Header campaign={campaign} />
             <main className="h-full flex flex-row">
                 <div className="w-[15%]">
                     <GroupListPanel idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} />
