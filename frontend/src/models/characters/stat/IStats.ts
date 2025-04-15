@@ -10,7 +10,7 @@ export default interface IStats {
     tempHitPoints: number;
     hitDice: string;
     armorClass: number;
-    seed: ISpeed;
+    speed: ISpeed;
     abilityScores: IAbilityScores;
     savingThrows?: ISavingThrows;
     skills?: ISkills;
