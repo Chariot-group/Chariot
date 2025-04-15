@@ -65,7 +65,12 @@
       "languagesAdd": "Add language",
       "languagesDelete": "Delete language",
       "abilitiesAdd": "Add ability",
-      "abilitiesDelete": "Delete ability"
+      "abilitiesDelete": "Delete ability",
+      "modal": {
+        "title": "Delete character",
+        "description": "Are you sure you want to delete this character ?",
+        "confirm": "Yes, delete"
+      }
     },
     "categories": {
       "global": {
@@ -258,7 +263,12 @@
     "error": "Error updating the group",
     "actions": {
       "groupDelete": "Delete group",
-      "findCampaign": "Find its campaign"
+      "findCampaign": "Find its campaign",
+      "modal": {
+        "title": "Delete group",
+        "description": "Are you sure you want to delete this group ?",
+        "confirm": "Yes, delete"
+      }
     },
     "labels": {
       "name": "Group name",
@@ -270,5 +280,9 @@
       "type": "Main group",
       "description": "Group description"
     }
+  },
+  "GroupPage": {
+    "yourCharacters": "Your characters",
+    "addCharacter": "Add character"
   }
 }
