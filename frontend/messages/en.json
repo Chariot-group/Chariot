@@ -235,6 +235,9 @@
       }
     }
   },
+  "Global": {
+    "cancel": "Cancel"
+  },
   "CampaignDetails": {
     "errors": "Error updating campaign",
     "labels": {
