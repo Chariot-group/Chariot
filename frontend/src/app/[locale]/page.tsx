@@ -1,4 +1,5 @@
 "use client";
+import { Header } from "@/components/common/Header";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
 import CharacterDetailsModal from "@/components/modules/characters/CharacterDetailsModal";
 import { Button } from "@/components/ui/button";
@@ -123,12 +124,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
-      <LocaleSwitcher />
+      <Header campaign={null} />
       <Button
         onClick={() => {
           setIsPopupOpen(true);
         }}
-        className="bg-blue-500 text-white p-2 rounded"
       >
         Open Character Details
       </Button>
