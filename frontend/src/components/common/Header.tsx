@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useEffect } from "react";
 import Link from "next/link";
+import LocaleSwitcher from "../locale/LocaleSwitcher";
 
 interface HeaderProps {
   campaign: ICampaign | null;
@@ -21,7 +22,7 @@ export function Header({ campaign }: HeaderProps) {
         <h1 className="text-foreground text-2xl font-bold">{`${t("home")} ${
           campaign ? `- ${campaign.label}` : ""
         }`}</h1>
-        <div>{/* Future avatar */}</div>
+        <LocaleSwitcher />
       </div>
     </header>
   );

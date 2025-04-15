@@ -33,8 +33,7 @@ const GroupService = {
       return [];
     }
   },
-
-  async updateCharacter(id: string, data: Partial<IGroup>) {
+  async updateGroup(id: string, data: Partial<any>) {
     try {
       const response = await apiClient(APIContentType.JSON).patch(
         `/groups/${id}`,
