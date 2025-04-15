@@ -49,6 +49,7 @@
     "search": "Buscar un grupo",
     "create": "Agregar un grupo",
     "noGroups": "No se encontraron grupos",
+    "dropHere": "Suelta aquí para agregar al grupo",
     "error": "Error al cargar los grupos"
   },
   "CharacterDetailsPanel": {
@@ -283,6 +284,4 @@
       "cancel": "Cancelar"
     }
   }
-
-
 }

@@ -49,6 +49,7 @@
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",
     "noGroups": "Aucun groupe trouvé",
+    "dropHere": "Déposez ici pour ajouter au groupe",
     "error": "Erreur lors du chargement des groupes"
   },
   "CharacterDetailsPanel": {
@@ -58,7 +59,7 @@
       "actions": "Actions",
       "traits": "Traits"
     },
-    "actions":{
+    "actions": {
       "characterDelete": "Supprimer le personnage",
       "actionsAdd": "Ajouter une action",
       "actionsDelete": "Supprimer l'action",
