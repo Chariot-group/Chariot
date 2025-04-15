@@ -14,22 +14,24 @@ import { useDroppable } from "@dnd-kit/core";
 import GroupListPanelItem from "./GroupListPanelItem";
 
 interface Props {
+  groups: IGroup[]; // Liste des groupes à afficher
+  setGroups: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
   offset?: number; // Nombre de groupes à afficher par page
   idCampaign: string; // ID de la campagne des groupes
   reverse?: boolean; // Si vrai, les couleurs de fond sont inversé
   type?: "all" | "main" | "npc" | "archived"; // Titre de groupe à afficher
   grabbled?: boolean; // Si vrai, le curseur est en mode grab et une icône de grip est affichée
   addable?: boolean; // Si vrai, le bouton d'ajout de groupe est affiché
-  refresh?: number; // Si défini, le composant sera rafraîchi
 }
 export default function GroupListPanel({
+  groups,
+  setGroups,
   offset = 8,
   idCampaign,
   reverse = false,
   type = "all",
   grabbled = false,
   addable = true,
-  refresh,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -38,8 +40,6 @@ export default function GroupListPanel({
   const { setNodeRef, isOver } = useDroppable({
     id: type, // "main", "npc", etc.
   });
-
-  const [groups, setGroups] = useState<IGroup[]>([]);
 
   //Pagination
   const [page, setPage] = useState<number>(1);
@@ -94,7 +94,7 @@ export default function GroupListPanel({
   useEffect(() => {
     setGroups([]);
     fetchGroups(search, 1, true);
-  }, [currentLocal, search, refresh]);
+  }, [currentLocal, search]);
 
   return (
     <div className="w-full h-full flex flex-col">
