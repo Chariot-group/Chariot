@@ -10,7 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
-import { Grip, Group } from "lucide-react";
 import { useDroppable } from "@dnd-kit/core";
 import GroupListPanelItem from "./GroupListPanelItem";
 
@@ -36,7 +35,7 @@ export default function GroupListPanel({
   const t = useTranslations("GroupListPanel");
   const { error } = useToast();
 
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef, isOver } = useDroppable({
     id: type, // "main", "npc", etc.
   });
 
@@ -48,7 +47,6 @@ export default function GroupListPanel({
   const [loading, setLoading] = useState<boolean>(false);
 
   //Infinite scroll
-  const containerRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const fetchGroups = useCallback(
@@ -91,7 +89,7 @@ export default function GroupListPanel({
     [loading]
   );
 
-  useInfiniteScroll(containerRef, fetchGroups, page, loading, search);
+  useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
 
   useEffect(() => {
     setGroups([]);
@@ -112,16 +110,15 @@ export default function GroupListPanel({
         />
       </CardHeader>
       <CardContent
-        ref={containerRef}
-        className="flex-1 h-auto overflow-auto scrollbar-hide"
+        ref={cardRef}
+        className={`flex-1 h-auto overflow-auto scrollbar-hide ${
+          isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
+        }`}
       >
         <div className="flex flex-col gap-3" ref={setNodeRef}>
           {addable && (
             <Link href="/groups/add" title={t("create")}>
-              <Card
-                ref={cardRef}
-                className="bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary shadow-md"
-              >
+              <Card className="bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary shadow-md">
                 <span className="text-background font-bold">{t("create")}</span>
               </Card>
             </Link>
@@ -140,6 +137,11 @@ export default function GroupListPanel({
           {groups.length === 0 && !loading && (
             <div className="row-start-2 col-span-3 flex items-top justify-center">
               <p className="text-gray-500">{t("noGroups")}</p>
+            </div>
+          )}
+          {isOver && (
+            <div className="row-start-2 col-span-3 flex items-top justify-center">
+              <p className="text-gray-500">{t("dropHere")}</p>
             </div>
           )}
         </div>

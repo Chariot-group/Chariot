@@ -49,6 +49,7 @@
     "search": "Search a group",
     "create": "Add a group",
     "noGroups": "No groups found",
+    "dropHere": "Drop here to add in the group",
     "error": "Error loading groups"
   },
   "CharacterDetailsPanel": {
