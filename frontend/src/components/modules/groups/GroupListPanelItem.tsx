@@ -25,20 +25,22 @@ const GroupListPanelItem = ({
         from: currentPanelType,
       },
     });
+
+  const isOverlay = currentPanelType === "overlay";
+  const style = transform
+    ? { transform: `translate(${transform.x}px, ${transform.y}px)` }
+    : undefined;
+
   return (
     <Card
-      ref={setNodeRef}
-      style={{
-        transform: transform
-          ? `translate(${transform.x}px, ${transform.y}px)`
-          : undefined,
-        opacity: isDragging ? 0.5 : 1,
-      }}
-      {...listeners}
-      {...attributes}
-      className={`flex p-2 gap-3 border-ring shadow-md hover:border-2 ${
+      ref={!isOverlay ? setNodeRef : undefined}
+      style={isOverlay ? {} : style}
+      {...(!isOverlay ? { ...listeners, ...attributes } : {})}
+      className={`flex p-2 gap-3 border-ring shadow-md ${
         reverse ? "bg-background" : "bg-card"
-      } ${grabbled ? "justify-between cursor-grab" : "justify-center"}`}
+      } ${grabbled ? "justify-between cursor-grab" : "justify-center"} ${
+        isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""
+      }`}
     >
       <span className="text-foreground font-bold">{group.label}</span>
       {grabbled && <Grip />}

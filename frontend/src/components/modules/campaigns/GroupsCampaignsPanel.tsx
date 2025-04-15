@@ -5,8 +5,9 @@ import { useTranslations } from "next-intl";
 import GroupListPanel from "../groups/GroupListPanel";
 import { IGroup } from "@/models/groups/IGroup";
 import { useState } from "react";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DragEndEvent } from "@dnd-kit/core";
 import GroupService from "@/services/groupService";
+import GroupDnDWrapper from "../groups/GroupDndProvider";
 
 interface Props {
   idCampaign: string; // ID de la campagne des groupes
@@ -46,7 +47,7 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
         <Button>{t("create")}</Button>
       </div>
       <div className="flex flex-row gap-4 mt-4 justify-between h-full">
-        <DndContext onDragEnd={handleDragEnd}>
+        <GroupDnDWrapper onDragEnd={handleDragEnd}>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
               reverse={true}
@@ -83,7 +84,7 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               refresh={refresh}
             />
           </div>
-        </DndContext>
+        </GroupDnDWrapper>
       </div>
     </div>
   );

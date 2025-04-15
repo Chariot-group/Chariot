@@ -134,7 +134,7 @@ export default function GroupListPanel({
                 reverse={reverse}
               />
             ))}
-          {groups.length === 0 && !loading && (
+          {groups.length === 0 && !loading && !isOver && (
             <div className="row-start-2 col-span-3 flex items-top justify-center">
               <p className="text-gray-500">{t("noGroups")}</p>
             </div>
