@@ -16,7 +16,7 @@ import CharacterService from "@/services/CharacterService";
 import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 
 export default function CampaignGroupsPage() {
 
@@ -25,6 +25,7 @@ export default function CampaignGroupsPage() {
 
     const [groupSelected, setGroupSelected] = useState<IGroup | null>(null);
     const [characterSelected, setCharacterSelected] = useState<ICharacter | null>(null);
+    const [groups, setGroups] = useState<IGroup[]>([]);
 
     const [campaign, setCampaign] = useState<ICampaign | null>(null);
 
@@ -234,7 +235,7 @@ export default function CampaignGroupsPage() {
             <Header campaign={campaign} />
             <main className="h-full flex flex-row">
                 <div className="w-[15%]">
-                    <GroupListPanel idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} />
+                    <GroupListPanel idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} />
                 </div>
                 <div className="h-[90vh] justify-center flex flex-col">
                     <div className="h-[80vh] border border-ring"></div>

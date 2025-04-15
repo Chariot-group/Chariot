@@ -73,6 +73,7 @@ export default function GroupListPanel({
         );
         if (reset) {
           setGroups(response.data || []);
+          setGroupSelected(response.data[0] || null);
         } else {
           setGroups((prev) => {
             //Fix un bug surement dû au seeder.
@@ -156,6 +157,8 @@ export default function GroupListPanel({
                 currentPanelType={type}
                 grabbled={grabbled}
                 reverse={reverse}
+                setGroupSelected={setGroupSelected}
+                groupSelected={groupSelected}
               />
             ))}
           {groups.length === 0 && !loading && !isOver && (
