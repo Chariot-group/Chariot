@@ -234,6 +234,18 @@
         "range": "5"
       }
     }
+  },
+  "CampaignDetails": {
+    "errors": "Error al cargar la campaña",
+    "labels": {
+      "description": "Descripción"
+    },
+    "placeholders": {
+      "description": "Una breve descripción de la campaña"
+    },
+    "actions": {
+      "delete": "Eliminar campaña"
+    }
   }
 
 }

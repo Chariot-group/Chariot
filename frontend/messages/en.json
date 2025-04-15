@@ -234,6 +234,18 @@
         "range": "5"
       }
     }
+  },
+  "CampaignDetails": {
+    "errors": "Error updating campaign",
+    "labels": {
+      "description": "Description"
+    },
+    "placeholders": {
+      "description": "A great campaign"
+    },
+    "actions": {
+      "delete": "Delete campaign"
+    }
   }
 
 }
