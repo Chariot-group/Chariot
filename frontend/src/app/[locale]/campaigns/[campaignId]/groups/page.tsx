@@ -48,6 +48,24 @@ export default function CampaignGroupsPage() {
         []
     );
 
+    const deleteCharacter = useCallback(
+        async (deleteCharacter: Partial<ICharacter>) => {
+            try {
+                await CharacterService.deleteCharacter(deleteCharacter._id);
+                setGroupSelected((prev) => {
+                    if (!prev) return null;
+                    return {
+                        ...prev,
+                        characters: prev.characters.filter((character) => character !== deleteCharacter._id)
+                    }
+                });
+            } catch (err) {
+                error(t("error"));
+                console.error("Error fetching characters:", error);
+            }
+        }, []
+    );
+
     useEffect(() => {
         if(newCharacter) {
             setCharacterSelected(newCharacter);
@@ -203,7 +221,7 @@ export default function CampaignGroupsPage() {
                                 </Card>
                                 {
                                     characterSelected && (
-                                        <CharacterDetailsPanel character={characterSelected} />
+                                        <CharacterDetailsPanel onDelete={deleteCharacter} character={characterSelected} />
                                     )
                                 }
                             </div>

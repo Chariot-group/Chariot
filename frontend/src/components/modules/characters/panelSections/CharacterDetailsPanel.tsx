@@ -16,11 +16,13 @@ import ActionsSection from "./actions/ActionsSection";
 import TraitsSection from "./traits/TraitsSection";
 import CharacterService from "@/services/CharacterService";
 import { useToast } from "@/hooks/useToast";
+import DeleteValidation from "@/components/common/modals/DeleteValidation";
 
 interface ICharacterDetailsPanelProps {
     character: ICharacter;
+    onDelete: (character: ICharacter) => void;
 }
-export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps) {
+export function CharacterDetailsPanel({ character, onDelete }: ICharacterDetailsPanelProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
     const { error } = useToast();
@@ -32,6 +34,8 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
     const [combat, setCombat] = useState<ICombat>(character.combat);
     const [action, setAction] = useState<IActions>(character.actions[0]);
     const [trait, setTrait] = useState(character.traits[0]);
+
+    const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
 
     useEffect(() => {
         cancelRef.current = true;
@@ -70,7 +74,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
           }
         },
         []
-      );
+    );
 
     const onChange = () => {
         character.name = name;
@@ -88,6 +92,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
 
   return (
     <Card className="flex flex-col h-full gap-3 p-5">
+        <DeleteValidation isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title={t("actions.modal.title")} message={t("actions.modal.description")} confirmMessage={t("actions.modal.confirm")} onConfirm={() => onDelete(character)} />
         <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row w-1/5">
                 <Champs id={"name"} type={"text"} label={t("labels.name")} onChange={onChange} placeholder={t("placeholders.name")} value={name} setValue={setName} />
@@ -98,7 +103,7 @@ export function CharacterDetailsPanel({ character }: ICharacterDetailsPanelProps
                 <span className={`cursor-pointer underline-offset-4 ${actionsNav ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('actions')}>{t("navigation.actions")}</span>
                 <span className={`cursor-pointer underline-offset-4 ${traitsNav ? "underline" : "hover:underline"}`} onClick={(e) => updateTab('traits')}>{t("navigation.traits")}</span>
             </div>
-            <Button variant={"link"}>{t("actions.characterDelete")}</Button>
+            <Button variant={"link"} onClick={() => setDeleteModalOpen(true)}>{t("actions.characterDelete")}</Button>
         </div>
         <div className="flex flex-col h-full flex-1 h-auto overflow-auto scrollbar-hide">
             {

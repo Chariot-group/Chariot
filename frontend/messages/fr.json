@@ -65,7 +65,12 @@
       "languagesAdd": "Ajouter une langue",
       "languagesDelete": "Supprimer la langue",
       "abilitiesAdd": "Ajouter une capacité",
-      "abilitiesDelete": "Supprimer la capacité"
+      "abilitiesDelete": "Supprimer la capacité",
+      "modal": {
+        "title": "Supprimer le personnage",
+        "description": "Êtes-vous sûr de vouloir supprimer ce personnage ?",
+        "confirm": "Oui, supprimer"
+      }
     },
     "categories": {
       "global": {

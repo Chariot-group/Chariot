@@ -54,6 +54,21 @@ const CharacterService = {
       console.error("API error:", err);
       return "error";
     }
+  },
+
+  async deleteCharacter(id: any) {
+    try {
+      const response = await apiClient(APIContentType.JSON).delete(`/characters/${id}`);
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return "error";
+    }
   }
 };
 
