@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/useToast";
 import ICharacter from "@/models/characters/ICharacter";
 import { IGroup } from "@/models/groups/IGroup";
 import CharacterService from "@/services/CharacterService";
+import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -57,6 +58,24 @@ export default function CampaignGroupsPage() {
                     return {
                         ...prev,
                         characters: prev.characters.filter((character) => character !== deleteCharacter._id)
+                    }
+                });
+            } catch (err) {
+                error(t("error"));
+                console.error("Error fetching characters:", error);
+            }
+        }, []
+    );
+
+    const deleteGroup = useCallback(
+        async (deleteGroup: IGroup) => {
+            try {
+                await GroupService.deleteGroup(deleteGroup._id);
+                setGroupSelected((prev) => {
+                    if (!prev) return null;
+                    return {
+                        ...prev,
+                        deletedAt: new Date()
                     }
                 });
             } catch (err) {
@@ -203,7 +222,7 @@ export default function CampaignGroupsPage() {
                     groupSelected && (
                         <div className="w-[85%] h[100vh] flex flex-col">
                             <div className="w-full">
-                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} idCampaign={campaignId?.toString() ?? ""} />
+                                <GroupDetailsPanel group={groupSelected} idCampaign={campaignId?.toString() ?? ""} onDelete={deleteGroup} />
                             </div>
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>

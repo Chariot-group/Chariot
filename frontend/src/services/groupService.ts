@@ -23,9 +23,24 @@ const GroupService = {
         }
     },
 
-    async updateCharacter(id: string, data: Partial<IGroup>) {
+    async updateGroup(id: string, data: Partial<IGroup>) {
         try {
             const response = await apiClient(APIContentType.JSON).patch(`/groups/${id}`, data);
+      
+            if (!response || !response.data || response === undefined) {
+              throw new Error("Invalid API response");
+            }
+      
+            return response.data;
+        } catch (err: any) {
+            console.error("API error:", err);
+            return "error";
+        }
+    },
+
+    async deleteGroup(id: string) {
+        try {
+            const response = await apiClient(APIContentType.JSON).delete(`/groups/${id}`);
       
             if (!response || !response.data || response === undefined) {
               throw new Error("Invalid API response");

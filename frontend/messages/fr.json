@@ -263,7 +263,12 @@
     "error": "Erreur lors de la mise à jour du groupe",
     "actions": {
       "groupDelete": "Supprimer le groupe",
-      "findCampaign": "Trouver sa campagne"
+      "findCampaign": "Trouver sa campagne",
+      "modal": {
+        "title": "Supprimer le group",
+        "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
+        "confirm": "Oui, supprimer"
+      }
     },
     "labels": {
       "name": "Nom du groupe",

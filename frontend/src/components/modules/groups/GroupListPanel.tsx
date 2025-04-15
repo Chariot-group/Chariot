@@ -66,14 +66,14 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
         } finally {
             setLoading(false);
         }
-    }, [loading])
+    }, [loading, groupSelected?.deletedAt])
 
     useInfiniteScroll(containerRef, fetchGroups, page, loading, search);
 
     useEffect(() => {
         setGroups([]);
         fetchGroups(search, 1, true);
-    }, [currentLocal, search]);
+    }, [currentLocal, search, groupSelected?.deletedAt]);
 
     return (
       <div className="w-full h-full flex flex-col">
