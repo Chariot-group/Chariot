@@ -12,6 +12,7 @@ import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
 import { Grip } from "lucide-react";
 import { group } from "console";
+import { Button } from "@/components/ui/button";
 
 interface Props {
     offset?: number; // Nombre de groupes à afficher par page
@@ -30,6 +31,7 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
     const { error } = useToast();
 
     const [groups, setGroups] = useState<IGroup[]>([]);
+    const [newGroup, setNewGroup] = useState<IGroup | null>(null);
 
     //Pagination
     const [page, setPage] = useState<number>(1);
@@ -68,6 +70,27 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
         }
     }, [loading, groupSelected?.deletedAt])
 
+    const createGroup = useCallback(async () => {
+      try {
+          const response = await GroupService.createGroup({label: "Nouveau groupe", description: "", campaigns: [{idCampaign, type: "npc"}]});
+          setNewGroup(response.data);
+          fetchGroups(search, 1, true);
+      } catch(err){
+          error(t("error"));
+      } finally {
+          setLoading(false);
+      }
+  }, [])
+
+    useEffect(() => {
+      console.log("newGroup", newGroup);
+      console.log("selected", groupSelected);
+      if(newGroup) {
+        setGroupSelected(newGroup);
+        setNewGroup(null);
+      }
+    }, [groupSelected]);
+
     useInfiniteScroll(containerRef, fetchGroups, page, loading, search);
 
     useEffect(() => {
@@ -89,14 +112,9 @@ export default function GroupListPanel({ offset = 8, idCampaign, groupSelected, 
         <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
             <div className="flex flex-col gap-3">
               {addable && 
-              <Link href="/groups/add" title={t("create")}>
-                <Card
-                  ref={cardRef}
-                  className="bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary shadow-md"
-                >
-                  <span className="text-background font-bold">{t("create")}</span>
-                </Card>
-              </Link>}
+              <Button onClick={() => createGroup()}>
+                <span className="text-background font-bold">{t("create")}</span>
+              </Button>}
               {loading && <Loading />}
               {groups.length > 0  &&
                 groups.map((group) => (
