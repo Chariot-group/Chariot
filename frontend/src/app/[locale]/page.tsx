@@ -1,13 +1,8 @@
 "use client";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
-import CharacterListPanel from "@/components/modules/characters/CharacterListPanel";
-import GroupListPanel from "@/components/modules/groups/GroupListPanel";
-import { IGroup } from "@/models/groups/IGroup";
-import ICharacter from "@/models/characters/ICharacter";
 import { useState } from "react";
 import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel";
 import { ICampaign } from "@/models/campaigns/ICampaign";
-import { CharacterDetailsPanel } from "@/components/modules/characters/panelSections/CharacterDetailsPanel";
 import { Header } from "@/components/common/Header";
 
 export default function Home() {

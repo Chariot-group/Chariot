@@ -238,6 +238,24 @@
   "Header": {
     "home": "CHARIOT",
     "launchBattle": "Iniciar un combate"
+  },
+  "GroupDetailsPanel": {
+    "error": "Error al actualizar el grupo",
+    "actions": {
+      "groupDelete": "Eliminar el grupo",
+      "findCampaign": "Encontrar su campaña"
+    },
+    "labels": {
+      "name": "Nombre del grupo",
+      "type": "Tipo",
+      "description": "Descripción"
+    },
+    "placeholders": {
+      "name": "Nombre del grupo",
+      "type": "Grupo principal",
+      "description": "Descripción del grupo"
+    }
   }
+
 
 }
