@@ -8,18 +8,44 @@ import { useState } from "react";
 import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { CharacterDetailsPanel } from "@/components/modules/characters/panelSections/CharacterDetailsPanel";
+import ValidationPopup from "@/components/common/modals/DeleteValidation";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [group, setGroupSelected] = useState<IGroup | null>(null);
 
   const [character, setCharacterSelected] = useState<ICharacter | null>(null);
-  const [selectedCampaign, setSelectedCampaign] = useState<ICampaign | null>(
-    null
-  );
+  const [selectedCampaign, setSelectedCampaign] = useState<ICampaign | null>(null);
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleConfirm = () => {
+    // Action à effectuer après confirmation
+    console.log('Action confirmée!');
+    // Votre logique ici (envoi de formulaire, suppression, etc.)
+  };
 
   return (
     <div className="flex flex-col">
       <LocaleSwitcher />
+      <div className="flex flex-row">
+        <Button 
+          variant="link"
+          onClick={() => setIsPopupOpen(true)}
+        >
+          Ouvrir la popup de validation
+        </Button>
+        
+        <ValidationPopup 
+          isOpen={isPopupOpen}
+          onClose={() => setIsPopupOpen(false)}
+          title="Êtes-vous sûr ?"
+          message="Voulez-vouis vraiment supprimer cet campagne ? Toutes les données seront perdues."
+          confirmMessage="Oui, supprimer"
+          onConfirm={handleConfirm}
+        />
+      </div>
       <div className="flex flex-row">
         <div className="w-1/4 h-[100vh]">
           <GroupListPanel

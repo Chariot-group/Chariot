@@ -234,6 +234,9 @@
         "range": "5"
       }
     }
+  },
+  "Global": {
+    "cancel": "Cancel"
   }
 
 }
