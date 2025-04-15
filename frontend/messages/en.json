@@ -235,6 +235,10 @@
       }
     }
   },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Launch a battle"
+  },
   "GroupDetailsPanel": {
     "error": "Error updating the group",
     "actions": {
