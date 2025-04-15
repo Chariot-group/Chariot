@@ -2,6 +2,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useEffect } from "react";
+import LocaleSwitcher from "../locale/LocaleSwitcher";
 
 interface HeaderProps {
   campaign: ICampaign | null;
@@ -15,7 +16,7 @@ export function Header({ campaign }: HeaderProps) {
             <div className="flex justify-between items-center">
                 <Button >{t("launchBattle")}</Button>
                 <h1 className="text-foreground text-2xl font-bold">{`${t("home")} ${campaign ? `- ${campaign.label}` : ""}`}</h1>
-                <div>{/* Future avatar */}</div>
+                <LocaleSwitcher />
             </div>
         </header>
     );
