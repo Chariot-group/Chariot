@@ -271,5 +271,17 @@
       "type": "Groupe principal",
       "description": "Description du groupe"
     }
+  },
+  "CampaignModal": {
+    "title": "Créer une campagne",
+    "subTitles": {
+      "info": "Pour créer une campagne, nous avons besoin du nom de celle-ci.",
+      "warning": "Attention ! Vous ne pourrez pas la modifier par la suite."
+    },
+    "placeholder": "Nom de la campagne",
+    "actions": {
+      "create": "Créer une campagne",
+      "cancel": "Annuler"
+    }
   }
 }
