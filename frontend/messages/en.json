@@ -238,6 +238,18 @@
   "Global": {
     "cancel": "Cancel"
   },
+  "CampaignDetails": {
+    "errors": "Error updating campaign",
+    "labels": {
+      "description": "Description"
+    },
+    "placeholders": {
+      "description": "A great campaign"
+    },
+    "actions": {
+      "delete": "Delete campaign"
+    }
+  },
   "Header": {
     "home": "CHARIOT",
     "launchBattle": "Launch a battle"

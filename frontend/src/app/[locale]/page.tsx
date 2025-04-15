@@ -5,9 +5,13 @@ import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel"
 import { ICampaign } from "@/models/campaigns/ICampaign";
 <<<<<<< HEAD
 import { CharacterDetailsPanel } from "@/components/modules/characters/panelSections/CharacterDetailsPanel";
+<<<<<<< HEAD
 import ValidationPopup from "@/components/common/modals/DeleteValidation";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+=======
+import CampaignDetailsPanel from "@/components/modules/campaigns/CampaignDetailsPanel";
+>>>>>>> origin/develop
 
 export default function Home() {
   const [group, setGroupSelected] = useState<IGroup | null>(null);
@@ -15,6 +19,7 @@ export default function Home() {
   const [character, setCharacterSelected] = useState<ICharacter | null>(null);
   const [selectedCampaign, setSelectedCampaign] = useState<ICampaign | null>(null);
 
+<<<<<<< HEAD
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleConfirm = () => {
@@ -23,10 +28,13 @@ export default function Home() {
     // Votre logique ici (envoi de formulaire, suppression, etc.)
   };
 
+=======
+>>>>>>> origin/develop
   return (
     <div className="flex flex-col">
       <LocaleSwitcher />
       <div className="flex flex-row">
+<<<<<<< HEAD
         <Button 
           variant="link"
           onClick={() => setIsPopupOpen(true)}
@@ -85,6 +93,8 @@ export default function Home() {
             setGroupSelected={setGroupSelected}
           />
         </div>
+=======
+>>>>>>> origin/develop
         <div className="w-1/4 h-[100vh] bg-card">
           <CampaignListPanel
             offset={15}
@@ -92,6 +102,7 @@ export default function Home() {
             setSelectedCampaign={setSelectedCampaign}
           />
         </div>
+<<<<<<< HEAD
       </div>
       <div className="flex flex-row gap-10 h-[70vh] p-5">
         <div className="w-1/5 bg-card">
@@ -101,6 +112,18 @@ export default function Home() {
             characterSelected={character}
             setCharacterSelected={setCharacterSelected}
           />
+=======
+        {
+          selectedCampaign && (
+            <div className="w-1/4 h-[100vh] w-full">
+              <CampaignDetailsPanel
+                campaign={selectedCampaign}
+                setCampaign={setSelectedCampaign}
+              />
+            </div>
+          )}
+      </div>
+>>>>>>> origin/develop
 =======
 import { Header } from "@/components/common/Header";
 
@@ -123,6 +146,7 @@ export default function Home() {
 >>>>>>> origin/develop
         </div>
       </main>
+>>>>>>> origin/develop
     </div>
   );
 }
