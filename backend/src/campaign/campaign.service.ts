@@ -191,8 +191,97 @@ export class CampaignService {
     }
   }
 
-  update(id: number, updateCampaignDto: UpdateCampaignDto) {
-    return `This action updates a #${id} campaign`;
+  async update(id: string, updateCampaignDto: UpdateCampaignDto) {
+    try {
+
+      await this.validateGroupRelations(updateCampaignDto.groups.main, 'Main');
+      await this.validateGroupRelations(updateCampaignDto.groups.npc, 'NPC');
+      await this.validateGroupRelations(
+        updateCampaignDto.groups.archived,
+        'Archived',
+      );
+
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        throw new BadRequestException(`Invalid campaign ID: ${id}`);
+      }
+
+      const start = Date.now();
+
+      // Find existing campaign
+      const existingCampaign = await this.campaignModel.findById(id);
+      if (!existingCampaign) {
+        throw new NotFoundException(`Campaign ${id} not found`);
+      }
+
+      if (existingCampaign.deletedAt) {
+        throw new GoneException(`Campaign ${id} has been deleted`);
+      }
+
+      // Handle label update attempt
+      if (updateCampaignDto.label && updateCampaignDto.label !== existingCampaign.label) {
+        throw new BadRequestException('Campaign label cannot be modified');
+      }
+
+      // Handle groups update if present
+      if (updateCampaignDto.groups) {
+        const { main = [], npc = [], archived = [] } = updateCampaignDto.groups;
+        const newGroupIds = [...main, ...npc, ...archived];
+        const currentGroupIds = [
+          ...existingCampaign.groups.main,
+          ...existingCampaign.groups.npc,
+          ...existingCampaign.groups.archived
+        ].map(id => id.toString());
+
+        // Remove campaign from old groups
+        const groupsToRemove = currentGroupIds.filter(id => !newGroupIds.includes(id));
+        if (groupsToRemove.length > 0) {
+          await this.groupModel.updateMany(
+            { _id: { $in: groupsToRemove } },
+            { $pull: { campaigns: id } }
+          );
+        }
+
+        // Add campaign to new groups
+        const groupsToAdd = newGroupIds.filter(id => !currentGroupIds.includes(id));
+        if (groupsToAdd.length > 0) {
+          await this.groupModel.updateMany(
+            { _id: { $in: groupsToAdd } },
+            { $addToSet: { campaigns: id } }
+          );
+        }
+      }
+
+      // Update campaign
+      const updatedCampaign = await this.campaignModel
+        .findByIdAndUpdate(
+          id,
+          {
+            ...updateCampaignDto,
+            updatedAt: new Date()
+          },
+          { new: true }
+        )
+        .populate([
+          { path: 'groups.main', populate: { path: 'characters' } },
+          { path: 'groups.npc', populate: { path: 'characters' } },
+          { path: 'groups.archived', populate: { path: 'characters' } }
+        ]);
+
+      const end = Date.now();
+
+      return {
+        message: `Campaign updated in ${end - start}ms`,
+        data: updatedCampaign
+      };
+    } catch (error) {
+      if (error instanceof BadRequestException || 
+          error instanceof NotFoundException || 
+          error instanceof GoneException) {
+        throw error;
+      }
+      throw new InternalServerErrorException(`Error updating campaign: ${error.message}`);
+    }
   }
 
   async remove(id: string) {
