@@ -235,6 +235,9 @@
       }
     }
   },
+  "Global": {
+    "cancel": "Annuler"
+  },
   "CampaignDetails": {
     "errors": "Erreur lors de la mise à jour de la campagne",
     "labels": {

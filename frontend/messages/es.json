@@ -235,6 +235,9 @@
       }
     }
   },
+  "Global": {
+    "cancel": "Cancelar"
+  },
   "CampaignDetails": {
     "errors": "Error al cargar la campaña",
     "labels": {
