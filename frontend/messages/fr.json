@@ -283,5 +283,14 @@
       "create": "Créer une campagne",
       "cancel": "Annuler"
     }
+  },
+  "CampaignPage": {
+    "tutorial": {
+      "step1": "Etape 1: Créer une campagne",
+      "step2": "Etape 2: Créer un groupe de joueur principal",
+      "step3": "Etape 3: Créer vos groupes de PNJ",
+      "step4": "Etape 4: Lancer vos initiatives",
+      "step5": "Etape 5: Let’s play !"
+    }
   }
 }

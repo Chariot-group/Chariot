@@ -99,7 +99,7 @@ export class CampaignService {
       const { page = 1, offset = 10, label = '' } = query;
       const skip = (page - 1) * offset;
 
-      const filter = {
+      const filters = {
         label: { $regex: `${label}`, $options: 'i' },
         deletedAt: { $eq: null },
       };
@@ -112,11 +112,11 @@ export class CampaignService {
           : (sort[query.sort] = 1);
       }
 
-      const totalItems = await this.campaignModel.countDocuments(filter);
+      const totalItems = await this.campaignModel.countDocuments(filters);
 
       const start: number = Date.now();
       const campaigns = await this.campaignModel
-        .find(filter)
+        .find(filters)
         .skip(skip)
         .limit(offset)
         .sort(sort)
@@ -194,16 +194,18 @@ export class CampaignService {
   async update(id: string, updateCampaignDto: UpdateCampaignDto) {
     try {
 
-      await this.validateGroupRelations(updateCampaignDto.groups.main, 'Main');
-      await this.validateGroupRelations(updateCampaignDto.groups.npc, 'NPC');
-      await this.validateGroupRelations(
-        updateCampaignDto.groups.archived,
-        'Archived',
-      );
+      this.logger.error(updateCampaignDto.groups, null, this.SERVICE_NAME);
+      if(updateCampaignDto.groups) {
+        await this.validateGroupRelations(updateCampaignDto.groups.main, 'Main');
+        await this.validateGroupRelations(updateCampaignDto.groups.npc, 'NPC');
+        await this.validateGroupRelations(updateCampaignDto.groups.archived, 'Archived');
+      }
 
       // Validate ID
       if (!Types.ObjectId.isValid(id)) {
-        throw new BadRequestException(`Invalid campaign ID: ${id}`);
+        const message = `Invalid campaign ID: ${id}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
       }
 
       const start = Date.now();
@@ -211,16 +213,22 @@ export class CampaignService {
       // Find existing campaign
       const existingCampaign = await this.campaignModel.findById(id);
       if (!existingCampaign) {
-        throw new NotFoundException(`Campaign ${id} not found`);
+        const message = `Campaign ${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
       }
 
       if (existingCampaign.deletedAt) {
-        throw new GoneException(`Campaign ${id} has been deleted`);
+        const message = `Campaign ${id} has been deleted`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
       }
 
       // Handle label update attempt
       if (updateCampaignDto.label && updateCampaignDto.label !== existingCampaign.label) {
-        throw new BadRequestException('Campaign label cannot be modified');
+        const message = `Campaign label cannot be modified`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
       }
 
       // Handle groups update if present
@@ -280,7 +288,9 @@ export class CampaignService {
           error instanceof GoneException) {
         throw error;
       }
-      throw new InternalServerErrorException(`Error updating campaign: ${error.message}`);
+      const message = `Error updating campaign: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
     }
   }
 

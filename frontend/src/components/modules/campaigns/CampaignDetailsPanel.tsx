@@ -41,6 +41,7 @@ export default function CampaignDetailsPanel({ campaign, setCampaign }: Campaign
     const updateCampaign = useCallback(
         async (updateCampaign: Partial<ICampaign>) => {
           try {
+            console.log("updateCampaign", updateCampaign);
             let response = await CampaignService.updateCampaign(campaign._id, updateCampaign);
             campaign = response.data;
           } catch (err) {
@@ -53,7 +54,7 @@ export default function CampaignDetailsPanel({ campaign, setCampaign }: Campaign
 
     const onChange = () => {
         campaign.description = description;
-        updateCampaign(campaign);
+        updateCampaign({description: description});
     }
 
     useEffect(() => {
@@ -62,7 +63,7 @@ export default function CampaignDetailsPanel({ campaign, setCampaign }: Campaign
     }, [description]);
 
     return (
-        <div className="flex flex-col h-full gap-3 p-5">
+        <div className="flex flex-col w-full gap-3 p-5">
             <div className="w-full">
                 <div className="w-full flex justify-between items-center">
                     <Label htmlFor={"description"} className="text-foreground">{t("labels.description")}</Label>

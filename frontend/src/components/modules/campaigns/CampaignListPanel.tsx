@@ -53,6 +53,7 @@ const CampaignListPanel = ({
         });
         if (reset) {
           setCampaigns(response.data);
+          setSelectedCampaign(response.data[0] || null);
         } else {
           setCampaigns((prev) => {
             return [...prev, ...response.data];

@@ -283,5 +283,14 @@
       "create": "Create a campaign",
       "cancel": "Cancel"
     }
+  },
+  "CampaignPage": {
+    "tutorial": {
+      "step1": "Step 1: Create a campaign",
+      "step2": "Step 2: Create a main player group",
+      "step3": "Step 3: Create your NPC groups",
+      "step4": "Step 4: Launch your initiatives",
+      "step5": "Step 5: Let’s play!"
+    }
   }
 }
