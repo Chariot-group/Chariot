@@ -44,11 +44,20 @@ const InitiativeList = ({ participants, setParticipants }: Props) => {
             const initB = b.initiative ?? -Infinity;
             return initB - initA;
           })
-          .map((participant, index) => (
+          .map((participant) => (
             <InitiativeItem
               key={participant.character._id}
               participant={participant}
               handleInitiativeChange={handleInitiativeChange}
+              setParticipant={(updatedParticipant: IParticipant) =>
+                setParticipants(
+                  participants.map((p) =>
+                    p.character._id === updatedParticipant.character._id
+                      ? updatedParticipant
+                      : p
+                  )
+                )
+              }
             />
           ))}
       </TableBody>
