@@ -249,6 +249,11 @@
     },
     "actions": {
       "delete": "Eliminar campaña"
+    },
+    "modal": {
+      "title": "Eliminar campaña",
+      "description": "¿Está seguro de que desea eliminar esta campaña?",
+      "confirm": "Sí, eliminar"
     }
   },
   "Header": {

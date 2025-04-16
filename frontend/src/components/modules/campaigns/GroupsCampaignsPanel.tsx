@@ -4,17 +4,19 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import GroupListPanel from "../groups/GroupListPanel";
 import { IGroup } from "@/models/groups/IGroup";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { DragEndEvent } from "@dnd-kit/core";
 import GroupService from "@/services/groupService";
 import GroupDnDWrapper from "../groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
+import { useToast } from "@/hooks/useToast";
 
 interface Props {
   idCampaign: string; // ID de la campagne des groupes
 }
 export default function GroupsCampaignsPanel({ idCampaign }: Props) {
   const t = useTranslations("GroupListPanel");
+  const { error } = useToast();
 
   const [mainGroups, setMainGroups] = useState<IGroup[]>([]);
   const [npcGroups, setNpcGroups] = useState<IGroup[]>([]);
@@ -58,11 +60,20 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
     groupSetters[to]((prev) => [...prev, response.data as IGroup]);
   };
 
+  const createGroup = useCallback(async () => {
+    try {
+        const response = await GroupService.createGroup({label: "Nouveau groupe", description: "", campaigns: [{idCampaign, type: "npc"}]});
+        setNpcGroups((prev) => [...prev, response.data as IGroup]);
+    } catch(err){
+        error(t("error"));
+    }
+  }, [])
+
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex flex-row justify-between items-center">
         <h2>{t("title.default")}</h2>
-        <Button>{t("create")}</Button>
+        <Button onClick={createGroup}>{t("create")}</Button>
       </div>
       <div className="flex flex-row gap-4 mt-4 justify-between h-full">
         <GroupDnDWrapper onDragEnd={handleDragEnd}>

@@ -1,18 +1,40 @@
 "use client"
 
 import { Header } from "@/components/common/Header";
+import CreateCampaign from "@/components/common/modals/CreateCampaign";
 import CampaignDetailsPanel from "@/components/modules/campaigns/CampaignDetailsPanel";
 import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel";
 import GroupsCampaignsPanel from "@/components/modules/campaigns/GroupsCampaignsPanel";
+import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
+import CampaignService from "@/services/campaignService";
+import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function CampaignsPage() {
 
     const [selectedCampaign, setSelectedCampaign] = useState<ICampaign | null>(null);
 
     const t = useTranslations("CampaignPage");
+    const { error } = useToast();
+
+    const deleteCampaign = useCallback(async (deletedCampaign: ICampaign) => {
+        try {
+            const response = await CampaignService.deleteCampaign(deletedCampaign._id);
+            setSelectedCampaign((prev) => {
+                if (prev) {
+                    return {
+                        ...prev,
+                        deletedAt: new Date(),
+                    };
+                }
+                return prev;
+            });
+        } catch(err){
+            error(t("error"));
+        }
+    }, [])
 
     return (
         <div className="w-full flex flex-col">
@@ -25,11 +47,11 @@ export default function CampaignsPage() {
                     <div className="h-[80vh] border border-ring"></div>
                 </div>
                 <div className="w-full">
-                    <div className="w-full h-full flex flex-row">
+                    <div className="w-full h-full flex flex-row justify-center items-center">
                         {selectedCampaign ? (
-                            <div className="flex flex-col border justify-start items-center w-full h-full">
+                            <div className="flex flex-col justify-start items-center w-full h-full">
                                 <div className="w-full flex flex-col">
-                                    <CampaignDetailsPanel campaign={selectedCampaign} setCampaign={setSelectedCampaign} />
+                                    <CampaignDetailsPanel campaign={selectedCampaign} setCampaign={setSelectedCampaign} onDelete={deleteCampaign} />
                                 </div>
                                 <div className="w-[90vh] flex flex-col">
                                     <div className="w-[80vh] border border-ring"></div>

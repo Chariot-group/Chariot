@@ -1,5 +1,6 @@
 "use client";
 import Loading from "@/components/common/Loading";
+import CreateCampaign from "@/components/common/modals/CreateCampaign";
 import SearchInput from "@/components/common/SearchBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
@@ -67,7 +68,7 @@ const CampaignListPanel = ({
         setLoading(false);
       }
     },
-    [loading]
+    [loading, selectedCampaign?.deletedAt]
   );
 
   useInfiniteScroll(containerRef, fetchCampaigns, page, loading, search);
@@ -82,10 +83,23 @@ const CampaignListPanel = ({
   useEffect(() => {
     setCampaigns([]);
     fetchCampaigns(search, 1, true);
-  }, [currentLocale, search]);
+  }, [currentLocale, search, selectedCampaign?.deletedAt]);
+
+  const [crearteModalOpen, setCreateModalOpen] = useState<boolean>(false);
+  
+  const createCampaign = useCallback(async (label: string) => {
+    try {
+      const response = await CampaignService.createCampaign({label, description: "", groups: {main: [], npc: [], archived: []}});
+      setSelectedCampaign(response.data);
+    } catch(err){
+      error(t("error"));
+    }
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col">
+      <CreateCampaign isOpen={crearteModalOpen} onClose={() => setCreateModalOpen(false)} onConfirm={createCampaign} />
+
       <CardHeader className="flex-none h-auto items-center gap-3">
         <CardTitle className="text-foreground font-bold">
           {t("title")}
@@ -96,14 +110,13 @@ const CampaignListPanel = ({
           placeholder={t("search")}
         />
         {addable && (
-          <Link className="w-full" href="/campaigns/add" title={t("create")}>
-            <Card
-              ref={cardRef}
-              className="bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary shadow-md"
-            >
-              <span className="text-background font-bold">{t("create")}</span>
-            </Card>
-          </Link>
+          <Card
+          onClick={() => setCreateModalOpen(true)}
+            ref={cardRef}
+            className="w-full bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary cursor-pointer shadow-md"
+          >
+            <span className="text-background font-bold">{t("create")}</span>
+          </Card>
         )}
       </CardHeader>
       <CardContent

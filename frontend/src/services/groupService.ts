@@ -50,6 +50,21 @@ const GroupService = {
       return "error";
     }
   },
+
+  async createGroup(data: any) {
+    try {
+        const response = await apiClient(APIContentType.JSON).post(`/groups`, data);
+  
+        if (!response || !response.data || response === undefined) {
+          throw new Error("Invalid API response");
+        }
+  
+        return response.data;
+    } catch (err: any) {
+        console.error("API error:", err);
+        return "error";
+    }
+  }
 };
 
 export default GroupService;

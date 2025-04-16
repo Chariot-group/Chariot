@@ -249,6 +249,11 @@
     },
     "actions": {
       "delete": "Delete campaign"
+    },
+    "modal": {
+      "title": "Delete campaign",
+      "description": "This action is irreversible.",
+      "confirm": "Yes, delete"
     }
   },
   "Header": {

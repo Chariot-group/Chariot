@@ -39,6 +39,36 @@ const CampaignService = {
       console.error("API error:", err);
       return "error";
     }
+  },
+
+  async createCampaign(data: any) {
+    try {
+      const response = await apiClient(APIContentType.JSON).post(`${moduleUrl}`, data);
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return "error";
+    }
+  },
+
+  async deleteCampaign(id: string) {
+    try {
+      const response = await apiClient(APIContentType.JSON).delete(`${moduleUrl}/${id}`);
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return "error";
+    }
   }
 };
 
