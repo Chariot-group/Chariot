@@ -19,7 +19,7 @@ const SearchInput = ({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`pr-10 w-64 border-ring shadow-md ${
+      className={`pr-10 border-ring shadow-md ${
         reverse ? "bg-background" : "bg-card"
       }`}
     />
