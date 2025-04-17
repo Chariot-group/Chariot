@@ -9,6 +9,8 @@ interface Props {
   reverse?: boolean;
   grabbled?: boolean;
   currentPanelType: string;
+  setGroupSelected?: (group: IGroup) => void;
+  groupSelected?: IGroup | null;
 }
 
 const GroupListPanelItem = ({
@@ -16,6 +18,8 @@ const GroupListPanelItem = ({
   reverse,
   grabbled = false,
   currentPanelType,
+  setGroupSelected,
+  groupSelected
 }: Props) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
@@ -38,9 +42,14 @@ const GroupListPanelItem = ({
       {...(!isOverlay ? { ...listeners, ...attributes } : {})}
       className={`flex p-2 gap-3 border-ring shadow-md ${
         reverse ? "bg-background" : "bg-card"
-      } ${grabbled ? "justify-between cursor-grab" : "justify-center"} ${
+      } ${grabbled ? "justify-between cursor-grab" : "cursor-pointer justify-center"} ${
         isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""
-      }`}
+      } ${groupSelected?._id === group._id ? "border-2" : ""}`}
+      onClick={() => {
+        if (setGroupSelected) {
+          setGroupSelected(group);
+        }
+      }}
     >
       <span className="text-foreground font-bold">{group.label}</span>
       {grabbled && <Grip />}

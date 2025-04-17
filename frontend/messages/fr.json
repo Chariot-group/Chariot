@@ -66,7 +66,12 @@
       "languagesAdd": "Ajouter une langue",
       "languagesDelete": "Supprimer la langue",
       "abilitiesAdd": "Ajouter une capacité",
-      "abilitiesDelete": "Supprimer la capacité"
+      "abilitiesDelete": "Supprimer la capacité",
+      "modal": {
+        "title": "Supprimer le personnage",
+        "description": "Êtes-vous sûr de vouloir supprimer ce personnage ?",
+        "confirm": "Oui, supprimer"
+      }
     },
     "categories": {
       "global": {
@@ -259,7 +264,12 @@
     "error": "Erreur lors de la mise à jour du groupe",
     "actions": {
       "groupDelete": "Supprimer le groupe",
-      "findCampaign": "Trouver sa campagne"
+      "findCampaign": "Trouver sa campagne",
+      "modal": {
+        "title": "Supprimer le group",
+        "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
+        "confirm": "Oui, supprimer"
+      }
     },
     "labels": {
       "name": "Nom du groupe",
@@ -271,6 +281,10 @@
       "type": "Groupe principal",
       "description": "Description du groupe"
     }
+  },
+  "GroupPage": {
+    "yourCharacters": "Vos personnages",
+    "addCharacter": "Ajouter un personnage"
   },
   "CampaignModal": {
     "title": "Créer une campagne",
