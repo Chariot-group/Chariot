@@ -55,7 +55,7 @@ export default function LoginPage() {
                     maxAge: 24 * 60 * 60, // 30 days
                     path: "/",
                 });
-                router.push("/campaigns");
+                router.push("/");
             }
         } catch (err) {
             error(t("errors.internal"));
