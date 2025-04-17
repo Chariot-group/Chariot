@@ -1,5 +1,5 @@
 export interface changePasswordDto {
-    oldPassword: string;
+    otp: number;
     newPassword: string;
     confirmPassword: string;
 }
