@@ -141,7 +141,7 @@ export class GroupService {
       }
 
       const filters: any = {
-        label: { $regex: `${label}`, $options: 'i' },
+        label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
       };
 

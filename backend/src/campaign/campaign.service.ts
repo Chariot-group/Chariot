@@ -100,7 +100,7 @@ export class CampaignService {
       const skip = (page - 1) * offset;
 
       const filters = {
-        label: { $regex: `${label}`, $options: 'i' },
+        label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
       };
 
