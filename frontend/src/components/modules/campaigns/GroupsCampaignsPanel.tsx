@@ -69,6 +69,10 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
     }
   }, [])
 
+  const [mainSearch, setMainSearch] = useState<string>("");
+  const [npcSearch, setNpcSearch] = useState<string>("");
+  const [archivedSearch, setArchivedSearch] = useState<string>("");
+
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex flex-row justify-between items-center">
@@ -88,8 +92,8 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               type="main"
               setGroupSelected={() => {}}
               groupSelected={null}
-              search={""}
-              setSearch={() => {}}
+              search={mainSearch}
+              setSearch={setMainSearch}
             />
           </div>
           <div className="flex items-center">
@@ -106,8 +110,8 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               type="npc"
               setGroupSelected={() => {}}
               groupSelected={null}
-              search={""}
-              setSearch={() => {}}
+              search={npcSearch}
+              setSearch={setNpcSearch}
             />
           </div>
           <div className="flex items-center">
@@ -124,8 +128,8 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               type="archived"
               setGroupSelected={() => {}}
               groupSelected={null}
-              search={""}
-              setSearch={() => {}}
+              search={archivedSearch}
+              setSearch={setArchivedSearch}
             />
           </div>
         </GroupDnDWrapper>
