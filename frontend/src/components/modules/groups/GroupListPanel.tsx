@@ -99,7 +99,7 @@ export default function GroupListPanel({
       } finally {
         setLoading(false);
       }
-    }, [loading, groupSelected?.deletedAt]);
+    }, [loading, groupSelected?.deletedAt, idCampaign]);
 
     const createGroup = useCallback(async () => {
       try {
@@ -125,7 +125,7 @@ export default function GroupListPanel({
     useEffect(() => {
         setGroups([]);
         fetchGroups(search, 1, true);
-    }, [currentLocal, search, groupSelected?.deletedAt]);
+    }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
   return (
     <div className="w-full h-full flex flex-col">
       <CardHeader className="flex-none h-auto items-center gap-3">
