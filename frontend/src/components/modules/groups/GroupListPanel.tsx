@@ -70,7 +70,7 @@ export default function GroupListPanel({
           {
             page: nextPage,
             offset,
-            label: search,
+            label: encodeURIComponent(search),
             type,
           },
           idCampaign

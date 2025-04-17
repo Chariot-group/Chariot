@@ -53,7 +53,7 @@ const CampaignListPanel = ({
         const response = await CampaignService.getAllCampaigns({
           page: nextPage,
           offset,
-          label: search,
+          label: encodeURIComponent(search),
         });
         if (reset) {
           setCampaigns(response.data);
