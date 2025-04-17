@@ -48,7 +48,7 @@ const InitiativeList = ({
           <TableHead>PV</TableHead>
           <TableHead>CA</TableHead>
           <TableHead>Groupe</TableHead>
-          <TableHead>Détail</TableHead>
+          <TableHead>Action(s)</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

@@ -5,6 +5,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { IParticipant } from "@/models/participant/IParticipant";
 import { Heart, Shield, Sword } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import CharacterDetailsModal from "../characters/CharacterDetailsModal";
 
 interface Props {
   participant: IParticipant;
@@ -20,6 +21,7 @@ const InitiativeItem = ({
   isCurrent,
 }: Props) => {
   const [localInitiative, setLocalInitiative] = useState<string>("");
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     setLocalInitiative(participant.initiative?.toString() ?? "");
@@ -57,8 +59,8 @@ const InitiativeItem = ({
     <TableRow
       className={`text-xl ${
         participant.character.stats.currentHitPoints <= 0 &&
-        "hover:bg-destructive/20 bg-destructive/20"
-      } ${isCurrent && "bg-secondary/20"}`}
+        "hover:bg-destructive/30 bg-destructive/20"
+      } ${isCurrent && "bg-secondary/20 hover:bg-secondary/30"}`}
     >
       <TableCell>
         <div className="relative flex items-center">
@@ -96,9 +98,15 @@ const InitiativeItem = ({
         <Button
           variant="secondary"
           className="bg-secondary/80 hover:bg-secondary/60"
+          onClick={() => setShowDetails(true)}
         >
           Détail
         </Button>
+        <CharacterDetailsModal
+          isOpen={showDetails}
+          onClose={() => setShowDetails(false)}
+          character={participant.character}
+        />
       </TableCell>
     </TableRow>
   );
