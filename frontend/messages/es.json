@@ -298,6 +298,24 @@
       "cancel": "Cancelar"
     }
   },
+  "InitiativeTracker": {
+    "reset": "Reiniciar",
+    "start": "Iniciar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "round": "Ronda"
+  },
+  "InitiativeList": {
+    "initiative": "Iniciativa",
+    "name": "Nombre",
+    "hitPoints": "PG",
+    "armorClass": "CA",
+    "group": "Grupo",
+    "actions": "Acción(es)"
+  },
+  "InitiativeItem": {
+    "detail": "Detalle"
+  },
   "MobileRestraint": {
     "title": "Pantalla pequeña",
     "subTitle": "Esta aplicación no es compatible con pantallas pequeñas."

@@ -1,10 +1,10 @@
 "use client";
-import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
+import { Header } from "@/components/common/Header";
 
 export default function Home() {
   return (
     <div className="flex flex-col">
-      <LocaleSwitcher />
+      <Header campaign={null} />
     </div>
   );
 }

@@ -25,10 +25,12 @@ const CampaignService = {
       return "error";
     }
   },
-
   async updateCampaign(id: string, data: any) {
     try {
-      const response = await apiClient(APIContentType.JSON).patch(`${moduleUrl}/${id}`, data);
+      const response = await apiClient(APIContentType.JSON).patch(
+        `${moduleUrl}/${id}`,
+        data
+      );
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -43,7 +45,9 @@ const CampaignService = {
 
   async findOne(id: string) {
     try {
-      const response = await apiClient(APIContentType.JSON).get(`${moduleUrl}/${id}`);
+      const response = await apiClient(APIContentType.JSON).get(
+        `${moduleUrl}/${id}`
+      );
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -54,7 +58,7 @@ const CampaignService = {
       console.error("API error:", err);
       return "error";
     }
-  }
+  },
 };
 
 export default CampaignService;
