@@ -7,6 +7,7 @@ import { Heart, Shield, Sword } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import CharacterDetailsModal from "../characters/CharacterDetailsModal";
 import { useTranslations } from "next-intl";
+import CharacterService from "@/services/CharacterService";
 
 interface Props {
   participant: IParticipant;
@@ -43,7 +44,7 @@ const InitiativeItem = ({
     }
   };
 
-  const onHPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onHPChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (!/^\d*$/.test(value) || value.length > 4) return;
     setParticipant({
@@ -54,6 +55,13 @@ const InitiativeItem = ({
           ...participant.character.stats,
           currentHitPoints: Number(value),
         },
+      },
+    });
+    await CharacterService.updateCharacter(participant.character._id, {
+      ...participant.character,
+      stats: {
+        ...participant.character.stats,
+        currentHitPoints: Number(value),
       },
     });
   };
