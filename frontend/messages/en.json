@@ -304,5 +304,13 @@
     "next": "Next",
     "previous": "Previous",
     "round": "Round"
+  },
+  "InitiativeList": {
+    "initiative": "Initiative",
+    "name": "Name",
+    "hitPoints": "HP",
+    "armorClass": "AC",
+    "group": "Group",
+    "actions": "Action(s)"
   }
 }

@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { IParticipant } from "@/models/participant/IParticipant";
+import { useTranslations } from "next-intl";
 
 interface Props {
   participants: IParticipant[];
@@ -22,6 +23,8 @@ const InitiativeList = ({
   setParticipants,
   currentParticipant,
 }: Props) => {
+  const t = useTranslations("InitiativeList");
+
   const handleInitiativeChange = (participant: IParticipant) => {
     setParticipants(
       participants.map((p) =>
@@ -43,12 +46,12 @@ const InitiativeList = ({
     <Table>
       <TableHeader>
         <TableRow className="text-xl text-center">
-          <TableHead>Initiative</TableHead>
-          <TableHead>Nom</TableHead>
-          <TableHead>PV</TableHead>
-          <TableHead>CA</TableHead>
-          <TableHead>Groupe</TableHead>
-          <TableHead>Action(s)</TableHead>
+          <TableHead>{t("initiative")}</TableHead>
+          <TableHead>{t("name")}</TableHead>
+          <TableHead>{t("hitPoints")}</TableHead>
+          <TableHead>{t("armorClass")}</TableHead>
+          <TableHead>{t("group")}</TableHead>
+          <TableHead>{t("actions")}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

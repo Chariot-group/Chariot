@@ -304,5 +304,13 @@
     "next": "Siguiente",
     "previous": "Anterior",
     "round": "Ronda"
+  },
+  "InitiativeList": {
+    "initiative": "Iniciativa",
+    "name": "Nombre",
+    "hitPoints": "PG",
+    "armorClass": "CA",
+    "group": "Grupo",
+    "actions": "Acción(es)"
   }
 }
