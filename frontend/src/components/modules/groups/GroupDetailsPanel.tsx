@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/useToast";
+import { ICampaign } from "@/models/campaigns/ICampaign";
 import { IGroup } from "@/models/groups/IGroup";
 import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
@@ -14,10 +15,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface GroupDetailsPanelProps {
     group: IGroup;
-    idCampaign: string;
+    campaign: ICampaign;
     onDelete: (group: IGroup) => void;
 } 
-export default function GroupDetailsPanel({ group, idCampaign, onDelete }: GroupDetailsPanelProps) {
+export default function GroupDetailsPanel({ group, campaign, onDelete }: GroupDetailsPanelProps) {
 
     const t = useTranslations("GroupDetailsPanel");
     const { error } = useToast();
@@ -75,7 +76,7 @@ export default function GroupDetailsPanel({ group, idCampaign, onDelete }: Group
             <div className="flex flex-row gap-3 justify-between">
                 <Field color="card" id={"label"} type={"text"} label={t("labels.name")} placeholder={"placeholders.name"} value={label} setValue={setLabel} onChange={onChange} />
                 <div className="flex flex-row gap-3">
-                    <Link href={`/campaigns/${idCampaign}`} >
+                    <Link href={`/campaigns?search=${campaign.label}`} >
                         <Button>{t("actions.findCampaign")}</Button>
                     </Link>
                     <Button onClick={() => setDeleteModalOpen(true)} variant={"link"}>{t("actions.groupDelete")}</Button>

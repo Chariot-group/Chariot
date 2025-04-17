@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import CampaignService from "@/services/campaignService";
 import { useTranslations } from "next-intl";
+import { useParams, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 
 export default function CampaignsPage() {
@@ -16,6 +17,10 @@ export default function CampaignsPage() {
 
     const t = useTranslations("CampaignPage");
     const { error } = useToast();
+
+    const searchParams = useSearchParams()
+
+    const [search, setSearch] = useState(searchParams.get('search') ?? "");
 
     const deleteCampaign = useCallback(async (deletedCampaign: ICampaign) => {
         try {
@@ -39,7 +44,7 @@ export default function CampaignsPage() {
             <Header campaign={selectedCampaign} />
             <main className="h-full flex flex-row">
                 <div className="w-1/4">
-                    <CampaignListPanel selectedCampaign={selectedCampaign} setSelectedCampaign={setSelectedCampaign} />
+                    <CampaignListPanel search={search} setSearch={setSearch} selectedCampaign={selectedCampaign} setSelectedCampaign={setSelectedCampaign} />
                 </div>
                 <div className="h-[90vh] justify-center flex flex-col">
                     <div className="h-[80vh] border border-ring"></div>

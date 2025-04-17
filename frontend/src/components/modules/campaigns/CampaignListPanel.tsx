@@ -16,6 +16,8 @@ interface Props {
   selectedCampaign: ICampaign | null;
   setSelectedCampaign: (campaign: ICampaign | null) => void;
   addable?: boolean;
+  search: string,
+  setSearch: (search: string) => void;
 }
 
 const CampaignListPanel = ({
@@ -23,6 +25,8 @@ const CampaignListPanel = ({
   selectedCampaign,
   setSelectedCampaign,
   addable = true,
+  search,
+  setSearch
 }: Props) => {
   const currentLocale = useLocale();
   const t = useTranslations("CampaignListPanel");
@@ -33,7 +37,6 @@ const CampaignListPanel = ({
 
   //Pagination
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
 
   //Ref pour le scroll infini

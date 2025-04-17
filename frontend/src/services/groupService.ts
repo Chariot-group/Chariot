@@ -22,7 +22,7 @@ const GroupService = {
     }
 },
 
-async updateGroup(id: string, data: Partial<IGroup>) {
+async updateGroup(id: string, data: any) {
     try {
         const response = await apiClient(APIContentType.JSON).patch(`/groups/${id}`, data);
   

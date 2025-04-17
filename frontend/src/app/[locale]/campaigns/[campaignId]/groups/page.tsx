@@ -15,13 +15,17 @@ import CampaignService from "@/services/campaignService";
 import CharacterService from "@/services/CharacterService";
 import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { SetStateAction, useCallback, useEffect, useState } from "react";
 
 export default function CampaignGroupsPage() {
 
     const t = useTranslations('GroupPage');
     const { error } = useToast();
+
+    const searchParams = useSearchParams()
+    
+    const [search, setSearch] = useState(searchParams.get('search') ?? "");
 
     const [groupSelected, setGroupSelected] = useState<IGroup | null>(null);
     const [characterSelected, setCharacterSelected] = useState<ICharacter | null>(null);
@@ -226,7 +230,6 @@ export default function CampaignGroupsPage() {
                 idGroup
             ]
         };
-        console.log(newCharacter);
         createCharacter(newCharacter);
     }
 
@@ -235,16 +238,16 @@ export default function CampaignGroupsPage() {
             <Header campaign={campaign} />
             <main className="h-full flex flex-row">
                 <div className="w-[15%]">
-                    <GroupListPanel idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} />
+                    <GroupListPanel search={search} setSearch={setSearch} idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} />
                 </div>
                 <div className="h-[90vh] justify-center flex flex-col">
                     <div className="h-[80vh] border border-ring"></div>
                 </div>
                 {
-                    groupSelected && (
+                    groupSelected && campaign && (
                         <div className="w-[85%] h[100vh] flex flex-col">
                             <div className="w-full">
-                                <GroupDetailsPanel group={groupSelected} idCampaign={campaignId?.toString() ?? ""} onDelete={deleteGroup} />
+                                <GroupDetailsPanel group={groupSelected} campaign={campaign} onDelete={deleteGroup} />
                             </div>
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>

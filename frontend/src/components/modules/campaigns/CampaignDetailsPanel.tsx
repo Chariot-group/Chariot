@@ -43,7 +43,6 @@ export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete }
     const updateCampaign = useCallback(
         async (updateCampaign: Partial<ICampaign>) => {
           try {
-            console.log("updateCampaign", updateCampaign);
             let response = await CampaignService.updateCampaign(campaign._id, updateCampaign);
             campaign = response.data;
           } catch (err) {

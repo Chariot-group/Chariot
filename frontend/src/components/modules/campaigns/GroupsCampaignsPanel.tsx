@@ -86,6 +86,10 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               idCampaign={idCampaign}
               addable={false}
               type="main"
+              setGroupSelected={() => {}}
+              groupSelected={null}
+              search={""}
+              setSearch={() => {}}
             />
           </div>
           <div className="flex items-center">
@@ -100,6 +104,10 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               idCampaign={idCampaign}
               addable={false}
               type="npc"
+              setGroupSelected={() => {}}
+              groupSelected={null}
+              search={""}
+              setSearch={() => {}}
             />
           </div>
           <div className="flex items-center">
@@ -114,6 +122,10 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               idCampaign={idCampaign}
               addable={false}
               type="archived"
+              setGroupSelected={() => {}}
+              groupSelected={null}
+              search={""}
+              setSearch={() => {}}
             />
           </div>
         </GroupDnDWrapper>

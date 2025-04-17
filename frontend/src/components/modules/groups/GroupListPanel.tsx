@@ -27,6 +27,8 @@ interface Props {
   type?: "all" | "main" | "npc" | "archived"; // Titre de groupe à afficher
   grabbled?: boolean; // Si vrai, le curseur est en mode grab et une icône de grip est affichée
   addable?: boolean; // Si vrai, le bouton d'ajout de groupe est affiché
+  search: string,
+  setSearch: (search: string) => void,
 }
 export default function GroupListPanel({
   groups,
@@ -39,6 +41,9 @@ export default function GroupListPanel({
   type = "all",
   grabbled = false,
   addable = true,
+  search,
+  setSearch
+  
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -51,7 +56,6 @@ export default function GroupListPanel({
   const [newGroup, setNewGroup] = useState<IGroup | null>(null);
   //Pagination
   const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   //Infinite scroll
@@ -90,6 +94,7 @@ export default function GroupListPanel({
         }
         setPage(nextPage);
       } catch(err){
+        console.log(err);
         error(t("error"));
       } finally {
         setLoading(false);
@@ -109,8 +114,6 @@ export default function GroupListPanel({
   }, [])
 
     useEffect(() => {
-      console.log("newGroup", newGroup);
-      console.log("selected", groupSelected);
       if(newGroup) {
         setGroupSelected(newGroup);
         setNewGroup(null);
@@ -152,6 +155,7 @@ export default function GroupListPanel({
           {groups.length > 0 &&
             groups.map((group) => (
               <GroupListPanelItem
+                idCampaign={idCampaign}
                 key={group._id}
                 group={group}
                 currentPanelType={type}
