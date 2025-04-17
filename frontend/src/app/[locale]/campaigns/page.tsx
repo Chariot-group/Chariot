@@ -1,14 +1,12 @@
 "use client"
 
 import { Header } from "@/components/common/Header";
-import CreateCampaign from "@/components/common/modals/CreateCampaign";
 import CampaignDetailsPanel from "@/components/modules/campaigns/CampaignDetailsPanel";
 import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel";
 import GroupsCampaignsPanel from "@/components/modules/campaigns/GroupsCampaignsPanel";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import CampaignService from "@/services/campaignService";
-import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 

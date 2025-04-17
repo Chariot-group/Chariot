@@ -69,6 +69,21 @@ const CampaignService = {
       console.error("API error:", err);
       return "error";
     }
+  },
+
+  async findOne(id: string) {
+    try {
+      const response = await apiClient(APIContentType.JSON).get(`${moduleUrl}/${id}`);
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return "error";
+    }
   }
 };
 
