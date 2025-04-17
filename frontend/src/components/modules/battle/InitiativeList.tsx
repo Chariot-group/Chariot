@@ -14,9 +14,14 @@ import { IParticipant } from "@/models/participant/IParticipant";
 interface Props {
   participants: IParticipant[];
   setParticipants: (participants: IParticipant[]) => void;
+  currentParticipant?: IParticipant;
 }
 
-const InitiativeList = ({ participants, setParticipants }: Props) => {
+const InitiativeList = ({
+  participants,
+  setParticipants,
+  currentParticipant,
+}: Props) => {
   const handleInitiativeChange = (participant: IParticipant) => {
     setParticipants(
       participants.map((p) =>
@@ -24,6 +29,15 @@ const InitiativeList = ({ participants, setParticipants }: Props) => {
       )
     );
   };
+
+  const handleSetParticipant = (updatedParticipant: IParticipant) =>
+    setParticipants(
+      participants.map((p) =>
+        p.character._id === updatedParticipant.character._id
+          ? updatedParticipant
+          : p
+      )
+    );
 
   return (
     <Table>
@@ -38,30 +52,18 @@ const InitiativeList = ({ participants, setParticipants }: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {[...participants]
-          .sort((a, b) => {
-            const initA = a.initiative ?? -Infinity;
-            const initB = b.initiative ?? -Infinity;
-            return initB - initA;
-          })
-          .map((participant) => (
-            <InitiativeItem
-              key={participant.character._id}
-              participant={participant}
-              handleInitiativeChange={handleInitiativeChange}
-              setParticipant={(updatedParticipant: IParticipant) =>
-                setParticipants(
-                  participants.map((p) =>
-                    p.character._id === updatedParticipant.character._id
-                      ? updatedParticipant
-                      : p
-                  )
-                )
-              }
-            />
-          ))}
+        {participants.map((participant) => (
+          <InitiativeItem
+            key={participant.character._id}
+            participant={participant}
+            handleInitiativeChange={handleInitiativeChange}
+            setParticipant={handleSetParticipant}
+            isCurrent={
+              currentParticipant?.character._id === participant.character._id
+            }
+          />
+        ))}
       </TableBody>
-      <TableCaption>Initiative tracker caption</TableCaption>
     </Table>
   );
 };

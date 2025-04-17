@@ -10,12 +10,14 @@ interface Props {
   participant: IParticipant;
   setParticipant: (participant: IParticipant) => void;
   handleInitiativeChange: (participant: IParticipant) => void;
+  isCurrent?: boolean;
 }
 
 const InitiativeItem = ({
   participant,
   setParticipant,
   handleInitiativeChange,
+  isCurrent,
 }: Props) => {
   const [localInitiative, setLocalInitiative] = useState<string>("");
 
@@ -56,7 +58,7 @@ const InitiativeItem = ({
       className={`text-xl ${
         participant.character.stats.currentHitPoints <= 0 &&
         "hover:bg-destructive/20 bg-destructive/20"
-      }`}
+      } ${isCurrent && "bg-secondary/20"}`}
     >
       <TableCell>
         <div className="relative flex items-center">
@@ -91,7 +93,12 @@ const InitiativeItem = ({
       </TableCell>
       <TableCell>{participant.groupLabel}</TableCell>
       <TableCell>
-        <Button>Détail</Button>
+        <Button
+          variant="secondary"
+          className="bg-secondary/80 hover:bg-secondary/60"
+        >
+          Détail
+        </Button>
       </TableCell>
     </TableRow>
   );
