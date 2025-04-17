@@ -297,5 +297,9 @@
       "create": "Créer une campagne",
       "cancel": "Annuler"
     }
-  }
+  },
+  "MobileRestraint": {
+    "title": "Application non disponible sur mobile",
+    "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
+  } 
 }
