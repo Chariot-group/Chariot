@@ -315,5 +315,9 @@
   },
   "InitiativeItem": {
     "detail": "Detail"
-  }
+  },
+  "MobileRestraint": {
+    "title": "Mobile Restraint",
+    "subTitle": "This application is not compatible with small screens."
+  } 
 }

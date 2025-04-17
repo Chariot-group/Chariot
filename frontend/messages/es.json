@@ -315,5 +315,9 @@
   },
   "InitiativeItem": {
     "detail": "Detalle"
-  }
+  },
+  "MobileRestraint": {
+    "title": "Pantalla pequeña",
+    "subTitle": "Esta aplicación no es compatible con pantallas pequeñas."
+  } 
 }
