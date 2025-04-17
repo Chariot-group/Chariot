@@ -9,7 +9,12 @@ interface Props {
   character: ICharacter;
 }
 
-const CharacterDetailsModal = ({ isOpen, onClose, character }: Props) => {
+const CharacterDetailsModal = ({
+  isOpen,
+  onClose,
+  character,
+}: Props) => {
+
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -33,7 +38,9 @@ const CharacterDetailsModal = ({ isOpen, onClose, character }: Props) => {
           isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
       >
-        <CharacterDetailsPanel character={character} />
+        <CharacterDetailsPanel
+          character={character}
+        />
       </div>
     </div>
   );
