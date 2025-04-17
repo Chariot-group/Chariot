@@ -31,7 +31,7 @@ export default function LanguageSwitcher({className}: LocaleSwitcherProps) {
 
   return (
     <Select onValueChange={handleChange} value={currentLocale}>
-      <SelectTrigger className={className + " bg-background text-foreground border-ring w-auto"}>
+      <SelectTrigger className={"bg-background text-foreground border-ring w-auto " + className}>
         <SelectValue placeholder="Select language" />
       </SelectTrigger>
       <SelectContent className="bg-background text-foreground border-ring">

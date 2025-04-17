@@ -67,7 +67,7 @@ export default function LoginPage() {
     return (
         <div className="w-full h-[100dvh] gap-2 flex flex-col items-center justify-center bg-background">
             <Card className="w-[40%] shadow-md relative">
-                <LocaleSwitcher className="absolute right-0 border-none shadow-none" />
+                <LocaleSwitcher className="absolute right-0 border-none shadow-none m-1 bg-card" />
                 <div className="p-6 w-full flex flex-col items-center justify-center gap-[5dvh]">
                     <h1 className="text-xl font-bold">{t("title")}</h1>
                     <div className="w-full flex flex-col gap-[5dvh] items-center justify-center">
