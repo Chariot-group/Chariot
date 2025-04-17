@@ -311,5 +311,9 @@
       "step4": "Paso 4: Lanzar sus iniciativas",
       "step5": "Paso 5: ¡A jugar!"
     }
-  }
+  },
+  "MobileRestraint": {
+    "title": "Pantalla pequeña",
+    "subTitle": "Esta aplicación no es compatible con pantallas pequeñas."
+  } 
 }

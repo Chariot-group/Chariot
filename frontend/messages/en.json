@@ -311,5 +311,9 @@
       "step4": "Step 4: Launch your initiatives",
       "step5": "Step 5: Let’s play!"
     }
-  }
+  },
+  "MobileRestraint": {
+    "title": "Mobile Restraint",
+    "subTitle": "This application is not compatible with small screens."
+  } 
 }

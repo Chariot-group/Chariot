@@ -311,5 +311,9 @@
       "step4": "Etape 4: Lancer vos initiatives",
       "step5": "Etape 5: Let’s play !"
     }
-  }
+  },
+  "MobileRestraint": {
+    "title": "Application non disponible sur mobile",
+    "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
+  } 
 }
