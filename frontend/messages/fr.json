@@ -312,8 +312,26 @@
       "step5": "Etape 5: Let’s play !"
     }
   },
+  "InitiativeTracker": {
+    "reset": "Réinitialiser",
+    "start": "Commencer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "round": "Tour"
+  },
+  "InitiativeList": {
+    "initiative": "Initiative",
+    "name": "Nom",
+    "hitPoints": "PV",
+    "armorClass": "CA",
+    "group": "Groupe",
+    "actions": "Action(s)"
+  },
+  "InitiativeItem": {
+    "detail": "Détail"
+  },
   "MobileRestraint": {
     "title": "Application non disponible sur mobile",
     "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
-  } 
+  }
 }

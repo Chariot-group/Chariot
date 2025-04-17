@@ -312,6 +312,24 @@
       "step5": "Step 5: Let’s play!"
     }
   },
+  "InitiativeTracker": {
+    "reset": "Reset",
+    "start": "Start",
+    "next": "Next",
+    "previous": "Previous",
+    "round": "Round"
+  },
+  "InitiativeList": {
+    "initiative": "Initiative",
+    "name": "Name",
+    "hitPoints": "HP",
+    "armorClass": "AC",
+    "group": "Group",
+    "actions": "Action(s)"
+  },
+  "InitiativeItem": {
+    "detail": "Detail"
+  },
   "MobileRestraint": {
     "title": "Mobile Restraint",
     "subTitle": "This application is not compatible with small screens."
