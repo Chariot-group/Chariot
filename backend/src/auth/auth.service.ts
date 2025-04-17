@@ -3,6 +3,7 @@ import { Injectable, InternalServerErrorException, Logger, NotFoundException, Un
 import { SignInDto } from './dto/signIn.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { changePasswordDto } from './dto/changePassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -46,5 +47,9 @@ export class AuthService {
               this.logger.error(message, null, this.SERVICE_NAME);
               throw new InternalServerErrorException(message);
         }
+    }
+
+    async forgotPassword(id: string, changePassword: changePasswordDto){
+        
     }
 }
