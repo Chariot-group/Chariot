@@ -297,5 +297,9 @@
       "create": "Crear campaña",
       "cancel": "Cancelar"
     }
-  }
+  },
+  "MobileRestraint": {
+    "title": "Pantalla pequeña",
+    "subTitle": "Esta aplicación no es compatible con pantallas pequeñas."
+  } 
 }

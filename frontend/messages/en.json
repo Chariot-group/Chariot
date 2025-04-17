@@ -297,5 +297,9 @@
       "create": "Create a campaign",
       "cancel": "Cancel"
     }
-  }
+  },
+  "MobileRestraint": {
+    "title": "Mobile Restraint",
+    "subTitle": "This application is not compatible with small screens."
+  } 
 }
