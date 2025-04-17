@@ -312,5 +312,8 @@
     "armorClass": "AC",
     "group": "Group",
     "actions": "Action(s)"
+  },
+  "InitiativeItem": {
+    "detail": "Detail"
   }
 }

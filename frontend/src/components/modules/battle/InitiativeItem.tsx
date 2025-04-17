@@ -6,6 +6,7 @@ import { IParticipant } from "@/models/participant/IParticipant";
 import { Heart, Shield, Sword } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import CharacterDetailsModal from "../characters/CharacterDetailsModal";
+import { useTranslations } from "next-intl";
 
 interface Props {
   participant: IParticipant;
@@ -20,6 +21,8 @@ const InitiativeItem = ({
   handleInitiativeChange,
   isCurrent,
 }: Props) => {
+  const t = useTranslations("InitiativeItem");
+
   const [localInitiative, setLocalInitiative] = useState<string>("");
   const [showDetails, setShowDetails] = useState(false);
 
@@ -100,7 +103,7 @@ const InitiativeItem = ({
           className="bg-secondary/80 hover:bg-secondary/60"
           onClick={() => setShowDetails(true)}
         >
-          Détail
+          {t("detail")}
         </Button>
         <CharacterDetailsModal
           isOpen={showDetails}

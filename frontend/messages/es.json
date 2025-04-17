@@ -312,5 +312,8 @@
     "armorClass": "CA",
     "group": "Grupo",
     "actions": "Acción(es)"
+  },
+  "InitiativeItem": {
+    "detail": "Detalle"
   }
 }
