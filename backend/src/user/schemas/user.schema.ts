@@ -14,7 +14,7 @@ export class User {
   email: string;
 
   @Prop({default: null})
-  otp?: number;
+  otp?: string;
 
   @Prop({ required: true })
   password: string;

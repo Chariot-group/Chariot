@@ -56,18 +56,19 @@ export class AuthService {
     async forgotPassword(id: string, changePassword: changePasswordDto){
         try {
             if (!Types.ObjectId.isValid(id)) {
+                this.logger.verbose("Passe pas", this.SERVICE_NAME);
                 const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
                 this.logger.error(message, null, this.SERVICE_NAME);
                 throw new BadRequestException(message);
             }
             let userCurrent = await this.userModel.findById(id);
-            
+
             if (!userCurrent) {
                 const message = `User #${id} not found`;
                 this.logger.error(message, null, this.SERVICE_NAME);
                 throw new NotFoundException(message);
             }
-            
+
             if (userCurrent.deletedAt) {
                 const message = `User #${id} deleted`;
                 this.logger.error(message, null, this.SERVICE_NAME);
@@ -88,12 +89,12 @@ export class AuthService {
 
             // Hash the password
             const saltRounds = 10;
-            const hashedPassword = await bcrypt.hash(changePassword.confirmPassword, saltRounds);
-            
+            const hashedPassword: string = await bcrypt.hash(changePassword.confirmPassword, saltRounds);
+
             const start: number = Date.now();
             const user = await this.userModel.updateOne({_id: id}, {
                 password: hashedPassword
-            });
+            }).exec();
             const end: number = Date.now();
 
             const message = `Password update in ${end - start}ms`;
