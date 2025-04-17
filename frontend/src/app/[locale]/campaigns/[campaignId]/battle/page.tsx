@@ -1,5 +1,6 @@
 "use client";
 import { Header } from "@/components/common/Header";
+import Loading from "@/components/common/Loading";
 import InitiativeTracker from "@/components/modules/battle/InitiativeTracker";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { IGroupWithRelations } from "@/models/groups/IGroup";
@@ -50,7 +51,7 @@ const BattlePage = () => {
   }, [campaignId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (

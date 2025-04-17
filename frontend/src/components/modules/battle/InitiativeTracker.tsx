@@ -5,11 +5,13 @@ import { IGroupWithRelations } from "@/models/groups/IGroup";
 import { IParticipant } from "@/models/participant/IParticipant";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, RefreshCcw, Swords } from "lucide-react";
+import { useTranslations } from "next-intl";
 interface Props {
   groups: IGroupWithRelations[];
 }
 
 const InitiativeTracker = ({ groups }: Props) => {
+  const t = useTranslations("InitiativeTracker");
   const [participants, setParticipants] = useState<IParticipant[]>([]);
   const [currentParticipant, setCurrentParticipant] = useState<
     IParticipant | undefined
@@ -133,10 +135,12 @@ const InitiativeTracker = ({ groups }: Props) => {
         currentParticipant={currentParticipant}
       />
       <div className="flex justify-between mt-5">
-        <p className="text-xl">Tour :{currentRound}</p>
+        <p className="text-xl">
+          {t("round")} : {currentRound}
+        </p>
         <div className=" flex flex-row gap-x-2">
           <Button variant="outline" onClick={handleReset}>
-            Reset <RefreshCcw />
+            {t("reset")} <RefreshCcw />
           </Button>
           {currentParticipant && (
             <div className="flex flex-row gap-x-2">
@@ -148,18 +152,18 @@ const InitiativeTracker = ({ groups }: Props) => {
                   )?.character._id
               ) && (
                 <Button onClick={handlePrevious}>
-                  Précédent <ArrowLeft />
+                  {t("previous")} <ArrowLeft />
                 </Button>
               )}
 
               <Button onClick={handleNext}>
-                Suivant <ArrowRight />
+                {t("next")} <ArrowRight />
               </Button>
             </div>
           )}
           {!currentParticipant && (
             <Button onClick={handleBattleStart}>
-              Commencer <Swords />
+              {t("start")} <Swords />
             </Button>
           )}
         </div>

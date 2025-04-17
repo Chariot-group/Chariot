@@ -297,5 +297,12 @@
       "create": "Créer une campagne",
       "cancel": "Annuler"
     }
+  },
+  "InitiativeTracker": {
+    "reset": "Réinitialiser",
+    "start": "Commencer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "round": "Tour"
   }
 }

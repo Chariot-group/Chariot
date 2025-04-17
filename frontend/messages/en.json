@@ -297,5 +297,12 @@
       "create": "Create a campaign",
       "cancel": "Cancel"
     }
+  },
+  "InitiativeTracker": {
+    "reset": "Reset",
+    "start": "Start",
+    "next": "Next",
+    "previous": "Previous",
+    "round": "Round"
   }
 }
