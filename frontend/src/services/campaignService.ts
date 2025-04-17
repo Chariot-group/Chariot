@@ -42,6 +42,7 @@ const CampaignService = {
       return "error";
     }
   },
+
   async findOne(id: string) {
     try {
       const response = await apiClient(APIContentType.JSON).get(

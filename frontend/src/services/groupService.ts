@@ -1,5 +1,6 @@
 import { APIContentType } from "@/constants/APIContentType";
 import apiClient from "./apiConfig";
+import { IGroup } from "@/models/groups/IGroup";
 
 const END_POINT = "/campaigns";
 
@@ -32,7 +33,8 @@ const GroupService = {
       return [];
     }
   },
-  async updateGroup(id: string, data: Partial<any>) {
+
+  async updateGroup(id: string, data: Partial<IGroup>) {
     try {
       const response = await apiClient(APIContentType.JSON).patch(
         `/groups/${id}`,
@@ -63,6 +65,40 @@ const GroupService = {
     } catch (error) {
       console.error("Error fetching group:", error);
       return null;
+    }
+  },
+  async deleteGroup(id: string) {
+    try {
+      const response = await apiClient(APIContentType.JSON).delete(
+        `/groups/${id}`
+      );
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return "error";
+    }
+  },
+
+  async createGroup(data: any) {
+    try {
+      const response = await apiClient(APIContentType.JSON).post(
+        `/groups`,
+        data
+      );
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return "error";
     }
   },
 };

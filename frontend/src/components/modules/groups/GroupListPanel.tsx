@@ -10,12 +10,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
+import { Grip } from "lucide-react";
+import { group } from "console";
+import { Button } from "@/components/ui/button";
 import { useDroppable } from "@dnd-kit/core";
 import GroupListPanelItem from "./GroupListPanelItem";
 
 interface Props {
   groups: IGroup[]; // Liste des groupes à afficher
   setGroups: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
+  groupSelected: IGroup | null; // Groupe selectionné
+  setGroupSelected: (group: IGroup | null) => void; // Fonction pour mettre à jour le groupe selectionné
   offset?: number; // Nombre de groupes à afficher par page
   idCampaign: string; // ID de la campagne des groupes
   reverse?: boolean; // Si vrai, les couleurs de fond sont inversé
@@ -27,6 +32,8 @@ export default function GroupListPanel({
   groups,
   setGroups,
   offset = 8,
+  groupSelected,
+  setGroupSelected,
   idCampaign,
   reverse = false,
   type = "all",
@@ -41,6 +48,7 @@ export default function GroupListPanel({
     id: type, // "main", "npc", etc.
   });
 
+  const [newGroup, setNewGroup] = useState<IGroup | null>(null);
   //Pagination
   const [page, setPage] = useState<number>(1);
   const [search, setSearch] = useState<string>("");
@@ -65,6 +73,7 @@ export default function GroupListPanel({
         );
         if (reset) {
           setGroups(response.data || []);
+          setGroupSelected(response.data[0] || null);
         } else {
           setGroups((prev) => {
             //Fix un bug surement dû au seeder.
@@ -80,22 +89,40 @@ export default function GroupListPanel({
           });
         }
         setPage(nextPage);
-      } catch (err) {
+      } catch(err){
         error(t("error"));
       } finally {
         setLoading(false);
       }
-    },
-    [loading]
-  );
+    }, [loading, groupSelected?.deletedAt]);
+
+    const createGroup = useCallback(async () => {
+      try {
+          const response = await GroupService.createGroup({label: "Nouveau groupe", description: "", campaigns: [{idCampaign, type: "npc"}]});
+          setNewGroup(response.data);
+          fetchGroups(search, 1, true);
+      } catch(err){
+          error(t("error"));
+      } finally {
+          setLoading(false);
+      }
+  }, [])
+
+    useEffect(() => {
+      console.log("newGroup", newGroup);
+      console.log("selected", groupSelected);
+      if(newGroup) {
+        setGroupSelected(newGroup);
+        setNewGroup(null);
+      }
+    }, [groupSelected]);
 
   useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
 
-  useEffect(() => {
-    setGroups([]);
-    fetchGroups(search, 1, true);
-  }, [currentLocal, search]);
-
+    useEffect(() => {
+        setGroups([]);
+        fetchGroups(search, 1, true);
+    }, [currentLocal, search, groupSelected?.deletedAt]);
   return (
     <div className="w-full h-full flex flex-col">
       <CardHeader className="flex-none h-auto items-center gap-3">
@@ -117,11 +144,9 @@ export default function GroupListPanel({
       >
         <div className="flex flex-col gap-3" ref={setNodeRef}>
           {addable && (
-            <Link href="/groups/add" title={t("create")}>
-              <Card className="bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary shadow-md">
-                <span className="text-background font-bold">{t("create")}</span>
-              </Card>
-            </Link>
+            <Button onClick={() => createGroup()}>
+              <span className="text-background font-bold">{t("create")}</span>
+            </Button>
           )}
           {loading && <Loading />}
           {groups.length > 0 &&
@@ -132,6 +157,8 @@ export default function GroupListPanel({
                 currentPanelType={type}
                 grabbled={grabbled}
                 reverse={reverse}
+                setGroupSelected={setGroupSelected}
+                groupSelected={groupSelected}
               />
             ))}
           {groups.length === 0 && !loading && !isOver && (
