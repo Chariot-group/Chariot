@@ -13,6 +13,7 @@ interface Props {
   setGroupSelected?: (group: IGroup) => void;
   groupSelected?: IGroup | null;
   idCampaign: string;
+  disabled?: boolean;
 }
 
 const GroupListPanelItem = ({
@@ -22,7 +23,8 @@ const GroupListPanelItem = ({
   currentPanelType,
   setGroupSelected,
   groupSelected,
-  idCampaign
+  idCampaign,
+  disabled = false
 }: Props) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: group._id,
@@ -61,15 +63,24 @@ const GroupListPanelItem = ({
     <Card
       ref={!isOverlay ? setNodeRef : undefined}
       style={isOverlay ? {} : style}
-      className={`flex p-2 gap-3 border-ring shadow-md
-        ${reverse ? "bg-background" : "bg-card"}
-        ${grabbled ? "justify-between" : "justify-center"}
-        ${grabbled ? "cursor-default" : "cursor-pointer"}
-        ${isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""}
-        ${groupSelected?._id === group._id ? "border-2" : ""}
-      `}
+
       onMouseDown={!isOverlay ? handleMouseDown : undefined}
       onMouseUp={!isOverlay ? handleMouseUp : undefined}
+      className={`flex p-2 gap-3 border-ring shadow-md ${
+        reverse ? "bg-background" : "bg-card"
+      } ${
+        grabbled
+          ? "justify-between cursor-grab"
+          : "cursor-pointer justify-center"
+      } ${isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""} ${
+        groupSelected?._id === group._id ? "border-2" : ""
+      }
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
+      onClick={() => {
+        if (setGroupSelected && !disabled) {
+          setGroupSelected(group);
+        }
+      }}
     >
       <span className="cursor-pointer text-foreground font-bold">{group.label}</span>
 
