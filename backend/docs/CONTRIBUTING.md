@@ -2,28 +2,10 @@
 
 Lorsque vous contribuez à l'application Chariot Back, ...
 
-# Table des matières
+## Table des matières
 
-1.  [Démarrer](#démarrer)
-2.  [Création de Ressource](#création-de-ressource)
-
-## Démarrer
-
-1 - Setup une DB mongo en local ou dockerisée
-
-2 - Dupliquer le fichier .env.exemple et le renommer en .env
-
-```bash
-cp .env.exemple .env
-```
-
-3 - Adapter les valeurs du .env à vos valeur (aucun risque le fichier est ignoré) :
-
-4- Lancer le serveur de dev :
-
-```bash
-npm run start:dev
-```
+- [Création de Ressource](#création-de-ressource)
+- [Gestion des logs](#gestion-des-logs)
 
 ## Création de Ressource
 
@@ -89,3 +71,9 @@ export const ProductSchema = SchemaFactory.createForClass(Product);
 Ce fichier sera enregistré sous `src/product/schemas/product.schema.ts`.
 
 Avec cette approche, nous structurons notre projet NestJS en respectant les bonnes pratiques pour l'utilisation de MongoDB avec Mongoose sans dénaturer la structure modulaire de NestJS.
+
+## Gestion des logs
+
+Pour enregistrer des événements ou des messages importants, nous utilisons un logger centralisé. Cela permet de suivre les activités de l'application et de faciliter le débuggage.
+
+Pour plus de détails sur l'utilisation et la configuration du logger, veuillez consulter la documentation dédiée : [`logger.md`](./logger.md).
