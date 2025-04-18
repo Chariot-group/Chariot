@@ -4,7 +4,7 @@
     "about": "La herramienta definitiva para el rol."
   },
   "LocaleSwitcher": {
-    "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
+    "locale": "{locale, select, fr {🇫🇷 Francés} en {🇬🇧 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
   },
   "CampaignListPanel": {
     "title": "Tus campañas",
