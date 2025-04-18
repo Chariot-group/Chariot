@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, RefreshCcw, Swords } from "lucide-react";
 import { useTranslations } from "next-intl";
 interface Props {
-  groups: IGroupWithRelations[];
+  groups: (IGroupWithRelations | null)[];
 }
 
 const InitiativeTracker = ({ groups }: Props) => {
@@ -25,7 +25,7 @@ const InitiativeTracker = ({ groups }: Props) => {
     }
     const allParticipants: IParticipant[] = [];
     groups.forEach((group) => {
-      group.characters.forEach((character) => {
+      group?.characters.forEach((character) => {
         allParticipants.push({
           character,
           groupLabel: group.label,

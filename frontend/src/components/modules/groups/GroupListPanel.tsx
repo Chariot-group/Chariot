@@ -6,12 +6,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import GroupService from "@/services/groupService";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
-import { Grip } from "lucide-react";
-import { group } from "console";
 import { Button } from "@/components/ui/button";
 import { useDroppable } from "@dnd-kit/core";
 import GroupListPanelItem from "./GroupListPanelItem";
@@ -27,6 +24,8 @@ interface Props {
   type?: "all" | "main" | "npc" | "archived"; // Titre de groupe à afficher
   grabbled?: boolean; // Si vrai, le curseur est en mode grab et une icône de grip est affichée
   addable?: boolean; // Si vrai, le bouton d'ajout de groupe est affiché
+  disabledGroups?: IGroup[]; // Liste des groupes à ne pas afficher
+  context?: boolean;
 }
 export default function GroupListPanel({
   groups,
@@ -39,6 +38,8 @@ export default function GroupListPanel({
   type = "all",
   grabbled = false,
   addable = true,
+  disabledGroups,
+  context = false,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -73,7 +74,9 @@ export default function GroupListPanel({
         );
         if (reset) {
           setGroups(response.data || []);
-          setGroupSelected(response.data[0] || null);
+          if (!context) {
+            setGroupSelected(response.data[0] || null);
+          }
         } else {
           setGroups((prev) => {
             //Fix un bug surement dû au seeder.
@@ -89,40 +92,46 @@ export default function GroupListPanel({
           });
         }
         setPage(nextPage);
-      } catch(err){
+      } catch (err) {
         error(t("error"));
       } finally {
         setLoading(false);
       }
-    }, [loading, groupSelected?.deletedAt]);
+    },
+    [loading, groupSelected?.deletedAt]
+  );
 
-    const createGroup = useCallback(async () => {
-      try {
-          const response = await GroupService.createGroup({label: "Nouveau groupe", description: "", campaigns: [{idCampaign, type: "npc"}]});
-          setNewGroup(response.data);
-          fetchGroups(search, 1, true);
-      } catch(err){
-          error(t("error"));
-      } finally {
-          setLoading(false);
-      }
-  }, [])
+  const createGroup = useCallback(async () => {
+    try {
+      const response = await GroupService.createGroup({
+        label: "Nouveau groupe",
+        description: "",
+        campaigns: [{ idCampaign, type: "npc" }],
+      });
+      setNewGroup(response.data);
+      fetchGroups(search, 1, true);
+    } catch (err) {
+      error(t("error"));
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
-    useEffect(() => {
-      console.log("newGroup", newGroup);
-      console.log("selected", groupSelected);
-      if(newGroup) {
-        setGroupSelected(newGroup);
-        setNewGroup(null);
-      }
-    }, [groupSelected]);
+  useEffect(() => {
+    console.log("newGroup", newGroup);
+    console.log("selected", groupSelected);
+    if (newGroup) {
+      setGroupSelected(newGroup);
+      setNewGroup(null);
+    }
+  }, [groupSelected]);
 
   useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
 
-    useEffect(() => {
-        setGroups([]);
-        fetchGroups(search, 1, true);
-    }, [currentLocal, search, groupSelected?.deletedAt]);
+  useEffect(() => {
+    setGroups([]);
+    fetchGroups(search, 1, true);
+  }, [currentLocal, search, groupSelected?.deletedAt]);
   return (
     <div className="w-full h-full flex flex-col">
       <CardHeader className="flex-none h-auto items-center gap-3">
@@ -159,6 +168,7 @@ export default function GroupListPanel({
                 reverse={reverse}
                 setGroupSelected={setGroupSelected}
                 groupSelected={groupSelected}
+                disabled={disabledGroups?.some((g) => g._id === group._id)}
               />
             ))}
           {groups.length === 0 && !loading && !isOver && (
