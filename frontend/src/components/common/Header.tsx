@@ -11,6 +11,7 @@ import AuthService from "@/services/authService";
 import { IUser } from "@/models/users/IUser";
 import stringService from "@/services/stringService";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   campaign: ICampaign | null;
@@ -18,6 +19,7 @@ interface HeaderProps {
 export function Header({ campaign }: HeaderProps) {
   const t = useTranslations("Header");
   const { campaignId } = useParams();
+  const router = useRouter();
 
   const [user, setUser] = useState<IUser>();
 
@@ -34,10 +36,8 @@ export function Header({ campaign }: HeaderProps) {
   );
 
   const logout = () => {
-    //supprimer le token
     document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    //rediriger vers la page de login
-    window.location.href = "/auth/login";
+    router.push("/auth/login");
   }
 
   useEffect(() => {
