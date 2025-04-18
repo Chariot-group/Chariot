@@ -4,7 +4,7 @@
     "about": "L'outil ultime pour le JDR."
   },
   "LocaleSwitcher": {
-    "locale": "{locale, select, fr {🇫🇷 Français} en {🇺🇸 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
+    "locale": "{locale, select, fr {🇫🇷 Français} en {🇬🇧 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
   },
   "CampaignListPanel": {
     "title": "Vos campagnes",
