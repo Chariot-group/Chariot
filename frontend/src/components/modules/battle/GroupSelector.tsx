@@ -51,6 +51,7 @@ const GroupSelector = ({
       <div className="flex flex-row items-center justify-around w-1/2">
         <div>
           <GroupListPanel
+            addable={false}
             context
             groups={groupsLeft}
             setGroups={setGroupsLeft}
@@ -81,6 +82,7 @@ const GroupSelector = ({
         <p className="text-6xl">vs</p>
         <div>
           <GroupListPanel
+            addable={false}
             context
             groups={groupsRight}
             setGroups={setGroupsRight}
