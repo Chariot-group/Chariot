@@ -25,7 +25,6 @@ const BattlePage = () => {
   const [fight, setFight] = useState<boolean>(true);
 
   useEffect(() => {
-    console.log(groupsToFight);
     if (!campaignId) {
       return;
     }
