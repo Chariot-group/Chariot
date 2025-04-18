@@ -11,6 +11,7 @@ interface Props {
   currentPanelType: string;
   setGroupSelected?: (group: IGroup) => void;
   groupSelected?: IGroup | null;
+  disabled?: boolean;
 }
 
 const GroupListPanelItem = ({
@@ -19,7 +20,8 @@ const GroupListPanelItem = ({
   grabbled = false,
   currentPanelType,
   setGroupSelected,
-  groupSelected
+  groupSelected,
+  disabled = false,
 }: Props) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } =
     useDraggable({
@@ -42,11 +44,16 @@ const GroupListPanelItem = ({
       {...(!isOverlay ? { ...listeners, ...attributes } : {})}
       className={`flex p-2 gap-3 border-ring shadow-md ${
         reverse ? "bg-background" : "bg-card"
-      } ${grabbled ? "justify-between cursor-grab" : "cursor-pointer justify-center"} ${
-        isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""
-      } ${groupSelected?._id === group._id ? "border-2" : ""}`}
+      } ${
+        grabbled
+          ? "justify-between cursor-grab"
+          : "cursor-pointer justify-center"
+      } ${isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""} ${
+        groupSelected?._id === group._id ? "border-2" : ""
+      }
+        ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
       onClick={() => {
-        if (setGroupSelected) {
+        if (setGroupSelected && !disabled) {
           setGroupSelected(group);
         }
       }}

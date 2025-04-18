@@ -1,9 +1,11 @@
 "use client";
 import { Header } from "@/components/common/Header";
 import Loading from "@/components/common/Loading";
+import GroupSelector from "@/components/modules/battle/GroupSelector";
 import InitiativeTracker from "@/components/modules/battle/InitiativeTracker";
+import { Button } from "@/components/ui/button";
 import { ICampaign } from "@/models/campaigns/ICampaign";
-import { IGroupWithRelations } from "@/models/groups/IGroup";
+import { IGroup, IGroupWithRelations } from "@/models/groups/IGroup";
 import CampaignService from "@/services/campaignService";
 import GroupService from "@/services/groupService";
 import { useParams } from "next/navigation";
@@ -14,7 +16,13 @@ const BattlePage = () => {
 
   const [campaign, setCampaign] = useState<ICampaign | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [groups, setGroups] = useState<IGroupWithRelations[]>([]);
+  const [groupsLeft, setGroupsLeft] = useState<IGroup[]>([]);
+  const [groupsRight, setGroupsRight] = useState<IGroup[]>([]);
+  const [groupsToFight, setGroupsToFight] = useState<
+    (IGroupWithRelations | null)[]
+  >([null, null]);
+  const [groupIds, setGroupIds] = useState<string[]>([]);
+  const [fight, setFight] = useState<boolean>(true);
 
   useEffect(() => {
     if (!campaignId) {
@@ -28,10 +36,12 @@ const BattlePage = () => {
       }
     };
 
-    const fetchGroups = async () => {
-      const groupIds = ["67fcb61e1e90f27ba2e0762c", "67fcb61e1e90f27ba2e07602"];
+    const fetchGroups = async (groupIds: string[]) => {
+      if (!groupIds || groupIds.length !== 2) {
+        return;
+      }
 
-      const fetchedGroups: IGroupWithRelations[] = [];
+      const fetchedGroups: IGroup[] = [];
 
       for (const id of groupIds) {
         const res = await GroupService.findOne(id);
@@ -40,10 +50,11 @@ const BattlePage = () => {
         }
       }
 
-      setGroups(fetchedGroups);
+      setGroupsLeft(fetchedGroups);
+      setGroupsRight(fetchedGroups);
     };
 
-    fetchGroups();
+    fetchGroups(groupIds);
 
     setLoading(true);
     fetchCampaign();
@@ -57,7 +68,33 @@ const BattlePage = () => {
   return (
     <div>
       <Header campaign={campaign} />
-      <InitiativeTracker groups={groups} />
+      {fight ? (
+        <>
+          <GroupSelector
+            campaignId={campaignId as string}
+            groupsLeft={groupsLeft as IGroup[]}
+            setGroupsLeft={setGroupsLeft}
+            groupsRight={groupsRight as IGroup[]}
+            setGroupsRight={setGroupsRight}
+            groupsToFight={groupsToFight}
+            setGroupsToFight={setGroupsToFight}
+          />
+          {!groupsToFight.some((group) => group === null) && (
+            <div className="flex justify-center mt-4">
+              <Button onClick={() => setFight(!fight)}>Start Battle</Button>
+            </div>
+          )}
+        </>
+      ) : (
+        <>
+          <InitiativeTracker groups={groupsToFight as IGroupWithRelations[]} />
+          <div className="flex justify-end p-5">
+            <Button variant="outline" onClick={() => setFight(!fight)}>
+              Retour à la sélection
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
