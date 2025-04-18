@@ -34,7 +34,7 @@ const GroupService = {
     }
   },
 
-  async updateGroup(id: string, data: Partial<IGroup>) {
+  async updateGroup(id: string, data: any) {
     try {
       const response = await apiClient(APIContentType.JSON).patch(
         `/groups/${id}`,
@@ -51,6 +51,7 @@ const GroupService = {
       return "error";
     }
   },
+  
   async findOne(id: string) {
     try {
       const response = await apiClient(APIContentType.JSON).get(
@@ -100,7 +101,7 @@ const GroupService = {
       console.error("API error:", err);
       return "error";
     }
-  },
+  }
 };
 
 export default GroupService;

@@ -1,6 +1,7 @@
 "use client";
 
 import Field from "@/components/common/Field";
+import DeleteValidation from "@/components/common/modals/DeleteValidation";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,8 +17,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface CampaignDetailsPanelProps {
     campaign: ICampaign;
     setCampaign: (campaign: ICampaign) => void;
+    onDelete: (campaign: ICampaign) => void;
 } 
-export default function CampaignDetailsPanel({ campaign, setCampaign }: CampaignDetailsPanelProps) {
+export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete }: CampaignDetailsPanelProps) {
 
     const t = useTranslations("CampaignDetails");
     const { error } = useToast();
@@ -53,7 +55,7 @@ export default function CampaignDetailsPanel({ campaign, setCampaign }: Campaign
 
     const onChange = () => {
         campaign.description = description;
-        updateCampaign(campaign);
+        updateCampaign({description: description});
     }
 
     useEffect(() => {
@@ -61,12 +63,15 @@ export default function CampaignDetailsPanel({ campaign, setCampaign }: Campaign
         onChange();
     }, [description]);
 
+    const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+
     return (
-        <div className="flex flex-col h-full gap-3 p-5">
+        <div className="flex flex-col w-full gap-3 p-5">
+            <DeleteValidation isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title={t("modal.title")} message={t("modal.description")} confirmMessage={t("modal.confirm")} onConfirm={() => onDelete(campaign)}  />
             <div className="w-full">
                 <div className="w-full flex justify-between items-center">
                     <Label htmlFor={"description"} className="text-foreground">{t("labels.description")}</Label>
-                    <Button variant={"link"}>{t("actions.delete")}</Button>
+                    <Button variant={"link"} onClick={() => setDeleteModalOpen(true)}>{t("actions.delete")}</Button>
                 </div>
                 <Textarea className="h-[10dvh] bg-card" placeholder={t("placeholders.description")} value={description} onChange={(e) => setDescription(e.target.value)}/>
             </div>

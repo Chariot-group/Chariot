@@ -45,7 +45,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
         const response = await CharacterService.getAllCharacters({
           page: nextPage,
           offset,
-          name: search,
+          name: encodeURIComponent(search),
         }, group._id);
         if (reset) {
           setCharacters(response.data);

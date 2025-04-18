@@ -18,7 +18,6 @@ interface HeaderProps {
 }
 export function Header({ campaign }: HeaderProps) {
   const t = useTranslations("Header");
-  const { campaignId } = useParams();
   const router = useRouter();
 
   const [user, setUser] = useState<IUser>();
@@ -50,14 +49,14 @@ export function Header({ campaign }: HeaderProps) {
   return (
     <header className="text-white p-4 bg-card border-b-2 border-ring shadow-md">
       <div className="flex justify-between items-center">
-        {campaignId && (
+        {campaign && (
           <Button>
-            <Link href={`/campaigns/${campaignId}/battle`}>
+            <Link href={`/campaigns/${campaign._id}/battle`}>
               {t("launchBattle")}
             </Link>
           </Button>
         )}
-        {!campaignId && <div className="w-1/12"></div>}
+        {!campaign && <div className="w-1/12"></div>}
         <h1 className="text-foreground text-2xl font-bold">{`${t("home")} ${
           campaign ? `- ${campaign.label}` : ""
         }`}</h1>

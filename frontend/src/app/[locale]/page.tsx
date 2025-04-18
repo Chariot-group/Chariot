@@ -1,10 +1,5 @@
-"use client";
-import { Header } from "@/components/common/Header";
+import { redirect } from 'next/navigation';
 
-export default function Home() {
-  return (
-    <div className="flex flex-col">
-      <Header campaign={null} />
-    </div>
-  );
+export default function App() {
+    redirect("/campaigns");
 }
