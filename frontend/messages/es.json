@@ -254,6 +254,11 @@
     },
     "actions": {
       "delete": "Eliminar campaña"
+    },
+    "modal": {
+      "title": "Eliminar campaña",
+      "description": "¿Está seguro de que desea eliminar esta campaña?",
+      "confirm": "Sí, eliminar"
     }
   },
   "Header": {
@@ -296,6 +301,15 @@
     "actions": {
       "create": "Crear campaña",
       "cancel": "Cancelar"
+    }
+  },
+  "CampaignPage": {
+    "tutorial": {
+      "step1": "Paso 1: Crear una campaña",
+      "step2": "Paso 2: Crear un grupo de jugador principal",
+      "step3": "Paso 3: Crear sus grupos de PNJ",
+      "step4": "Paso 4: Lanzar sus iniciativas",
+      "step5": "Paso 5: ¡A jugar!"
     }
   },
   "InitiativeTracker": {
