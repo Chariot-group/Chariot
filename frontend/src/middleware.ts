@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 export default function middleware(req: NextRequest) {
   const intlMiddleware = createMiddleware({
     locales,
-    defaultLocale: "fr", // Remplace par ta locale par défaut
+    defaultLocale: "en", // Remplace par ta locale par défaut
   });
 
   return intlMiddleware(req);

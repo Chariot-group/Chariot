@@ -43,6 +43,9 @@ const GroupSelector = ({
     }
   };
 
+  const [searchLeft, setSearchLeft] = React.useState<string>("");
+  const [searchRight, setSearchRight] = React.useState<string>("");
+
   return (
     <div className="mt-12 flex flex-col w-full gap-4 items-center">
       <h1 className="text-2xl ">
@@ -53,6 +56,8 @@ const GroupSelector = ({
           <GroupListPanel
             addable={false}
             context
+            search={searchLeft}
+            setSearch={setSearchLeft}
             groups={groupsLeft}
             setGroups={setGroupsLeft}
             groupSelected={
@@ -84,6 +89,8 @@ const GroupSelector = ({
           <GroupListPanel
             addable={false}
             context
+            search={searchRight}
+            setSearch={setSearchRight}
             groups={groupsRight}
             setGroups={setGroupsRight}
             groupSelected={

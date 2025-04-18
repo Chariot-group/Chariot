@@ -24,6 +24,8 @@ interface Props {
   type?: "all" | "main" | "npc" | "archived"; // Titre de groupe à afficher
   grabbled?: boolean; // Si vrai, le curseur est en mode grab et une icône de grip est affichée
   addable?: boolean; // Si vrai, le bouton d'ajout de groupe est affiché
+  search: string;
+  setSearch: (search: string) => void;
   disabledGroups?: IGroup[]; // Liste des groupes à ne pas afficher
   context?: boolean;
 }
@@ -38,6 +40,8 @@ export default function GroupListPanel({
   type = "all",
   grabbled = false,
   addable = true,
+  search,
+  setSearch,
   disabledGroups,
   context = false,
 }: Props) {
@@ -52,7 +56,6 @@ export default function GroupListPanel({
   const [newGroup, setNewGroup] = useState<IGroup | null>(null);
   //Pagination
   const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   //Infinite scroll
@@ -67,7 +70,7 @@ export default function GroupListPanel({
           {
             page: nextPage,
             offset,
-            label: search,
+            label: encodeURIComponent(search),
             type,
           },
           idCampaign
@@ -97,9 +100,7 @@ export default function GroupListPanel({
       } finally {
         setLoading(false);
       }
-    },
-    [loading, groupSelected?.deletedAt]
-  );
+    }, [loading, groupSelected?.deletedAt, idCampaign]);
 
   const createGroup = useCallback(async () => {
     try {
@@ -117,21 +118,19 @@ export default function GroupListPanel({
     }
   }, []);
 
-  useEffect(() => {
-    console.log("newGroup", newGroup);
-    console.log("selected", groupSelected);
-    if (newGroup) {
-      setGroupSelected(newGroup);
-      setNewGroup(null);
-    }
-  }, [groupSelected]);
+    useEffect(() => {
+      if(newGroup) {
+        setGroupSelected(newGroup);
+        setNewGroup(null);
+      }
+    }, [groupSelected]);
 
   useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
 
-  useEffect(() => {
-    setGroups([]);
-    fetchGroups(search, 1, true);
-  }, [currentLocal, search, groupSelected?.deletedAt]);
+    useEffect(() => {
+        setGroups([]);
+        fetchGroups(search, 1, true);
+    }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
   return (
     <div className="w-full h-full flex flex-col">
       <CardHeader className="flex-none h-auto items-center gap-3">
@@ -161,6 +160,7 @@ export default function GroupListPanel({
           {groups.length > 0 &&
             groups.map((group) => (
               <GroupListPanelItem
+                idCampaign={idCampaign}
                 key={group._id}
                 group={group}
                 currentPanelType={type}
@@ -169,6 +169,7 @@ export default function GroupListPanel({
                 setGroupSelected={setGroupSelected}
                 groupSelected={groupSelected}
                 disabled={disabledGroups?.some((g) => g._id === group._id)}
+                clickable={!context}
               />
             ))}
           {groups.length === 0 && !loading && !isOver && (
