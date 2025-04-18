@@ -37,6 +37,7 @@ const BattlePage = () => {
     };
 
     const fetchGroups = async (groupIds: string[]) => {
+      console.log(groupIds)
       if (!groupIds || groupIds.length !== 2) {
         return;
       }

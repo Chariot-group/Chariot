@@ -169,6 +169,7 @@ export default function GroupListPanel({
                 setGroupSelected={setGroupSelected}
                 groupSelected={groupSelected}
                 disabled={disabledGroups?.some((g) => g._id === group._id)}
+                clickable={!context}
               />
             ))}
           {groups.length === 0 && !loading && !isOver && (

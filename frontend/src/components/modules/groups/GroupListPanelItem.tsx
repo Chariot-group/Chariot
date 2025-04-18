@@ -14,6 +14,7 @@ interface Props {
   groupSelected?: IGroup | null;
   idCampaign: string;
   disabled?: boolean;
+  clickable?: boolean;
 }
 
 const GroupListPanelItem = ({
@@ -24,7 +25,8 @@ const GroupListPanelItem = ({
   setGroupSelected,
   groupSelected,
   idCampaign,
-  disabled = false
+  disabled = false,
+  clickable = true,
 }: Props) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: group._id,
@@ -53,8 +55,7 @@ const GroupListPanelItem = ({
     const dy = event.clientY - pointerStart.current.y;
     const distance = Math.sqrt(dx * dx + dy * dy);
 
-    if (distance < 5 && setGroupSelected) {
-      setGroupSelected(group);
+    if (distance < 5 && setGroupSelected && clickable) {
       router.push(`/campaigns/${idCampaign}/groups?search=${group.label}`);
     }
   };
@@ -76,7 +77,7 @@ const GroupListPanelItem = ({
         groupSelected?._id === group._id ? "border-2" : ""
       }
         ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
-      onClick={() => {
+      onClick={(e) => {
         if (setGroupSelected && !disabled) {
           setGroupSelected(group);
         }
