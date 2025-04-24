@@ -154,26 +154,20 @@ export class SeederService {
           { $addToSet: { campaigns: campaign._id } },
         );
 
-        mainGroups.forEach(async (g: ObjectId) => {
-          await this.groupModel.updateOne(
-            { _id: g },
-            { $addToSet: { campaigns: campaign._id } },
-          );
-        });
+        await this.groupModel.updateMany(
+          { _id: { $in: mainGroups.map((id) => id) } },
+          { $addToSet: { campaigns: campaign._id } },
+        );
 
-        npcGroups.forEach(async (g: ObjectId) => {
-          await this.groupModel.updateOne(
-            { _id: g },
-            { $addToSet: { campaigns: campaign._id } },
-          );
-        });
+        await this.groupModel.updateMany(
+          { _id: { $in: npcGroups.map((id) => id) } },
+          { $addToSet: { campaigns: campaign._id } },
+        );
 
-        archivedGroups.forEach(async (g: ObjectId) => {
-          await this.groupModel.updateOne(
-            { _id: g },
-            { $addToSet: { campaigns: campaign._id } },
-          );
-        });
+        await this.groupModel.updateMany(
+          { _id: { $in: archivedGroups.map((id) => id) } },
+          { $addToSet: { campaigns: campaign._id } },
+        );
 
         campaigns.push(campaign._id);
       }
