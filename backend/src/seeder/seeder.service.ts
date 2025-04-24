@@ -178,10 +178,9 @@ export class SeederService {
         campaigns.push(campaign._id);
       }
 
-      let password = faker.internet.password();
-      let hashPassword = await bcrypt.hash(password, 10);
+      let hashPassword = await bcrypt.hash('chariot', 10);
       await this.userModel.create({
-        username: faker.person.fullName() + ` (${password})`,
+        username: faker.person.fullName(),
         email: faker.internet.email(),
         password: hashPassword,
         campaigns: campaigns,
