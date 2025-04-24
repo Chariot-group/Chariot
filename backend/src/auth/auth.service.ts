@@ -7,6 +7,7 @@ import { ResetPasswordDto } from './dto/resetPassword.dto';
 import { User, UserDocument } from '@/user/schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { MaillingService } from '@/mailling/mailling.service';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +15,7 @@ export class AuthService {
     constructor(
         private userService: UserService,
         private jwtService: JwtService,
+        private maillingService: MaillingService,
         @InjectModel(User.name) private userModel: Model<UserDocument>,
     ) {}
 
@@ -78,6 +80,8 @@ export class AuthService {
                 .updateOne({ email: email }, {otp})
                 .exec();
             const end: number = Date.now();
+
+            this.maillingService.sendOTP(user.username, user.email, otp);
 
             if (userUpdate.modifiedCount === 0) {
                 const message = `User #${email} not found`;

@@ -7,10 +7,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Algorithm } from 'jsonwebtoken';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '@/user/schemas/user.schema';
+import { MaillingModule } from '@/mailling/mailling.module';
 
 @Module({
   imports: [
     UserModule,
+    MaillingModule,
     JwtModule.registerAsync({
       imports: [
         MongooseModule.forFeature([
