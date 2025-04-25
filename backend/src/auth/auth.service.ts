@@ -56,7 +56,6 @@ export class AuthService {
     async forgotPassword(id: string, changePassword: changePasswordDto){
         try {
             if (!Types.ObjectId.isValid(id)) {
-                this.logger.verbose("Passe pas", this.SERVICE_NAME);
                 const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
                 this.logger.error(message, null, this.SERVICE_NAME);
                 throw new BadRequestException(message);
@@ -93,7 +92,9 @@ export class AuthService {
 
             const start: number = Date.now();
             const user = await this.userModel.updateOne({_id: id}, {
-                password: hashedPassword
+                password: hashedPassword,
+                otp: null,
+                updatedAt: new Date()
             }).exec();
             const end: number = Date.now();
 

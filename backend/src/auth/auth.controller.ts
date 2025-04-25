@@ -23,7 +23,7 @@ export class AuthController {
         return this.userService.create(createUserDto);
     }
 
-    @Patch(':id/changePassword')
+    @Patch(':id/change-password')
     forgotPassword(@Param('id') id: string, @Body() changePassword: changePasswordDto) {
         return this.authService.forgotPassword(id, changePassword);
     }
