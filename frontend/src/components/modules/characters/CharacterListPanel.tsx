@@ -5,20 +5,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useToast } from "@/hooks/useToast";
 import ICharacter from "@/models/characters/ICharacter";
+import { IGroup } from "@/models/groups/IGroup";
 import CharacterService from "@/services/CharacterService";
 import { Plus } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-interface Props {
+interface ICharacterListPanelProps {
   offset?: number;
   characterSelected: ICharacter | null;
   setCharacterSelected: (group: ICharacter | null) => void;
-  idGroup: string;
+  group: IGroup;
 }
-
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, idGroup }: Props) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -45,8 +45,8 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
         const response = await CharacterService.getAllCharacters({
           page: nextPage,
           offset,
-          name: search,
-        }, idGroup);
+          name: encodeURIComponent(search),
+        }, group._id);
         if (reset) {
           setCharacters(response.data);
           setCharacterSelected(response.data[0]);
@@ -63,7 +63,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
         setLoading(false);
       }
     },
-    [loading]
+    [loading, group._id, group.characters]
   );
 
   useInfiniteScroll(containerRef, fetchCharacters, page, loading, search);
@@ -78,7 +78,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   useEffect(() => {
     setCharacters([]);
     fetchCharacters(search, 1, true);
-  }, [currentLocale, search]);
+  }, [currentLocale, search, group]);
 
   return (
     <div className="w-full h-full flex flex-col">

@@ -97,7 +97,7 @@ export class CharacterService {
           : (sort[query.sort] = 'asc');
       }
       const filters = {
-        name: { $regex: `${name}`, $options: 'i' },
+        name: { $regex: `${decodeURIComponent(name)}`, $options: 'i' },
         deletedAt: { $eq: null },
       };
       if (groupId) {

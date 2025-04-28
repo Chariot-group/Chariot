@@ -5,7 +5,6 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
-  Res,
 } from '@nestjs/common';
 import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
@@ -24,25 +23,40 @@ export class CampaignService {
   private readonly logger = new Logger(CampaignService.name);
   private readonly SERVICE_NAME = CampaignService.name;
 
+  private async validateGroupRelations(
+    groupIds: string[],
+    type: 'Main' | 'NPC' | 'Archived',
+  ): Promise<void> {
+    if (!groupIds || groupIds.length === 0) return;
+
+    for (const groupId of groupIds) {
+      if (!Types.ObjectId.isValid(groupId)) {
+        throw new BadRequestException(`Invalid ${type} group ID: ${groupId}`);
+      }
+
+      const group = await this.groupModel.findById(groupId).exec();
+
+      if (!group) {
+        throw new NotFoundException(`${type} group not found: ${groupId}`);
+      }
+
+      if (group.deletedAt) {
+        throw new GoneException(`${type} group deleted: ${groupId}`);
+      }
+    }
+  }
+
   async create(createCampaignDto: CreateCampaignDto, userId: string) {
     try {
       const { groups, ...campaignData } = createCampaignDto;
       const totalGroups = groups.main.concat(groups.npc, groups.archived);
 
-      const groupCheckPromises = totalGroups.map((groupId) =>
-        this.groupModel.findById(groupId).exec(),
+      await this.validateGroupRelations(createCampaignDto.groups.main, 'Main');
+      await this.validateGroupRelations(createCampaignDto.groups.npc, 'NPC');
+      await this.validateGroupRelations(
+        createCampaignDto.groups.archived,
+        'Archived',
       );
-      const groupCheckResults = await Promise.all(groupCheckPromises);
-      // Si un ou plusieurs groupes ne sont pas trouvés, on log et on lève une erreur
-      const invalidGroups = groupCheckResults.filter((group) => !group);
-      if (invalidGroups.length > 0) {
-        const invalidGroupIds = totalGroups.filter(
-          (_, index) => !groupCheckResults[index],
-        );
-        const message = `Invalid group IDs: ${invalidGroupIds.join(', ')}`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
 
       const start: number = Date.now();
       const campaign = await this.campaignModel.create({
@@ -63,7 +77,11 @@ export class CampaignService {
         data: campaign,
       };
     } catch (error) {
-      if (error instanceof BadRequestException) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof GoneException ||
+        error instanceof NotFoundException
+      ) {
         throw error;
       }
       const message = `Error while creating campaign: ${error.message}`;
@@ -82,8 +100,8 @@ export class CampaignService {
       const { page = 1, offset = 10, label = '' } = query;
       const skip = (page - 1) * offset;
 
-      const filter = {
-        label: { $regex: `${label}`, $options: 'i' },
+      const filters = {
+        label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
       };
 
@@ -95,11 +113,11 @@ export class CampaignService {
           : (sort[query.sort] = 1);
       }
 
-      const totalItems = await this.campaignModel.countDocuments(filter);
+      const totalItems = await this.campaignModel.countDocuments(filters);
 
       const start: number = Date.now();
       const campaigns = await this.campaignModel
-        .find(filter)
+        .find(filters)
         .skip(skip)
         .limit(offset)
         .sort(sort)
@@ -174,8 +192,107 @@ export class CampaignService {
     }
   }
 
-  update(id: number, updateCampaignDto: UpdateCampaignDto) {
-    return `This action updates a #${id} campaign`;
+  async update(id: string, updateCampaignDto: UpdateCampaignDto) {
+    try {
+
+      this.logger.error(updateCampaignDto.groups, null, this.SERVICE_NAME);
+      if(updateCampaignDto.groups) {
+        await this.validateGroupRelations(updateCampaignDto.groups.main, 'Main');
+        await this.validateGroupRelations(updateCampaignDto.groups.npc, 'NPC');
+        await this.validateGroupRelations(updateCampaignDto.groups.archived, 'Archived');
+      }
+
+      // Validate ID
+      if (!Types.ObjectId.isValid(id)) {
+        const message = `Invalid campaign ID: ${id}`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      const start = Date.now();
+
+      // Find existing campaign
+      const existingCampaign = await this.campaignModel.findById(id);
+      if (!existingCampaign) {
+        const message = `Campaign ${id} not found`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new NotFoundException(message);
+      }
+
+      if (existingCampaign.deletedAt) {
+        const message = `Campaign ${id} has been deleted`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new GoneException(message);
+      }
+
+      // Handle label update attempt
+      if (updateCampaignDto.label && updateCampaignDto.label !== existingCampaign.label) {
+        const message = `Campaign label cannot be modified`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new BadRequestException(message);
+      }
+
+      // Handle groups update if present
+      if (updateCampaignDto.groups) {
+        const { main = [], npc = [], archived = [] } = updateCampaignDto.groups;
+        const newGroupIds = [...main, ...npc, ...archived];
+        const currentGroupIds = [
+          ...existingCampaign.groups.main,
+          ...existingCampaign.groups.npc,
+          ...existingCampaign.groups.archived
+        ].map(id => id.toString());
+
+        // Remove campaign from old groups
+        const groupsToRemove = currentGroupIds.filter(id => !newGroupIds.includes(id));
+        if (groupsToRemove.length > 0) {
+          await this.groupModel.updateMany(
+            { _id: { $in: groupsToRemove } },
+            { $pull: { campaigns: id } }
+          );
+        }
+
+        // Add campaign to new groups
+        const groupsToAdd = newGroupIds.filter(id => !currentGroupIds.includes(id));
+        if (groupsToAdd.length > 0) {
+          await this.groupModel.updateMany(
+            { _id: { $in: groupsToAdd } },
+            { $addToSet: { campaigns: id } }
+          );
+        }
+      }
+
+      // Update campaign
+      const updatedCampaign = await this.campaignModel
+        .findByIdAndUpdate(
+          id,
+          {
+            ...updateCampaignDto,
+            updatedAt: new Date()
+          },
+          { new: true }
+        )
+        .populate([
+          { path: 'groups.main', populate: { path: 'characters' } },
+          { path: 'groups.npc', populate: { path: 'characters' } },
+          { path: 'groups.archived', populate: { path: 'characters' } }
+        ]);
+
+      const end = Date.now();
+
+      return {
+        message: `Campaign updated in ${end - start}ms`,
+        data: updatedCampaign
+      };
+    } catch (error) {
+      if (error instanceof BadRequestException || 
+          error instanceof NotFoundException || 
+          error instanceof GoneException) {
+        throw error;
+      }
+      const message = `Error updating campaign: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
   }
 
   async remove(id: string) {

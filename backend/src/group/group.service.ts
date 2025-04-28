@@ -18,7 +18,6 @@ import {
   CharacterDocument,
 } from '@/character/schemas/character.schema';
 import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
-import { CampaignGroupDto } from './dto/sub/campaigns.dto';
 
 @Injectable()
 export class GroupService {
@@ -32,41 +31,58 @@ export class GroupService {
   private readonly SERVICE_NAME = GroupService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
+  private async validateCharacterRelations(
+    characterIds: string[],
+  ): Promise<void> {
+    if (!characterIds || characterIds.length === 0) return;
+
+    for (const characterId of characterIds) {
+      if (!Types.ObjectId.isValid(characterId)) {
+        throw new BadRequestException(`Invalid character ID: ${characterId}`);
+      }
+
+      const character = await this.characterModel.findById(characterId).exec();
+
+      if (!character) {
+        throw new NotFoundException(`Character not found: ${characterId}`);
+      }
+
+      if (character.deletedAt) {
+        throw new GoneException(`Character deleted: ${characterId}`);
+      }
+    }
+  }
+
+  private async validatecampaignRelations(
+    campaignIds: string[],
+  ): Promise<void> {
+    if (!campaignIds || campaignIds.length === 0) return;
+
+    for (const campaignId of campaignIds) {
+      if (!Types.ObjectId.isValid(campaignId)) {
+        throw new BadRequestException(`Invalid campaign ID: ${campaignId}`);
+      }
+
+      const campaign = await this.campaignModel.findById(campaignId).exec();
+
+      if (!campaign) {
+        throw new NotFoundException(`Campaign not found: ${campaignId}`);
+      }
+
+      if (campaign.deletedAt) {
+        throw new GoneException(`Campaign deleted: ${campaignId}`);
+      }
+    }
+  }
+
   async create(createGroupDto: CreateGroupDto, userId: string) {
     try {
       const { characters = [], campaigns, ...groupData } = createGroupDto;
 
-      const characterCheckPromises = characters.map((characterId) =>
-        this.characterModel.findById(characterId).exec(),
+      await this.validateCharacterRelations(characters);
+      await this.validatecampaignRelations(
+        campaigns.map((campaign) => campaign.idCampaign),
       );
-      const characterCheckResults = await Promise.all(characterCheckPromises);
-      const invalidCharacters = characterCheckResults.filter(
-        (character) => !character,
-      );
-      if (invalidCharacters.length > 0) {
-        const invalidCharacterIds = characters.filter(
-          (_, index) => !characterCheckResults[index],
-        );
-        const message = `Invalid characters IDs: ${invalidCharacterIds.join(', ')}`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
-
-      const campaignCheckPromises = campaigns.map((campaign) =>
-        this.campaignModel.findById(campaign.idCampaign).exec(),
-      );
-      const campaignCheckResults = await Promise.all(campaignCheckPromises);
-      const invalidCampaigns = campaignCheckResults.filter(
-        (campaign) => !campaign,
-      );
-      if (invalidCampaigns.length > 0) {
-        const invalidCampaignIds = campaigns
-          .map((campaign) => campaign.idCampaign)
-          .filter((_, index) => !campaignCheckResults[index]);
-        const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
 
       const start: number = Date.now();
       const group = await this.groupModel.create({
@@ -97,7 +113,11 @@ export class GroupService {
         data: group,
       };
     } catch (error) {
-      if (error instanceof BadRequestException) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof GoneException ||
+        error instanceof NotFoundException
+      ) {
         throw error;
       }
       const errorMessage = `Error while creating group: ${error.message}`;
@@ -108,7 +128,8 @@ export class GroupService {
 
   async findAll(
     query: { page?: number; offset?: number; label?: string; sort?: string },
-    campaignId?: string, type: "all" | "main" | "npc" | "archived" = "all",
+    campaignId?: string,
+    type: 'all' | 'main' | 'npc' | 'archived' = 'all',
   ) {
     try {
       const { label = '', page = 1, offset = 10, sort = 'updatedAt' } = query;
@@ -121,27 +142,35 @@ export class GroupService {
       }
 
       const filters: any = {
-        label: { $regex: `${label}`, $options: 'i' },
+        label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
       };
 
       if (campaignId) {
         const campaign = await this.campaignModel.findById(campaignId).lean();
-        if(!campaign) {
+        if (!campaign) {
           const message = `Error while fetching groups: Campaign ${campaignId} not found`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new NotFoundException(message);
         }
-        
+
         let groupIds: string[] = [];
         if (type === 'all') {
           groupIds = [
-            ...(campaign.groups?.main || []).map((group: any) => group.toString()),
-            ...(campaign.groups?.npc || []).map((group: any) => group.toString()),
-            ...(campaign.groups?.archived || []).map((group: any) => group.toString())
+            ...(campaign.groups?.main || []).map((group: any) =>
+              group.toString(),
+            ),
+            ...(campaign.groups?.npc || []).map((group: any) =>
+              group.toString(),
+            ),
+            ...(campaign.groups?.archived || []).map((group: any) =>
+              group.toString(),
+            ),
           ];
         } else {
-          groupIds = (campaign.groups?.[type] || []).map((group: any) => group.toString());
+          groupIds = (campaign.groups?.[type] || []).map((group: any) =>
+            group.toString(),
+          );
         }
 
         filters['campaigns'] = { $in: [campaignId] };
@@ -252,103 +281,31 @@ export class GroupService {
         throw new GoneException(message);
       }
 
-      //Vérification ids characters
       if (characters) {
-        const invalidIds = [];
-        characters.forEach((character) => {
-          if (!Types.ObjectId.isValid(character)) {
-            invalidIds.push(character);
-          }
-        });
-        if (invalidIds.length > 0) {
-          const message = `These are not valid mongoose Ids: ${invalidIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
-          throw new BadRequestException(message);
-        }
-        const characterCheckPromises = characters.map((characterId) =>
-          this.characterModel.findById(characterId).exec(),
-        );
-        const characterCheckResults = await Promise.all(characterCheckPromises);
-        const invalidCharacters = characterCheckResults.filter(
-          (character) => !character,
-        );
-        if (invalidCharacters.length > 0) {
-          const invalidCharacterIds = characters.filter(
-            (_, index) => !characterCheckResults[index],
-          );
-          const message = `Invalid characters IDs: ${invalidCharacterIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
-          throw new NotFoundException(message);
-        }
-        const deletedCharacters = characterCheckResults.filter(
-          (character) => character.deletedAt,
-        );
-        if (deletedCharacters.length > 0) {
-          const deletedCharacterIds = characters.filter(
-            (_, index) => characterCheckResults[index].deletedAt,
-          );
-          const message = `These characters are already deleted: ${deletedCharacterIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
-          throw new GoneException(message);
-        }
-      } else {
-        characters = group.characters.map((character) =>
-          character._id.toString(),
-        );
+        await this.validateCharacterRelations(characters);
       }
 
-      let campaignIds: string[] = [];
       if (campaigns) {
-        const invalidIds = [];
-        campaigns.forEach((campaign) => {
-          if (!Types.ObjectId.isValid(campaign.idCampaign)) {
-            invalidIds.push(campaign.idCampaign);
-          }
-        });
-        if (invalidIds.length > 0) {
-          const message = `These are not valid mongoose Ids: ${invalidIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
-          throw new BadRequestException(message);
-        }
-        const campaignCheckPromises = campaigns.map((campaign) =>
-          this.campaignModel.findById(campaign.idCampaign).exec(),
-        );
-        const campaignCheckResults = await Promise.all(campaignCheckPromises);
-        const invalidCampaigns = campaignCheckResults.filter(
-          (campaign) => !campaign,
-        );
-        if (invalidCampaigns.length > 0) {
-          const invalidCampaignIds = campaigns
-            .map((campaign) => campaign.idCampaign)
-            .filter((_, index) => !campaignCheckResults[index]);
-          const message = `Invalid campaign IDs: ${invalidCampaignIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
-          throw new NotFoundException(message);
-        }
-        const deletedCampaigns = campaignCheckResults.filter(
-          (campaign) => campaign.deletedAt,
-        );
-        if (deletedCampaigns.length > 0) {
-          const deletedCampaignIds = campaigns
-            .filter((_, index) => campaignCheckResults[index].deletedAt)
-            .map((campaign) => campaign.idCampaign);
-          const message = `These campaigns are already deleted: ${deletedCampaignIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
-          throw new GoneException(message);
-        }
-        campaignIds = campaigns.map((campaign) => campaign.idCampaign);
-      } else {
-        campaignIds = group.campaigns.map((campaign) =>
-          campaign._id.toString(),
+        await this.validatecampaignRelations(
+          campaigns.map((campaign) => campaign.idCampaign),
         );
       }
-
-      const charactersToRemove = group.characters.filter(
-        (oldCharacter) =>
-          !characters.some(
-            (newCharacters) => newCharacters === oldCharacter._id.toString(),
-          ),
+      let campaignIds = group.campaigns.map((campaign) =>
+        campaign._id.toString(),
       );
+      if (campaigns) {
+        campaignIds = campaigns.map((campaign) => campaign.idCampaign);
+      }
+
+      let charactersToRemove = [];
+      if (characters) {
+        charactersToRemove = group.characters.filter(
+          (oldCharacter) =>
+            !characters.some(
+              (newCharacters) => newCharacters === oldCharacter._id.toString(),
+            ),
+        );
+      }
 
       const start: number = Date.now();
       const groupUpdate = await this.groupModel
@@ -367,14 +324,16 @@ export class GroupService {
         .populate('characters')
         .exec();
 
-      await this.characterModel.updateMany(
-        { _id: { $in: characters.map((id) => id) } },
-        { $addToSet: { groups: id } },
-      );
-      await this.characterModel.updateMany(
-        { _id: { $in: charactersToRemove } },
-        { $pull: { groups: id } },
-      );
+      if (characters) {
+        await this.characterModel.updateMany(
+          { _id: { $in: characters.map((id) => id) } },
+          { $addToSet: { groups: id } },
+        );
+        await this.characterModel.updateMany(
+          { _id: { $in: charactersToRemove } },
+          { $pull: { groups: id } },
+        );
+      }
 
       if (campaigns) {
         campaigns.forEach(async (newCampaign) => {

@@ -14,7 +14,7 @@ import { useLocale, useTranslations } from "next-intl";
 interface LocaleSwitcherProps {
   className?: string;
 }
-export default function LanguageSwitcher({className = ""}: LocaleSwitcherProps) {
+export default function LanguageSwitcher({className}: LocaleSwitcherProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -31,10 +31,10 @@ export default function LanguageSwitcher({className = ""}: LocaleSwitcherProps) 
 
   return (
     <Select onValueChange={handleChange} value={currentLocale}>
-      <SelectTrigger className={className + " w-auto"}>
+      <SelectTrigger className={"bg-background text-foreground border-ring w-auto " + className}>
         <SelectValue placeholder="Select language" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-background text-foreground border-ring">
         {routing.locales.map((current) => (
           <SelectItem key={current} value={current}>
             {t("locale", { locale: current })}

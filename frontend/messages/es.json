@@ -4,7 +4,15 @@
     "about": "La herramienta definitiva para el rol."
   },
   "LocaleSwitcher": {
-    "locale": "{locale, select, fr {🇫🇷 Francés} en {🇺🇸 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
+    "locale": "{locale, select, fr {🇫🇷 Francés} en {🇬🇧 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
+  },
+  "CampaignListPanel": {
+    "title": "Tus campañas",
+    "search": "Buscar una campaña",
+    "createTooltip": "Añadir campaña",
+    "noCampaigns": "No se encontraron campañas",
+    "error": "Error al cargar las campañas",
+    "create": "Añadir campaña"
   },
   "LoginPage": {
     "title": "Bienvenido a Chariot!",
@@ -41,6 +49,289 @@
     "search": "Buscar un grupo",
     "create": "Agregar un grupo",
     "noGroups": "No se encontraron grupos",
+    "dropHere": "Suelta aquí para agregar al grupo",
     "error": "Error al cargar los grupos"
-  }
+  },
+  "CharacterDetailsPanel": {
+    "navigation": {
+      "global": "General",
+      "combat": "Combate",
+      "actions": "Acciones",
+      "traits": "Rasgos"
+    },
+    "actions": {
+      "characterDelete": "Eliminar personaje",
+      "actionsAdd": "Agregar acción",
+      "actionsDelete": "Eliminar acción",
+      "languagesAdd": "Agregar idioma",
+      "languagesDelete": "Eliminar idioma",
+      "abilitiesAdd": "Agregar habilidad",
+      "abilitiesDelete": "Eliminar habilidad",
+      "modal": {
+        "title": "Eliminar personaje",
+        "description": "¿Estás seguro de que deseas eliminar este personaje?",
+        "confirm": "Sí, eliminar"
+      }
+    },
+    "categories": {
+      "global": {
+        "classification": "Clasificación",
+        "informations": "Información",
+        "moving": "Movimiento",
+        "skills": "Habilidades",
+        "senses": "Sentidos"
+      },
+      "combat": {
+        "stats": "Estadísticas"
+      },
+      "traits": {
+        "languages": "Idiomas",
+        "noLanguage": "Sin idioma",
+        "abilities": "Habilidades",
+        "noAbilities": "Sin habilidades"
+      }
+    },
+    "labels": {
+      "name": "Nombre",
+      "classification": {
+        "type": "Tipo",
+        "alignment": "Alineación",
+        "subType": "Subtipo",
+        "size": "Tamaño"
+      },
+      "stats": {
+        "maxHP": "PV máx",
+        "currentHP": "PV actuales",
+        "tempHP": "PV temporales",
+        "hitDice": "Dados de golpe",
+        "armorClass": "Clase de armadura",
+        "speed": {
+          "walk": "Caminar",
+          "fly": "Volar",
+          "swim": "Nadar",
+          "climb": "Escalar",
+          "burrow": "Excavar"
+        },
+        "abilityScores": {
+          "strength": "Fuerza",
+          "dexterity": "Destreza",
+          "constitution": "Constitución",
+          "intelligence": "Inteligencia",
+          "wisdom": "Sabiduría",
+          "charisma": "Carisma"
+        },
+        "skills": {
+          "athletics": "Atletismo",
+          "acrobatics": "Acrobacias",
+          "sleightOfHand": "Trucos de manos",
+          "stealth": "Sigilo",
+          "arcana": "Arcanos",
+          "history": "Historia",
+          "investigation": "Investigación",
+          "nature": "Naturaleza",
+          "religion": "Religión",
+          "animalHandling": "Manejo de animales",
+          "insight": "Perspicacia",
+          "medicine": "Medicina",
+          "perception": "Percepción",
+          "survival": "Supervivencia",
+          "deception": "Engaño",
+          "intimidation": "Intimidación",
+          "performance": "Actuación",
+          "persuasion": "Persuasión"
+        },
+        "senses": {
+          "nightVision": "Visión nocturna",
+          "passivePerception": "Percepción pasiva"
+        }
+      },
+      "combat": {
+        "challengeRating": "Nivel de desafío",
+        "experiencePoints": "Puntos de experiencia",
+        "resistances": "Resistencias",
+        "immunities": "Inmunidades",
+        "vulnerabilities": "Vulnerabilidades"
+      },
+      "traits": {
+        "languages": "Idiomas",
+        "abilities": {
+          "name": "Nombre",
+          "description": "Descripción"
+        }
+      },
+      "actions": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "attackBonus": "Bonificación de ataque",
+        "damage": {
+          "dice": "Dado",
+          "type": "Tipo"
+        },
+        "range": "Alcance"
+      }
+    },
+    "placeholders": {
+      "name": "Goblin",
+      "classification": {
+        "type": "Humanoide",
+        "alignment": "Neutral - Malvado",
+        "subType": "goblinoide",
+        "size": "Pequeño"
+      },
+      "stats": {
+        "maxHP": "7",
+        "currentHP": "3",
+        "tempHP": "5",
+        "hitDice": "2d6",
+        "armorClass": "15",
+        "speed": {
+          "walk": "30",
+          "fly": "0",
+          "swim": "0",
+          "climb": "0",
+          "burrow": "0"
+        },
+        "abilityScores": "Puntaje de habilidad",
+        "savingThrows": "Tiradas de salvación",
+        "skills": {
+          "athletics": "6",
+          "acrobatics": "0",
+          "sleightOfHand": "0",
+          "stealth": "0",
+          "arcana": "0",
+          "history": "0",
+          "investigation": "0",
+          "nature": "0",
+          "religion": "0",
+          "animalHandling": "0",
+          "insight": "0",
+          "medicine": "0",
+          "perception": "0",
+          "survival": "0",
+          "deception": "0",
+          "intimidation": "0",
+          "performance": "0",
+          "persuasion": "0"
+        },
+        "senses": {
+          "nightVision": "60",
+          "passivePerception": "9"
+        }
+      },
+      "combat": {
+        "challengeRating": "0.25",
+        "experiencePoints": "50"
+      },
+      "traits": {
+        "languages": "Común, Goblin",
+        "abilities": {
+          "name": "La gran escapada",
+          "description": "Cuando el goblin recibe un ataque, puede usar su reacción para moverse 10 pies en una dirección de su elección."
+        }
+      },
+      "actions": {
+        "name": "Cimitarra",
+        "type": "Cuerpo a cuerpo",
+        "attackBonus": "Bonificación de ataque",
+        "damage": {
+          "dice": "1d6",
+          "type": "Cortante"
+        },
+        "range": "5"
+      }
+    }
+  },
+  "Global": {
+    "cancel": "Cancelar"
+  },
+  "CampaignDetails": {
+    "errors": "Error al cargar la campaña",
+    "labels": {
+      "description": "Descripción"
+    },
+    "placeholders": {
+      "description": "Una breve descripción de la campaña"
+    },
+    "actions": {
+      "delete": "Eliminar campaña"
+    },
+    "modal": {
+      "title": "Eliminar campaña",
+      "description": "¿Está seguro de que desea eliminar esta campaña?",
+      "confirm": "Sí, eliminar"
+    }
+  },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Iniciar un combate"
+  },
+  "GroupDetailsPanel": {
+    "error": "Error al actualizar el grupo",
+    "actions": {
+      "groupDelete": "Eliminar el grupo",
+      "findCampaign": "Encontrar su campaña",
+      "modal": {
+        "title": "Eliminar grupo",
+        "description": "¿Estás seguro de que deseas eliminar este grupo?",
+        "confirm": "Sí, eliminar"
+      }
+    },
+    "labels": {
+      "name": "Nombre del grupo",
+      "type": "Tipo",
+      "description": "Descripción"
+    },
+    "placeholders": {
+      "name": "Nombre del grupo",
+      "type": "Grupo principal",
+      "description": "Descripción del grupo"
+    }
+  },
+  "GroupPage": {
+    "yourCharacters": "Tus personajes",
+    "addCharacter": "Agregar personaje"
+  },
+  "CampaignModal": {
+    "title": "Crear una nueva campaña",
+    "subTitles": {
+      "info": "Para crear una campaña, necesitamos el nombre de la campaña.",
+      "warning": "Tenga en cuenta que No podrás cambiarlo después."
+    },
+    "placeholder": "Nombre de la campaña",
+    "actions": {
+      "create": "Crear campaña",
+      "cancel": "Cancelar"
+    }
+  },
+  "CampaignPage": {
+    "tutorial": {
+      "step1": "Paso 1: Crear una campaña",
+      "step2": "Paso 2: Crear un grupo de jugador principal",
+      "step3": "Paso 3: Crear sus grupos de PNJ",
+      "step4": "Paso 4: Lanzar sus iniciativas",
+      "step5": "Paso 5: ¡A jugar!"
+    }
+  },
+  "InitiativeTracker": {
+    "reset": "Reiniciar",
+    "start": "Iniciar",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "round": "Ronda"
+  },
+  "InitiativeList": {
+    "initiative": "Iniciativa",
+    "name": "Nombre",
+    "hitPoints": "PG",
+    "armorClass": "CA",
+    "group": "Grupo",
+    "actions": "Acción(es)"
+  },
+  "InitiativeItem": {
+    "detail": "Detalle"
+  },
+  "MobileRestraint": {
+    "title": "Pantalla pequeña",
+    "subTitle": "Esta aplicación no es compatible con pantallas pequeñas."
+  } 
 }

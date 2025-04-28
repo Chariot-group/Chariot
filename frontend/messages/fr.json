@@ -4,7 +4,15 @@
     "about": "L'outil ultime pour le JDR."
   },
   "LocaleSwitcher": {
-    "locale": "{locale, select, fr {🇫🇷 Français} en {🇺🇸 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
+    "locale": "{locale, select, fr {🇫🇷 Français} en {🇬🇧 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
+  },
+  "CampaignListPanel": {
+    "title": "Vos campagnes",
+    "search": "Rechercher une campagne",
+    "createTooltip": "Ajouter une campagne",
+    "noCampaigns": "Aucune campagne trouvée",
+    "error": "Erreur lors du chargement des campagnes",
+    "create": "Ajouter une campagne"
   },
   "LoginPage": {
     "title": "Bienvenue sur Chariot!",
@@ -36,11 +44,294 @@
       "main": "Principaux",
       "npc": "PNJ",
       "default": "Vos groupes",
-    "archived": "Archivés"
+      "archived": "Archivés"
     },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",
     "noGroups": "Aucun groupe trouvé",
+    "dropHere": "Déposez ici pour ajouter au groupe",
     "error": "Erreur lors du chargement des groupes"
+  },
+  "CharacterDetailsPanel": {
+    "navigation": {
+      "global": "Général",
+      "combat": "Combat",
+      "actions": "Actions",
+      "traits": "Traits"
+    },
+    "actions": {
+      "characterDelete": "Supprimer le personnage",
+      "actionsAdd": "Ajouter une action",
+      "actionsDelete": "Supprimer l'action",
+      "languagesAdd": "Ajouter une langue",
+      "languagesDelete": "Supprimer la langue",
+      "abilitiesAdd": "Ajouter une capacité",
+      "abilitiesDelete": "Supprimer la capacité",
+      "modal": {
+        "title": "Supprimer le personnage",
+        "description": "Êtes-vous sûr de vouloir supprimer ce personnage ?",
+        "confirm": "Oui, supprimer"
+      }
+    },
+    "categories": {
+      "global": {
+        "classification": "Classification",
+        "informations": "Informations",
+        "moving": "Déplacement",
+        "skills": "Compétences",
+        "senses": "Senses"
+      },
+      "combat": {
+        "stats": "Statistiques"
+      },
+      "traits": {
+        "languages": "Langues",
+        "noLanguage": "Aucune langue",
+        "abilities": "Capacités",
+        "noAbilities": "Aucune capacité"
+      }
+    },
+    "labels": {
+      "name": "Nom",
+      "classification": {
+        "type": "Type",
+        "alignment": "Alignement",
+        "subType": "Sous-type",
+        "size": "Taille"
+      },
+      "stats": {
+        "maxHP": "PV max",
+        "currentHP": "PV actuel",
+        "tempHP": "PV temporaires",
+        "hitDice": "Dés de vie",
+        "armorClass": "Classe d'armure",
+        "speed": {
+          "walk": "Marche",
+          "fly": "Vol",
+          "swim": "Natation",
+          "climb": "Escalade",
+          "burrow": "Creuser"
+        },
+        "abilityScores": {
+          "strength": "Force",
+          "dexterity": "Dextérité",
+          "constitution": "Constitution",
+          "intelligence": "Intelligence",
+          "wisdom": "Sagesse",
+          "charisma": "Charisme"
+        },
+        "skills": {
+          "athletics": "Athlétisme",
+          "acrobatics": "Acrobaties",
+          "sleightOfHand": "Tour de passe-passe",
+          "stealth": "Discrétion",
+          "arcana": "Arcanes",
+          "history": "Histoire",
+          "investigation": "Investigation",
+          "nature": "Nature",
+          "religion": "Religion",
+          "animalHandling": "Dressage d'animaux",
+          "insight": "Perspicacité",
+          "medicine": "Médecine",
+          "perception": "Perception",
+          "survival": "Survie",
+          "deception": "Duperie",
+          "intimidation": "Intimidation",
+          "performance": "Performance",
+          "persuasion": "Persuasion"
+        },
+        "senses": {
+          "nightVision": "Vision nocturne",
+          "passivePerception": "Perception passive"
+        }
+      },
+      "combat": {
+        "challengeRating": "Niveau de défi",
+        "experiencePoints": "Points d'expérience",
+        "resistances": "Résistances",
+        "immunities": "Immunités",
+        "vulnerabilities": "Vulnérabilités"
+      },
+      "traits": {
+        "languages": "Langues",
+        "abilities": {
+          "name": "Nom",
+          "description": "Description"
+        }
+      },
+      "actions": {
+        "name": "Nom",
+        "type": "Type",
+        "attackBonus": "Bonus d'attaque",
+        "damage": {
+          "dice": "Dé",
+          "type": "Type"
+        },
+        "range": "Portée"
+      }
+    },
+    "placeholders": {
+      "name": "Goblin",
+      "classification": {
+        "type": "Humanoid",
+        "alignment": "Neutre - Mauvais",
+        "subType": "goblinoid",
+        "size": "Small"
+      },
+      "stats": {
+        "maxHP": "7",
+        "currentHP": "3",
+        "tempHP": "5",
+        "hitDice": "2d6",
+        "armorClass": "15",
+        "speed": {
+          "walk": "30",
+          "fly": "0",
+          "swim": "0",
+          "climb": "0",
+          "burrow": "0"
+        },
+        "abilityScores": "Score d'aptitude",
+        "savingThrows": "Jet de sauvegarde",
+        "skills": {
+          "athletics": "6",
+          "acrobatics": "0",
+          "sleightOfHand": "0",
+          "stealth": "0",
+          "arcana": "0",
+          "history": "0",
+          "investigation": "0",
+          "nature": "0",
+          "religion": "0",
+          "animalHandling": "0",
+          "insight": "0",
+          "medicine": "0",
+          "perception": "0",
+          "survival": "0",
+          "deception": "0",
+          "intimidation": "0",
+          "performance": "0",
+          "persuasion": "0"
+        },
+        "senses": {
+          "nightVision": "60",
+          "passivePerception": "9"
+        }
+      },
+      "combat": {
+        "challengeRating": "0.25",
+        "experiencePoints": "50"
+      },
+      "traits": {
+        "languages": "Commun, Goblin",
+        "abilities": {
+          "name": "L'échappée belle",
+          "description": "Lorsque le gobelin est touché par une attaque, il peut utiliser sa réaction pour se déplacer de 10 pieds dans une direction de son choix."
+        }
+      },
+      "actions": {
+        "name": "Scimitar",
+        "type": "Melée",
+        "attackBonus": "Bonus d'attaque",
+        "damage": {
+          "dice": "1d6",
+          "type": "Slashing"
+        },
+        "range": "5"
+      }
+    }
+  },
+  "Global": {
+    "cancel": "Annuler"
+  },
+  "CampaignDetails": {
+    "errors": "Erreur lors de la mise à jour de la campagne",
+    "labels": {
+      "description": "Description"
+    },
+    "placeholders": {
+      "description": "Une campagne épique dans un monde fantastique où les héros se battent contre des forces obscures."
+    },
+    "actions": {
+      "delete": "Supprimer la campagne"
+    },
+    "modal": {
+      "title": "Supprimer la campagne",
+      "description": "Êtes-vous sûr de vouloir supprimer cette campagne ?",
+      "confirm": "Oui, supprimer"
+    }
+  },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Initier un combat"
+  },
+  "GroupDetailsPanel": {
+    "error": "Erreur lors de la mise à jour du groupe",
+    "actions": {
+      "groupDelete": "Supprimer le groupe",
+      "findCampaign": "Trouver sa campagne",
+      "modal": {
+        "title": "Supprimer le group",
+        "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
+        "confirm": "Oui, supprimer"
+      }
+    },
+    "labels": {
+      "name": "Nom du groupe",
+      "type": "Type",
+      "description": "Description"
+    },
+    "placeholders": {
+      "name": "Nom du groupe",
+      "type": "Groupe principal",
+      "description": "Description du groupe"
+    }
+  },
+  "GroupPage": {
+    "yourCharacters": "Vos personnages",
+    "addCharacter": "Ajouter un personnage"
+  },
+  "CampaignModal": {
+    "title": "Créer une campagne",
+    "subTitles": {
+      "info": "Pour créer une campagne, nous avons besoin du nom de celle-ci.",
+      "warning": "Attention ! Vous ne pourrez pas la modifier par la suite."
+    },
+    "placeholder": "Nom de la campagne",
+    "actions": {
+      "create": "Créer une campagne",
+      "cancel": "Annuler"
+    }
+  },
+  "CampaignPage": {
+    "tutorial": {
+      "step1": "Etape 1: Créer une campagne",
+      "step2": "Etape 2: Créer un groupe de joueur principal",
+      "step3": "Etape 3: Créer vos groupes de PNJ",
+      "step4": "Etape 4: Lancer vos initiatives",
+      "step5": "Etape 5: Let’s play !"
+    }
+  },
+  "InitiativeTracker": {
+    "reset": "Réinitialiser",
+    "start": "Commencer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "round": "Tour"
+  },
+  "InitiativeList": {
+    "initiative": "Initiative",
+    "name": "Nom",
+    "hitPoints": "PV",
+    "armorClass": "CA",
+    "group": "Groupe",
+    "actions": "Action(s)"
+  },
+  "InitiativeItem": {
+    "detail": "Détail"
+  },
+  "MobileRestraint": {
+    "title": "Application non disponible sur mobile",
+    "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
   }
 }

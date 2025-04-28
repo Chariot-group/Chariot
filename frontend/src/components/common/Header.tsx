@@ -1,0 +1,84 @@
+import { useTranslations } from "next-intl";
+import { Button } from "../ui/button";
+import { ICampaign } from "@/models/campaigns/ICampaign";
+import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
+import LocaleSwitcher from "../locale/LocaleSwitcher";
+import { useParams } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import jwt from 'jsonwebtoken'
+import AuthService from "@/services/authService";
+import { IUser } from "@/models/users/IUser";
+import stringService from "@/services/stringService";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { useRouter } from "next/navigation";
+
+interface HeaderProps {
+  campaign: ICampaign | null;
+}
+export function Header({ campaign }: HeaderProps) {
+  const t = useTranslations("Header");
+  const router = useRouter();
+
+  const [user, setUser] = useState<IUser>();
+
+  const getProfile = useCallback(
+    async (id: string) => {
+        try {
+            let response = await AuthService.profile(id);
+            setUser(response.data);
+        } catch (err) {
+            console.error("Error fetching user:", err);
+        }
+    },
+    []
+  );
+
+  const logout = () => {
+    document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    router.push("/auth/login");
+  }
+
+  useEffect(() => {
+    const token: string | undefined = document.cookie.split('; ').find(row => row.startsWith('accessToken='))?.split('=')[1];
+    const userId: string = jwt.decode(token ?? "")?.sub as string;
+
+    getProfile(userId);
+  }, [])
+
+  return (
+    <header className="text-white p-4 bg-card border-b-2 border-ring shadow-md">
+      <div className="flex justify-between items-center">
+        {campaign && (
+          <Button>
+            <Link href={`/campaigns/${campaign._id}/battle`}>
+              {t("launchBattle")}
+            </Link>
+          </Button>
+        )}
+        {!campaign && <div className="w-1/12"></div>}
+        <h1 className="text-foreground text-2xl font-bold">{`${t("home")} ${
+          campaign ? `- ${campaign.label}` : ""
+        }`}</h1>
+        <div className="flex flex-row items-center gap-4">
+          <LocaleSwitcher />
+          {
+            user && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Avatar className="cursor-pointer">
+                    <AvatarFallback className="bg-background text-foreground border">{stringService.getInitials(user.username)}</AvatarFallback>
+                  </Avatar>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-2 mr-5">
+                  <a onClick={logout} className="hover:underline underline-offset-4 cursor-pointer">Se déconnecter</a>
+                </PopoverContent>
+              </Popover>
+            )
+          }
+        </div>
+        
+      </div>
+    </header>
+  );
+}
