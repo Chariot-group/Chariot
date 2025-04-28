@@ -23,9 +23,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const hasToken = document.cookie.includes('accessToken');
 
     if (!hasToken && !pathname.includes('/auth/login')) {
-      router.push(`/${locale}/auth/login`);
+      setTimeout(() => {
+        router.push(`/${locale}/auth/login`);
+      }, 0);
     }else if (hasToken && pathname.includes('/auth/login')) {
-      router.push(`/${locale}`);
+      setTimeout(() => {
+        router.push(`/${locale}`);
+      }, 0);
     }
 
     setIsLoading(false)
