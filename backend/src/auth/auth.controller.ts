@@ -1,15 +1,10 @@
-import {
-  Body,
-  Controller,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Post, Param, Patch } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signIn.dto';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { UserService } from '@/user/user.service';
 import { Public } from '@/common/decorators/public.decorator';
+import { changePasswordDto } from './dto/changePassword.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -28,5 +23,13 @@ export class AuthController {
   @Post('/register')
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
+  }
+
+  @Patch(':id/change-password')
+  forgotPassword(
+    @Param('id') id: string,
+    @Body() changePassword: changePasswordDto,
+  ) {
+    return this.authService.forgotPassword(id, changePassword);
   }
 }
