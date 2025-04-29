@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { SignInDto } from './dto/signIn.dto';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { UserService } from '@/user/user.service';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
 import { changePasswordDto } from './dto/changePassword.dto';
 
 @Controller('auth')
@@ -26,5 +27,10 @@ export class AuthController {
     @Patch(':id/change-password')
     forgotPassword(@Param('id') id: string, @Body() changePassword: changePasswordDto) {
         return this.authService.forgotPassword(id, changePassword);
+    }
+
+    @Patch('/reset-password')
+    resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+        return this.authService.resetPassword(resetPasswordDto);
     }
 }
