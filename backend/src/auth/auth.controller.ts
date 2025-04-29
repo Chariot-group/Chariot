@@ -4,6 +4,7 @@ import { SignInDto } from './dto/signIn.dto';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { UserService } from '@/user/user.service';
 import { Public } from '@/common/decorators/public.decorator';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
 import { changePasswordDto } from './dto/changePassword.dto';
 
 @Controller('auth')
@@ -31,5 +32,10 @@ export class AuthController {
     @Body() changePassword: changePasswordDto,
   ) {
     return this.authService.forgotPassword(id, changePassword);
+  }
+
+  @Patch('/reset-password')
+  resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+      return this.authService.resetPassword(resetPasswordDto);
   }
 }

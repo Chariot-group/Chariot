@@ -7,6 +7,8 @@ import { changePasswordDto } from './dto/changePassword.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '@/user/schemas/user.schema';
+import { MaillingService } from '@/mailling/mailling.service';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +16,7 @@ export class AuthService {
     constructor(
         private userService: UserService,
         private jwtService: JwtService,
+        private maillingService: MaillingService,
         @InjectModel(User.name) private userModel: Model<UserDocument>,
     ) {}
 
@@ -50,6 +53,59 @@ export class AuthService {
               const message = `Error while sign in user: ${error.message}`;
               this.logger.error(message, null, this.SERVICE_NAME);
               throw new InternalServerErrorException(message);
+        }
+    }
+
+    async resetPassword(resetPasswordDto: ResetPasswordDto) {
+        try {
+
+            const { email, local } = resetPasswordDto;
+
+            const user = await this.userService.findByEmail(email);
+            if (!user) {
+                const message = `User ${email} not found`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new NotFoundException(message);
+            }
+
+            if (user.deletedAt) {
+                const message = `User ${email} deleted`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new GoneException(message);
+            }
+
+            const otp = Math.floor(100000 + Math.random() * 900000);
+
+            const start: number = Date.now();
+            const userUpdate = await this.userModel
+                .updateOne({ email: email }, {otp})
+                .exec();
+            const end: number = Date.now();
+
+            this.maillingService.sendOTP(user.username, user.email, otp, local);
+
+            if (userUpdate.modifiedCount === 0) {
+                const message = `User #${email} not found`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new NotFoundException(message);
+            }
+            
+            const message = `User update in ${end - start}ms`;
+            this.logger.verbose(message, this.SERVICE_NAME);
+            return {
+                message,
+                data: user,
+            };
+            
+
+        }catch (error) {
+            if( error instanceof NotFoundException ||
+                error instanceof GoneException ) {
+                throw error;
+            }
+            const message = `Error while reset password of user: ${error.message}`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new InternalServerErrorException(message);
         }
     }
 

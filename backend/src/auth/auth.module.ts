@@ -8,15 +8,22 @@ import { Algorithm } from 'jsonwebtoken';
 import { JwtStrategy } from '@/common/strategies/jwt.strategy';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '@/user/schemas/user.schema';
+import { MaillingModule } from '@/mailling/mailling.module';
 
 @Module({
   imports: [
     UserModule,
+    MaillingModule,
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
     ]),
     JwtModule.registerAsync({
-      imports: [ConfigModule, UserModule],
+      imports: [
+        MongooseModule.forFeature([
+          { name: User.name, schema: UserSchema },
+        ]),
+        ConfigModule, 
+        UserModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         global: true,

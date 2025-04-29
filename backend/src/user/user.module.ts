@@ -16,6 +16,9 @@ import { Campaign, CampaignSchema } from '@/campaign/schemas/campaign.schema';
   ],
   controllers: [UserController],
   providers: [UserService],
-  exports: [UserService],
+  exports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    UserService
+  ],
 })
 export class UserModule {}
