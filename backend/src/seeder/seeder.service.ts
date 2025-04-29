@@ -154,34 +154,27 @@ export class SeederService {
           { $addToSet: { campaigns: campaign._id } },
         );
 
-        mainGroups.forEach(async (g: ObjectId) => {
-          await this.groupModel.updateOne(
-            { _id: g },
-            { $addToSet: { campaigns: campaign._id } },
-          );
-        });
+        await this.groupModel.updateMany(
+          { _id: { $in: mainGroups.map((id) => id) } },
+          { $addToSet: { campaigns: campaign._id } },
+        );
 
-        npcGroups.forEach(async (g: ObjectId) => {
-          await this.groupModel.updateOne(
-            { _id: g },
-            { $addToSet: { campaigns: campaign._id } },
-          );
-        });
+        await this.groupModel.updateMany(
+          { _id: { $in: npcGroups.map((id) => id) } },
+          { $addToSet: { campaigns: campaign._id } },
+        );
 
-        archivedGroups.forEach(async (g: ObjectId) => {
-          await this.groupModel.updateOne(
-            { _id: g },
-            { $addToSet: { campaigns: campaign._id } },
-          );
-        });
+        await this.groupModel.updateMany(
+          { _id: { $in: archivedGroups.map((id) => id) } },
+          { $addToSet: { campaigns: campaign._id } },
+        );
 
         campaigns.push(campaign._id);
       }
 
-      let password = faker.internet.password();
-      let hashPassword = await bcrypt.hash(password, 10);
+      let hashPassword = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 10);
       await this.userModel.create({
-        username: faker.person.fullName() + ` (${password})`,
+        username: faker.person.fullName(),
         email: faker.internet.email(),
         password: hashPassword,
         campaigns: campaigns,
