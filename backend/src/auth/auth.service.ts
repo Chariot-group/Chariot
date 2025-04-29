@@ -1,13 +1,14 @@
 import { UserService } from '@/user/user.service';
-import { GoneException, Injectable, InternalServerErrorException, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, GoneException, Injectable, InternalServerErrorException, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { SignInDto } from './dto/signIn.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { ResetPasswordDto } from './dto/resetPassword.dto';
-import { User, UserDocument } from '@/user/schemas/user.schema';
+import { changePasswordDto } from './dto/changePassword.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import { User, UserDocument } from '@/user/schemas/user.schema';
 import { MaillingService } from '@/mailling/mailling.service';
+import { ResetPasswordDto } from './dto/resetPassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
         @InjectModel(User.name) private userModel: Model<UserDocument>,
     ) {}
 
-      private readonly SERVICE_NAME = UserService.name;
+      private readonly SERVICE_NAME = AuthService.name;
       private readonly logger = new Logger(this.SERVICE_NAME);
 
     async signIn(signInDto: SignInDto) {
@@ -105,6 +106,72 @@ export class AuthService {
             const message = `Error while reset password of user: ${error.message}`;
             this.logger.error(message, null, this.SERVICE_NAME);
             throw new InternalServerErrorException(message);
+        }
+    }
+
+    async forgotPassword(id: string, changePassword: changePasswordDto){
+        try {
+            if (!Types.ObjectId.isValid(id)) {
+                const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new BadRequestException(message);
+            }
+            let userCurrent = await this.userModel.findById(id);
+
+            if (!userCurrent) {
+                const message = `User #${id} not found`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new NotFoundException(message);
+            }
+
+            if (userCurrent.deletedAt) {
+                const message = `User #${id} deleted`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new GoneException(message);
+            }
+
+            if(userCurrent.otp == null || changePassword.otp !== userCurrent.otp) {
+                const message = `Error while updating user #${id}: Otp is incorrect`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new UnauthorizedException(message);
+            }
+
+            if (changePassword.newPassword !== changePassword.confirmPassword) {
+                const message = `Error while updating user #${id}: Passwords do not match`;
+                this.logger.error(message, null, this.SERVICE_NAME);
+                throw new BadRequestException(message);
+            }
+
+            // Hash the password
+            const saltRounds = 10;
+            const hashedPassword: string = await bcrypt.hash(changePassword.confirmPassword, saltRounds);
+
+            const start: number = Date.now();
+            const user = await this.userModel.updateOne({_id: id}, {
+                password: hashedPassword,
+                otp: null,
+                updatedAt: new Date()
+            }).exec();
+            const end: number = Date.now();
+
+            const message = `Password update in ${end - start}ms`;
+            this.logger.verbose(message, this.SERVICE_NAME);
+            return {
+                message,
+                data: user,
+            };
+        } catch (error) {
+            if (
+                error instanceof BadRequestException ||
+                error instanceof NotFoundException ||
+                error instanceof GoneException ||
+                error instanceof UnauthorizedException
+              ) {
+                throw error;
+              }
+              const message = `Error while changing password: ${error.message}`;
+              this.logger.error(message, null, this.SERVICE_NAME);
+              throw new InternalServerErrorException(message);
         }
     }
 }

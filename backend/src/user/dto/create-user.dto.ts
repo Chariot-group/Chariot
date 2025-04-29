@@ -1,4 +1,4 @@
-import { IsArray, IsEmail, IsMongoId, IsOptional, IsString, IsStrongPassword, MaxLength } from 'class-validator';
+import { IsArray, IsEmail, IsMongoId, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateUserDto {
 
@@ -8,7 +8,7 @@ export class CreateUserDto {
 
     @IsEmail()
     readonly email: string;
-
+    
     @IsString()
     readonly password: string;
 

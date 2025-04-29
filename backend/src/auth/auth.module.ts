@@ -13,6 +13,9 @@ import { MaillingModule } from '@/mailling/mailling.module';
   imports: [
     UserModule,
     MaillingModule,
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+    ]),
     JwtModule.registerAsync({
       imports: [
         MongooseModule.forFeature([
