@@ -8,11 +8,7 @@ export class CreateUserDto {
 
     @IsEmail()
     readonly email: string;
-
-    @IsString()
-    @IsOptional()
-    readonly otp?: string;
-
+    
     @IsString()
     readonly password: string;
 
