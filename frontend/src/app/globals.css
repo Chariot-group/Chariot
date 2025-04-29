@@ -45,6 +45,12 @@ body {
     --ring: 15 75% 35%;
 
     --radius: 0.5rem;
+
+    /* Toast */
+    --toastify-color-light: var(--card);
+    --toastify-font-family: Arial, Helvetica, sans-serif;
+    --toastify-text-color-light: #261208;
+    --toastify-toast-bd-radius: var(--radius);
   }
   .dark {
     --background: 0 0% 3.9%;

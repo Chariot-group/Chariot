@@ -64,6 +64,10 @@ export default function LoginPage() {
         }
     }, [loading]);
 
+    useEffect(() => {
+        success("Chargement");
+    }, []);
+
     return (
         <div className="w-full h-[100dvh] gap-2 flex flex-col items-center justify-center bg-background">
             <Card className="w-[40%] shadow-md relative">
