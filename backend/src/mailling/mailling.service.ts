@@ -10,19 +10,42 @@ export class MaillingService {
     private readonly logger = new Logger(this.SERVICE_NAME);
 
 
-    async sendOTP(username: string, email: string, otp: number) {
+    async sendOTP(username: string, email: string, otp: number, local: string) {
         try{
+
+            let infos: {subjetct: string, template: string} = null;
+            switch (local) {
+                case 'fr':
+                    infos = {
+                        subjetct: 'Votre code OTP',
+                        template: './otpFr',
+                    };
+                    break;
+                case 'es':
+                    infos = {
+                        subjetct: 'Su código OTP',
+                        template: './otpEs',
+                    };
+                    break;
+                default:
+                    infos = {
+                        subjetct: 'Your OTP code',
+                        template: './otpEn',
+                    };
+                    break;
+            }
+
             await this.mailerService.sendMail({
                 to: email,
-                subject: 'Your OTP code',
-                template: './otp',
+                subject: infos.subjetct,
+                template: infos.template,
                 context: {
                     username,
                     otp,
                 },
             });
             
-            this.logger.verbose(`Email send at ${email}`, this.SERVICE_NAME);
+            this.logger.verbose(`Email send at ${email} in ${local}`, this.SERVICE_NAME);
         }catch(error) {
             const message = `Error while send otp code at ${email}: ${error.message}`;
             this.logger.error(message, null, this.SERVICE_NAME);

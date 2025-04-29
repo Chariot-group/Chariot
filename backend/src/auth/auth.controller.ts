@@ -23,7 +23,7 @@ export class AuthController {
         return this.userService.create(createUserDto);
     }
 
-    @Patch('/resetPassword')
+    @Patch('/reset-password')
     resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
         return this.authService.resetPassword(resetPasswordDto);
     }

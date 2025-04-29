@@ -31,8 +31,8 @@ import { MaillingModule } from './mailling/mailling.module';
     MailerModule.forRoot({
       transport: {
         host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT) || 587,
-        secure: process.env.SMTP_PORT === '465',
+        port: Number(process.env.SMTP_PORT),
+        secure: process.env.SMTP_SECURE,
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS,
