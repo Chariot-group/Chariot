@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import GroupListPanel from "../groups/GroupListPanel";
 import { IGroup } from "@/models/groups/IGroup";
-import { useCallback, useState } from "react";
+import { RefObject, useCallback, useState } from "react";
 import { DragEndEvent } from "@dnd-kit/core";
 import GroupService from "@/services/groupService";
 import GroupDnDWrapper from "../groups/GroupDndProvider";
@@ -13,8 +13,10 @@ import { useToast } from "@/hooks/useToast";
 
 interface Props {
   idCampaign: string; // ID de la campagne des groupes
+  isUpdating: boolean; // Indique si la campagne est en cours de mise à jour
+  groupsRef: RefObject<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>; // Liste des groupes
 }
-export default function GroupsCampaignsPanel({ idCampaign }: Props) {
+export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef }: Props) {
   const t = useTranslations("GroupListPanel");
   const { error } = useToast();
 
@@ -42,9 +44,14 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
       }
     );
 
-    const response = await GroupService.updateGroup(group._id, {
+    /*const response = await GroupService.updateGroup(group._id, {
       campaigns: updatedCampaigns,
+    });*/
+    groupsRef.current.set(group._id, {
+      idCampaign: idCampaign,
+      type: to,
     });
+    group.campaigns = updatedCampaigns as any;
 
     const groupSetters = {
       main: setMainGroups,
@@ -57,7 +64,7 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
         setter((prev) => prev.filter((g) => g._id !== group._id));
     });
 
-    groupSetters[to]((prev) => [...prev, response.data as IGroup]);
+    groupSetters[to]((prev) => [...prev, group]);
   };
 
   const createGroup = useCallback(async () => {
@@ -86,7 +93,7 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               groups={mainGroups}
               setGroups={setMainGroups}
               reverse={true}
-              grabbled={true}
+              grabbled={isUpdating}
               idCampaign={idCampaign}
               addable={false}
               type="main"
@@ -104,7 +111,7 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               groups={npcGroups}
               setGroups={setNpcGroups}
               reverse={true}
-              grabbled={true}
+              grabbled={isUpdating}
               idCampaign={idCampaign}
               addable={false}
               type="npc"
@@ -122,7 +129,7 @@ export default function GroupsCampaignsPanel({ idCampaign }: Props) {
               groups={archivedGroups}
               setGroups={setArchivedGroups}
               reverse={true}
-              grabbled={true}
+              grabbled={isUpdating}
               idCampaign={idCampaign}
               addable={false}
               type="archived"
