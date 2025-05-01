@@ -54,8 +54,8 @@ export default function CampaignsPage() {
             if(!updateCampaign._id) return;
             let response = await CampaignService.updateCampaign(updateCampaign._id, updateCampaign);
 
-            groupsRef.current.forEach((campaigns, key) => {
-                GroupService.updateGroup(key, {
+            groupsRef.current.forEach(async (campaigns, key) => {
+                await GroupService.updateGroup(key, {
                     campaigns: [campaigns],
                 });
             });
