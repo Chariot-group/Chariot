@@ -13,8 +13,9 @@ import { useEffect, useState } from "react";
 interface IAbilitiesCardProps {
     abilities: IAbility[];
     setAbilities: (abilities: IAbility[]) => void;
+    isUpdating: boolean;
 }
-export default function AbilitiesCard({ abilities, setAbilities }: IAbilitiesCardProps) {
+export default function AbilitiesCard({ abilities, setAbilities, isUpdating }: IAbilitiesCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -91,7 +92,7 @@ export default function AbilitiesCard({ abilities, setAbilities }: IAbilitiesCar
                                         newAbilities[index].name = value;
                                         setAbilities(newAbilities);
                                     }
-                                }} />
+                                }} isActive={isUpdating} />
                                 <div className="grid w-full max-w-sm items-center gap-1.5">
                                     <Label htmlFor={"description"} className="text-foreground">{t("labels.traits.abilities.description")}</Label>
                                     <Textarea className="h-[10dvh] bg-card" placeholder={t("placeholders.traits.abilities.description")} value={selectedAbility.description} onChange={(e) => {
@@ -101,7 +102,7 @@ export default function AbilitiesCard({ abilities, setAbilities }: IAbilitiesCar
                                             newAbilities[index].description = e.target.value;
                                             setAbilities(newAbilities);
                                         }
-                                    }} />
+                                    }} readOnly={!isUpdating} />
                                 </div>
                             </div>
                         </Card>

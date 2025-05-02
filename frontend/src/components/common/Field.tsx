@@ -9,7 +9,7 @@ interface IChampsProps {
     placeholder: string;
     value: any | null;
     setValue: (value: any) => void;
-    onChange: () => void;
+    onChange?: () => void;
     color?: string;
     isActive?: boolean;
 }
@@ -24,7 +24,7 @@ export default function Field({ id, type, label, placeholder, value, setValue, c
 
     useEffect(() => {
     if (pending) {
-        onChange();
+        onChange?.();
         setPending(false);
     }
     }, [value]);

@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 interface IActionsSectionProps {
     actions: IActions;
     setActions: (actions: IActions) => void;
+    isUpdating: boolean;
 }
-export default function ActionsSection({ actions, setActions }: IActionsSectionProps) {
+export default function ActionsSection({ actions, setActions, isUpdating }: IActionsSectionProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -37,6 +38,7 @@ export default function ActionsSection({ actions, setActions }: IActionsSectionP
                             newActions[index] = action;
                             setActions({ ...actions, standard: newActions });
                         }}
+                        isUpdating={isUpdating}
                     />
                 ))
             }

@@ -8,8 +8,9 @@ import AbilitiesCard from "./card/AbilitiesCard";
 interface ITraitsSectionProps {
     trait: ITrait;
     setTrait: (combat: ITrait) => void;
+    isUpdating: boolean;
 }
-export default function TraitsSection({ trait, setTrait }: ITraitsSectionProps) {
+export default function TraitsSection({ trait, setTrait, isUpdating }: ITraitsSectionProps) {
 
     const [languages, setLanguages] = useState<string[]>(trait.languages);
     const [abilities, setAbilities] = useState(trait.abilities);
@@ -37,10 +38,10 @@ export default function TraitsSection({ trait, setTrait }: ITraitsSectionProps) 
     return (
         <div className="flex flex-row h-full justify-between">
             <div className="flex flex-col gap-3 1/3">
-                <LanguagesCard languages={languages} setLanguges={setLanguages} />
+                <LanguagesCard languages={languages} setLanguges={setLanguages} isUpdating={isUpdating} />
             </div>
             <div className="flex flex-col gap-3 w-2/3">
-                <AbilitiesCard abilities={abilities} setAbilities={setAbilities} />
+                <AbilitiesCard abilities={abilities} setAbilities={setAbilities} isUpdating={isUpdating} />
             </div>
         </div>
     )

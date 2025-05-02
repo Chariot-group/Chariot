@@ -9,8 +9,9 @@ import { useTranslations } from "next-intl";
 interface ILanguagesCardProps {
     languages: string[];
     setLanguges: (languages: string[]) => void;
+    isUpdating: boolean;
 }
-export default function LanguagesCard({ languages, setLanguges }: ILanguagesCardProps) {
+export default function LanguagesCard({ languages, setLanguges, isUpdating }: ILanguagesCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -50,6 +51,7 @@ export default function LanguagesCard({ languages, setLanguges }: ILanguagesCard
                                 }}
                                 onDelete={() => onDeleteLanguage(index)}
                                 language={language}
+                                isUpdating={isUpdating}
                             />
                         ))
                     }
@@ -64,12 +66,13 @@ interface ILanguageCardProps {
     language: string;
     onDelete: () => void;
     onChange: (value: string) => void;
+    isUpdating: boolean;
 }
-function LanguageCard( { language, onDelete, onChange }: ILanguageCardProps) {
+function LanguageCard( { language, onDelete, onChange, isUpdating }: ILanguageCardProps) {
 
     return (
         <Card className="flex flex-row gap-2 p-3 bg-card items-center justify-between">
-            <Input value={language} className="bg-background" onChange={(e) => onChange(e.target.value)} />
+            <Input readOnly={!isUpdating} value={language} className="bg-background" onChange={(e) => onChange(e.target.value)} />
             <Trash2Icon className="hover:cursor-pointer" onClick={onDelete}/>
         </Card>
     )
