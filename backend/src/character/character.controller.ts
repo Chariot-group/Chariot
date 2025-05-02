@@ -1,7 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe } from '@nestjs/common';
-import { CharacterService } from './character.service';
-import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateCharacterDto } from './dto/update-character.dto';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { CharacterService } from '@/character/character.service';
+import { CreateCharacterDto } from '@/character/dto/create-character.dto';
+import { UpdateCharacterDto } from '@/character/dto/update-character.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 
 @Controller('characters')
