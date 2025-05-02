@@ -10,15 +10,18 @@ import CharacterService from "@/services/CharacterService";
 import { Plus } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 interface ICharacterListPanelProps {
   offset?: number;
   characterSelected: ICharacter | null;
   setCharacterSelected: (group: ICharacter | null) => void;
   group: IGroup;
+  isUpdating: boolean;
+  removeCharacters: RefObject<string[]>;
+  newCharacters: RefObject<Partial<ICharacter>[]>;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -76,6 +79,15 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   }, []);
 
   useEffect(() => {
+    if(isUpdating) {
+      const updateCharacters = characters.filter((character) => !removeCharacters.current?.includes(character._id));
+      //newCharacters en premiere position et seulement si il n'y a pas de doublon
+      const newCharactersFiltered = newCharacters.current.filter((character) => !updateCharacters.some((c) => c._id === character._id));
+      updateCharacters.unshift(...newCharactersFiltered.map((character) => character as ICharacter));
+      setCharacters(updateCharacters);
+      setCharacterSelected(updateCharacters[0]);
+      return;
+    }
     setCharacters([]);
     fetchCharacters(search, 1, true);
   }, [currentLocale, search, group]);

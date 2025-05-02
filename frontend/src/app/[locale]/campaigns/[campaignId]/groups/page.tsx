@@ -8,6 +8,7 @@ import GroupDetailsPanel from "@/components/modules/groups/GroupDetailsPanel";
 import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import ICharacter from "@/models/characters/ICharacter";
@@ -15,6 +16,7 @@ import { IGroup } from "@/models/groups/IGroup";
 import CampaignService from "@/services/campaignService";
 import CharacterService from "@/services/CharacterService";
 import GroupService from "@/services/groupService";
+import { PlusCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { SetStateAction, useCallback, useEffect, useRef, useState } from "react";
@@ -46,9 +48,43 @@ export default function CampaignGroupsPage() {
     const cancelUpdate = async () => {
         if (groupSelected) {
             setLoading(true);
+            removedCharacterRef.current = [];
+            newCharacterRef.current = [];
             await setGroupSelected(groupTempRef.current);
             setIsUpdating(false);
             setLoading(false);
+        }
+    }
+
+    const saveAction = async () => {
+        if (groupSelected) {
+            //Enlever les personnages supprimés de characterTempRef
+            characterTempRef.current.forEach((character, key) => {
+                if (removedCharacterRef.current.includes(character._id ?? "")) {
+                    characterTempRef.current.delete(key);
+                }
+            });
+            //Enlever les personnages ajoutés de characterTempRef
+            newCharacterRef.current.forEach((character) => {
+                if (characterTempRef.current.has(character._id ?? "")) {
+                    characterTempRef.current.delete(character._id ?? "");
+                }
+            });
+            characterTempRef.current.forEach(async (character, key) => {
+                await CharacterService.updateCharacter(key, character);
+            });
+            await updateGroup(groupSelected);
+            removedCharacterRef.current.forEach(async (characterId) => {
+                await CharacterService.deleteCharacter(characterId);
+            });
+            newCharacterRef.current.forEach(async (character) => {
+                const { _id, ...characterWithoutId } = character;
+                await CharacterService.createCharacter(characterWithoutId);
+            });
+            removedCharacterRef.current = [];
+            newCharacterRef.current = [];
+            characterTempRef.current.clear();
+            setIsUpdating(false);
         }
     }
 
@@ -56,17 +92,10 @@ export default function CampaignGroupsPage() {
         async (updateGroup: IGroup) => {
         try {
             if(!updateGroup._id) return;
-            const { campaigns, ...group } = updateGroup;
+            const { campaigns, characters, ...group } = updateGroup;
             let response = await GroupService.updateGroup(updateGroup._id, group);
 
-            characterTempRef.current.forEach(async (character, key) => {
-                console.log("character", character);
-                await CharacterService.updateCharacter(key, character);
-            });
-
             setGroupSelected(response.data);
-            setIsUpdating(false);
-            
         } catch (err) {
             error(t("error"));
             console.error("Error updating characters:", error);
@@ -82,21 +111,25 @@ export default function CampaignGroupsPage() {
     const [campaign, setCampaign] = useState<ICampaign | null>(null);
     const [newCharacter, setNewCharacter] = useState<ICharacter | null>(null);
 
+    let newCharacterRef = useRef<Partial<ICharacter>[]>([]);
+    let removedCharacterRef = useRef<string[]>([]);
+
     const { campaignId } = useParams();
 
     const createCharacter = useCallback(
         async (createCharacter: Partial<ICharacter>) => {
             try {
-                let response = await CharacterService.createCharacter(createCharacter);
-                let character: ICharacter = response.data;
-                setGroupSelected((prev) => {
+                createCharacter._id = createCharacter.name;
+                newCharacterRef.current.push(createCharacter);
+                let character: ICharacter = createCharacter as ICharacter;
+                await setGroupSelected((prev) => {
                     if (!prev) return null;
                     return {
                         ...prev,
                         characters: [...prev.characters, character._id]
                     }
                 });
-                setNewCharacter(character);
+                await setNewCharacter(character);
             } catch (err) {
                 error(t("error"));
                 console.error("Error fetching characters:", error);
@@ -108,8 +141,8 @@ export default function CampaignGroupsPage() {
     const deleteCharacter = useCallback(
         async (deleteCharacter: Partial<ICharacter>) => {
             try {
-                await CharacterService.deleteCharacter(deleteCharacter._id);
-                setGroupSelected((prev) => {
+                removedCharacterRef.current.push(deleteCharacter._id ?? "");
+                await setGroupSelected((prev) => {
                     if (!prev) return null;
                     return {
                         ...prev,
@@ -247,28 +280,7 @@ export default function CampaignGroupsPage() {
             ],
             "actions": [
                 {
-                    "standard": [
-                        {
-                            "name": "Scimitar",
-                            "type": "melee",
-                            "attackBonus": 4,
-                            "damage": {
-                                "dice": "1d6",
-                                "type": "slashing"
-                            },
-                            "range": "5 feet"
-                        },
-                        {
-                            "name": "Shortbow",
-                            "type": "ranged",
-                            "attackBonus": 4,
-                            "damage": {
-                                "dice": "1d6",
-                                "type": "piercing"
-                            },
-                            "range": "80/320 feet"
-                        }
-                    ],
+                    "standard": [],
                     "legendary": [],
                     "lair": []
                 }
@@ -306,18 +318,32 @@ export default function CampaignGroupsPage() {
                             </div>
                             <div className="w-full h-[6vh] flex flex-row justify-between items-center pr-5 pl-5">
                                 <span className="text-2xl text-foreground">{t("yourCharacters")}</span>
-                                <Button onClick={() => addCharacter(groupSelected._id)}>{t("addCharacter")}</Button>
+                                {
+                                    isUpdating && (
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(groupSelected._id)} />
+                                            </TooltipTrigger>
+                                            <TooltipContent>
+                                                <p>{t("addCharacter")}</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    )
+                                }
                             </div>
                             <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
                                 <Card className="w-[20%] ">
                                     <CharacterListPanel 
+                                        newCharacters={newCharacterRef}
+                                        removeCharacters={removedCharacterRef}
+                                        isUpdating={isUpdating}
                                         group={groupSelected}
                                         characterSelected={characterSelected}
                                         setCharacterSelected={setCharacterSelected} />
                                 </Card>
                                 {
                                     characterSelected && (
-                                        <CharacterDetailsPanel onDelete={deleteCharacter} setCharacter={setCharacterSelected} character={characterSelected} isUpdating={isUpdating} characterTempRef={characterTempRef} />
+                                        <CharacterDetailsPanel onDelete={deleteCharacter} character={characterSelected} isUpdating={isUpdating} characterTempRef={characterTempRef} />
                                     )
                                 }
                             </div>
@@ -330,7 +356,7 @@ export default function CampaignGroupsPage() {
                     isUpdating && groupSelected && (
                         <div>
                             <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >Annuler</Button>
-                            <Button variant={"secondary"} onClick={() => updateGroup(groupSelected)} className="mr-5 mb-2" >Sauvegarder</Button>
+                            <Button variant={"secondary"} onClick={() => saveAction()} className="mr-5 mb-2" >Sauvegarder</Button>
                         </div>
                     )
                 }

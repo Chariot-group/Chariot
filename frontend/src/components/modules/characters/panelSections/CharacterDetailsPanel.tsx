@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ICharacter from "@/models/characters/ICharacter";
 import { useTranslations } from "next-intl";
-import { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import GlobalSection from "./global/GlobalSection";
 import IClassification from "@/models/characters/classification/IClassification";
 import CombatSection from "./combat/CombatSection";
@@ -14,26 +14,21 @@ import ICombat from "@/models/characters/combat/ICombat";
 import IActions from "@/models/characters/actions/IActions";
 import ActionsSection from "./actions/ActionsSection";
 import TraitsSection from "./traits/TraitsSection";
-import CharacterService from "@/services/CharacterService";
-import { useToast } from "@/hooks/useToast";
 import DeleteValidation from "@/components/common/modals/DeleteValidation";
 
 interface ICharacterDetailsPanelProps {
   character: ICharacter;
-  setCharacter: (character: ICharacter) => void;
   onDelete?: (character: ICharacter) => void;
   isUpdating: boolean;
   characterTempRef: RefObject<Map<string, Partial<ICharacter>>>;
 }
 export function CharacterDetailsPanel({
   character,
-  setCharacter,
   onDelete,
   isUpdating,
   characterTempRef
 }: ICharacterDetailsPanelProps) {
   const t = useTranslations("CharacterDetailsPanel");
-  const { error } = useToast();
 
   const [name, setName] = useState<string>(character.name);
   const [classification, setClassification] = useState<IClassification>(
@@ -67,7 +62,13 @@ export function CharacterDetailsPanel({
   };
 
   useEffect(() => {
-    characterTempRef.current?.set(character._id, {name, classification, stats, combat, actions: [action], traits: [trait]});
+    character.name = name;
+    character.classification = classification;
+    character.stats = stats;
+    character.combat = combat;
+    character.actions[0] = action;
+    character.traits[0] = trait;
+    characterTempRef.current?.set(character._id, character);
   }, [name, classification, stats, combat, action, trait]);
 
   return (
@@ -133,12 +134,12 @@ export function CharacterDetailsPanel({
             {t("navigation.traits")}
           </span>
         </div>
-        {onDelete && (
+        {onDelete && isUpdating && (
           <Button variant={"link"} onClick={() => setDeleteModalOpen(true)}>
             {t("actions.characterDelete")}
           </Button>
         )}
-        {!onDelete && <div className="w-1/5"></div>}
+        {!onDelete || !isUpdating && <div className="w-1/5"></div>}
       </div>
       <div className="flex flex-col h-auto flex-1 overflow-auto scrollbar-hide">
         {global && (
