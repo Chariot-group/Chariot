@@ -1,19 +1,19 @@
 import { Logger, Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AppController } from '@/app.controller';
+import { AppService } from '@/app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserModule } from './user/user.module';
-import { CharacterModule } from './character/character.module';
-import { GroupModule } from './group/group.module';
-import { CampaignModule } from './campaign/campaign.module';
-import { SeederModule } from './seeder/seeder.module';
-import { AuthModule } from './auth/auth.module';
+import { UserModule } from '@/user/user.module';
+import { CharacterModule } from '@/character/character.module';
+import { GroupModule } from '@/group/group.module';
+import { CampaignModule } from '@/campaign/campaign.module';
+import { SeederModule } from '@/seeder/seeder.module';
+import { AuthModule } from '@/auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
-import { MaillingService } from './mailling/mailling.service';
-import { MaillingModule } from './mailling/mailling.module';
+import { MaillingService } from '@/mailling/mailling.service';
+import { MaillingModule } from '@/mailling/mailling.module';
 
 
 @Module({
