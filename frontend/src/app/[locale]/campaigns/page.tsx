@@ -6,8 +6,10 @@ import CampaignDetailsPanel from "@/components/modules/campaigns/CampaignDetails
 import CampaignListPanel from "@/components/modules/campaigns/CampaignListPanel";
 import GroupsCampaignsPanel from "@/components/modules/campaigns/GroupsCampaignsPanel";
 import { Button } from "@/components/ui/button";
+import useBeforeUnload from "@/hooks/useBeforeUnload";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign, ICampaignUpdated } from "@/models/campaigns/ICampaign";
+import { IGroup } from "@/models/groups/IGroup";
 import CampaignService from "@/services/campaignService";
 import GroupService from "@/services/groupService";
 import { group } from "console";
@@ -30,6 +32,7 @@ export default function CampaignsPage() {
     //Update
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     let campaignTempRef = useRef<ICampaign | null>(null);
+    let newGroupRef = useRef<any[]>([]);
     let groupsRef = useRef<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>(new Map());
 
     const startUpdate = () => {
@@ -45,6 +48,16 @@ export default function CampaignsPage() {
             await setSelectedCampaign(campaignTempRef.current);
             setIsUpdating(false);
             setLoading(false);
+        }
+    }
+
+    const saveActions = async () => {
+        if (selectedCampaign) {
+            updateCampaign(selectedCampaign);
+
+            newGroupRef.current.forEach(async (group) => {
+                await GroupService.createGroup(group);
+            });
         }
     }
 
@@ -94,6 +107,8 @@ export default function CampaignsPage() {
         }
     }, []);
 
+    useBeforeUnload(isUpdating);
+
     return (
         <div className="w-full flex flex-col">
             <Header campaign={selectedCampaign} />
@@ -119,7 +134,7 @@ export default function CampaignsPage() {
                                     <div className="w-[80vh] border border-ring"></div>
                                 </div>
                                 <div className="w-full h-full flex flex-row items-center p-5">
-                                    <GroupsCampaignsPanel idCampaign={selectedCampaign._id} isUpdating={isUpdating} groupsRef={groupsRef} />
+                                    <GroupsCampaignsPanel idCampaign={selectedCampaign._id} isUpdating={isUpdating} groupsRef={groupsRef} newGroupRef={newGroupRef} />
                                 </div>
                             </div>
                         )} 
@@ -140,7 +155,7 @@ export default function CampaignsPage() {
                     isUpdating && selectedCampaign && (
                         <div>
                             <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >Annuler</Button>
-                            <Button variant={"secondary"} onClick={() => updateCampaign(selectedCampaign)} className="mr-5 mb-2" >Sauvegarder</Button>
+                            <Button variant={"secondary"} onClick={() => saveActions} className="mr-5 mb-2" >Sauvegarder</Button>
                         </div>
                     )
                 }

@@ -10,13 +10,16 @@ import GroupService from "@/services/groupService";
 import GroupDnDWrapper from "../groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useToast } from "@/hooks/useToast";
+import { CrossIcon, PlusCircleIcon } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Props {
   idCampaign: string; // ID de la campagne des groupes
   isUpdating: boolean; // Indique si la campagne est en cours de mise à jour
   groupsRef: RefObject<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>; // Liste des groupes
+  newGroupRef: RefObject<any[]>; // Liste des nouveaux groupes
 }
-export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef }: Props) {
+export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef, newGroupRef }: Props) {
   const t = useTranslations("GroupListPanel");
   const { error } = useToast();
 
@@ -44,9 +47,6 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
       }
     );
 
-    /*const response = await GroupService.updateGroup(group._id, {
-      campaigns: updatedCampaigns,
-    });*/
     groupsRef.current.set(group._id, {
       idCampaign: idCampaign,
       type: to,
@@ -69,8 +69,9 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
 
   const createGroup = useCallback(async () => {
     try {
-        const response = await GroupService.createGroup({label: "Nouveau groupe", description: "", campaigns: [{idCampaign, type: "npc"}]});
-        setNpcGroups((prev) => [...prev, response.data as IGroup]);
+      let current = {_id: newGroupRef.current.length, label: "Nouveau groupe", description: "", campaigns: [{idCampaign, type: "main"}]};
+      newGroupRef.current.push(current);
+      setNpcGroups((prev) => [...prev, current as unknown as IGroup]);
     } catch(err){
         error(t("error"));
     }
@@ -84,7 +85,19 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
     <div className="w-full h-full flex flex-col">
       <div className="flex flex-row justify-between items-center">
         <h2>{t("title.default")}</h2>
-        <Button onClick={createGroup}>{t("create")}</Button>
+        {
+          isUpdating && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={createGroup} />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("create")}</p>
+              </TooltipContent>
+            </Tooltip>
+            
+          )
+        }
       </div>
       <div className="flex flex-row gap-4 mt-4 justify-between h-full">
         <GroupDnDWrapper onDragEnd={handleDragEnd}>
