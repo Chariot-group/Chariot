@@ -289,7 +289,13 @@
   },
   "GroupPage": {
     "yourCharacters": "Your characters",
-    "addCharacter": "Add character"
+    "addCharacter": "Add character",
+    "form": {
+      "update": "Update group",
+      "cancel": "cancel",
+      "save": "Save",
+      "unsave": "You have unsaved changes. Do you want to continue?"
+    }
   },
   "CampaignModal": {
     "title": "Create a campaign",
@@ -310,6 +316,12 @@
       "step3": "Step 3: Create your NPC groups",
       "step4": "Step 4: Launch your initiatives",
       "step5": "Step 5: Let’s play!"
+    },
+    "form": {
+      "update": "Update campaign",
+      "cancel": "cancel",
+      "save": "Save",
+      "unsave": "You have unsaved changes. Do you want to continue?"
     }
   },
   "InitiativeTracker": {

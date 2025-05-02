@@ -289,7 +289,13 @@
   },
   "GroupPage": {
     "yourCharacters": "Vos personnages",
-    "addCharacter": "Ajouter un personnage"
+    "addCharacter": "Ajouter un personnage",
+    "form": {
+      "update": "Modifier le groupe",
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    }
   },
   "CampaignModal": {
     "title": "Créer une campagne",
@@ -310,6 +316,12 @@
       "step3": "Etape 3: Créer vos groupes de PNJ",
       "step4": "Etape 4: Lancer vos initiatives",
       "step5": "Etape 5: Let’s play !"
+    },
+    "form": {
+      "update": "Modifier la campagne",
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
     }
   },
   "InitiativeTracker": {

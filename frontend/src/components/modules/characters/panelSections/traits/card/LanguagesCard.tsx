@@ -3,7 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Trash2Icon } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface ILanguagesCardProps {
@@ -27,12 +28,19 @@ export default function LanguagesCard({ languages, setLanguges, isUpdating }: IL
             <Card className="flex flex-col gap-2 h-full bg-background p-3">
                 <div className="flex flex-row gap-2 items-center justify-between">
                     <h3 className="text-foreground">{t("categories.traits.languages")}</h3>
-                    <Button
-                        className="w-full mt-2"
-                        onClick={() => {
-                            setLanguges([...languages, ""].reverse());
-                        }}
-                    >{t("actions.languagesAdd")}</Button>
+                    {
+                        isUpdating && (
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => setLanguges([...languages, ""].reverse())} />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>{t("actions.languagesAdd")}</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        )
+                    }
+                    
                 </div>
                 <div className="flex flex-col h-full gap-2">
                     {
@@ -73,7 +81,11 @@ function LanguageCard( { language, onDelete, onChange, isUpdating }: ILanguageCa
     return (
         <Card className="flex flex-row gap-2 p-3 bg-card items-center justify-between">
             <Input readOnly={!isUpdating} value={language} className="bg-background" onChange={(e) => onChange(e.target.value)} />
-            <Trash2Icon className="hover:cursor-pointer" onClick={onDelete}/>
+            {
+                isUpdating && (
+                    <Trash2Icon className="hover:cursor-pointer" onClick={onDelete}/>
+                )
+            }
         </Card>
     )
 }

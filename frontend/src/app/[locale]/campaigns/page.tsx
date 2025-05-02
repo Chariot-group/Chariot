@@ -107,7 +107,7 @@ export default function CampaignsPage() {
         }
     }, []);
 
-    useBeforeUnload(isUpdating);
+    useBeforeUnload(isUpdating, t("form.unsave"));
 
     return (
         <div className="w-full flex flex-col">
@@ -154,14 +154,14 @@ export default function CampaignsPage() {
                 {
                     isUpdating && selectedCampaign && (
                         <div>
-                            <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >Annuler</Button>
-                            <Button variant={"secondary"} onClick={() => saveActions} className="mr-5 mb-2" >Sauvegarder</Button>
+                            <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
+                            <Button variant={"secondary"} onClick={() => saveActions} className="mr-5 mb-2" >{t('form.save')}</Button>
                         </div>
                     )
                 }
                 {
                     !isUpdating && selectedCampaign && (
-                        <Button variant={"secondary"} onClick={startUpdate} className="mr-5 mb-2" >Modifier</Button>
+                        <Button variant={"secondary"} onClick={startUpdate} className="mr-5 mb-2" >{t('form.update')}</Button>
                     )
                 }
             </footer>

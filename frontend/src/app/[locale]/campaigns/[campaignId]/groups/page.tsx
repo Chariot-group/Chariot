@@ -9,6 +9,7 @@ import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import useBeforeUnload from "@/hooks/useBeforeUnload";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import ICharacter from "@/models/characters/ICharacter";
@@ -292,6 +293,8 @@ export default function CampaignGroupsPage() {
         createCharacter(newCharacter);
     }
 
+    useBeforeUnload(isUpdating, t("form.unsave"));
+
     return (
         <div className="w-full flex flex-col">
             <Header campaign={campaign} />
@@ -355,14 +358,14 @@ export default function CampaignGroupsPage() {
                 {
                     isUpdating && groupSelected && (
                         <div>
-                            <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >Annuler</Button>
-                            <Button variant={"secondary"} onClick={() => saveAction()} className="mr-5 mb-2" >Sauvegarder</Button>
+                            <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
+                            <Button variant={"secondary"} onClick={() => saveAction()} className="mr-5 mb-2" >{t('form.save')}</Button>
                         </div>
                     )
                 }
                 {
                     !isUpdating && groupSelected && (
-                        <Button variant={"secondary"} onClick={startUpdate} className="mr-5 mb-2" >Modifier</Button>
+                        <Button variant={"secondary"} onClick={startUpdate} className="mr-5 mb-2" >{t('form.update')}</Button>
                     )
                 }
             </footer>

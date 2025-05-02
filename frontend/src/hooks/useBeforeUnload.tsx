@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function useBeforeUnload(shouldWarn: boolean) {
+export default function useBeforeUnload(shouldWarn: boolean, msg: string) {
     const router = useRouter();
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export default function useBeforeUnload(shouldWarn: boolean) {
       const originalPush = router.push;
   
       const customPush = (href: string) => {
-        const confirmed = confirm('Vous avez des modifications non sauvegardées. Continuer ?');
+        const confirmed = confirm(msg);
         if (confirmed) {
           originalPush(href);
         }
