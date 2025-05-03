@@ -120,7 +120,7 @@ export class CampaignService {
 
       const start: number = Date.now();
       const campaigns = await this.campaignModel
-        .find({ ...filters, createdBy: userId })
+        .find({ ...filters, users: userId })
         .skip(skip)
         .limit(offset)
         .sort(sort)
