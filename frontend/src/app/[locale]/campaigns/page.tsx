@@ -155,7 +155,7 @@ export default function CampaignsPage() {
                     isUpdating && selectedCampaign && (
                         <div>
                             <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
-                            <Button variant={"secondary"} onClick={() => saveActions} className="mr-5 mb-2" >{t('form.save')}</Button>
+                            <Button variant={"secondary"} onClick={() => saveActions()} className="mr-5 mb-2" >{t('form.save')}</Button>
                         </div>
                     )
                 }
