@@ -1,4 +1,4 @@
-import { IsArray, IsString, MaxLength, ValidateNested } from 'class-validator';
+import { IsString, MaxLength, ValidateNested } from 'class-validator';
 import { CreateGroupIdsDto } from '@/campaign/dto/sub/create-group-ids.dto';
 import { Type } from 'class-transformer';
 

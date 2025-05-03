@@ -1,14 +1,14 @@
 import { UserService } from '@/user/user.service';
 import { BadRequestException, GoneException, Injectable, InternalServerErrorException, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { SignInDto } from './dto/signIn.dto';
+import { SignInDto } from '@/auth/dto/signIn.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { changePasswordDto } from './dto/changePassword.dto';
+import { changePasswordDto } from '@/auth/dto/changePassword.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '@/user/schemas/user.schema';
 import { MaillingService } from '@/mailling/mailling.service';
-import { ResetPasswordDto } from './dto/resetPassword.dto';
+import { ResetPasswordDto } from '@/auth/dto/resetPassword.dto';
 
 @Injectable()
 export class AuthService {

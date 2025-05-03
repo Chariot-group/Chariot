@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Classification } from './classification/classification.schema';
-import { Stats } from './stat/stats.schema';
-import { Combat } from './combat/combat.schema';
-import { Traits } from './trait/trait.schema';
-import { Actions } from './actions/actions.schema';
+import { Classification } from '@/character/schemas/classification/classification.schema';
+import { Stats } from '@/character/schemas/stat/stats.schema';
+import { Combat } from '@/character/schemas/combat/combat.schema';
+import { Traits } from '@/character/schemas/trait/trait.schema';
+import { Actions } from '@/character/schemas/actions/actions.schema';
 import { Group } from '@/group/schemas/group.schema';
 
 export type CharacterDocument = Character & Document;

@@ -4,7 +4,7 @@ import { Campaign, CampaignSchema } from '@/campaign/schemas/campaign.schema';
 import { Character, CharacterSchema } from '@/character/schemas/character.schema';
 import { Group, GroupSchema } from '@/group/schemas/group.schema';
 import { User, UserSchema } from '@/user/schemas/user.schema';
-import { SeederService } from './seeder.service';
+import { SeederService } from '@/seeder/seeder.service';
 
 @Module({
     imports: [

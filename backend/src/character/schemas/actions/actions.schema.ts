@@ -1,5 +1,5 @@
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
-import { Action } from "./sub/action.schema";
+import { Prop } from "@nestjs/mongoose";
+import { Action } from "@/character/schemas/actions/sub/action.schema";
 
 export class Actions {
     

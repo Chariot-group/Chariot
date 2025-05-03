@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GroupController } from './group.controller';
-import { GroupService } from './group.service';
+import { GroupController } from '@/group/group.controller';
+import { GroupService } from '@/group/group.service';
 
 describe('GroupController', () => {
   let controller: GroupController;

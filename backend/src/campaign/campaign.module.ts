@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { CampaignService } from './campaign.service';
-import { CampaignController } from './campaign.controller';
+import { CampaignService } from '@/campaign/campaign.service';
+import { CampaignController } from '@/campaign/campaign.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Campaign, CampaignSchema } from './schemas/campaign.schema';
+import { Campaign, CampaignSchema } from '@/campaign/schemas/campaign.schema';
 import { Logger } from 'winston';
-import { Groups, GroupsSchema } from './schemas/sub/groups.schema';
+import { Groups, GroupsSchema } from '@/campaign/schemas/sub/groups.schema';
 import { GroupModule } from '@/group/group.module';
 import { Group, GroupSchema } from '@/group/schemas/group.schema';
 

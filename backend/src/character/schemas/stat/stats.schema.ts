@@ -1,9 +1,9 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Speed } from "./sub/speed.schema";
-import { AbilityScores } from "./sub/abilityScores.schema";
-import { SavingThrows } from "./sub/savingThrows.schema";
-import { Skills } from "./sub/skill.schema";
-import { Senses } from "./sub/sense.schema";
+import { Prop, Schema } from "@nestjs/mongoose";
+import { Speed } from "@/character/schemas/stat/sub/speed.schema";
+import { AbilityScores } from "@/character/schemas/stat/sub/abilityScores.schema";
+import { SavingThrows } from "@/character/schemas/stat/sub/savingThrows.schema";
+import { Skills } from "@/character/schemas/stat/sub/skill.schema";
+import { Senses } from "@/character/schemas/stat/sub/sense.schema";
 
 @Schema()
 export class Stats {
