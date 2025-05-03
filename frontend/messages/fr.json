@@ -33,6 +33,7 @@
     }
   },
   "CharacterListPanel": {
+    "addCharacter": "Ajouter un personnage",
     "title": "Liste des personnages",
     "search": "Rechercher un personnage",
     "create": "Ajouter un personnage",
@@ -269,6 +270,7 @@
     "error": "Erreur lors de la mise à jour du groupe",
     "actions": {
       "groupDelete": "Supprimer le groupe",
+      "update": "Modifier le groupe",
       "findCampaign": "Trouver sa campagne",
       "modal": {
         "title": "Supprimer le group",
@@ -289,9 +291,7 @@
   },
   "GroupPage": {
     "yourCharacters": "Vos personnages",
-    "addCharacter": "Ajouter un personnage",
     "form": {
-      "update": "Modifier le groupe",
       "cancel": "Annuler",
       "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"

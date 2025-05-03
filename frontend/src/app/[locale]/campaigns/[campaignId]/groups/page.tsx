@@ -20,7 +20,7 @@ import GroupService from "@/services/groupService";
 import { PlusCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
-import { SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function CampaignGroupsPage() {
 
@@ -40,6 +40,7 @@ export default function CampaignGroupsPage() {
     let characterTempRef = useRef<Map<string, ICharacter>>(new Map());
 
     const startUpdate = () => {
+        console.log("startUpdate");
         if (groupSelected) {
             groupTempRef.current = groupSelected;
             setIsUpdating(true);
@@ -314,25 +315,13 @@ export default function CampaignGroupsPage() {
                     !loading && groupSelected && campaign && (
                         <div className="w-[85%] h[100vh] flex flex-col">
                             <div className="w-full">
-                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} campaign={campaign} onDelete={deleteGroup} isUpdating={isUpdating} />
+                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} campaign={campaign} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} />
                             </div>
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>
                             </div>
                             <div className="w-full h-[6vh] flex flex-row justify-between items-center pr-5 pl-5">
                                 <span className="text-2xl text-foreground">{t("yourCharacters")}</span>
-                                {
-                                    isUpdating && (
-                                        <Tooltip>
-                                            <TooltipTrigger asChild>
-                                                <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(groupSelected._id)} />
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>{t("addCharacter")}</p>
-                                            </TooltipContent>
-                                        </Tooltip>
-                                    )
-                                }
                             </div>
                             <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
                                 <Card className="w-[20%] ">
@@ -361,11 +350,6 @@ export default function CampaignGroupsPage() {
                             <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
                             <Button variant={"secondary"} onClick={() => saveAction()} className="mr-5 mb-2" >{t('form.save')}</Button>
                         </div>
-                    )
-                }
-                {
-                    !isUpdating && groupSelected && (
-                        <Button variant={"secondary"} onClick={startUpdate} className="mr-5 mb-2" >{t('form.update')}</Button>
                     )
                 }
             </footer>

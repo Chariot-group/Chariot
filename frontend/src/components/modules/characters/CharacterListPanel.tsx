@@ -2,12 +2,13 @@
 import Loading from "@/components/common/Loading";
 import SearchInput from "@/components/common/SearchBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useToast } from "@/hooks/useToast";
 import ICharacter from "@/models/characters/ICharacter";
 import { IGroup } from "@/models/groups/IGroup";
 import CharacterService from "@/services/CharacterService";
-import { Plus } from "lucide-react";
+import { Plus, PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
@@ -95,7 +96,23 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   return (
     <div className="w-full h-full flex flex-col">
         <CardHeader className="flex-none h-auto items-center gap-3">
-          <CardTitle className="text-foreground font-bold">{t("title")}</CardTitle>
+          <CardTitle className="text-foreground font-bold">
+            <div className="flex items-center gap-2">
+              <p>{t("title")}</p>
+              {
+                isUpdating && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => /*addCharacter(groupSelected._id)*/ console.log('')} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{t("addCharacter")}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )
+              }
+            </div>
+            </CardTitle>
           <SearchInput
             value={search}
             onChange={setSearch}
