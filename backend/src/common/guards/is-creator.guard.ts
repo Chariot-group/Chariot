@@ -1,59 +1,52 @@
 import {
-  Injectable,
   CanActivate,
   ExecutionContext,
+  Injectable,
   ForbiddenException,
   UnauthorizedException,
+  Type,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Observable } from 'rxjs';
-
-interface IResource {
-  createdBy: string;
-}
+import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
-export class IsCreatorGuard<T extends IResource> implements CanActivate {
+export class IsCreatorGuard implements CanActivate {
   constructor(
-    @InjectModel('Resource') private readonly model: Model<T>, // Provide the model name here
     private reflector: Reflector,
+    private moduleRef: ModuleRef,
   ) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const handler = context.getHandler();
+    const serviceClass = this.reflector.get<Type<any>>('service', handler);
+
+    if (!serviceClass) return true; // No service specified
+
     const request = context.switchToHttp().getRequest();
-    const userId = request.user.userId;
-    const resourceId = request.params.id;
+    const userId = request.user?.userId;
+    const resourceId = request.params?.id;
 
-    if (!userId) {
-      throw new UnauthorizedException('User not authenticated');
+    if (!userId) throw new UnauthorizedException('User not authenticated');
+    if (!resourceId) throw new ForbiddenException('Missing resource id');
+
+    try {
+      // Dynamically resolve the service using ModuleRef
+      const service = await this.moduleRef.resolve(serviceClass);
+
+      if (!service) {
+        throw new ForbiddenException(`Service ${serviceClass} not found`);
+      }
+
+      const resource = await service.findOne(resourceId);
+      if (!resource) throw new ForbiddenException('Resource not found');
+
+      if (resource.data.createdBy?.toString() !== userId.toString()) {
+        throw new ForbiddenException('Forbidden: not the creator');
+      }
+
+      return true;
+    } catch (error) {
+      throw new ForbiddenException(`Error resolving service: ${error.message}`);
     }
-
-    if (!resourceId) {
-      throw new ForbiddenException('Resource ID is required');
-    }
-
-    return this.verifyResourceOwnership(resourceId, userId);
-  }
-
-  private async verifyResourceOwnership(
-    resourceId: string,
-    userId: string,
-  ): Promise<boolean> {
-    const resource = await this.model.findById(resourceId).exec();
-    if (!resource) {
-      throw new ForbiddenException('Resource not found');
-    }
-
-    if (resource.createdBy?.toString() !== userId.toString()) {
-      throw new ForbiddenException(
-        'Forbidden: User is not the creator of the resource',
-      );
-    }
-
-    return true;
   }
 }
