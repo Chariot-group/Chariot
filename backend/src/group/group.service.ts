@@ -7,11 +7,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Group } from './schemas/group.schema';
+import { Group } from '@/group/schemas/group.schema';
 import { SortOrder } from 'mongoose';
-import { GroupDocument } from './schemas/group.schema';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { UpdateGroupDto } from './dto/update-group.dto';
+import { GroupDocument } from '@/group/schemas/group.schema';
+import { CreateGroupDto } from '@/group/dto/create-group.dto';
+import { UpdateGroupDto } from '@/group/dto/update-group.dto';
 import { Model, Types } from 'mongoose';
 import {
   Character,

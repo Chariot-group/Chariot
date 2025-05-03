@@ -1,4 +1,4 @@
-import { IsArray, IsEmail, IsMongoId, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsArray, IsEmail, IsMongoId, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateUserDto {
 

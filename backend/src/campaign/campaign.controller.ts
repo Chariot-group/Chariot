@@ -7,17 +7,14 @@ import {
   Param,
   Delete,
   Query,
-  Req,
-  ParseIntPipe,
   Logger,
-  BadRequestException,
+  Req,
 } from '@nestjs/common';
 import { CampaignService } from '@/campaign/campaign.service';
 import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 import { GroupService } from '@/group/group.service';
-import { Types } from 'mongoose';
 
 @Controller('campaigns')
 export class CampaignController {

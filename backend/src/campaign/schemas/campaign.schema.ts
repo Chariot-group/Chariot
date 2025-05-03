@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Groups } from './sub/groups.schema';
+import { Groups } from '@/campaign/schemas/sub/groups.schema';
 import { User } from '@/user/schemas/user.schema';
 import { BaseSchema } from '@/common/schemas/base-schema';
 

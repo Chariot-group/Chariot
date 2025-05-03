@@ -1,5 +1,5 @@
-import { Prop, SchemaFactory } from "@nestjs/mongoose";
-import { Ability } from "./sub/ability.schema";
+import { Prop } from "@nestjs/mongoose";
+import { Ability } from "@/character/schemas/trait/sub/ability.schema";
 
 export class Traits {
     @Prop({ type: [String], required: true })

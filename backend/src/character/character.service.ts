@@ -6,10 +6,10 @@ import {
   NotFoundException,
   GoneException,
 } from '@nestjs/common';
-import { CreateCharacterDto } from './dto/create-character.dto';
-import { UpdateCharacterDto } from './dto/update-character.dto';
+import { CreateCharacterDto } from '@/character/dto/create-character.dto';
+import { UpdateCharacterDto } from '@/character/dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Character, CharacterDocument } from './schemas/character.schema';
+import { Character, CharacterDocument } from '@/character/schemas/character.schema';
 import { Model, SortOrder, Types } from 'mongoose';
 import { Group } from '@/group/schemas/group.schema';
 

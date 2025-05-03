@@ -1,11 +1,11 @@
-import { Body, Controller, Post, Param, Patch } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { SignInDto } from './dto/signIn.dto';
+import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { AuthService } from '@/auth/auth.service';
+import { SignInDto } from '@/auth/dto/signIn.dto';
 import { CreateUserDto } from '@/user/dto/create-user.dto';
 import { UserService } from '@/user/user.service';
+import { ResetPasswordDto } from '@/auth/dto/resetPassword.dto';
+import { changePasswordDto } from '@/auth/dto/changePassword.dto';
 import { Public } from '@/common/decorators/public.decorator';
-import { ResetPasswordDto } from './dto/resetPassword.dto';
-import { changePasswordDto } from './dto/changePassword.dto';
 
 @Controller('auth')
 export class AuthController {

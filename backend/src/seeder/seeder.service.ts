@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
