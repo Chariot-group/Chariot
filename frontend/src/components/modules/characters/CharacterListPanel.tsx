@@ -85,8 +85,9 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
       //newCharacters en premiere position et seulement si il n'y a pas de doublon
       const newCharactersFiltered = newCharacters.current.filter((character) => !updateCharacters.some((c) => c._id === character._id));
       updateCharacters.unshift(...newCharactersFiltered.map((character) => character as ICharacter));
-      setCharacters(updateCharacters);
-      setCharacterSelected(updateCharacters[0]);
+      let filtered = updateCharacters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()));
+      setCharacters(filtered);
+      setCharacterSelected(filtered[0]);
       return;
     }
     setCharacters([]);
