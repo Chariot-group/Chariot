@@ -9,13 +9,17 @@ import {
   Query,
   Logger,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { CampaignService } from '@/campaign/campaign.service';
 import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/campaign/dto/update-campaign.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 import { GroupService } from '@/group/group.service';
+import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
+import { IsCreator } from '@/common/decorators/is-creator.decorator';
 
+@UseGuards(IsCreatorGuard)
 @Controller('campaigns')
 export class CampaignController {
   constructor(
@@ -58,11 +62,13 @@ export class CampaignController {
     }
   }
 
+  @IsCreator(CampaignService)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.campaignService.findOne(id);
   }
 
+  @IsCreator(CampaignService)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -71,6 +77,7 @@ export class CampaignController {
     return this.campaignService.update(id, updateCampaignDto);
   }
 
+  @IsCreator(CampaignService)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.campaignService.remove(id);
