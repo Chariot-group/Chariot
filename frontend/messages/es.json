@@ -19,6 +19,7 @@
     "login": "Iniciar sesión",
     "email": "Correo electrónico",
     "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
     "noAccount": {
       "text": "¿No tienes una cuenta ?",
       "link": "¡Disfruta del acceso gratuito !"

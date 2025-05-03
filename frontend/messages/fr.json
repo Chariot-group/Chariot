@@ -19,6 +19,7 @@
     "login": "Se connecter",
     "email": "Email",
     "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
     "noAccount": {
       "text": "Vous n'avez pas de compte ?",
       "link": "Profitez de l'accès gratuit !"

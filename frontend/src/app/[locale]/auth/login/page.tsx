@@ -73,7 +73,12 @@ export default function LoginPage() {
                     <div className="w-full flex flex-col gap-[5dvh] items-center justify-center">
                         <div className="w-[50%] flex flex-col gap-4">
                             <Input placeholder={t("email")} type="email" value={email} onChange={(e) => updateEmail(e.target.value)} className="bg-background" />
-                            <Input placeholder={t("password")} type="password" value={password} onChange={(e) => updatePassword(e.target.value)} className="bg-background" />
+                            <div className="flex flex-col gap-2">
+                                <Input placeholder={t("password")} type="password" value={password} onChange={(e) => updatePassword(e.target.value)} className="bg-background" />
+                                <p className="text-[0.8rem] font-medium">
+                                    <Link target="_blank" href="forget-password" className="hover:underline underline-offset-2">{t("forgotPassword")}</Link>
+                                </p>
+                            </div>
                         </div>
                         { 
                             !loading &&
@@ -89,7 +94,7 @@ export default function LoginPage() {
                 </div>
             </Card>
             <div className="w-[40%] flex flex-col items-left">
-                <p className="text-sm text-foreground">{t("noAccount.text")} <Link target="_blank" href="#" className="hover:underline">{t("noAccount.link")}</Link></p>
+                <p className="text-sm text-foreground">{t("noAccount.text")} <Link target="_blank" href="#" className="hover:underline underline-offset-2">{t("noAccount.link")}</Link></p>
             </div>
         </div>
     )
