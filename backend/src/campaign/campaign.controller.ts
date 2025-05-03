@@ -39,12 +39,20 @@ export class CampaignController {
 
   @Get()
   findAll(
+    @Req() request,
     @Query('page', ParseNullableIntPipe) page?: number,
     @Query('offset', ParseNullableIntPipe) offset?: number,
     @Query('sort') sort?: string,
     @Query('label') label?: string,
   ) {
-    return this.campaignService.findAll({ page, offset, sort, label });
+    const userId = request.user.userId;
+
+    return this.campaignService.findAllByUser(userId, {
+      page,
+      offset,
+      sort,
+      label,
+    });
   }
 
   @IsCreator(CampaignService)

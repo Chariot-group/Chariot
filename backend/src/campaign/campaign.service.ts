@@ -90,12 +90,15 @@ export class CampaignService {
     }
   }
 
-  async findAll(query: {
-    page?: number;
-    offset?: number;
-    sort?: string;
-    label?: string;
-  }) {
+  async findAllByUser(
+    userId: string,
+    query: {
+      page?: number;
+      offset?: number;
+      sort?: string;
+      label?: string;
+    },
+  ) {
     try {
       const { page = 1, offset = 10, label = '' } = query;
       const skip = (page - 1) * offset;
@@ -117,7 +120,7 @@ export class CampaignService {
 
       const start: number = Date.now();
       const campaigns = await this.campaignModel
-        .find(filters)
+        .find({ ...filters, createdBy: userId })
         .skip(skip)
         .limit(offset)
         .sort(sort)
@@ -194,12 +197,17 @@ export class CampaignService {
 
   async update(id: string, updateCampaignDto: UpdateCampaignDto) {
     try {
-
       this.logger.error(updateCampaignDto.groups, null, this.SERVICE_NAME);
-      if(updateCampaignDto.groups) {
-        await this.validateGroupRelations(updateCampaignDto.groups.main, 'Main');
+      if (updateCampaignDto.groups) {
+        await this.validateGroupRelations(
+          updateCampaignDto.groups.main,
+          'Main',
+        );
         await this.validateGroupRelations(updateCampaignDto.groups.npc, 'NPC');
-        await this.validateGroupRelations(updateCampaignDto.groups.archived, 'Archived');
+        await this.validateGroupRelations(
+          updateCampaignDto.groups.archived,
+          'Archived',
+        );
       }
 
       // Validate ID
@@ -226,7 +234,10 @@ export class CampaignService {
       }
 
       // Handle label update attempt
-      if (updateCampaignDto.label && updateCampaignDto.label !== existingCampaign.label) {
+      if (
+        updateCampaignDto.label &&
+        updateCampaignDto.label !== existingCampaign.label
+      ) {
         const message = `Campaign label cannot be modified`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new BadRequestException(message);
@@ -239,24 +250,28 @@ export class CampaignService {
         const currentGroupIds = [
           ...existingCampaign.groups.main,
           ...existingCampaign.groups.npc,
-          ...existingCampaign.groups.archived
-        ].map(id => id.toString());
+          ...existingCampaign.groups.archived,
+        ].map((id) => id.toString());
 
         // Remove campaign from old groups
-        const groupsToRemove = currentGroupIds.filter(id => !newGroupIds.includes(id));
+        const groupsToRemove = currentGroupIds.filter(
+          (id) => !newGroupIds.includes(id),
+        );
         if (groupsToRemove.length > 0) {
           await this.groupModel.updateMany(
             { _id: { $in: groupsToRemove } },
-            { $pull: { campaigns: id } }
+            { $pull: { campaigns: id } },
           );
         }
 
         // Add campaign to new groups
-        const groupsToAdd = newGroupIds.filter(id => !currentGroupIds.includes(id));
+        const groupsToAdd = newGroupIds.filter(
+          (id) => !currentGroupIds.includes(id),
+        );
         if (groupsToAdd.length > 0) {
           await this.groupModel.updateMany(
             { _id: { $in: groupsToAdd } },
-            { $addToSet: { campaigns: id } }
+            { $addToSet: { campaigns: id } },
           );
         }
       }
@@ -267,26 +282,28 @@ export class CampaignService {
           id,
           {
             ...updateCampaignDto,
-            updatedAt: new Date()
+            updatedAt: new Date(),
           },
-          { new: true }
+          { new: true },
         )
         .populate([
           { path: 'groups.main', populate: { path: 'characters' } },
           { path: 'groups.npc', populate: { path: 'characters' } },
-          { path: 'groups.archived', populate: { path: 'characters' } }
+          { path: 'groups.archived', populate: { path: 'characters' } },
         ]);
 
       const end = Date.now();
 
       return {
         message: `Campaign updated in ${end - start}ms`,
-        data: updatedCampaign
+        data: updatedCampaign,
       };
     } catch (error) {
-      if (error instanceof BadRequestException || 
-          error instanceof NotFoundException || 
-          error instanceof GoneException) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof GoneException
+      ) {
         throw error;
       }
       const message = `Error updating campaign: ${error.message}`;
