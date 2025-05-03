@@ -16,6 +16,7 @@ import { UpdateCharacterDto } from '@/character/dto/update-character.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 import { IsCreator } from '@/common/decorators/is-creator.decorator';
 import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
+@UseGuards(IsCreatorGuard)
 @Controller('characters')
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
@@ -40,13 +41,13 @@ export class CharacterController {
     return this.characterService.findAll({ page, offset, name, sort });
   }
 
-  @UseGuards(IsCreatorGuard)
   @IsCreator(CharacterService)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.characterService.findOne(id);
   }
 
+  @IsCreator(CharacterService)
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -55,6 +56,7 @@ export class CharacterController {
     return this.characterService.update(id, updateCharacterDto);
   }
 
+  @IsCreator(CharacterService)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.characterService.remove(id);
