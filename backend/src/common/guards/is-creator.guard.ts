@@ -46,7 +46,7 @@ export class IsCreatorGuard implements CanActivate {
 
       return true;
     } catch (error) {
-      throw new ForbiddenException(`Error resolving service: ${error.message}`);
+      throw error;
     }
   }
 }
