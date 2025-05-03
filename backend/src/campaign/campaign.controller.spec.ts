@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CampaignController } from './campaign.controller';
-import { CampaignService } from './campaign.service';
+import { CampaignController } from '@/campaign/campaign.controller';
+import { CampaignService } from '@/campaign/campaign.service';
 
 describe('CampaignController', () => {
   let controller: CampaignController;

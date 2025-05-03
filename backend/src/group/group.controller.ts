@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { GroupService } from './group.service';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { UpdateGroupDto } from './dto/update-group.dto';
+import { GroupService } from '@/group/group.service';
+import { CreateGroupDto } from '@/group/dto/create-group.dto';
+import { UpdateGroupDto } from '@/group/dto/update-group.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 import { CharacterService } from '@/character/character.service';
 

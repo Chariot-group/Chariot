@@ -1,5 +1,5 @@
-import { IsArray, IsEnum, IsMongoId, IsNotEmpty, IsObject, IsOptional, IsString, MaxLength, ValidateNested } from 'class-validator';
-import { CampaignGroupDto } from './sub/campaigns.dto';
+import { IsArray, IsMongoId, IsOptional, IsString, MaxLength, ValidateNested } from 'class-validator';
+import { CampaignGroupDto } from '@/group/dto/sub/campaigns.dto';
 import { Type } from 'class-transformer';
 
 export class CreateGroupDto {

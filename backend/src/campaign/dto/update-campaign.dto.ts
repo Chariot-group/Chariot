@@ -1,5 +1,5 @@
 import { PartialType, OmitType } from '@nestjs/mapped-types';
-import { CreateCampaignDto } from './create-campaign.dto';
+import { CreateCampaignDto } from '@/campaign/dto/create-campaign.dto';
 import { IsOptional } from 'class-validator';
 
 export class UpdateCampaignDto extends PartialType(
