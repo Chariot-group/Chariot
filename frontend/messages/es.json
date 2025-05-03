@@ -254,7 +254,8 @@
       "description": "Una breve descripción de la campaña"
     },
     "actions": {
-      "delete": "Eliminar campaña"
+      "delete": "Eliminar campaña",
+      "update": "Actualizar campaña"
     },
     "modal": {
       "title": "Eliminar campaña",
@@ -318,7 +319,6 @@
       "step5": "Paso 5: ¡A jugar!"
     },
     "form": {
-      "update": "Actualizar campaña",
       "cancel": "Cancelar",
       "save": "Guardar",
       "unsave": "Tienes cambios sin guardar. ¿Continuar?"

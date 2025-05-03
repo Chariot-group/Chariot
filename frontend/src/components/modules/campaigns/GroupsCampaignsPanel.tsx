@@ -83,7 +83,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row gap-3 justify-start items-center">
         <h2>{t("title.default")}</h2>
         {
           isUpdating && (

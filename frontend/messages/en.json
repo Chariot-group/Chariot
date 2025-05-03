@@ -254,7 +254,8 @@
       "description": "A great campaign"
     },
     "actions": {
-      "delete": "Delete campaign"
+      "delete": "Delete campaign",
+      "update": "Update campaign"
     },
     "modal": {
       "title": "Delete campaign",
@@ -318,7 +319,6 @@
       "step5": "Step 5: Let’s play!"
     },
     "form": {
-      "update": "Update campaign",
       "cancel": "cancel",
       "save": "Save",
       "unsave": "You have unsaved changes. Do you want to continue?"

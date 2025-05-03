@@ -254,7 +254,8 @@
       "description": "Une campagne épique dans un monde fantastique où les héros se battent contre des forces obscures."
     },
     "actions": {
-      "delete": "Supprimer la campagne"
+      "delete": "Supprimer la campagne",
+      "update": "Modifier la campagne"
     },
     "modal": {
       "title": "Supprimer la campagne",
@@ -318,7 +319,6 @@
       "step5": "Etape 5: Let’s play !"
     },
     "form": {
-      "update": "Modifier la campagne",
       "cancel": "Annuler",
       "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"

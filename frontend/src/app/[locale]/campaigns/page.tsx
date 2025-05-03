@@ -128,7 +128,7 @@ export default function CampaignsPage() {
                         {!loading && selectedCampaign && (
                             <div className="flex flex-col justify-start items-center w-full h-full">
                                 <div className="w-full flex flex-col">
-                                    <CampaignDetailsPanel campaign={selectedCampaign} setCampaign={setSelectedCampaign} onDelete={deleteCampaign} isUpdating={isUpdating} />
+                                    <CampaignDetailsPanel campaign={selectedCampaign} setCampaign={setSelectedCampaign} onDelete={deleteCampaign} isUpdating={isUpdating} startUpdate={startUpdate} />
                                 </div>
                                 <div className="w-[90vh] flex flex-col">
                                     <div className="w-[80vh] border border-ring"></div>
@@ -157,11 +157,6 @@ export default function CampaignsPage() {
                             <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
                             <Button variant={"secondary"} onClick={() => saveActions} className="mr-5 mb-2" >{t('form.save')}</Button>
                         </div>
-                    )
-                }
-                {
-                    !isUpdating && selectedCampaign && (
-                        <Button variant={"secondary"} onClick={startUpdate} className="mr-5 mb-2" >{t('form.update')}</Button>
                     )
                 }
             </footer>
