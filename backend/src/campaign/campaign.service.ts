@@ -120,14 +120,38 @@ export class CampaignService {
         .skip(skip)
         .limit(offset)
         .sort(sort)
+        .populate({
+          path: 'groups.main',
+          match: { deletedAt: null },
+          select: '_id',
+        })
+        .populate({
+          path: 'groups.npc',
+          match: { deletedAt: null },
+          select: '_id',
+        })
+        .populate({
+          path: 'groups.archived',
+          match: { deletedAt: null },
+          select: '_id',
+        })
         .exec();
       const end: number = Date.now();
+
+      let campaignsWithGroupsClean = campaigns.map(doc => ({
+        ...doc.toObject(),
+        groups: {
+          main: doc.groups.main.map(group => group._id),
+          npc: doc.groups.npc.map(group => group._id),
+          archived: doc.groups.archived.map(group => group._id),
+        },
+      }))
 
       const message = `Campaigns found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
-        data: campaigns,
+        data: campaignsWithGroupsClean,
         pagination: {
           page,
           offset,
