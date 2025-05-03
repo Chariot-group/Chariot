@@ -47,6 +47,7 @@ export class CampaignController {
     return this.campaignService.findAll({ page, offset, sort, label });
   }
 
+  @IsCreator(CampaignService)
   @Get(':id/groups')
   async findAllGroups(
     @Param('id') id: string,

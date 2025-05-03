@@ -43,6 +43,7 @@ export class GroupController {
     return this.groupService.findAll({ page, offset, label, sort });
   }
 
+  @IsCreator(GroupService)
   @Get(':id/characters')
   findAllCharacters(
     @Param('id') id: string,
