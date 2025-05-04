@@ -106,6 +106,7 @@ export class CampaignService {
       const filters = {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
+        users: userId,
       };
 
       const sort: { [key: string]: 1 | -1 } = { updatedAt: -1 };
@@ -120,7 +121,7 @@ export class CampaignService {
 
       const start: number = Date.now();
       const campaigns = await this.campaignModel
-        .find({ ...filters, users: userId })
+        .find(filters)
         .skip(skip)
         .limit(offset)
         .sort(sort)
