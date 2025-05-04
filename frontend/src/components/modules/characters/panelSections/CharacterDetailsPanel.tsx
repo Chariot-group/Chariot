@@ -14,7 +14,6 @@ import ICombat from "@/models/characters/combat/ICombat";
 import IActions from "@/models/characters/actions/IActions";
 import ActionsSection from "./actions/ActionsSection";
 import TraitsSection from "./traits/TraitsSection";
-import DeleteValidation from "@/components/common/modals/DeleteValidation";
 
 interface ICharacterDetailsPanelProps {
   character: ICharacter;
@@ -38,8 +37,6 @@ export function CharacterDetailsPanel({
   const [combat, setCombat] = useState<ICombat>(character.combat);
   const [action, setAction] = useState<IActions>(character.actions[0]);
   const [trait, setTrait] = useState(character.traits[0]);
-
-  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setName(character.name);
@@ -73,21 +70,6 @@ export function CharacterDetailsPanel({
 
   return (
     <Card className="flex w-full flex-col h-full gap-3 p-5">
-      {onDelete && (
-        <DeleteValidation
-          isOpen={deleteModalOpen}
-          onClose={() => setDeleteModalOpen(false)}
-          title={t("actions.modal.title")}
-          message={t("actions.modal.description")}
-          confirmMessage={t("actions.modal.confirm")}
-          onConfirm={() => {
-            if (onDelete) {
-              onDelete(character);
-            }
-          }}
-        />
-      )}
-
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row w-1/5">
           <Champs
@@ -135,7 +117,7 @@ export function CharacterDetailsPanel({
           </span>
         </div>
         {onDelete && isUpdating && (
-          <Button variant={"link"} onClick={() => setDeleteModalOpen(true)}>
+          <Button variant={"link"} onClick={() => onDelete(character)}>
             {t("actions.characterDelete")}
           </Button>
         )}
