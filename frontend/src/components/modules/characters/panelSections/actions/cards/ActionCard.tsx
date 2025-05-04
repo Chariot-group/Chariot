@@ -11,8 +11,9 @@ interface IActionCardProps {
     action: IAction;
     setAction: (action: IAction) => void;
     onDelete: () => void;
+    isUpdating: boolean;
 }
-export function ActionCard({ action, setAction, onDelete }: IActionCardProps) {
+export function ActionCard({ action, setAction, onDelete, isUpdating }: IActionCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
     
@@ -42,14 +43,14 @@ export function ActionCard({ action, setAction, onDelete }: IActionCardProps) {
                 <Button variant={"link"} onClick={onDelete}>{t("actions.actionsDelete")}</Button>
             </div>
             <div className="flex flex-row gap-3">
-                <Champs color="card" id={"name"} type={"text"} label={t("labels.actions.name")} placeholder={t("placeholders.actions.name")} value={name} setValue={setName} onChange={onChange}  />
-                <Champs color="card" id={"type"} type={"text"} label={t("labels.actions.type")} placeholder={t("placeholders.actions.type")} value={type} setValue={setType} onChange={onChange}  />
-                <Champs color="card" id={"attackBonus"} type={"text"} label={t("labels.actions.attackBonus")} placeholder={t("placeholders.actions.attackBonus")} value={attackBonus} setValue={setAttackBonus} onChange={onChange}  />
+                <Champs isActive={isUpdating} color="card" id={"name"} type={"text"} label={t("labels.actions.name")} placeholder={t("placeholders.actions.name")} value={name} setValue={setName} onChange={onChange}  />
+                <Champs isActive={isUpdating} color="card" id={"type"} type={"text"} label={t("labels.actions.type")} placeholder={t("placeholders.actions.type")} value={type} setValue={setType} onChange={onChange}  />
+                <Champs isActive={isUpdating} color="card" id={"attackBonus"} type={"text"} label={t("labels.actions.attackBonus")} placeholder={t("placeholders.actions.attackBonus")} value={attackBonus} setValue={setAttackBonus} onChange={onChange}  />
             </div>
             <div className="flex flex-row gap-3">
-                <Champs color="card" id={"damageType"} type={"text"} label={t("labels.actions.damage.type")} placeholder={t("placeholders.actions.damage.type")} value={damageType} setValue={setDamageType} onChange={onChange}  />
-                <Champs color="card" id={"damageDice"} type={"text"} label={t("labels.actions.damage.dice")} placeholder={t("placeholders.actions.damage.dice")} value={damageDice} setValue={setDamageDice} onChange={onChange}  />
-                <Champs color="card" id={"range"} type={"text"} label={t("labels.actions.range")} placeholder={t("placeholders.actions.range")} value={range} setValue={setRange} onChange={onChange}  />
+                <Champs isActive={isUpdating} color="card" id={"damageType"} type={"text"} label={t("labels.actions.damage.type")} placeholder={t("placeholders.actions.damage.type")} value={damageType} setValue={setDamageType} onChange={onChange}  />
+                <Champs isActive={isUpdating} color="card" id={"damageDice"} type={"text"} label={t("labels.actions.damage.dice")} placeholder={t("placeholders.actions.damage.dice")} value={damageDice} setValue={setDamageDice} onChange={onChange}  />
+                <Champs isActive={isUpdating} color="card" id={"range"} type={"text"} label={t("labels.actions.range")} placeholder={t("placeholders.actions.range")} value={range} setValue={setRange} onChange={onChange}  />
             </div>
         </Card>
     )
