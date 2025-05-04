@@ -365,5 +365,51 @@
   "BattlePage": {
     "battle": "Lancer le combat",
     "back": "Retour à la sélection"
+  },
+  "confirmEmail": {
+    "title": "Réinitialiser votre mot de passe",
+    "description": "Renseignez votre addresse email. Si un compte existe avec cette adresse, vous recevrez un email contenant un code pour réinitialiser votre mot de passe.",
+    "label": "Email",
+    "placeholder": "Entrez votre email",
+    "send": "Envoyer le code",
+    "toasts": {
+      "sendingEmail": "Un email a été envoyé ! Vérifier vos spams.",
+      "invalidEmail": "L'email est invalide",
+      "emailNotFound": "Aucun compte trouvé avec cet email",
+      "internal": "Une erreur c'est produite quand nous avons essayé de vous envoyer l'email"
+    },
+    "cancel": "Annuler"
+  },
+  "forgetPassword": {
+    "wrongEmail": "Vous vous êtes trompé d'email ?",
+    "step": {
+      "step1": "Renseignez votre email",
+      "step2": "Vérifier votre code",
+      "step3": "Changer votre mot de passe"
+    }
+  },
+  "confirmOTP": {
+    "title": "Réinitialiser votre mot de passe",
+    "description": "Renseignez le code reçu par email.",
+    "label": "OPT",
+    "placeholder": "Entrez votre code",
+    "send": "Vérifier le code",
+    "cancel": "Annuler"
+  },
+  "changePassword": {
+    "title": "Réinitialiser votre mot de passe",
+    "description": "Il est temps de changer votre mot de passe !",
+    "password": "Mot de passe",
+    "placeholderPassword": "Entrez votre nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "placeholderConfirmPassword": "Confirmez votre mot de passe",
+    "send": "Changer le mot de passe",
+    "toasts": {
+      "passwordChanged": "Mot de passe changé !",
+      "invalidOTP": "Le code est invalide",
+      "passwordsNotMatching": "Les mots de passe ne correspondent pas",
+      "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
+    },
+    "cancel": "Annuler"
   }
 }

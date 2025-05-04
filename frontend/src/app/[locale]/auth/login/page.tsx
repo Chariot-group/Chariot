@@ -76,7 +76,7 @@ export default function LoginPage() {
                             <div className="flex flex-col gap-2">
                                 <Input placeholder={t("password")} type="password" value={password} onChange={(e) => updatePassword(e.target.value)} className="bg-background" />
                                 <p className="text-[0.8rem] font-medium">
-                                    <Link target="_blank" href="forget-password" className="hover:underline underline-offset-2">{t("forgotPassword")}</Link>
+                                    <Link href="forget-password" className="hover:underline underline-offset-2">{t("forgotPassword")}</Link>
                                 </p>
                             </div>
                         </div>
