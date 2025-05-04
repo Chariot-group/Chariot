@@ -9,6 +9,7 @@ import { Locale } from "@/i18n/locales.generated";
 import ToastContainer from "@/components/modules/toastR/ToastContainer";
 import { AuthProvider } from "@/components/common/authProvider";
 import RestraintMobile from "@/components/modules/mobile/restraintMobile";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,7 +55,9 @@ export default async function LocaleLayout({
             </div>
 
             <div className="hidden lg:block">
-              {children}
+              <TooltipProvider>
+                {children}
+              </TooltipProvider>
             </div>
           </AuthProvider>
         </NextIntlClientProvider>

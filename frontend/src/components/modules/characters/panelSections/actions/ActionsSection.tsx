@@ -4,12 +4,15 @@ import { useTranslations } from "next-intl";
 import IActions from "@/models/characters/actions/IActions";
 import { ActionCard } from "./cards/ActionCard";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { PlusCircleIcon } from "lucide-react";
 
 interface IActionsSectionProps {
     actions: IActions;
     setActions: (actions: IActions) => void;
+    isUpdating: boolean;
 }
-export default function ActionsSection({ actions, setActions }: IActionsSectionProps) {
+export default function ActionsSection({ actions, setActions, isUpdating }: IActionsSectionProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -22,9 +25,18 @@ export default function ActionsSection({ actions, setActions }: IActionsSectionP
     return (
         <div className="flex flex-col gap-3">
             <div className="flex justify-end">
-                <Button onClick={() => setActions({ ...actions, standard: [...actions.standard, { name: "", type: "melee", attackBonus: 0, damage: { type: "bludgeoning", dice: "1d6" }, range: "melee" }].reverse() })}>
-                    {t("actions.actionsAdd")}
-                </Button>
+                {
+                    isUpdating && (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => setActions({ ...actions, standard: [...actions.standard, { name: "", type: "melee", attackBonus: 0, damage: { type: "bludgeoning", dice: "1d6" }, range: "melee" }].reverse() })} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>{t("actions.actionsAdd")}</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    )
+                }
             </div>
             {
                 actions.standard.map((action, index) => (
@@ -37,6 +49,7 @@ export default function ActionsSection({ actions, setActions }: IActionsSectionP
                             newActions[index] = action;
                             setActions({ ...actions, standard: newActions });
                         }}
+                        isUpdating={isUpdating}
                     />
                 ))
             }

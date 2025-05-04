@@ -1,15 +1,12 @@
 import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class StatsDto {
-  @IsNumber()
   @IsOptional()
   maxHitPoints: number;
 
-  @IsNumber()
   @IsOptional()
   currentHitPoints: number;
 
-  @IsNumber()
   @IsOptional()
   tempHitPoints: number;
 
@@ -17,7 +14,6 @@ export class StatsDto {
   @IsOptional()
   hitDice: string;
 
-  @IsNumber()
   @IsOptional()
   armorClass: number;
 

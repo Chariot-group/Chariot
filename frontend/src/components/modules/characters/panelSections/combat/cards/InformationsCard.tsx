@@ -9,8 +9,9 @@ import { useEffect, useState } from "react";
 interface IInformationsCardProps {
     combat: ICombat;
     setCombat: (combat: ICombat) => void;
+    isUpdating: boolean;
 }
-export default function InformationsCard({ combat, setCombat }: IInformationsCardProps) {
+export default function InformationsCard({ combat, setCombat, isUpdating }: IInformationsCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -32,8 +33,8 @@ export default function InformationsCard({ combat, setCombat }: IInformationsCar
             <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.combat.stats")}</h3>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"challengeRating"} type={"number"} label={t("labels.combat.challengeRating")} placeholder={t("placeholders.combat.challengeRating")} value={challengeRating} setValue={setChallangeRating} />
-                    <Champs onChange={onChange} color="card" id={"experiencePoints"} type={"number"} label={t("labels.combat.experiencePoints")} placeholder={t("placeholders.combat.experiencePoints")} value={experiencePoints} setValue={setExperiencePoints} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"challengeRating"} type={"number"} label={t("labels.combat.challengeRating")} placeholder={t("placeholders.combat.challengeRating")} value={challengeRating} setValue={setChallangeRating} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"experiencePoints"} type={"number"} label={t("labels.combat.experiencePoints")} placeholder={t("placeholders.combat.experiencePoints")} value={experiencePoints} setValue={setExperiencePoints} />
                 </div>
             </Card>
 
