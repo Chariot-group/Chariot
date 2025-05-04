@@ -9,8 +9,9 @@ import { useEffect, useState } from "react";
 interface ISensesProps {
     senses: ISenses;
     setSenses: (classification: ISenses) => void;
+    isUpdating: boolean;
 }
-export default function SensesCard({ senses, setSenses }: ISensesProps) {
+export default function SensesCard({ senses, setSenses, isUpdating }: ISensesProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -32,8 +33,8 @@ export default function SensesCard({ senses, setSenses }: ISensesProps) {
             <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.global.senses")}</h3>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"nightVision"} type={"number"} label={t("labels.stats.senses.nightVision")} placeholder={t("placeholders.stats.senses.nightVision")} value={darkvision} setValue={setDarkvision} />
-                    <Champs onChange={onChange} color="card" id={"passivePerception"} type={"number"} label={t("labels.stats.senses.passivePerception")} placeholder={t("placeholders.stats.senses.passivePerception")} value={passivePerception} setValue={setPassivePerception} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"nightVision"} type={"number"} label={t("labels.stats.senses.nightVision")} placeholder={t("placeholders.stats.senses.nightVision")} value={darkvision} setValue={setDarkvision} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"passivePerception"} type={"number"} label={t("labels.stats.senses.passivePerception")} placeholder={t("placeholders.stats.senses.passivePerception")} value={passivePerception} setValue={setPassivePerception} />
                 </div>
             </Card>
 

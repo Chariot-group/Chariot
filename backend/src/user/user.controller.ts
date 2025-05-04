@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -9,9 +8,8 @@ import {
   BadRequestException,
   Query,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from '@/user/user.service';
+import { UpdateUserDto } from '@/user/dto/update-user.dto';
 import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
 
 @Controller('users')

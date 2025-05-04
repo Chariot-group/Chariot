@@ -34,6 +34,7 @@
     }
   },
   "CharacterListPanel": {
+    "addCharacter": "Add character",
     "title": "Character List",
     "search": "Search a character",
     "create": "Add a character",
@@ -46,6 +47,9 @@
       "npc": "NPC",
       "default": "Your groups",
       "archived": "Archived"
+    },
+    "newGroup": {
+      "label": "New group"
     },
     "search": "Search a group",
     "create": "Add a group",
@@ -254,7 +258,8 @@
       "description": "A great campaign"
     },
     "actions": {
-      "delete": "Delete campaign"
+      "delete": "Delete campaign",
+      "update": "Update campaign"
     },
     "modal": {
       "title": "Delete campaign",
@@ -270,7 +275,8 @@
     "error": "Error updating the group",
     "actions": {
       "groupDelete": "Delete group",
-      "findCampaign": "Find its campaign",
+      "update": "Update group",
+      "backCampaign": "Back to campaign",
       "modal": {
         "title": "Delete group",
         "description": "Are you sure you want to delete this group ?",
@@ -290,7 +296,11 @@
   },
   "GroupPage": {
     "yourCharacters": "Your characters",
-    "addCharacter": "Add character"
+    "form": {
+      "cancel": "cancel",
+      "save": "Save",
+      "unsave": "You have unsaved changes. Do you want to continue?"
+    }
   },
   "CampaignModal": {
     "title": "Create a campaign",
@@ -311,6 +321,11 @@
       "step3": "Step 3: Create your NPC groups",
       "step4": "Step 4: Launch your initiatives",
       "step5": "Step 5: Let’s play!"
+    },
+    "form": {
+      "cancel": "cancel",
+      "save": "Save",
+      "unsave": "You have unsaved changes. Do you want to continue?"
     }
   },
   "InitiativeTracker": {
@@ -334,5 +349,21 @@
   "MobileRestraint": {
     "title": "Mobile Restraint",
     "subTitle": "This application is not compatible with small screens."
-  } 
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "API status",
+      "ok": "Ok",
+      "error": "Error",
+      "loading": "Loading..."
+    }
+  },
+  "GroupSelector": {
+    "title": "Choose the two groups that will face off",
+    "versus": "VS"
+  },
+  "BattlePage": {
+    "battle": "Start battle",
+    "back": "Back to selection"
+  }
 }

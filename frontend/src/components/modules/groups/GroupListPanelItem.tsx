@@ -82,13 +82,14 @@ const GroupListPanelItem = ({
           setGroupSelected(group);
         }
       }}
+
+      {...(grabbled ? listeners : {})}
+      {...(grabbled ? attributes : {})}
     >
-      <span className="cursor-pointer text-foreground font-bold">{group.label}</span>
+      <span className={`${grabbled ? 'cursor-grab': 'cursor-pointer'} text-foreground font-bold`}>{group.label}</span>
 
       {grabbled && (
         <span
-          {...listeners}
-          {...attributes}
           className="cursor-grab active:cursor-grabbing"
         >
           <Grip />

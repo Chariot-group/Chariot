@@ -34,6 +34,7 @@
     }
   },
   "CharacterListPanel": {
+    "addCharacter": "Agregar personaje",
     "title": "Lista de personajes",
     "search": "Buscar un personaje",
     "create": "Agregar un personaje",
@@ -46,6 +47,9 @@
       "npc": "PNJ",
       "default": "Tus grupos",
       "archived": "Archivados"
+    },
+    "newGroup": {
+      "label": "Nuevo grupo"
     },
     "search": "Buscar un grupo",
     "create": "Agregar un grupo",
@@ -254,7 +258,8 @@
       "description": "Una breve descripción de la campaña"
     },
     "actions": {
-      "delete": "Eliminar campaña"
+      "delete": "Eliminar campaña",
+      "update": "Actualizar campaña"
     },
     "modal": {
       "title": "Eliminar campaña",
@@ -270,7 +275,8 @@
     "error": "Error al actualizar el grupo",
     "actions": {
       "groupDelete": "Eliminar el grupo",
-      "findCampaign": "Encontrar su campaña",
+      "backCampaign": "Volver a la campaña",
+      "update": "Actualizar grupo",
       "modal": {
         "title": "Eliminar grupo",
         "description": "¿Estás seguro de que deseas eliminar este grupo?",
@@ -290,7 +296,11 @@
   },
   "GroupPage": {
     "yourCharacters": "Tus personajes",
-    "addCharacter": "Agregar personaje"
+    "form": {
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "unsave": "Tienes cambios sin guardar. ¿Continuar?"
+    }
   },
   "CampaignModal": {
     "title": "Crear una nueva campaña",
@@ -311,6 +321,11 @@
       "step3": "Paso 3: Crear sus grupos de PNJ",
       "step4": "Paso 4: Lanzar sus iniciativas",
       "step5": "Paso 5: ¡A jugar!"
+    },
+    "form": {
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "unsave": "Tienes cambios sin guardar. ¿Continuar?"
     }
   },
   "InitiativeTracker": {
@@ -334,5 +349,21 @@
   "MobileRestraint": {
     "title": "Pantalla pequeña",
     "subTitle": "Esta aplicación no es compatible con pantallas pequeñas."
-  } 
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "Estado de la API",
+      "ok": "Ok",
+      "error": "Error",
+      "loading": "Cargando..."
+    }
+  },
+  "GroupSelector": {
+    "title": "Elige los dos grupos que se enfrentarán",
+    "versus": "VS"
+  },
+  "BattlePage": {
+    "battle": "Iniciar combate",
+    "back": "Volver a la selección"
+  }
 }

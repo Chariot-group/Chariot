@@ -34,6 +34,7 @@
     }
   },
   "CharacterListPanel": {
+    "addCharacter": "Ajouter un personnage",
     "title": "Liste des personnages",
     "search": "Rechercher un personnage",
     "create": "Ajouter un personnage",
@@ -46,6 +47,9 @@
       "npc": "PNJ",
       "default": "Vos groupes",
       "archived": "Archivés"
+    },
+    "newGroup": {
+      "label": "Nouveau groupe"
     },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",
@@ -254,7 +258,8 @@
       "description": "Une campagne épique dans un monde fantastique où les héros se battent contre des forces obscures."
     },
     "actions": {
-      "delete": "Supprimer la campagne"
+      "delete": "Supprimer la campagne",
+      "update": "Modifier la campagne"
     },
     "modal": {
       "title": "Supprimer la campagne",
@@ -270,7 +275,8 @@
     "error": "Erreur lors de la mise à jour du groupe",
     "actions": {
       "groupDelete": "Supprimer le groupe",
-      "findCampaign": "Trouver sa campagne",
+      "update": "Modifier le groupe",
+      "backCampaign": "Retour à la campagne",
       "modal": {
         "title": "Supprimer le group",
         "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
@@ -290,7 +296,11 @@
   },
   "GroupPage": {
     "yourCharacters": "Vos personnages",
-    "addCharacter": "Ajouter un personnage"
+    "form": {
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    }
   },
   "CampaignModal": {
     "title": "Créer une campagne",
@@ -311,6 +321,11 @@
       "step3": "Etape 3: Créer vos groupes de PNJ",
       "step4": "Etape 4: Lancer vos initiatives",
       "step5": "Etape 5: Let’s play !"
+    },
+    "form": {
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
     }
   },
   "InitiativeTracker": {
@@ -334,5 +349,21 @@
   "MobileRestraint": {
     "title": "Application non disponible sur mobile",
     "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "Status de l'API",
+      "ok": "Ok",
+      "error": "Erreur",
+      "loading": "Chargement..."
+    }
+  },
+  "GroupSelector": {
+    "title": "Choisisser les deux groupes qui vont s’affronter",
+    "versus": "VS"
+  },
+  "BattlePage": {
+    "battle": "Lancer le combat",
+    "back": "Retour à la sélection"
   }
 }

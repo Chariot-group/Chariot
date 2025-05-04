@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model } from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
 import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
@@ -50,8 +50,15 @@ export class SeederService {
     const userCount = faker.number.int({ min: 4, max: 8 });
 
     for (let i = 0; i < userCount; i++) {
-      const campaigns = [];
+      let hashPassword = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 10);
+      await this.userModel.create({
+        username: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: hashPassword,
+      });
+      const users = await this.userModel.find();
 
+      const campaigns = [];
       const campaignsPerUser: number = faker.number.int({ min: 0, max: 3 });
 
       for (let j = 0; j < campaignsPerUser; j++) {
@@ -74,7 +81,10 @@ export class SeederService {
 
         for (let k = 0; k < groupsMainPerCampaign; k++) {
           const mainCharacters = await this.characterModel.create(
-            this.getRandomObjects(),
+            this.getRandomObjects().map((character) => ({
+              ...character,
+              createdBy: users[i]._id,
+            })),
           );
 
           const mainGroup = await this.groupModel.create({
@@ -82,10 +92,12 @@ export class SeederService {
             description: faker.lorem.paragraph({ min: 0, max: 3 }),
             active: faker.number.int({ min: 0, max: 1 }) === 1,
             characters: mainCharacters.map((c) => c._id),
+            createdBy: users[i]._id,
           });
 
           mainCharacters.forEach((c: CharacterDocument) => {
             c.groups.push(mainGroup.id);
+            c.createdBy = mainGroup.createdBy;
             c.save();
           });
 
@@ -94,7 +106,10 @@ export class SeederService {
 
         for (let k = 0; k < groupsNpcPerCampaign; k++) {
           const npcCharacters = await this.characterModel.create(
-            this.getRandomObjects(),
+            this.getRandomObjects().map((character) => ({
+              ...character,
+              createdBy: users[i]._id,
+            })),
           );
 
           const npcGroup = await this.groupModel.create({
@@ -102,10 +117,12 @@ export class SeederService {
             description: faker.lorem.paragraph({ min: 0, max: 3 }),
             active: faker.number.int({ min: 0, max: 1 }) === 1,
             characters: npcCharacters.map((c) => c._id),
+            createdBy: users[i]._id,
           });
 
           npcCharacters.forEach((c: CharacterDocument) => {
             c.groups.push(npcGroup.id);
+            c.createdBy = npcGroup.createdBy;
             c.save();
           });
 
@@ -114,7 +131,10 @@ export class SeederService {
 
         for (let k = 0; k < groupsArchivedPerCampaign; k++) {
           const archivedCharacters = await this.characterModel.create(
-            this.getRandomObjects(),
+            this.getRandomObjects().map((character) => ({
+              ...character,
+              createdBy: users[i]._id,
+            })),
           );
 
           const archivedGroup = await this.groupModel.create({
@@ -122,21 +142,17 @@ export class SeederService {
             description: faker.lorem.paragraph({ min: 0, max: 3 }),
             active: faker.number.int({ min: 0, max: 1 }) === 1,
             characters: archivedCharacters.map((c) => c._id),
+            createdBy: users[i]._id,
           });
 
           archivedCharacters.forEach((c: CharacterDocument) => {
             c.groups.push(archivedGroup.id);
+            c.createdBy = archivedGroup.createdBy;
             c.save();
           });
 
           archivedGroups.push(archivedGroup._id);
         }
-
-        const usersCount = faker.number.int({ min: 1, max: userCount });
-        const campaignUsers = await this.userModel.aggregate([
-          { $sample: { size: usersCount } }, // Sélection aléatoire
-          { $project: { _id: 1 } }, // Ne garder que les IDs
-        ]);
 
         const campaign = await this.campaignModel.create({
           label: faker.lorem.words(3),
@@ -146,11 +162,12 @@ export class SeederService {
             npc: npcGroups,
             archived: archivedGroups,
           },
-          users: campaignUsers.map((u) => u._id),
+          users: [users[i]._id],
+          createdBy: users[i]._id,
         });
 
         await this.userModel.updateMany(
-          { _id: { $in: campaignUsers.map((u) => u._id) } },
+          { _id: users[i]._id },
           { $addToSet: { campaigns: campaign._id } },
         );
 
@@ -171,14 +188,6 @@ export class SeederService {
 
         campaigns.push(campaign._id);
       }
-
-      let hashPassword = await bcrypt.hash(process.env.DEFAULT_PASSWORD, 10);
-      await this.userModel.create({
-        username: faker.person.fullName(),
-        email: faker.internet.email(),
-        password: hashPassword,
-        campaigns: campaigns,
-      });
     }
   }
 }
