@@ -4,6 +4,7 @@ import GroupListPanel from "../groups/GroupListPanel";
 import { IGroup, IGroupWithRelations } from "@/models/groups/IGroup";
 import { Group } from "lucide-react";
 import GroupService from "@/services/groupService";
+import { useTranslations } from "next-intl";
 
 interface Props {
   campaignId: string; // ID de la campagne
@@ -26,6 +27,8 @@ const GroupSelector = ({
   groupsToFight,
   setGroupsToFight,
 }: Props) => {
+  const t = useTranslations("GroupSelector");
+
   const handleGroupSelected = async (group: IGroup | null, index: 0 | 1) => {
     // Ne rien faire si l'autre groupe sélectionné a le même _id
     const otherIndex = index === 0 ? 1 : 0;
@@ -48,9 +51,7 @@ const GroupSelector = ({
 
   return (
     <div className="mt-12 flex flex-col w-full gap-4 items-center">
-      <h1 className="text-2xl ">
-        Choisisser les deux groupes qui vont s’affronter
-      </h1>
+      <h1 className="text-2xl ">{t("title")}</h1>
       <div className="flex flex-row items-center justify-around w-1/2">
         <div>
           <GroupListPanel
@@ -84,7 +85,7 @@ const GroupSelector = ({
             }
           />
         </div>
-        <p className="text-6xl">vs</p>
+        <p className="text-6xl">{t("versus")}</p>
         <div>
           <GroupListPanel
             addable={false}

@@ -47,6 +47,9 @@
       "default": "Vos groupes",
       "archived": "Archivés"
     },
+    "newGroup": {
+      "label": "Nouveau groupe"
+    },
     "search": "Rechercher un groupe",
     "create": "Ajouter un groupe",
     "noGroups": "Aucun groupe trouvé",
@@ -272,7 +275,7 @@
     "actions": {
       "groupDelete": "Supprimer le groupe",
       "update": "Modifier le groupe",
-      "findCampaign": "Trouver sa campagne",
+      "backCampaign": "Retour à la campagne",
       "modal": {
         "title": "Supprimer le group",
         "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
@@ -345,5 +348,21 @@
   "MobileRestraint": {
     "title": "Application non disponible sur mobile",
     "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "Status de l'API",
+      "ok": "Ok",
+      "error": "Erreur",
+      "loading": "Chargement..."
+    }
+  },
+  "GroupSelector": {
+    "title": "Choisisser les deux groupes qui vont s’affronter",
+    "versus": "VS"
+  },
+  "BattlePage": {
+    "battle": "Lancer le combat",
+    "back": "Retour à la sélection"
   }
 }
