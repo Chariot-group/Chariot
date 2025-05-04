@@ -9,14 +9,18 @@ import {
 import { CreateCharacterDto } from '@/character/dto/create-character.dto';
 import { UpdateCharacterDto } from '@/character/dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Character, CharacterDocument } from '@/character/schemas/character.schema';
+import {
+  Character,
+  CharacterDocument,
+} from '@/character/schemas/character.schema';
 import { Model, SortOrder, Types } from 'mongoose';
 import { Group } from '@/group/schemas/group.schema';
 
 @Injectable()
 export class CharacterService {
   constructor(
-    @InjectModel(Character.name) private characterModel: Model<CharacterDocument>,
+    @InjectModel(Character.name)
+    private characterModel: Model<CharacterDocument>,
     @InjectModel(Group.name) private groupModel: Model<CharacterDocument>,
   ) {}
 
@@ -84,7 +88,8 @@ export class CharacterService {
     }
   }
 
-  async findAll(
+  async findAllByUser(
+    userId: string,
     query: { page?: number; offset?: number; name?: string; sort?: string },
     groupId?: string,
   ) {
@@ -99,6 +104,7 @@ export class CharacterService {
       const filters = {
         name: { $regex: `${decodeURIComponent(name)}`, $options: 'i' },
         deletedAt: { $eq: null },
+        users: userId,
       };
       if (groupId) {
         filters['groups'] = { $in: [groupId] };
@@ -181,7 +187,7 @@ export class CharacterService {
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {
     try {
       let { groups, ...characterData } = updateCharacterDto;
-      
+
       if (!Types.ObjectId.isValid(id)) {
         const message = `Error while updating character #${id}: Id is not a valid mongoose id`;
         this.logger.error(message, null, this.SERVICE_NAME);
@@ -202,7 +208,7 @@ export class CharacterService {
       }
 
       //Vérification ids characters
-      if(groups) {
+      if (groups) {
         const groupCheckPromises = groups.map((groupId) =>
           this.groupModel.findById(groupId).exec(),
         );
@@ -224,26 +230,30 @@ export class CharacterService {
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new GoneException(message);
         }
-      }else{
+      } else {
         groups = character.groups.map((group) => group._id.toString());
       }
 
       const groupsToRemove = character.groups.filter(
-        (oldGroups) => !groups.some((newGroups) => newGroups === oldGroups._id.toString()),
+        (oldGroups) =>
+          !groups.some((newGroups) => newGroups === oldGroups._id.toString()),
       );
 
       const start: number = Date.now();
       const characterUpdate = await this.characterModel
         .updateOne(
-          { _id: id }, 
+          { _id: id },
           {
             ...characterData,
             groups,
-          }
+          },
         )
         .exec();
-      character = await this.characterModel.findById(id).populate('groups').exec();
-      
+      character = await this.characterModel
+        .findById(id)
+        .populate('groups')
+        .exec();
+
       await this.groupModel.updateMany(
         { _id: { $in: groups.map((id) => id) } },
         { $addToSet: { characters: id } },

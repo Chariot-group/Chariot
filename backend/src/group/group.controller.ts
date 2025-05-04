@@ -46,13 +46,20 @@ export class GroupController {
   @IsCreator(GroupService)
   @Get(':id/characters')
   findAllCharacters(
+    @Req() request,
     @Param('id') id: string,
     @Query('page', ParseNullableIntPipe) page?: number,
     @Query('offset', ParseNullableIntPipe) offset?: number,
     @Query('name') name?: string,
     @Query('sort') sort?: string,
   ) {
-    return this.characterService.findAll({ page, offset, name, sort }, id);
+    const userId = request.user.userId;
+
+    return this.characterService.findAllByUser(
+      userId,
+      { page, offset, name, sort },
+      id,
+    );
   }
 
   @IsCreator(GroupService)
