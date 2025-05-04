@@ -1,12 +1,15 @@
 "use client"
 
 import { Header } from "@/components/common/Header";
+import Loading from "@/components/common/Loading";
 import CharacterListPanel from "@/components/modules/characters/CharacterListPanel";
 import { CharacterDetailsPanel } from "@/components/modules/characters/panelSections/CharacterDetailsPanel";
 import GroupDetailsPanel from "@/components/modules/groups/GroupDetailsPanel";
 import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import useBeforeUnload from "@/hooks/useBeforeUnload";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import ICharacter from "@/models/characters/ICharacter";
@@ -14,42 +17,121 @@ import { IGroup } from "@/models/groups/IGroup";
 import CampaignService from "@/services/campaignService";
 import CharacterService from "@/services/CharacterService";
 import GroupService from "@/services/groupService";
+import { PlusCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
-import { SetStateAction, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function CampaignGroupsPage() {
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const t = useTranslations('GroupPage');
     const { error } = useToast();
 
-    const searchParams = useSearchParams()
-    
+    //Recherche
+    const searchParams = useSearchParams();
     const [search, setSearch] = useState(searchParams.get('search') ?? "");
 
+
+    //Update
+    const [isUpdating, setIsUpdating] = useState<boolean>(false);
+    let groupTempRef = useRef<IGroup | null>(null);
+    let characterTempRef = useRef<Map<string, ICharacter>>(new Map());
+
+    const startUpdate = () => {
+        console.log("startUpdate");
+        if (groupSelected) {
+            groupTempRef.current = groupSelected;
+            setIsUpdating(true);
+        }
+    }
+
+    const cancelUpdate = async () => {
+        if (groupSelected) {
+            setLoading(true);
+            removedCharacterRef.current = [];
+            newCharacterRef.current = [];
+            await setGroupSelected(groupTempRef.current);
+            setIsUpdating(false);
+            setLoading(false);
+        }
+    }
+
+    const saveAction = async () => {
+        if (groupSelected) {
+            //Enlever les personnages supprimés de characterTempRef
+            characterTempRef.current.forEach((character, key) => {
+                if (removedCharacterRef.current.includes(character._id ?? "")) {
+                    characterTempRef.current.delete(key);
+                }
+            });
+            //Enlever les personnages ajoutés de characterTempRef
+            newCharacterRef.current.forEach((character) => {
+                if (characterTempRef.current.has(character._id ?? "")) {
+                    characterTempRef.current.delete(character._id ?? "");
+                }
+            });
+            characterTempRef.current.forEach(async (character, key) => {
+                await CharacterService.updateCharacter(key, character);
+            });
+            await updateGroup(groupSelected);
+            removedCharacterRef.current.forEach(async (characterId) => {
+                await CharacterService.deleteCharacter(characterId);
+            });
+            newCharacterRef.current.forEach(async (character) => {
+                const { _id, ...characterWithoutId } = character;
+                await CharacterService.createCharacter(characterWithoutId);
+            });
+            removedCharacterRef.current = [];
+            newCharacterRef.current = [];
+            characterTempRef.current.clear();
+            setIsUpdating(false);
+        }
+    }
+
+    const updateGroup = useCallback(
+        async (updateGroup: IGroup) => {
+        try {
+            if(!updateGroup._id) return;
+            const { campaigns, characters, ...group } = updateGroup;
+            let response = await GroupService.updateGroup(updateGroup._id, group);
+
+            setGroupSelected(response.data);
+        } catch (err) {
+            error(t("error"));
+            console.error("Error updating characters:", error);
+        }
+        },
+        []
+    );
+
+    //Character
     const [groupSelected, setGroupSelected] = useState<IGroup | null>(null);
     const [characterSelected, setCharacterSelected] = useState<ICharacter | null>(null);
     const [groups, setGroups] = useState<IGroup[]>([]);
-
     const [campaign, setCampaign] = useState<ICampaign | null>(null);
-
     const [newCharacter, setNewCharacter] = useState<ICharacter | null>(null);
+
+    let newCharacterRef = useRef<Partial<ICharacter>[]>([]);
+    let removedCharacterRef = useRef<string[]>([]);
 
     const { campaignId } = useParams();
 
     const createCharacter = useCallback(
         async (createCharacter: Partial<ICharacter>) => {
             try {
-                let response = await CharacterService.createCharacter(createCharacter);
-                let character: ICharacter = response.data;
-                setGroupSelected((prev) => {
+                createCharacter._id = createCharacter.name;
+                newCharacterRef.current.push(createCharacter);
+                let character: ICharacter = createCharacter as ICharacter;
+                await setGroupSelected((prev) => {
                     if (!prev) return null;
                     return {
                         ...prev,
                         characters: [...prev.characters, character._id]
                     }
                 });
-                setNewCharacter(character);
+                await setNewCharacter(character);
             } catch (err) {
                 error(t("error"));
                 console.error("Error fetching characters:", error);
@@ -61,8 +143,8 @@ export default function CampaignGroupsPage() {
     const deleteCharacter = useCallback(
         async (deleteCharacter: Partial<ICharacter>) => {
             try {
-                await CharacterService.deleteCharacter(deleteCharacter._id);
-                setGroupSelected((prev) => {
+                removedCharacterRef.current.push(deleteCharacter._id ?? "");
+                await setGroupSelected((prev) => {
                     if (!prev) return null;
                     return {
                         ...prev,
@@ -200,28 +282,7 @@ export default function CampaignGroupsPage() {
             ],
             "actions": [
                 {
-                    "standard": [
-                        {
-                            "name": "Scimitar",
-                            "type": "melee",
-                            "attackBonus": 4,
-                            "damage": {
-                                "dice": "1d6",
-                                "type": "slashing"
-                            },
-                            "range": "5 feet"
-                        },
-                        {
-                            "name": "Shortbow",
-                            "type": "ranged",
-                            "attackBonus": 4,
-                            "damage": {
-                                "dice": "1d6",
-                                "type": "piercing"
-                            },
-                            "range": "80/320 feet"
-                        }
-                    ],
+                    "standard": [],
                     "legendary": [],
                     "lair": []
                 }
@@ -232,6 +293,8 @@ export default function CampaignGroupsPage() {
         };
         createCharacter(newCharacter);
     }
+
+    useBeforeUnload(isUpdating, t("form.unsave"));
 
     return (
         <div className="w-full flex flex-col">
@@ -244,28 +307,35 @@ export default function CampaignGroupsPage() {
                     <div className="h-[80vh] border border-ring"></div>
                 </div>
                 {
-                    groupSelected && campaign && (
+                    loading && (
+                        <Loading />
+                    )
+                }
+                {
+                    !loading && groupSelected && campaign && (
                         <div className="w-[85%] h[100vh] flex flex-col">
                             <div className="w-full">
-                                <GroupDetailsPanel group={groupSelected} campaign={campaign} onDelete={deleteGroup} />
+                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} campaign={campaign} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} />
                             </div>
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>
                             </div>
                             <div className="w-full h-[6vh] flex flex-row justify-between items-center pr-5 pl-5">
                                 <span className="text-2xl text-foreground">{t("yourCharacters")}</span>
-                                <Button onClick={() => addCharacter(groupSelected._id)}>{t("addCharacter")}</Button>
                             </div>
                             <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
                                 <Card className="w-[20%] ">
                                     <CharacterListPanel 
+                                        newCharacters={newCharacterRef}
+                                        removeCharacters={removedCharacterRef}
+                                        isUpdating={isUpdating}
                                         group={groupSelected}
                                         characterSelected={characterSelected}
                                         setCharacterSelected={setCharacterSelected} />
                                 </Card>
                                 {
                                     characterSelected && (
-                                        <CharacterDetailsPanel onDelete={deleteCharacter} character={characterSelected} />
+                                        <CharacterDetailsPanel onDelete={deleteCharacter} character={characterSelected} isUpdating={isUpdating} characterTempRef={characterTempRef} />
                                     )
                                 }
                             </div>
@@ -273,6 +343,16 @@ export default function CampaignGroupsPage() {
                     )
                 }
             </main>
+            <footer className="absolute bottom-0 w-full flex flex-row justify-end items-left">
+                {
+                    isUpdating && groupSelected && (
+                        <div>
+                            <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
+                            <Button variant={"secondary"} onClick={() => saveAction()} className="mr-5 mb-2" >{t('form.save')}</Button>
+                        </div>
+                    )
+                }
+            </footer>
         </div>
     );
 }

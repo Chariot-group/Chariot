@@ -33,6 +33,7 @@
     }
   },
   "CharacterListPanel": {
+    "addCharacter": "Ajouter un personnage",
     "title": "Liste des personnages",
     "search": "Rechercher un personnage",
     "create": "Ajouter un personnage",
@@ -256,7 +257,8 @@
       "description": "Une campagne épique dans un monde fantastique où les héros se battent contre des forces obscures."
     },
     "actions": {
-      "delete": "Supprimer la campagne"
+      "delete": "Supprimer la campagne",
+      "update": "Modifier la campagne"
     },
     "modal": {
       "title": "Supprimer la campagne",
@@ -272,6 +274,7 @@
     "error": "Erreur lors de la mise à jour du groupe",
     "actions": {
       "groupDelete": "Supprimer le groupe",
+      "update": "Modifier le groupe",
       "backCampaign": "Retour à la campagne",
       "modal": {
         "title": "Supprimer le group",
@@ -292,7 +295,11 @@
   },
   "GroupPage": {
     "yourCharacters": "Vos personnages",
-    "addCharacter": "Ajouter un personnage"
+    "form": {
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    }
   },
   "CampaignModal": {
     "title": "Créer une campagne",
@@ -313,6 +320,11 @@
       "step3": "Etape 3: Créer vos groupes de PNJ",
       "step4": "Etape 4: Lancer vos initiatives",
       "step5": "Etape 5: Let’s play !"
+    },
+    "form": {
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
     }
   },
   "InitiativeTracker": {

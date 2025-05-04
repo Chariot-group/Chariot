@@ -9,10 +9,11 @@ interface IChampsProps {
     placeholder: string;
     value: any | null;
     setValue: (value: any) => void;
-    onChange: () => void;
+    onChange?: () => void;
     color?: string;
+    isActive?: boolean;
 }
-export default function Field({ id, type, label, placeholder, value, setValue, color = "background", onChange }: IChampsProps) {
+export default function Field({ id, type, label, placeholder, value, setValue, color = "background", onChange, isActive = true }: IChampsProps) {
 
     const [pending, setPending] = useState(false);
 
@@ -23,7 +24,7 @@ export default function Field({ id, type, label, placeholder, value, setValue, c
 
     useEffect(() => {
     if (pending) {
-        onChange();
+        onChange?.();
         setPending(false);
     }
     }, [value]);
@@ -31,7 +32,7 @@ export default function Field({ id, type, label, placeholder, value, setValue, c
     return (
         <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label htmlFor={id} className="text-foreground">{label}</Label>
-            <Input id={id} type={type} value={value ?? ""} onChange={handleChange} placeholder={placeholder} className={`bg-${color}`} />
+            <Input id={id} type={type} value={value ?? ""} onChange={handleChange} placeholder={placeholder} className={`bg-${color}`} readOnly={!isActive} />
         </div>
     );
 

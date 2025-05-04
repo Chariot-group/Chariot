@@ -9,8 +9,9 @@ import { useEffect, useState } from "react";
 interface IInformationsCardProps {
     stats: IStats;
     setStats: (classification: IStats) => void;
+    isUpdating: boolean;
 }
-export default function InformationsCard({ stats, setStats }: IInformationsCardProps) {
+export default function InformationsCard({ stats, setStats, isUpdating }: IInformationsCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -38,12 +39,12 @@ export default function InformationsCard({ stats, setStats }: IInformationsCardP
             <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.global.informations")}</h3>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"maxHP"} type={"number"} label={t("labels.stats.maxHP")} placeholder={t("placeholders.stats.maxHP")} value={maxHitPoints} setValue={setMaxHP} />
-                    <Champs onChange={onChange} color="card" id={"currentHP"} type={"number"} label={t("labels.stats.currentHP")} placeholder={t("placeholders.stats.currentHP")} value={currentHitPoints} setValue={setCurrentHP} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"maxHP"} type={"number"} label={t("labels.stats.maxHP")} placeholder={t("placeholders.stats.maxHP")} value={maxHitPoints} setValue={setMaxHP} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"currentHP"} type={"number"} label={t("labels.stats.currentHP")} placeholder={t("placeholders.stats.currentHP")} value={currentHitPoints} setValue={setCurrentHP} />
                 </div>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"armorClass"} type={"number"} label={t("labels.stats.armorClass")} placeholder={t("placeholders.stats.armorClass")} value={armorClass} setValue={setArmorClass} />
-                    <Champs onChange={onChange} color="card" id={"hitDice"} type={"text"} label={t("labels.stats.hitDice")} placeholder={t("placeholders.stats.hitDice")} value={hitDice} setValue={setHitDice} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"armorClass"} type={"number"} label={t("labels.stats.armorClass")} placeholder={t("placeholders.stats.armorClass")} value={armorClass} setValue={setArmorClass} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"hitDice"} type={"text"} label={t("labels.stats.hitDice")} placeholder={t("placeholders.stats.hitDice")} value={hitDice} setValue={setHitDice} />
                 </div>
             </Card>
 

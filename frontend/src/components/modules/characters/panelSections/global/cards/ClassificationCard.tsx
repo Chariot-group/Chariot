@@ -9,8 +9,9 @@ import { useEffect, useState } from "react";
 interface IClassificationCardProps {
     classification: IClassification;
     setClassification: (classification: IClassification) => void;
+    isUpdating: boolean;
 }
-export default function ClassificationCard({ classification, setClassification }: IClassificationCardProps) {
+export default function ClassificationCard({ classification, setClassification, isUpdating }: IClassificationCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -36,12 +37,12 @@ export default function ClassificationCard({ classification, setClassification }
             <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("categories.global.classification")}</h3>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"type"} type={"text"} label={t("labels.classification.type")} placeholder={t("placeholders.classification.type")} value={type} setValue={setType} />
-                    <Champs onChange={onChange} color="card" id={"subType"} type={"text"} label={t("labels.classification.subType")} placeholder={t("placeholders.classification.subType")} value={subType} setValue={setSubType} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"type"} type={"text"} label={t("labels.classification.type")} placeholder={t("placeholders.classification.type")} value={type} setValue={setType} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"subType"} type={"text"} label={t("labels.classification.subType")} placeholder={t("placeholders.classification.subType")} value={subType} setValue={setSubType} />
                 </div>
                 <div className="flex flex-row gap-2">
-                    <Champs onChange={onChange} color="card" id={"alignment"} type={"text"} label={t("labels.classification.alignment")} placeholder={t("placeholders.classification.alignment")} value={alignment} setValue={setAlignment} />
-                    <Champs onChange={onChange} color="card" id={"size"} type={"text"} label={t("labels.classification.size")} placeholder={t("placeholders.classification.size")} value={size} setValue={setSize} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"alignment"} type={"text"} label={t("labels.classification.alignment")} placeholder={t("placeholders.classification.alignment")} value={alignment} setValue={setAlignment} />
+                    <Champs isActive={isUpdating} onChange={onChange} color="card" id={"size"} type={"text"} label={t("labels.classification.size")} placeholder={t("placeholders.classification.size")} value={size} setValue={setSize} />
                 </div>
             </Card>
 

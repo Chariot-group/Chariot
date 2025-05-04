@@ -33,6 +33,7 @@
     }
   },
   "CharacterListPanel": {
+    "addCharacter": "Add character",
     "title": "Character List",
     "search": "Search a character",
     "create": "Add a character",
@@ -256,7 +257,8 @@
       "description": "A great campaign"
     },
     "actions": {
-      "delete": "Delete campaign"
+      "delete": "Delete campaign",
+      "update": "Update campaign"
     },
     "modal": {
       "title": "Delete campaign",
@@ -272,6 +274,7 @@
     "error": "Error updating the group",
     "actions": {
       "groupDelete": "Delete group",
+      "update": "Update group",
       "backCampaign": "Back to campaign",
       "modal": {
         "title": "Delete group",
@@ -292,7 +295,11 @@
   },
   "GroupPage": {
     "yourCharacters": "Your characters",
-    "addCharacter": "Add character"
+    "form": {
+      "cancel": "cancel",
+      "save": "Save",
+      "unsave": "You have unsaved changes. Do you want to continue?"
+    }
   },
   "CampaignModal": {
     "title": "Create a campaign",
@@ -313,6 +320,11 @@
       "step3": "Step 3: Create your NPC groups",
       "step4": "Step 4: Launch your initiatives",
       "step5": "Step 5: Let’s play!"
+    },
+    "form": {
+      "cancel": "cancel",
+      "save": "Save",
+      "unsave": "You have unsaved changes. Do you want to continue?"
     }
   },
   "InitiativeTracker": {

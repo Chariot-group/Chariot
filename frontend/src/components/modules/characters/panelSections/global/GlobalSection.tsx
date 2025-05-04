@@ -16,8 +16,9 @@ interface IGlobalSectionProps {
     setClassification: (classification: IClassification) => void;
     stats: IStats;
     setStats: (stats: IStats) => void;
+    isUpdating: boolean;
 }
-export default function GlobalSection({ classification, setClassification, stats, setStats }: IGlobalSectionProps) {
+export default function GlobalSection({ classification, setClassification, stats, setStats, isUpdating }: IGlobalSectionProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -26,18 +27,18 @@ export default function GlobalSection({ classification, setClassification, stats
             <div className="flex flex-row gap-3">
                 <div className="flex flex-col gap-3 w-2/3">
                     <div className="flex flex-row gap-3">
-                        <ClassificationCard classification={classification} setClassification={setClassification} />
-                        <InformationsCard stats={stats} setStats={setStats} />
+                        <ClassificationCard classification={classification} setClassification={setClassification} isUpdating={isUpdating} />
+                        <InformationsCard stats={stats} setStats={setStats} isUpdating={isUpdating} />
                     </div>
                     <div className="flex flex-row gap-3">
-                        <MovingCards speed={stats.speed} setSpeed={(speed) => setStats({ ...stats, speed })} />
+                        <MovingCards speed={stats.speed} setSpeed={(speed) => setStats({ ...stats, speed })} isUpdating={isUpdating} />
                     </div>
                 </div>
-                <SkillsCard skills={stats.skills} setSkills={(skills) => setStats({ ...stats, skills })} />
+                <SkillsCard skills={stats.skills} setSkills={(skills) => setStats({ ...stats, skills })} isUpdating={isUpdating} />
             </div>
             <div className="flex flex-row gap-3">
-                <SensesCard senses={stats.senses} setSenses={(senses) => setStats({ ...stats, senses })} />
-                <ScoresCard abilityScores={stats.abilityScores} setAbilityScores={(abilityScores) => setStats({ ...stats, abilityScores })} savingThrows={stats.savingThrows} setSavingThrows={(savingThrows) => setStats({ ...stats, savingThrows })} />
+                <SensesCard senses={stats.senses} setSenses={(senses) => setStats({ ...stats, senses })} isUpdating={isUpdating} />
+                <ScoresCard abilityScores={stats.abilityScores} setAbilityScores={(abilityScores) => setStats({ ...stats, abilityScores })} savingThrows={stats.savingThrows} setSavingThrows={(savingThrows) => setStats({ ...stats, savingThrows })} isUpdating={isUpdating} />
             </div>
         </div>
     )
