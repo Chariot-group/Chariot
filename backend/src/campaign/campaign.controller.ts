@@ -58,6 +58,7 @@ export class CampaignController {
   @IsCreator(CampaignService)
   @Get(':id/groups')
   async findAllGroups(
+    @Req() request,
     @Param('id') id: string,
     @Query('page', ParseNullableIntPipe) page?: number,
     @Query('offset', ParseNullableIntPipe) offset?: number,
@@ -65,9 +66,16 @@ export class CampaignController {
     @Query('label') label?: string,
     @Query('type') type: 'all' | 'main' | 'npc' | 'archived' = 'all',
   ) {
+    const userId = request.user.userId;
+
     let checkCampaginId = await this.campaignService.findOne(id);
     if (checkCampaginId.data) {
-      return this.groupService.findAll({ page, offset, sort, label }, id, type);
+      return this.groupService.findAllByUser(
+        userId,
+        { page, offset, sort, label },
+        id,
+        type,
+      );
     }
   }
 
