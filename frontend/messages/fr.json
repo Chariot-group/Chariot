@@ -333,5 +333,13 @@
   "MobileRestraint": {
     "title": "Application non disponible sur mobile",
     "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "Status de l'API",
+      "ok": "Ok",
+      "error": "Erreur",
+      "loading": "Chargement..."
+    }
   }
 }

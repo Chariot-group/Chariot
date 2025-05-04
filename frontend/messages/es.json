@@ -333,5 +333,13 @@
   "MobileRestraint": {
     "title": "Pantalla pequeña",
     "subTitle": "Esta aplicación no es compatible con pantallas pequeñas."
-  } 
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "Estado de la API",
+      "ok": "Ok",
+      "error": "Error",
+      "loading": "Cargando..."
+    }
+  }
 }

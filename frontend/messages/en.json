@@ -333,5 +333,13 @@
   "MobileRestraint": {
     "title": "Mobile Restraint",
     "subTitle": "This application is not compatible with small screens."
-  } 
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "API status",
+      "ok": "Ok",
+      "error": "Error",
+      "loading": "Loading..."
+    }
+  }
 }

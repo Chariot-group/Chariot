@@ -1,18 +1,20 @@
 "use client";
 
 import HealthService from "@/services/healthService";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 const HealthCheck = () => {
-  const [status, setStatus] = useState<"loading" | "ok" | "error">("loading");
+  const t = useTranslations("HealthCheck");
+  const [status, setStatus] = useState(t("status.loading"));
 
   useEffect(() => {
     const checkHealth = async () => {
       try {
         const status = await HealthService.getHealth();
-        setStatus(status === 200 ? "ok" : "error");
+        setStatus(status === 200 ? t("status.ok") : t("status.error"));
       } catch {
-        setStatus("error");
+        setStatus(t("status.error"));
       }
     };
 
@@ -24,10 +26,11 @@ const HealthCheck = () => {
 
   return (
     <div
-      className="p-4 rounded-md text-white"
-      style={{ backgroundColor: status === "ok" ? "green" : "red" }}
+      className={`p-4 rounded-md text-white ${
+        status === t("status.ok") ? "bg-green-500" : "bg-red-500"
+      }`}
     >
-      API Status: {status === "loading" ? "Checking..." : status.toUpperCase()}
+      {t("status.label")} : {status.toUpperCase()}
     </div>
   );
 };
