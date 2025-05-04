@@ -9,14 +9,18 @@ import {
 import { CreateCharacterDto } from '@/character/dto/create-character.dto';
 import { UpdateCharacterDto } from '@/character/dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Character, CharacterDocument } from '@/character/schemas/character.schema';
+import {
+  Character,
+  CharacterDocument,
+} from '@/character/schemas/character.schema';
 import { Model, SortOrder, Types } from 'mongoose';
 import { Group } from '@/group/schemas/group.schema';
 
 @Injectable()
 export class CharacterService {
   constructor(
-    @InjectModel(Character.name) private characterModel: Model<CharacterDocument>,
+    @InjectModel(Character.name)
+    private characterModel: Model<CharacterDocument>,
     @InjectModel(Group.name) private groupModel: Model<CharacterDocument>,
   ) {}
 
@@ -29,7 +33,6 @@ export class CharacterService {
       }
 
       const group = await this.groupModel.findById(groupId).exec();
-      
       if (!group) {
         throw new NotFoundException(`Group not found: ${groupId}`);
       }
@@ -43,39 +46,50 @@ export class CharacterService {
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  async create(createCharacterDto: CreateCharacterDto) {
+  async create(createCharacterDto: CreateCharacterDto, userId: string) {
     try {
       const start = Date.now();
 
       if (createCharacterDto.groups) {
         for (const groupId of createCharacterDto.groups) {
           if (!Types.ObjectId.isValid(groupId)) {
-            throw new BadRequestException(`Invalid group ID format: ${groupId}`);
+            throw new BadRequestException(
+              `Invalid group ID format: ${groupId}`,
+            );
           }
         }
         await this.validateGroupRelations(createCharacterDto.groups);
       }
 
-      const newCharacter = new this.characterModel(createCharacterDto);
+      const newCharacter = new this.characterModel({
+        ...createCharacterDto,
+        createdBy: userId,
+      });
       const savedCharacter = await newCharacter.save();
       const end = Date.now();
 
-      const message = (`Character created in ${end - start}ms`);
-      return { 
+      const message = `Character created in ${end - start}ms`;
+      return {
         message,
-        data : savedCharacter};
+        data: savedCharacter,
+      };
     } catch (error) {
-      if (error instanceof BadRequestException || 
-          error instanceof NotFoundException || 
-          error instanceof GoneException) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof GoneException
+      ) {
         throw error;
       }
       this.logger.error(`Error creating character: ${error.message}`);
-      throw new InternalServerErrorException('Une erreur est survenue lors de la création du personnage');
+      throw new InternalServerErrorException(
+        'Une erreur est survenue lors de la création du personnage',
+      );
     }
   }
 
-  async findAll(
+  async findAllByUser(
+    userId: string,
     query: { page?: number; offset?: number; name?: string; sort?: string },
     groupId?: string,
   ) {
@@ -90,6 +104,7 @@ export class CharacterService {
       const filters = {
         name: { $regex: `${decodeURIComponent(name)}`, $options: 'i' },
         deletedAt: { $eq: null },
+        createdBy: new Types.ObjectId(userId),
       };
       if (groupId) {
         filters['groups'] = { $in: [groupId] };
@@ -172,7 +187,7 @@ export class CharacterService {
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {
     try {
       let { groups, ...characterData } = updateCharacterDto;
-      
+
       if (!Types.ObjectId.isValid(id)) {
         const message = `Error while updating character #${id}: Id is not a valid mongoose id`;
         this.logger.error(message, null, this.SERVICE_NAME);
@@ -193,7 +208,7 @@ export class CharacterService {
       }
 
       //Vérification ids characters
-      if(groups) {
+      if (groups) {
         const groupCheckPromises = groups.map((groupId) =>
           this.groupModel.findById(groupId).exec(),
         );
@@ -215,26 +230,30 @@ export class CharacterService {
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new GoneException(message);
         }
-      }else{
+      } else {
         groups = character.groups.map((group) => group._id.toString());
       }
 
       const groupsToRemove = character.groups.filter(
-        (oldGroups) => !groups.some((newGroups) => newGroups === oldGroups._id.toString()),
+        (oldGroups) =>
+          !groups.some((newGroups) => newGroups === oldGroups._id.toString()),
       );
 
       const start: number = Date.now();
       const characterUpdate = await this.characterModel
         .updateOne(
-          { _id: id }, 
+          { _id: id },
           {
             ...characterData,
             groups,
-          }
+          },
         )
         .exec();
-      character = await this.characterModel.findById(id).populate('groups').exec();
-      
+      character = await this.characterModel
+        .findById(id)
+        .populate('groups')
+        .exec();
+
       await this.groupModel.updateMany(
         { _id: { $in: groups.map((id) => id) } },
         { $addToSet: { characters: id } },
