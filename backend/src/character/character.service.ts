@@ -104,7 +104,7 @@ export class CharacterService {
       const filters = {
         name: { $regex: `${decodeURIComponent(name)}`, $options: 'i' },
         deletedAt: { $eq: null },
-        users: userId,
+        createdBy: new Types.ObjectId(userId),
       };
       if (groupId) {
         filters['groups'] = { $in: [groupId] };

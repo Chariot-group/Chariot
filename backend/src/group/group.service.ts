@@ -145,7 +145,7 @@ export class GroupService {
       const filters: any = {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
-        createdBy: userId,
+        createdBy: new Types.ObjectId(userId),
       };
 
       if (campaignId) {

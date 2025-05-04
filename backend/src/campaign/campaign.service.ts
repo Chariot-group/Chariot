@@ -106,7 +106,7 @@ export class CampaignService {
       const filters = {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
-        users: userId,
+        createdBy: new Types.ObjectId(userId),
       };
 
       const sort: { [key: string]: 1 | -1 } = { updatedAt: -1 };
