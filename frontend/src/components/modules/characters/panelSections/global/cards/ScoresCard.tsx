@@ -12,8 +12,9 @@ interface IScoresCardProps {
     setAbilityScores: (abilityScores: IAbilityScores) => void;
     savingThrows: ISavingThrows | undefined;
     setSavingThrows: (savingThrows: ISavingThrows) => void;
+    isUpdating: boolean;
 }
-export default function ScoresCard({ abilityScores, setAbilityScores, savingThrows, setSavingThrows }: IScoresCardProps) {
+export default function ScoresCard({ abilityScores, setAbilityScores, savingThrows, setSavingThrows, isUpdating }: IScoresCardProps) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -74,48 +75,48 @@ export default function ScoresCard({ abilityScores, setAbilityScores, savingThro
             <Card className="flex flex-col gap-2 bg-background p-3">
                 <h3 className="text-foreground">{t("labels.stats.abilityScores.strength")}</h3>
                 <div className="flex flex-col gap-2">
-                    <CustomInput onChange={onChange} value={strength} setValue={setStrength} placeholder={t("placeholders.stats.abilityScores")} />
-                    <CustomInput onChange={onChangeSavingThrows} value={savingThrowStrength} setValue={setSavingThrowStrength} placeholder={t("placeholders.stats.savingThrows")} />
+                    <CustomInput isActive={isUpdating} onChange={onChange} value={strength} setValue={setStrength} placeholder={t("placeholders.stats.abilityScores")} />
+                    <CustomInput isActive={isUpdating} onChange={onChangeSavingThrows} value={savingThrowStrength} setValue={setSavingThrowStrength} placeholder={t("placeholders.stats.savingThrows")} />
                 </div>
             </Card>
 
             <Card className="flex flex-col gap-2 bg-background p-3">
                  <h3 className="text-foreground">{t("labels.stats.abilityScores.dexterity")}</h3>
                  <div className="flex flex-col gap-2">
-                     <CustomInput onChange={onChange} value={dexterity} setValue={setDexterity} placeholder={t("placeholders.stats.abilityScores")} />
-                     <CustomInput onChange={onChangeSavingThrows} value={savingThrowDexterity} setValue={setSavingThrowDexterity} placeholder={t("placeholders.stats.savingThrows")} />
+                     <CustomInput isActive={isUpdating} onChange={onChange} value={dexterity} setValue={setDexterity} placeholder={t("placeholders.stats.abilityScores")} />
+                     <CustomInput isActive={isUpdating} onChange={onChangeSavingThrows} value={savingThrowDexterity} setValue={setSavingThrowDexterity} placeholder={t("placeholders.stats.savingThrows")} />
                  </div>
              </Card>
  
              <Card className="flex flex-col gap-2 bg-background p-3">
                  <h3 className="text-foreground">{t("labels.stats.abilityScores.constitution")}</h3>
                  <div className="flex flex-col gap-2">
-                     <CustomInput onChange={onChange} value={constitution} setValue={setConstitution} placeholder={t("placeholders.stats.abilityScores")} />
-                     <CustomInput onChange={onChangeSavingThrows} value={savingThrowConstitution} setValue={setSavingThrowConstitution} placeholder={t("placeholders.stats.savingThrows")} />
+                     <CustomInput isActive={isUpdating} onChange={onChange} value={constitution} setValue={setConstitution} placeholder={t("placeholders.stats.abilityScores")} />
+                     <CustomInput isActive={isUpdating} onChange={onChangeSavingThrows} value={savingThrowConstitution} setValue={setSavingThrowConstitution} placeholder={t("placeholders.stats.savingThrows")} />
                  </div>
              </Card>
  
              <Card className="flex flex-col gap-2 bg-background p-3">
                  <h3 className="text-foreground">{t("labels.stats.abilityScores.intelligence")}</h3>
                  <div className="flex flex-col gap-2">
-                     <CustomInput onChange={onChange} value={intelligence} setValue={setIntelligence} placeholder={t("placeholders.stats.abilityScores")} />
-                     <CustomInput onChange={onChangeSavingThrows} value={savingThrowIntelligence} setValue={setSavingThrowIntelligence} placeholder={t("placeholders.stats.savingThrows")} />
+                     <CustomInput isActive={isUpdating} onChange={onChange} value={intelligence} setValue={setIntelligence} placeholder={t("placeholders.stats.abilityScores")} />
+                     <CustomInput isActive={isUpdating} onChange={onChangeSavingThrows} value={savingThrowIntelligence} setValue={setSavingThrowIntelligence} placeholder={t("placeholders.stats.savingThrows")} />
                  </div>
              </Card>
  
              <Card className="flex flex-col gap-2 bg-background p-3">
                  <h3 className="text-foreground">{t("labels.stats.abilityScores.wisdom")}</h3>
                  <div className="flex flex-col gap-2">
-                     <CustomInput onChange={onChange} value={wisdom} setValue={setWisdom} placeholder={t("placeholders.stats.abilityScores")} />
-                     <CustomInput onChange={onChangeSavingThrows} value={savingThrowWisdom} setValue={setSavingThrowWisdom} placeholder={t("placeholders.stats.savingThrows")} />
+                     <CustomInput isActive={isUpdating} onChange={onChange} value={wisdom} setValue={setWisdom} placeholder={t("placeholders.stats.abilityScores")} />
+                     <CustomInput isActive={isUpdating} onChange={onChangeSavingThrows} value={savingThrowWisdom} setValue={setSavingThrowWisdom} placeholder={t("placeholders.stats.savingThrows")} />
                  </div>
              </Card>
  
              <Card className="flex flex-col gap-2 bg-background p-3">
                  <h3 className="text-foreground">{t("labels.stats.abilityScores.charisma")}</h3>
                  <div className="flex flex-col gap-2">
-                     <CustomInput onChange={onChange} value={charisma} setValue={setCharisma} placeholder={t("placeholders.stats.abilityScores")} />
-                     <CustomInput onChange={onChangeSavingThrows} value={savingThrowCharisma} setValue={setSavingThrowCharisma} placeholder={t("placeholders.stats.savingThrows")} />
+                     <CustomInput isActive={isUpdating} onChange={onChange} value={charisma} setValue={setCharisma} placeholder={t("placeholders.stats.abilityScores")} />
+                     <CustomInput isActive={isUpdating} onChange={onChangeSavingThrows} value={savingThrowCharisma} setValue={setSavingThrowCharisma} placeholder={t("placeholders.stats.savingThrows")} />
                  </div>
              </Card>
         </div>
@@ -127,8 +128,9 @@ interface ICustomInputProps {
     setValue: (value: number) => void;
     placeholder: string;
     onChange: () => void;
+    isActive: boolean;
 }
-function CustomInput({ value, setValue, placeholder, onChange }: ICustomInputProps) {
+function CustomInput({ value, setValue, placeholder, onChange, isActive }: ICustomInputProps) {
 
     const [pending, setPending] = useState(false);
 
@@ -145,6 +147,6 @@ function CustomInput({ value, setValue, placeholder, onChange }: ICustomInputPro
     }, [value]);
 
     return (
-        <Input type="number" onChange={handleChange} value={value === 0 ? "" : value} placeholder={placeholder} className={`bg-card`} />
+        <Input readOnly={!isActive} type="number" onChange={handleChange} value={value === 0 ? "" : value} placeholder={placeholder} className={`bg-card`} />
     )
 }

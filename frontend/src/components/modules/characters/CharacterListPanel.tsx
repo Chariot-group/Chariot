@@ -2,23 +2,27 @@
 import Loading from "@/components/common/Loading";
 import SearchInput from "@/components/common/SearchBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useToast } from "@/hooks/useToast";
 import ICharacter from "@/models/characters/ICharacter";
 import { IGroup } from "@/models/groups/IGroup";
 import CharacterService from "@/services/CharacterService";
-import { Plus } from "lucide-react";
+import { Plus, PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 interface ICharacterListPanelProps {
   offset?: number;
   characterSelected: ICharacter | null;
   setCharacterSelected: (group: ICharacter | null) => void;
   group: IGroup;
+  isUpdating: boolean;
+  removeCharacters: RefObject<string[]>;
+  newCharacters: RefObject<Partial<ICharacter>[]>;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -76,6 +80,16 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   }, []);
 
   useEffect(() => {
+    if(isUpdating) {
+      const updateCharacters = characters.filter((character) => !removeCharacters.current?.includes(character._id));
+      //newCharacters en premiere position et seulement si il n'y a pas de doublon
+      const newCharactersFiltered = newCharacters.current.filter((character) => !updateCharacters.some((c) => c._id === character._id));
+      updateCharacters.unshift(...newCharactersFiltered.map((character) => character as ICharacter));
+      let filtered = updateCharacters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()));
+      setCharacters(filtered);
+      setCharacterSelected(filtered[0]);
+      return;
+    }
     setCharacters([]);
     fetchCharacters(search, 1, true);
   }, [currentLocale, search, group]);
@@ -83,7 +97,23 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   return (
     <div className="w-full h-full flex flex-col">
         <CardHeader className="flex-none h-auto items-center gap-3">
-          <CardTitle className="text-foreground font-bold">{t("title")}</CardTitle>
+          <CardTitle className="text-foreground font-bold">
+            <div className="flex items-center gap-2">
+              <p>{t("title")}</p>
+              {
+                isUpdating && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => /*addCharacter(groupSelected._id)*/ console.log('')} />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{t("addCharacter")}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )
+              }
+            </div>
+            </CardTitle>
           <SearchInput
             value={search}
             onChange={setSearch}

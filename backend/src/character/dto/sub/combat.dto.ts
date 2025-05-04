@@ -1,11 +1,9 @@
 import { IsNumber, IsArray, IsString, IsOptional } from 'class-validator';
 
 export class CombatDto {
-  @IsNumber()
   @IsOptional()
   challengeRating: number;
 
-  @IsNumber()
   @IsOptional()
   experiencePoints: number;
 

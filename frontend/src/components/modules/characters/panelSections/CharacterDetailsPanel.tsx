@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import ICharacter from "@/models/characters/ICharacter";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import GlobalSection from "./global/GlobalSection";
 import IClassification from "@/models/characters/classification/IClassification";
 import CombatSection from "./combat/CombatSection";
@@ -14,22 +14,21 @@ import ICombat from "@/models/characters/combat/ICombat";
 import IActions from "@/models/characters/actions/IActions";
 import ActionsSection from "./actions/ActionsSection";
 import TraitsSection from "./traits/TraitsSection";
-import CharacterService from "@/services/CharacterService";
-import { useToast } from "@/hooks/useToast";
-import DeleteValidation from "@/components/common/modals/DeleteValidation";
 
 interface ICharacterDetailsPanelProps {
   character: ICharacter;
   onDelete?: (character: ICharacter) => void;
+  isUpdating: boolean;
+  characterTempRef: RefObject<Map<string, Partial<ICharacter>>>;
 }
 export function CharacterDetailsPanel({
   character,
   onDelete,
+  isUpdating,
+  characterTempRef
 }: ICharacterDetailsPanelProps) {
   const t = useTranslations("CharacterDetailsPanel");
-  const { error } = useToast();
 
-  const cancelRef = useRef<boolean>(false);
   const [name, setName] = useState<string>(character.name);
   const [classification, setClassification] = useState<IClassification>(
     character.classification
@@ -39,21 +38,13 @@ export function CharacterDetailsPanel({
   const [action, setAction] = useState<IActions>(character.actions[0]);
   const [trait, setTrait] = useState(character.traits[0]);
 
-  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
-
   useEffect(() => {
-    cancelRef.current = true;
     setName(character.name);
     setClassification(character.classification);
     setStats(character.stats);
     setCombat(character.combat);
     setAction(character.actions[0]);
     setTrait(character.traits[0]);
-    // Attendre que le composant soit monté avant de mettre à jour le state
-    (async () => {
-      await new Promise((resolve) => setTimeout(resolve, 0));
-      cancelRef.current = false;
-    })();
   }, [character]);
 
   const [global, setGlobal] = useState<boolean>(true);
@@ -67,57 +58,28 @@ export function CharacterDetailsPanel({
     setTraitsNav(tab === "traits");
   };
 
-  const updateCharacters = useCallback(async (updateCharacter: ICharacter) => {
-    try {
-      await CharacterService.updateCharacter(character._id, updateCharacter);
-      character = updateCharacter;
-    } catch (err) {
-      error(t("error"));
-      console.error("Error fetching characters:", error);
-    }
-  }, []);
-
-  const onChange = () => {
+  useEffect(() => {
     character.name = name;
     character.classification = classification;
     character.stats = stats;
     character.combat = combat;
     character.actions[0] = action;
     character.traits[0] = trait;
-    updateCharacters(character);
-  };
-  useEffect(() => {
-    if (cancelRef.current) return;
-    onChange();
-  }, [classification, stats, combat, action, trait]);
+    characterTempRef.current?.set(character._id, character);
+  }, [name, classification, stats, combat, action, trait]);
 
   return (
-    <Card className="flex flex-col h-full gap-3 p-5">
-      {onDelete && (
-        <DeleteValidation
-          isOpen={deleteModalOpen}
-          onClose={() => setDeleteModalOpen(false)}
-          title={t("actions.modal.title")}
-          message={t("actions.modal.description")}
-          confirmMessage={t("actions.modal.confirm")}
-          onConfirm={() => {
-            if (onDelete) {
-              onDelete(character);
-            }
-          }}
-        />
-      )}
-
+    <Card className="flex w-full flex-col h-full gap-3 p-5">
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row w-1/5">
           <Champs
             id={"name"}
             type={"text"}
             label={t("labels.name")}
-            onChange={onChange}
             placeholder={t("placeholders.name")}
             value={name}
             setValue={setName}
+            isActive={isUpdating}
           />
         </div>
         <div className="flex flex-row items-center gap-2 text-foreground">
@@ -154,12 +116,12 @@ export function CharacterDetailsPanel({
             {t("navigation.traits")}
           </span>
         </div>
-        {onDelete && (
-          <Button variant={"link"} onClick={() => setDeleteModalOpen(true)}>
+        {onDelete && isUpdating && (
+          <Button variant={"link"} onClick={() => onDelete(character)}>
             {t("actions.characterDelete")}
           </Button>
         )}
-        {!onDelete && <div className="w-1/5"></div>}
+        {!onDelete || !isUpdating && <div className="w-1/5"></div>}
       </div>
       <div className="flex flex-col h-auto flex-1 overflow-auto scrollbar-hide">
         {global && (
@@ -168,13 +130,14 @@ export function CharacterDetailsPanel({
             setClassification={setClassification}
             stats={stats}
             setStats={setStats}
+            isUpdating={isUpdating}
           />
         )}
-        {combatNav && <CombatSection combat={combat} setCombat={setCombat} />}
+        {combatNav && <CombatSection combat={combat} setCombat={setCombat} isUpdating={isUpdating} />}
         {actionsNav && (
-          <ActionsSection actions={action} setActions={setAction} />
+          <ActionsSection actions={action} setActions={setAction} isUpdating={isUpdating} />
         )}
-        {traitsNav && <TraitsSection trait={trait} setTrait={setTrait} />}
+        {traitsNav && <TraitsSection trait={trait} setTrait={setTrait} isUpdating={isUpdating} />}
       </div>
     </Card>
   );
