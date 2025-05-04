@@ -341,5 +341,13 @@
       "error": "Error",
       "loading": "Loading..."
     }
+  },
+  "GroupSelector": {
+    "title": "Choose the two groups that will face off",
+    "versus": "VS"
+  },
+  "BattlePage": {
+    "battle": "Start battle",
+    "back": "Back to selection"
   }
 }

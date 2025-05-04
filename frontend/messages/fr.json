@@ -341,5 +341,13 @@
       "error": "Erreur",
       "loading": "Chargement..."
     }
+  },
+  "GroupSelector": {
+    "title": "Choisisser les deux groupes qui vont s’affronter",
+    "versus": "VS"
+  },
+  "BattlePage": {
+    "battle": "Lancer le combat",
+    "back": "Retour à la sélection"
   }
 }
