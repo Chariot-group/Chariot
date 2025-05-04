@@ -105,7 +105,7 @@ export default function GroupListPanel({
   const createGroup = useCallback(async () => {
     try {
       const response = await GroupService.createGroup({
-        label: "Nouveau groupe",
+        label: t("newGroup.label"),
         description: "",
         campaigns: [{ idCampaign, type: "npc" }],
       });

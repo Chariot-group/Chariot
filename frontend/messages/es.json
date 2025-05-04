@@ -46,6 +46,9 @@
       "default": "Tus grupos",
       "archived": "Archivados"
     },
+    "newGroup": {
+      "label": "Nuevo grupo"
+    },
     "search": "Buscar un grupo",
     "create": "Agregar un grupo",
     "noGroups": "No se encontraron grupos",
@@ -269,7 +272,7 @@
     "error": "Error al actualizar el grupo",
     "actions": {
       "groupDelete": "Eliminar el grupo",
-      "findCampaign": "Encontrar su campaña",
+      "backCampaign": "Volver a la campaña",
       "modal": {
         "title": "Eliminar grupo",
         "description": "¿Estás seguro de que deseas eliminar este grupo?",
