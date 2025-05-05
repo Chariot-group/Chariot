@@ -81,7 +81,6 @@ export default function CampaignGroupsPage() {
             });
             newCharacterRef.current.forEach(async (character) => {
                 const { _id, ...characterWithoutId } = character;
-                console.log(characterWithoutId);
                 await CharacterService.createCharacter(characterWithoutId);
             });
             removedCharacterRef.current = [];
@@ -97,6 +96,7 @@ export default function CampaignGroupsPage() {
             try {
                 if(!updateGroup._id) return;
                 const { campaigns, characters, ...group } = updateGroup;
+                console.log("characters", characters);
                 let response = await GroupService.updateGroup(updateGroup._id, group);
 
                 setGroupSelected(response.data);
