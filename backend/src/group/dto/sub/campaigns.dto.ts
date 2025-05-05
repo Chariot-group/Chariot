@@ -1,4 +1,4 @@
-import { IsEnum, IsMongoId, IsNotEmpty, IsString } from "class-validator";
+import { IsEnum, IsMongoId, IsNotEmpty } from "class-validator";
 
 export class CampaignGroupDto {
 

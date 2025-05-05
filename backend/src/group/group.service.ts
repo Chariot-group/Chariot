@@ -7,11 +7,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Group } from './schemas/group.schema';
+import { Group } from '@/group/schemas/group.schema';
 import { SortOrder } from 'mongoose';
-import { GroupDocument } from './schemas/group.schema';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { UpdateGroupDto } from './dto/update-group.dto';
+import { GroupDocument } from '@/group/schemas/group.schema';
+import { CreateGroupDto } from '@/group/dto/create-group.dto';
+import { UpdateGroupDto } from '@/group/dto/update-group.dto';
 import { Model, Types } from 'mongoose';
 import {
   Character,
@@ -75,7 +75,7 @@ export class GroupService {
     }
   }
 
-  async create(createGroupDto: CreateGroupDto) {
+  async create(createGroupDto: CreateGroupDto, userId: string) {
     try {
       const { characters = [], campaigns, ...groupData } = createGroupDto;
 
@@ -89,6 +89,7 @@ export class GroupService {
         ...groupData,
         characters,
         campaigns: campaigns.map((campaign) => campaign.idCampaign),
+        createdBy: userId,
       });
 
       await this.characterModel.updateMany(
@@ -125,7 +126,8 @@ export class GroupService {
     }
   }
 
-  async findAll(
+  async findAllByUser(
+    userId: string,
     query: { page?: number; offset?: number; label?: string; sort?: string },
     campaignId?: string,
     type: 'all' | 'main' | 'npc' | 'archived' = 'all',
@@ -143,6 +145,7 @@ export class GroupService {
       const filters: any = {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
+        createdBy: new Types.ObjectId(userId),
       };
 
       if (campaignId) {
@@ -289,8 +292,10 @@ export class GroupService {
           campaigns.map((campaign) => campaign.idCampaign),
         );
       }
-      let campaignIds = group.campaigns.map((campaign) => campaign._id.toString());
-      if( campaigns) {
+      let campaignIds = group.campaigns.map((campaign) =>
+        campaign._id.toString(),
+      );
+      if (campaigns) {
         campaignIds = campaigns.map((campaign) => campaign.idCampaign);
       }
 

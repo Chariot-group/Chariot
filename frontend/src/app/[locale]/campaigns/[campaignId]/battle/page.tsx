@@ -8,10 +8,13 @@ import { ICampaign } from "@/models/campaigns/ICampaign";
 import { IGroup, IGroupWithRelations } from "@/models/groups/IGroup";
 import CampaignService from "@/services/campaignService";
 import GroupService from "@/services/groupService";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const BattlePage = () => {
+  const t = useTranslations("BattlePage");
+
   const { campaignId } = useParams();
 
   const [campaign, setCampaign] = useState<ICampaign | null>(null);
@@ -37,7 +40,6 @@ const BattlePage = () => {
     };
 
     const fetchGroups = async (groupIds: string[]) => {
-      console.log(groupIds)
       if (!groupIds || groupIds.length !== 2) {
         return;
       }
@@ -82,7 +84,7 @@ const BattlePage = () => {
           />
           {!groupsToFight.some((group) => group === null) && (
             <div className="flex justify-center mt-4">
-              <Button onClick={() => setFight(!fight)}>Start Battle</Button>
+              <Button onClick={() => setFight(!fight)}>{t("battle")}</Button>
             </div>
           )}
         </>
@@ -91,7 +93,7 @@ const BattlePage = () => {
           <InitiativeTracker groups={groupsToFight as IGroupWithRelations[]} />
           <div className="flex justify-end p-5">
             <Button variant="outline" onClick={() => setFight(!fight)}>
-              Retour à la sélection
+              {t("back")}
             </Button>
           </div>
         </>

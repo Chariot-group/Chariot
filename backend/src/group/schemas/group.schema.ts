@@ -1,13 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 import { Character } from '@/character/schemas/character.schema';
 import mongoose from 'mongoose';
 import { Campaign } from '@/campaign/schemas/campaign.schema';
+import { BaseSchema } from '@/common/schemas/base-schema';
 
 export type GroupDocument = Group & Document;
 
 @Schema({ timestamps: true })
-export class Group {
+export class Group extends BaseSchema {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, auto: true })
   _id: mongoose.Schema.Types.ObjectId;

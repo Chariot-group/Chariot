@@ -1,5 +1,5 @@
 import { Prop } from "@nestjs/mongoose";
-import { Damage } from "./damage.schema";
+import { Damage } from "@/character/schemas/actions/sub/damage.schema";
 
 export class Action {
     

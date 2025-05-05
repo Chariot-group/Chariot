@@ -10,7 +10,6 @@ class ActionDto {
   @IsOptional()
   type: string;
 
-  @IsNumber()
   @IsOptional()
   attackBonus: number;
 

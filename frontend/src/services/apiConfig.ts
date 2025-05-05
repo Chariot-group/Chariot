@@ -1,6 +1,5 @@
 import { APIContentType } from "@/constants/APIContentType";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 
@@ -13,6 +12,7 @@ const apiClient = (contentType: string) => {
     headers: {
       "Content-Type": contentType || APIContentType.JSON,
     },
+    withCredentials: true,
   });
 
   return instance;
