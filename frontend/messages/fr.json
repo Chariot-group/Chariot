@@ -302,12 +302,12 @@
     },
     "toasts": {
       "cancel": "Modification annulée",
-      "save": "Modifications sauvegardées",
+      "save": "Groupe modifié avec succès",
       "errorGroup": "Erreur lors de la sauvegarde du groupe",
       "errorCreateCharacter": "Erreur lors de la création du personnage",
       "errorDeleteCharacter": "Erreur lors de la suppression du personnage",
       "errorDeleteGroup": "Erreur lors de la suppression du groupe",
-      "groupDeleted": "Groupe supprimé",
+      "groupDeleted": "Groupe supprimé avec succès",
       "errorFindCampaign": "Erreur lors de la recherche de la campagne"
     }
   },
@@ -338,9 +338,9 @@
     },
     "toasts": {
       "cancel": "Modification annulée",
-      "save": "Campagne sauvegardées",
+      "save": "Campagne sauvegardées avec succès",
       "errorDetetingCampaign": "Erreur lors de la suppression de la campagne",
-      "deletedCampaign": "Campagne supprimée"
+      "deletedCampaign": "Campagne supprimée avec succès"
     }
   },
   "InitiativeTracker": {
