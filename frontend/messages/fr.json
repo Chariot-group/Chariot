@@ -335,6 +335,12 @@
       "cancel": "Annuler",
       "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    },
+    "toasts": {
+      "cancel": "Modification annulée",
+      "save": "Campagne sauvegardées",
+      "errorDetetingCampaign": "Erreur lors de la suppression de la campagne",
+      "deletedCampaign": "Campagne supprimée"
     }
   },
   "InitiativeTracker": {
