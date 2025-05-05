@@ -299,6 +299,16 @@
       "cancel": "Annuler",
       "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    },
+    "toasts": {
+      "cancel": "Modification annulée",
+      "save": "Modifications sauvegardées",
+      "errorGroup": "Erreur lors de la sauvegarde du groupe",
+      "errorCreateCharacter": "Erreur lors de la création du personnage",
+      "errorDeleteCharacter": "Erreur lors de la suppression du personnage",
+      "errorDeleteGroup": "Erreur lors de la suppression du groupe",
+      "groupDeleted": "Groupe supprimé",
+      "errorFindCampaign": "Erreur lors de la recherche de la campagne"
     }
   },
   "CampaignModal": {

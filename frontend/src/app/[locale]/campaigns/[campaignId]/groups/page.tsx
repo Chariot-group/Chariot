@@ -27,7 +27,7 @@ export default function CampaignGroupsPage() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const t = useTranslations('GroupPage');
-    const { error } = useToast();
+    const { success, error } = useToast();
 
     //Recherche
     const searchParams = useSearchParams();
@@ -40,7 +40,6 @@ export default function CampaignGroupsPage() {
     let characterTempRef = useRef<Map<string, ICharacter>>(new Map());
 
     const startUpdate = () => {
-        console.log("startUpdate");
         if (groupSelected) {
             groupTempRef.current = groupSelected;
             setIsUpdating(true);
@@ -55,6 +54,7 @@ export default function CampaignGroupsPage() {
             await setGroupSelected(groupTempRef.current);
             setIsUpdating(false);
             setLoading(false);
+            success(t("toasts.cancel"));
         }
     }
 
@@ -81,27 +81,28 @@ export default function CampaignGroupsPage() {
             });
             newCharacterRef.current.forEach(async (character) => {
                 const { _id, ...characterWithoutId } = character;
+                console.log(characterWithoutId);
                 await CharacterService.createCharacter(characterWithoutId);
             });
             removedCharacterRef.current = [];
             newCharacterRef.current = [];
             characterTempRef.current.clear();
             setIsUpdating(false);
+            success(t("toasts.save"));
         }
     }
 
     const updateGroup = useCallback(
         async (updateGroup: IGroup) => {
-        try {
-            if(!updateGroup._id) return;
-            const { campaigns, characters, ...group } = updateGroup;
-            let response = await GroupService.updateGroup(updateGroup._id, group);
+            try {
+                if(!updateGroup._id) return;
+                const { campaigns, characters, ...group } = updateGroup;
+                let response = await GroupService.updateGroup(updateGroup._id, group);
 
-            setGroupSelected(response.data);
-        } catch (err) {
-            error(t("error"));
-            console.error("Error updating characters:", error);
-        }
+                setGroupSelected(response.data);
+            } catch (err) {
+                error(t("toasts.errorGroup"));
+            }
         },
         []
     );
@@ -133,8 +134,7 @@ export default function CampaignGroupsPage() {
                 });
                 await setNewCharacter(character);
             } catch (err) {
-                error(t("error"));
-                console.error("Error fetching characters:", error);
+                error(t("toasts.errorCreateCharacter"));
             }
         },
         []
@@ -152,8 +152,7 @@ export default function CampaignGroupsPage() {
                     }
                 });
             } catch (err) {
-                error(t("error"));
-                console.error("Error fetching characters:", error);
+                error(t("toasts.errorDeleteCharacter"));
             }
         }, []
     );
@@ -169,9 +168,9 @@ export default function CampaignGroupsPage() {
                         deletedAt: new Date()
                     }
                 });
+                success(t("toasts.groupDeleted"));
             } catch (err) {
-                error(t("error"));
-                console.error("Error fetching characters:", error);
+                error(t("toasts.errorDeleteGroup"));
             }
         }, []
     );
@@ -182,8 +181,7 @@ export default function CampaignGroupsPage() {
                 let response = await CampaignService.findOne(campaignId);
                 setCampaign(response.data);
             } catch (err) {
-                error(t("error"));
-                console.error("Error fetching characters:", error);
+                error(t("toasts.errorFindCampaign"));
             }
         }, []
     );
@@ -331,7 +329,8 @@ export default function CampaignGroupsPage() {
                                         isUpdating={isUpdating}
                                         group={groupSelected}
                                         characterSelected={characterSelected}
-                                        setCharacterSelected={setCharacterSelected} />
+                                        setCharacterSelected={setCharacterSelected}
+                                        addCharacter={addCharacter} />
                                 </Card>
                                 {
                                     characterSelected && (
