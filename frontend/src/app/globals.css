@@ -47,7 +47,7 @@ body {
     --radius: 0.5rem;
 
     /* Toast */
-    --toastify-color-light: var(--card);
+    --toastify-color-light: #f2e1c4;
     --toastify-font-family: Arial, Helvetica, sans-serif;
     --toastify-text-color-light: #261208;
     --toastify-toast-bd-radius: var(--radius);
