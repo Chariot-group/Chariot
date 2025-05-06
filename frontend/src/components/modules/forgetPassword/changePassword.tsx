@@ -13,8 +13,9 @@ import { useCallback, useState } from "react";
 interface ChangePasswordProps {
     otp: string;
     userId: string;
+    setStep: (step: 1 | 2 | 3) => void;
 }
-export default function ChangePassword({ otp, userId }: ChangePasswordProps) {
+export default function ChangePassword({ otp, userId, setStep }: ChangePasswordProps) {
 
     const t = useTranslations("changePassword");
     const { success, error } = useToast();
@@ -35,6 +36,7 @@ export default function ChangePassword({ otp, userId }: ChangePasswordProps) {
             let response = await AuthService.changePassword(userId, otp, password, confirmPassword);
             if(response.statusCode && response.statusCode === 401){
                 error(t("toasts.invalidOTP"));
+                setStep(2);
                 setLoading(false);
                 return;
             }

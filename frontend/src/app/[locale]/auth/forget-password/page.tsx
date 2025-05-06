@@ -40,7 +40,7 @@ export default function ForgotPasswordPage() {
                 }
                 {
                     step === 3 &&
-                    <ChangePassword otp={otp} userId={userId}  />
+                    <ChangePassword otp={otp} userId={userId} setStep={setStep} />
                 }
             </Card>
             {
