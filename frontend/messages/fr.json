@@ -313,7 +313,8 @@
     "actions": {
       "create": "Créer une campagne",
       "cancel": "Annuler"
-    }
+    },
+    "emptyName": "Le nom de la campagne ne peut pas être vide"
   },
   "CampaignPage": {
     "tutorial": {

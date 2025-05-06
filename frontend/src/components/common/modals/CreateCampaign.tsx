@@ -1,7 +1,10 @@
-// components/ValidationPopup.jsx
+"use client"
+
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { useToast } from '@/hooks/useToast';
+import { on } from 'events';
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 
@@ -15,8 +18,42 @@ export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }:
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const t = useTranslations("CampaignModal");
   const global = useTranslations("Global");
+  const { error } = useToast();
 
   const [name, setName] = useState<string>("");
+  const [hasError, setError] = useState<boolean>(false);
+
+  //Ferme la popup si l'utilisateur clique sur 'esc'
+  useEffect(() => {
+    if(isOpen){
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Escape') {
+          onClose();
+        }
+      };
+  
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [onConfirm, onClose]);
+
+  //Valide la popup si l'utilisateur clique sur 'enter'
+  useEffect(() => {
+    if(isOpen){
+      const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+          checkName();
+        }
+      };
+  
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [onConfirm, onClose]);
   
   useEffect(() => {
     if (isOpen) {
@@ -28,10 +65,26 @@ export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }:
 
   if (!isOpen) return null;
 
+  const checkName = () => {
+    // Check if the name is empty
+    if (name.trim() === "") {
+      error(t("emptyName"));
+      setError(true);
+      return false;
+    }
+    // Check if the name contains only spaces
+    if (name.trim().length === 0) {
+      onConfirm(name);
+      setError(false);
+      return true;
+    }
+  }
+
   const handleClose = () => {
-    onConfirm(name);
-    setName("");
-    onClose();
+    if(checkName()){
+      setName("");
+      onClose();
+    }
   };
 
   return (
@@ -57,7 +110,7 @@ export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }:
             </div>
           </div>
           <div>
-            <Input type={"text"} value={name} onChange={(e) => setName(e.target.value)} placeholder={t("placeholder")} className={`bg-background`} />
+            <Input type={"text"} value={name} onChange={(e) => setName(e.target.value)} placeholder={t("placeholder")} className={`bg-background ${hasError && 'border-destructive'}`} />
           </div>
           <div className="flex justify-center gap-3">
             <Button variant={"outline"} onClick={onClose} >
