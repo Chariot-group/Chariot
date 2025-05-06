@@ -338,7 +338,7 @@
     },
     "toasts": {
       "cancel": "Modification annulée",
-      "save": "Campagne sauvegardées avec succès",
+      "save": "Campagne sauvegardée avec succès",
       "errorDetetingCampaign": "Erreur lors de la suppression de la campagne",
       "deletedCampaign": "Campagne supprimée avec succès"
     }
