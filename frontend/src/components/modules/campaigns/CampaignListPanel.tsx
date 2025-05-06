@@ -116,7 +116,7 @@ const CampaignListPanel = ({
           <Card
           onClick={() => setCreateModalOpen(true)}
             ref={cardRef}
-            className="w-full bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary cursor-pointer shadow-md"
+            className="w-full bg-primary justify-center flex p-2 gap-3 border-ring hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] hover:border-primary cursor-pointer shadow-md"
           >
             <span className="text-background font-bold">{t("create")}</span>
           </Card>
@@ -132,8 +132,8 @@ const CampaignListPanel = ({
             campaigns.map((campaign) => (
               <Card
                 key={campaign._id}
-                className={`flex p-2 gap-3 border-ring shadow-md hover:border-2 bg-background ${
-                  selectedCampaign?._id === campaign._id ? "border-2" : "border"
+                className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${
+                  selectedCampaign?._id === campaign._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"
                 }`}
                 onClick={() => setSelectedCampaign(campaign)}
               >

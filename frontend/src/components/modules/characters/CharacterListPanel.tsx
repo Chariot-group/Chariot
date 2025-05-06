@@ -125,7 +125,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
               {loading && <Loading />}
               {characters.length > 0  &&
                 characters.map((character) => (
-                  <Card key={character._id} className={`flex p-2 gap-3 border-ring shadow-md hover:border-2 bg-background ${characterSelected?._id === character._id ? "border-2" : "border"}`} onClick={() => setCharacterSelected(character)}>
+                  <Card key={character._id} className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${characterSelected?._id === character._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"}`} onClick={() => setCharacterSelected(character)}>
                     <span className="text-foreground font-bold">{character.name}</span>
                   </Card>
                 ))

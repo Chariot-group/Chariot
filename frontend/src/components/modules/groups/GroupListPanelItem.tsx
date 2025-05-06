@@ -67,7 +67,7 @@ const GroupListPanelItem = ({
 
       onMouseDown={!isOverlay ? handleMouseDown : undefined}
       onMouseUp={!isOverlay ? handleMouseUp : undefined}
-      className={`flex p-2 gap-3 border-ring shadow-md ${
+      className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] ${
         reverse ? "bg-background" : "bg-card"
       } ${
         grabbled

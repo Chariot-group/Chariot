@@ -68,7 +68,7 @@ export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete, 
                         </Tooltip>
                     </div>
                 </div>
-                <Textarea readOnly={!isUpdating} className="h-[10dvh] bg-card" placeholder={t("placeholders.description")} value={description} onChange={(e) => setDescription(e.target.value)}/>
+                <Textarea readOnly={!isUpdating} className="h-[10dvh] bg-card border-ring" placeholder={t("placeholders.description")} value={description} onChange={(e) => setDescription(e.target.value)}/>
             </div>
         </div>
     );
