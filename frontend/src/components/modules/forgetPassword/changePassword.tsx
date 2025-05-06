@@ -28,7 +28,7 @@ export default function ChangePassword({ otp, userId }: ChangePasswordProps) {
     const changePassword = useCallback(async (password: string, confirmPassword: string) => {
         try{
             if(password !== confirmPassword){
-                error(t("toasts.passwordsDontMatch"));
+                error(t("toasts.passwordsNotMatching"));
                 return;
             }
             setLoading(true);
@@ -39,7 +39,7 @@ export default function ChangePassword({ otp, userId }: ChangePasswordProps) {
                 return;
             }
             if(response.statusCode && response.statusCode === 400){
-                error(t("toasts.passwordsDontMatch"));
+                error(t("toasts.passwordsNotMatching"));
                 setLoading(false);
                 return;
             }
