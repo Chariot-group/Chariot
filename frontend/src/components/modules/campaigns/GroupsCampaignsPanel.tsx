@@ -10,8 +10,9 @@ import GroupService from "@/services/groupService";
 import GroupDnDWrapper from "../groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useToast } from "@/hooks/useToast";
-import { CrossIcon, PlusCircleIcon } from "lucide-react";
+import { CrossIcon, EyeIcon, PlusCircleIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import Link from "next/link";
 
 interface Props {
   idCampaign: string; // ID de la campagne des groupes
@@ -84,7 +85,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex flex-row gap-3 justify-start items-center">
-        <h2>{t("title.default")}</h2>
+        <Link href={`/campaigns/${idCampaign}/groups`} className="text-foreground hover:underline underline-offset-2"><h2>{t("title.default")}</h2></Link>
         {
           isUpdating && (
             <Tooltip>
