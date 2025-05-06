@@ -1,4 +1,4 @@
-import { showToast } from "../lib/toast";
+import { showToast } from "@/lib/toast";
 
 export const useToast = () => {
   const success = (message: string) => showToast(message, "success");

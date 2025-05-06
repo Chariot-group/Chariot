@@ -1,5 +1,5 @@
 import { APIContentType } from "@/constants/APIContentType";
-import apiClient from "./apiConfig";
+import apiClient from "@/services/apiConfig";
 
 const moduleUrl = "/auth/login";
 

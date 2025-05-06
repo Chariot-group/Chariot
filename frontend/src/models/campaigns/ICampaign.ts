@@ -1,4 +1,4 @@
-import { IGroup } from "../groups/IGroup";
+import { IGroup } from "@/models/groups/IGroup";
 
 export interface ICampaign {
   _id: string;

@@ -1,5 +1,5 @@
 import createMiddleware from "next-intl/middleware";
-import { locales } from "./i18n/locales.generated"; // Assure-toi que ce fichier est bien généré
+import { locales } from "@/i18n/locales.generated"; // Assure-toi que ce fichier est bien généré
 import { NextRequest } from "next/server";
 
 export default function middleware(req: NextRequest) {
