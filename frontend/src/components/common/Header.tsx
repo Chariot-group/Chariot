@@ -60,7 +60,7 @@ export function Header({ campaign }: HeaderProps) {
         <div className="flex flex-col items-center">
           <Link href={"/campaigns"}><h1 className="text-foreground text-2xl font-bold">{`${t("home")}`}</h1></Link>
           {campaign && (
-            <Link href={`/campaigns?search=${campaign.label}`}><p className="text-foreground">{campaign.label}</p></Link>
+            <Link href={`/campaigns?search=${campaign.label}`} className="text-foreground hover:underline underline-offset-2"><p className="text-foreground">{campaign.label}</p></Link>
             ) 
           }
         </div>
