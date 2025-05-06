@@ -33,6 +33,19 @@ export default function LoginPage() {
         setPassword(password);
     }
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+              login();
+            }
+          };
+      
+          window.addEventListener('keydown', handleKeyDown);
+          return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+          };
+      }, []);
+
     const { error, success } = useToast();
 
     const login = useCallback(async () => {
