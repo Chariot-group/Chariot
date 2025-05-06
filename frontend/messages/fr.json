@@ -258,7 +258,9 @@
     },
     "actions": {
       "delete": "Supprimer la campagne",
-      "update": "Modifier la campagne"
+      "update": "Modifier la campagne",
+      "cancel": "Annuler",
+      "save": "Sauvegarder"
     },
     "modal": {
       "title": "Supprimer la campagne",
@@ -276,6 +278,8 @@
       "groupDelete": "Supprimer le groupe",
       "update": "Modifier le groupe",
       "backCampaign": "Retour à la campagne",
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
       "modal": {
         "title": "Supprimer le group",
         "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
@@ -296,8 +300,6 @@
   "GroupPage": {
     "yourCharacters": "Vos personnages",
     "form": {
-      "cancel": "Annuler",
-      "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
     }
   },
@@ -322,8 +324,6 @@
       "step5": "Etape 5: Let’s play !"
     },
     "form": {
-      "cancel": "Annuler",
-      "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
     }
   },

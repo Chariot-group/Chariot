@@ -312,7 +312,7 @@ export default function CampaignGroupsPage() {
                     !loading && groupSelected && campaign && (
                         <div className="w-[85%] h[100vh] flex flex-col">
                             <div className="w-full">
-                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} />
+                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} saveActions={saveAction} cancelUpdate={cancelUpdate} />
                             </div>
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>
@@ -340,16 +340,6 @@ export default function CampaignGroupsPage() {
                     )
                 }
             </main>
-            <footer className="absolute bottom-0 w-full flex flex-row justify-end items-left">
-                {
-                    isUpdating && groupSelected && (
-                        <div>
-                            <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
-                            <Button variant={"secondary"} onClick={() => saveAction()} className="mr-5 mb-2" >{t('form.save')}</Button>
-                        </div>
-                    )
-                }
-            </footer>
         </div>
     );
 }
