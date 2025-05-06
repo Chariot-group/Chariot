@@ -18,7 +18,6 @@ import {
   CharacterDocument,
 } from '@/character/schemas/character.schema';
 import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
-import { $ } from '@faker-js/faker/dist/airline-CBNP41sR';
 
 @Injectable()
 export class GroupService {
@@ -93,8 +92,6 @@ export class GroupService {
         createdBy: new Types.ObjectId(userId),
       });
 
-      this.logger.verbose(`created: ${group.campaigns.length} - ${campaigns[0].idCampaign}`, this.SERVICE_NAME);
-
       await this.characterModel.updateMany(
         { _id: { $in: characters.map((id) => id) } },
         { $addToSet: { groups: group._id } },
@@ -148,7 +145,7 @@ export class GroupService {
       const filters: any = {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
-        //createdBy: new Types.ObjectId(userId),
+        createdBy: new Types.ObjectId(userId),
       };
 
       if (campaignId) {
