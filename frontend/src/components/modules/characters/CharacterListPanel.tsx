@@ -21,8 +21,9 @@ interface ICharacterListPanelProps {
   isUpdating: boolean;
   removeCharacters: RefObject<string[]>;
   newCharacters: RefObject<Partial<ICharacter>[]>;
+  addCharacter: (groupId: string) => void;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -104,7 +105,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
                 isUpdating && (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => /*addCharacter(groupSelected._id)*/ console.log('')} />
+                      <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(group._id)} />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>{t("addCharacter")}</p>

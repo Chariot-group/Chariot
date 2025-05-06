@@ -299,6 +299,16 @@
       "cancel": "Cancelar",
       "save": "Guardar",
       "unsave": "Tienes cambios sin guardar. ¿Continuar?"
+    },
+    "toasts": {
+      "cancel": "Grupo no guardado",
+      "save": "Grupo guardado con éxito",
+      "errorGroup": "Error al guardar el grupo",
+      "errorCreateCharacter": "Error al crear el personaje",
+      "errorDeleteCharacter": "Error al eliminar el personaje",
+      "errorDeleteGroup": "Error al eliminar el grupo",
+      "groupDeleted": "Grupo eliminado con éxito",
+      "errorFindCampaign": "Error al encontrar la campaña"
     }
   },
   "CampaignModal": {
@@ -325,6 +335,12 @@
       "cancel": "Cancelar",
       "save": "Guardar",
       "unsave": "Tienes cambios sin guardar. ¿Continuar?"
+    },
+    "toasts": {
+      "cancel": "Campaña no guardada",
+      "save": "Campaña guardada con éxito",
+      "errorDetetingCampaign": "Error al eliminar la campaña",
+      "deletedCampaign": "Campaña eliminada con éxito"
     }
   },
   "InitiativeTracker": {
