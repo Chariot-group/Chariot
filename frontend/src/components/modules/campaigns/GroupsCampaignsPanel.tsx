@@ -88,7 +88,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
     try {
       let current = {
         _id: newGroupRef.current.length,
-        label: "Nouveau groupe",
+        label: t("newGroup.label"),
         description: "",
         campaigns: [{ idCampaign: idCampaign, type: "npc" }],
       };
