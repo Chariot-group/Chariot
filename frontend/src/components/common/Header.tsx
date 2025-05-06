@@ -57,10 +57,9 @@ export function Header({ campaign }: HeaderProps) {
           </Button>
         )}
         {!campaign && <div className="w-1/12"></div>}
-        <Link href={`/campaigns`} className="flex items-center gap-2">
-          <h1 className="text-foreground text-2xl font-bold">{`${t("home")} ${
-            campaign ? `- ${campaign.label}` : ""
-          }`}</h1>
+        <Link href={`/campaigns`} className="flex flex-col items-center">
+          <h1 className="text-foreground text-2xl font-bold">{`${t("home")}`}</h1>
+          <p className="text-foreground">{campaign && `${campaign.label}`}</p>
         </Link>
         <div className="flex flex-row items-center gap-4">
           <LocaleSwitcher />
