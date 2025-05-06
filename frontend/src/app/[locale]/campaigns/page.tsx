@@ -8,14 +8,12 @@ import GroupsCampaignsPanel from "@/components/modules/campaigns/GroupsCampaigns
 import { Button } from "@/components/ui/button";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
 import { useToast } from "@/hooks/useToast";
-import { ICampaign, ICampaignUpdated } from "@/models/campaigns/ICampaign";
-import { IGroup } from "@/models/groups/IGroup";
+import { ICampaign } from "@/models/campaigns/ICampaign";
 import CampaignService from "@/services/campaignService";
 import GroupService from "@/services/groupService";
-import { group } from "console";
 import { useTranslations } from "next-intl";
-import { useParams, useSearchParams } from "next/navigation";
-import { use, useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useRef, useState } from "react";
 
 export default function CampaignsPage() {
 
@@ -23,7 +21,7 @@ export default function CampaignsPage() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const t = useTranslations("CampaignPage");
-    const { error } = useToast();
+    const { error, success } = useToast();
 
     //Recherche
     const searchParams = useSearchParams()
@@ -53,6 +51,7 @@ export default function CampaignsPage() {
             newGroupRef.current = [];
             setIsUpdating(false);
             setLoading(false);
+            success(t("toasts.cancel"));
         }
     }
 
@@ -83,6 +82,8 @@ export default function CampaignsPage() {
             newGroupRef.current = [];
             groupsLabelRef.current = [];
             groupsRef.current = new Map();
+            
+            success(t("toasts.save"));
         }
     }
 
@@ -123,8 +124,9 @@ export default function CampaignsPage() {
                 }
                 return prev;
             });
+            success(t("toasts.deletedCampaign"));
         } catch(err){
-            error(t("error"));
+            error(t("toasts.errorDetetingCampaign"));
         }
     }, []);
 

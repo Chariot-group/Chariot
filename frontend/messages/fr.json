@@ -301,6 +301,16 @@
     "yourCharacters": "Vos personnages",
     "form": {
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    },
+    "toasts": {
+      "cancel": "Modification annulée",
+      "save": "Groupe modifié avec succès",
+      "errorGroup": "Erreur lors de la sauvegarde du groupe",
+      "errorCreateCharacter": "Erreur lors de la création du personnage",
+      "errorDeleteCharacter": "Erreur lors de la suppression du personnage",
+      "errorDeleteGroup": "Erreur lors de la suppression du groupe",
+      "groupDeleted": "Groupe supprimé avec succès",
+      "errorFindCampaign": "Erreur lors de la recherche de la campagne"
     }
   },
   "CampaignModal": {
@@ -326,6 +336,12 @@
     },
     "form": {
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    },
+    "toasts": {
+      "cancel": "Modification annulée",
+      "save": "Campagne sauvegardée avec succès",
+      "errorDetetingCampaign": "Erreur lors de la suppression de la campagne",
+      "deletedCampaign": "Campagne supprimée avec succès"
     }
   },
   "InitiativeTracker": {

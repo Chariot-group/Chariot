@@ -301,6 +301,16 @@
     "yourCharacters": "Your characters",
     "form": {
       "unsave": "You have unsaved changes. Do you want to continue?"
+    },
+    "toasts": {
+      "cancel": "Updating cancelled",
+      "save": "Group updated successfully",
+      "errorGroup": "Error updating group",
+      "errorCreateCharacter": "Error creating character",
+      "errorDeleteCharacter": "Error deleting character",
+      "errorDeleteGroup": "Error deleting group",
+      "groupDeleted": "Group deleted successfully",
+      "errorFindCampaign": "Error finding campaign"
     }
   },
   "CampaignModal": {
@@ -326,6 +336,12 @@
     },
     "form": {
       "unsave": "You have unsaved changes. Do you want to continue?"
+    },
+    "toasts": {
+      "cancel": "updating cancelled",
+      "save": "Campaign updated successfully",
+      "errorDetetingCampaign": "Error deleting campaign",
+      "deletedCampaign": "Campaign deleted successfully"
     }
   },
   "InitiativeTracker": {
