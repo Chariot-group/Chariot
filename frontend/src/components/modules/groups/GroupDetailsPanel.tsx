@@ -22,7 +22,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface GroupDetailsPanelProps {
   group: IGroup;
   setGroup: (group: IGroup) => void;
-  campaign: ICampaign;
   onDelete: (group: IGroup) => void;
   isUpdating: boolean;
   startUpdate: () => void;
@@ -30,7 +29,6 @@ interface GroupDetailsPanelProps {
 export default function GroupDetailsPanel({
   group,
   setGroup,
-  campaign,
   onDelete,
   isUpdating,
   startUpdate,
@@ -76,9 +74,6 @@ export default function GroupDetailsPanel({
           setValue={setLabel}
         />
         <div className="flex flex-row gap-3 items-center">
-          <Link href={`/campaigns?search=${campaign.label}`}>
-            <Button>{t("actions.backCampaign")}</Button>
-          </Link>
           {!isUpdating && group && (
             <Tooltip>
               <TooltipTrigger asChild>

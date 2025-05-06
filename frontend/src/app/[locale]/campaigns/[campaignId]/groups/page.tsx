@@ -312,7 +312,7 @@ export default function CampaignGroupsPage() {
                     !loading && groupSelected && campaign && (
                         <div className="w-[85%] h[100vh] flex flex-col">
                             <div className="w-full">
-                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} campaign={campaign} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} />
+                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} />
                             </div>
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>
