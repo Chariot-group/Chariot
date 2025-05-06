@@ -222,7 +222,6 @@ export class CampaignService {
 
   async update(id: string, updateCampaignDto: UpdateCampaignDto) {
     try {
-      this.logger.error(updateCampaignDto.groups, null, this.SERVICE_NAME);
       if (updateCampaignDto.groups) {
         await this.validateGroupRelations(
           updateCampaignDto.groups.main,
@@ -251,7 +250,6 @@ export class CampaignService {
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new NotFoundException(message);
       }
-
       if (existingCampaign.deletedAt) {
         const message = `Campaign ${id} has been deleted`;
         this.logger.error(message, null, this.SERVICE_NAME);
@@ -319,8 +317,11 @@ export class CampaignService {
 
       const end = Date.now();
 
+      const message = `Campaign updated in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+
       return {
-        message: `Campaign updated in ${end - start}ms`,
+        message: message,
         data: updatedCampaign,
       };
     } catch (error) {

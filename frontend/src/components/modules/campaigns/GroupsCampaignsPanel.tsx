@@ -19,8 +19,9 @@ interface Props {
   isUpdating: boolean; // Indique si la campagne est en cours de mise à jour
   groupsRef: RefObject<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>; // Liste des groupes
   newGroupRef: RefObject<any[]>; // Liste des nouveaux groupes
+  groupsLabelRef: RefObject<IGroup[]>; // Liste des groupes à ne pas afficher
 }
-export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef, newGroupRef }: Props) {
+export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef, newGroupRef, groupsLabelRef }: Props) {
   const t = useTranslations("GroupListPanel");
   const { error } = useToast();
 
@@ -54,6 +55,21 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
     });
     group.campaigns = updatedCampaigns as any;
 
+    //Chnage groupe si il existe dans newGroupRef
+    if (newGroupRef.current.find((g) => g._id === group._id)) {
+      newGroupRef.current = newGroupRef.current.map((g) => {
+        if (g._id === group._id) {
+          const t = { ...g, campaigns: [{
+            idCampaign: idCampaign,
+            type: to,
+          }] };
+          console.log(t);
+          return t;
+        }
+        return g;
+      });
+    }
+
     const groupSetters = {
       main: setMainGroups,
       npc: setNpcGroups,
@@ -70,7 +86,12 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
 
   const createGroup = useCallback(async () => {
     try {
-      let current = {_id: newGroupRef.current.length, label: "Nouveau groupe", description: "", campaigns: [{idCampaign, type: "main"}]};
+      let current = {
+        _id: newGroupRef.current.length,
+        label: "Nouveau groupe",
+        description: "",
+        campaigns: [{ idCampaign: idCampaign, type: "npc" }],
+      };
       newGroupRef.current.push(current);
       setNpcGroups((prev) => [...prev, current as unknown as IGroup]);
     } catch(err){
@@ -81,6 +102,28 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
   const [mainSearch, setMainSearch] = useState<string>("");
   const [npcSearch, setNpcSearch] = useState<string>("");
   const [archivedSearch, setArchivedSearch] = useState<string>("");
+
+  const changeLabel = (label: string, group: IGroup) => {
+    if(groupsLabelRef.current.find((g) => g._id === group._id)){
+      groupsLabelRef.current = groupsLabelRef.current.map((g) => {
+        if (g._id === group._id) {
+          return { ...g, label };
+        }
+        return g;
+      });
+    } else {
+      groupsLabelRef.current.push({ ...group, label });
+    }
+    setMainGroups((prev) =>
+      prev.map((g) => (g._id === group._id ? { ...g, label } : g))
+    );
+    setNpcGroups((prev) =>
+      prev.map((g) => (g._id === group._id ? { ...g, label } : g))
+    );
+    setArchivedGroups((prev) =>
+      prev.map((g) => (g._id === group._id ? { ...g, label } : g))
+    );
+  }
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -104,6 +147,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
         <GroupDnDWrapper onDragEnd={handleDragEnd}>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              changeLabel={changeLabel}
               groups={mainGroups}
               setGroups={setMainGroups}
               reverse={true}
@@ -122,6 +166,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
           </div>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              changeLabel={changeLabel}
               groups={npcGroups}
               setGroups={setNpcGroups}
               reverse={true}
@@ -140,6 +185,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
           </div>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              changeLabel={changeLabel}
               groups={archivedGroups}
               setGroups={setArchivedGroups}
               reverse={true}

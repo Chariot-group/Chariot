@@ -28,6 +28,7 @@ interface Props {
   setSearch: (search: string) => void;
   disabledGroups?: IGroup[]; // Liste des groupes à ne pas afficher
   context?: boolean;
+  changeLabel: (label: string, group: IGroup) => void; // Fonction pour changer le label d'un groupe
 }
 export default function GroupListPanel({
   groups,
@@ -44,6 +45,7 @@ export default function GroupListPanel({
   setSearch,
   disabledGroups,
   context = false,
+  changeLabel
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -118,19 +120,20 @@ export default function GroupListPanel({
     }
   }, []);
 
-    useEffect(() => {
-      if(newGroup) {
-        setGroupSelected(newGroup);
-        setNewGroup(null);
-      }
-    }, [groupSelected]);
+  useEffect(() => {
+    if(newGroup) {
+      setGroupSelected(newGroup);
+      setNewGroup(null);
+    }
+  }, [groupSelected]);
 
   useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
 
-    useEffect(() => {
-        setGroups([]);
-        fetchGroups(search, 1, true);
-    }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
+  useEffect(() => {
+    setGroups([]);
+    fetchGroups(search, 1, true);
+  }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
+
   return (
     <div className="w-full h-full flex flex-col">
       <CardHeader className="flex-none h-auto items-center gap-3">
@@ -160,6 +163,7 @@ export default function GroupListPanel({
           {groups.length > 0 &&
             groups.map((group) => (
               <GroupListPanelItem
+                changeLabel={changeLabel}
                 idCampaign={idCampaign}
                 key={group._id}
                 group={group}

@@ -34,6 +34,7 @@ export default function CampaignsPage() {
     let campaignTempRef = useRef<ICampaign | null>(null);
     let newGroupRef = useRef<any[]>([]);
     let groupsRef = useRef<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>(new Map());
+    let groupsLabelRef = useRef<IGroup[]>([]);
 
     const startUpdate = () => {
         if (selectedCampaign) {
@@ -46,6 +47,10 @@ export default function CampaignsPage() {
         if (selectedCampaign) {
             setLoading(true);
             await setSelectedCampaign(campaignTempRef.current);
+            campaignTempRef.current = null;
+            groupsLabelRef.current = [];
+            groupsRef.current = new Map();
+            newGroupRef.current = [];
             setIsUpdating(false);
             setLoading(false);
         }
@@ -53,11 +58,31 @@ export default function CampaignsPage() {
 
     const saveActions = async () => {
         if (selectedCampaign) {
-            updateCampaign(selectedCampaign);
+
+            groupsLabelRef.current.forEach(async (group) => {
+                if (!Number.isInteger(Number(group._id))) {
+                    console.log('update', group);
+                    await GroupService.updateGroup(group._id, {label: group.label});
+                }else {
+                    newGroupRef.current.forEach((newGroup) => {
+                        if (newGroup._id === group._id) {
+                            newGroup.label = group.label;
+                        }
+                    });
+                }
+            });
 
             newGroupRef.current.forEach(async (group) => {
-                await GroupService.createGroup(group);
+                const {_id, ...groupWhitoutId} = group;
+                console.log('create', groupWhitoutId);
+                await GroupService.createGroup(groupWhitoutId);
             });
+
+            updateCampaign(selectedCampaign);
+
+            newGroupRef.current = [];
+            groupsLabelRef.current = [];
+            groupsRef.current = new Map();
         }
     }
 
@@ -65,13 +90,9 @@ export default function CampaignsPage() {
         async (updateCampaign: Partial<ICampaign>) => {
           try {
             if(!updateCampaign._id) return;
-            let response = await CampaignService.updateCampaign(updateCampaign._id, updateCampaign);
-
-            groupsRef.current.forEach(async (campaigns, key) => {
-                await GroupService.updateGroup(key, {
-                    campaigns: [campaigns],
-                });
-            });
+            console.log("updateCampaign", updateCampaign);
+            const {groups, ...campaigns} = updateCampaign;
+            let response = await CampaignService.updateCampaign(updateCampaign._id, campaigns);
 
             let data = response.data;
             response.data.groups = {
@@ -134,7 +155,7 @@ export default function CampaignsPage() {
                                     <div className="w-[80vh] border border-ring"></div>
                                 </div>
                                 <div className="w-full h-full flex flex-row items-center p-5">
-                                    <GroupsCampaignsPanel idCampaign={selectedCampaign._id} isUpdating={isUpdating} groupsRef={groupsRef} newGroupRef={newGroupRef} />
+                                    <GroupsCampaignsPanel idCampaign={selectedCampaign._id} isUpdating={isUpdating} groupsRef={groupsRef} newGroupRef={newGroupRef} groupsLabelRef={groupsLabelRef} />
                                 </div>
                             </div>
                         )} 
