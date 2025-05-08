@@ -62,7 +62,7 @@ export class CampaignService {
       const campaign = await this.campaignModel.create({
         ...campaignData,
         groups,
-        createdBy: userId,
+        createdBy: new Types.ObjectId(userId),
       });
       await this.groupModel.updateMany(
         { _id: { $in: totalGroups.map((id) => id) } },

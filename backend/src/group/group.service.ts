@@ -89,7 +89,7 @@ export class GroupService {
         ...groupData,
         characters,
         campaigns: campaigns.map((campaign) => campaign.idCampaign),
-        createdBy: userId,
+        createdBy: new Types.ObjectId(userId),
       });
 
       await this.characterModel.updateMany(
