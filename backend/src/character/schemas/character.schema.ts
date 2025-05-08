@@ -1,44 +1,43 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Classification } from '@/character/schemas/classification/classification.schema';
 import { Stats } from '@/character/schemas/stat/stats.schema';
-import { Combat } from '@/character/schemas/combat/combat.schema';
-import { Traits } from '@/character/schemas/trait/trait.schema';
-import { Actions } from '@/character/schemas/actions/actions.schema';
+import { Affinities } from '@/character/schemas/affinities/affinities.schema';
 import { Group } from '@/group/schemas/group.schema';
 import { BaseSchema } from '@/common/schemas/base-schema';
+import { Ability } from '@/character/schemas/ability/ability.schema';
+import { Spellcasting } from '@/character/schemas/spellcasting/spellcasting.schema';
 
 export type CharacterDocument = Character & Document;
 
-@Schema({timestamps: true})
+@Schema({ timestamps: true, discriminatorKey: 'kind' })
 export class Character extends BaseSchema {
+  @Prop({ type: mongoose.Schema.Types.ObjectId, auto: true })
+  _id: mongoose.Schema.Types.ObjectId;
 
-    @Prop({ type: mongoose.Schema.Types.ObjectId, auto: true })
-    _id: mongoose.Schema.Types.ObjectId;
-    
-    @Prop({ required: true })
-    name: string;
+  @Prop({ required: true })
+  name: string;
 
-    @Prop({ type: Classification, required: true })
-    classification: Classification;
+  @Prop({ type: Stats, required: true })
+  stats: Stats;
 
-    @Prop({ type: Stats, required: true })
-    stats: Stats;
+  @Prop({ type: Affinities })
+  affinities: Affinities;
 
-    @Prop({ type: Combat, required: true })
-    combat: Combat;
+  @Prop({ type: [Ability], default: [] })
+  abilities: Ability[];
 
-    @Prop({ type: [Traits], required: true, default: [] })
-    traits: Traits[];
+  @Prop({ type: [Spellcasting], default: [] })
+  spellcasting: Spellcasting[];
 
-    @Prop({ type: [Actions], required: true, default: [] })
-    actions: Actions[];
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
+    default: [],
+    required: true,
+  })
+  groups: Group[];
 
-    @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }], default: [], required: true })
-    groups: Group[];
-
-    @Prop({ default: null })
-    deletedAt?: Date;
+  @Prop({ default: null })
+  deletedAt?: Date;
 }
 
 export const CharacterSchema = SchemaFactory.createForClass(Character);

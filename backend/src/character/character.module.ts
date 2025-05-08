@@ -7,16 +7,22 @@ import {
   CharacterSchema,
 } from '@/character/schemas/character.schema';
 import { Group, GroupSchema } from '@/group/schemas/group.schema';
+import { PlayerSchema } from '@/character/schemas/player.schema';
+import { NPCSchema } from '@/character/schemas/npc.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Character.name, schema: CharacterSchema },
+      {
+        name: Character.name,
+        schema: CharacterSchema,
+        discriminators: [
+          { name: 'player', schema: PlayerSchema },
+          { name: 'npc', schema: NPCSchema },
+        ],
+      },
     ]),
-    MongooseModule.forFeature([
-      { name: Character.name, schema: CharacterSchema },
-      { name: Group.name, schema: GroupSchema },
-    ]),
+    MongooseModule.forFeature([{ name: Group.name, schema: GroupSchema }]),
   ],
   exports: [CharacterService],
   controllers: [CharacterController],

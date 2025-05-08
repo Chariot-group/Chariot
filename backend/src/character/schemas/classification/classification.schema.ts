@@ -1,16 +1,13 @@
-import { Prop } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
+@Schema({ _id: false })
 export class Classification {
+  @Prop({ required: true })
+  type: string;
 
-    @Prop({ required: true })
-    type: string;
-  
-    @Prop({ required: true })
-    subtype: string;
-  
-    @Prop({ required: true })
-    alignment: string;
-  
-    @Prop({ required: true })
-    size: string;
+  @Prop({ required: true })
+  subtype: string;
 }
+
+export const ClassificationSchema =
+  SchemaFactory.createForClass(Classification);

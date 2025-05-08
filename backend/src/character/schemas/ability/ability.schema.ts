@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
-export class Damage {
+export class Ability {
   @Prop({ required: true })
-  dice: string;
+  name: string;
 
   @Prop({ required: true })
-  type: string;
+  description: string;
 }
 
-export const DamageSchema = SchemaFactory.createForClass(Damage);
+export const AbilitySchema = SchemaFactory.createForClass(Ability);
