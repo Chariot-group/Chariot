@@ -25,7 +25,7 @@ export class SeederService {
   ) {}
 
   getRandomObjects() {
-    const filePath = path.join(__dirname, 'runner', 'characters.json');
+    const filePath = path.join(__dirname, 'runner', 'characters-new.json');
     const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
     const shuffled = [...jsonData].sort(() => 0.5 - Math.random());
