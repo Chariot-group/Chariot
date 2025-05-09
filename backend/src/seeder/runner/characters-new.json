@@ -31,9 +31,8 @@
       "skills": {
         "stealth": 6
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [],
+      "darkvision": 60,
       "languages": ["Commun", "Goblin"],
       "passivePerception": 9
     },
@@ -107,9 +106,9 @@
       "skills": {
         "perception": 3
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [],
+      "darkvision": 60,
+
       "languages": [],
       "passivePerception": 13
     },
@@ -184,7 +183,7 @@
         "deception": 2,
         "religion": 2
       },
-      "senses": {},
+      "senses": [],
       "languages": ["any one language (usually Common)"],
       "passivePerception": 10
     },
@@ -250,9 +249,8 @@
         "perception": 5,
         "stealth": 9
       },
-      "senses": {
-        "darkvision": 120
-      },
+      "senses": [],
+      "darkvision": 120,
       "languages": ["Elvish", "Undercommon"],
       "passivePerception": 15
     },
@@ -357,9 +355,7 @@
       "skills": {
         "perception": 4
       },
-      "senses": {
-        "passivePerception": 14
-      },
+      "senses": [],
       "languages": [
         "Giant Eagle",
         "understands Common and Auran but can't speak"
@@ -444,10 +440,11 @@
         "insight": 9,
         "perception": 9
       },
-      "senses": {
-        "truesight": 120,
-        "passivePerception": 19
-      },
+      "senses": [
+        {
+          "truesight": 120
+        }
+      ],
       "languages": ["Common", "Draconic", "Elvish", "any four other languages"],
       "passivePerception": 19
     },
@@ -545,10 +542,8 @@
       "skills": {
         "intimidation": 2
       },
-      "senses": {
-        "darkvision": 60,
-        "passivePerception": 10
-      },
+      "senses": [],
+      "darkvision": 60,
       "languages": ["Common", "Orc"],
       "passivePerception": 10
     },
@@ -603,7 +598,7 @@
         "name": "Bard",
         "subclass": "College of Lore",
         "level": 3,
-        "hitDie": 8
+        "hitDice": 8
       }
     ],
     "profile": {
@@ -665,9 +660,8 @@
         "deception": 7,
         "performance": 7
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [],
+      "darkvision": 60,
       "languages": ["Common", "Gnomish", "Sylvan"],
       "passivePerception": 10
     },
@@ -730,7 +724,7 @@
         "name": "Barbarian",
         "subclass": "Berserker",
         "level": 3,
-        "hitDie": 12
+        "hitDice": 12
       }
     ],
     "profile": {
@@ -792,7 +786,7 @@
         "athletics": 6,
         "intimidation": 1
       },
-      "senses": {},
+      "senses": [],
       "languages": ["Common", "Giant"],
       "passivePerception": 10
     },
@@ -830,7 +824,7 @@
         "name": "Rogue",
         "subclass": "Thief",
         "level": 3,
-        "hitDie": 8
+        "hitDice": 8
       }
     ],
     "profile": {
@@ -893,9 +887,8 @@
         "stealth": 6,
         "sleight of hand": 6
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [],
+      "darkvision": 60,
       "languages": ["Common", "Elvish", "Thieves' Cant"],
       "passivePerception": 11
     },
@@ -929,7 +922,7 @@
         "name": "Ranger",
         "subclass": "Hunter",
         "level": 3,
-        "hitDie": 10
+        "hitDice": 10
       }
     ],
     "profile": {
@@ -992,9 +985,8 @@
         "nature": 3,
         "animal handling": 4
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [],
+      "darkvision": 60,
       "languages": ["Common", "Elvish", "Sylvan"],
       "passivePerception": 12
     },
@@ -1047,7 +1039,7 @@
         "name": "Druid",
         "subclass": "Circle of the Moon",
         "level": 3,
-        "hitDie": 8
+        "hitDice": 8
       }
     ],
     "profile": {
@@ -1111,9 +1103,8 @@
         "insight": 5,
         "arcana": 3
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [],
+      "darkvision": 60,
       "languages": ["Common", "Elvish", "Druidic", "Primordial"],
       "passivePerception": 13
     },
@@ -1198,7 +1189,7 @@
         "name": "Cleric",
         "subclass": "War Domain",
         "level": 10,
-        "hitDie": 8
+        "hitDice": 8
       }
     ],
     "profile": {
@@ -1262,9 +1253,8 @@
         "medicine": 9,
         "persuasion": 5
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [],
+      "darkvision": 60,
       "languages": ["Common", "Gnomish", "Celestial"],
       "passivePerception": 15
     },
@@ -1369,7 +1359,7 @@
         "name": "Fighter",
         "subclass": "Gunslinger",
         "level": 15,
-        "hitDie": 10
+        "hitDice": 10
       }
     ],
     "profile": {
@@ -1434,7 +1424,7 @@
         "intimidation": 6,
         "sleightOfHand": 9
       },
-      "senses": {},
+      "senses": [],
       "languages": ["Common", "Draconic", "Dwarvish"],
       "passivePerception": 10
     },
@@ -1487,5 +1477,4 @@
       "vulnerabilities": []
     }
   }
-
 ]

@@ -57,6 +57,9 @@ export class Stats {
 
   @Prop({ type: Skills, default: {} })
   skills: Skills;
+
+  @Prop({ type: [{ name: String, value: Number }], default: [] })
+  senses: { name: string; value: number }[];
 }
 
 export const StatsSchema = SchemaFactory.createForClass(Stats);
