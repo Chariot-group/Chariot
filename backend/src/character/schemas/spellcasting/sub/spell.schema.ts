@@ -10,7 +10,7 @@ export class Spell {
   level?: number;
 
   @Prop()
-  schoo?: string;
+  school?: string;
 
   @Prop()
   description?: string;

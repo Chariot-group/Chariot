@@ -13,6 +13,7 @@ export class Spellcasting {
 
   @Prop()
   attackBonus: number;
+  
   @Prop({
     type: Map,
     of: new MongooseSchema(

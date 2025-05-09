@@ -1,24 +1,27 @@
-import { IsString, IsOptional, IsMongoId, ValidateNested, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsMongoId,
+  ValidateNested,
+  IsArray,
+} from 'class-validator';
 import { Type } from 'class-transformer';
-import { ClassificationDto } from '@/character/dto/sub/classification.dto';
-import { StatsDto } from '@/character/dto/sub/stats.dto';
-import { CombatDto } from '@/character/dto/sub/combat.dto';
-import { TraitsDto } from '@/character/dto/sub/traits.dto';
-import { ActionsDto } from '@/character/dto/sub/actions.dto';
+import { StatsDto } from '@/character/dto/stats/stats.dto';
+import { AffinitiesDto } from '@/character/dto/affinities/affinities.dto';
+import { AbilityDto } from '@/character/dto/ability/ability.dto';
+import { SpellcastingDto } from '@/character/dto/spellcasting/spellcasting.dto';
 
 export class CreateCharacterDto {
   @IsString()
   name: string;
 
-  @IsMongoId({each:true})
-  @IsArray() 
+  @IsString()
+  kind?: 'player' | 'npc';
+
+  @IsMongoId({ each: true })
+  @IsArray()
   @IsOptional()
   groups?: string[];
-
-  @ValidateNested()
-  @IsOptional()
-  @Type(() => ClassificationDto)
-  classification: ClassificationDto;
 
   @ValidateNested()
   @IsOptional()
@@ -27,16 +30,18 @@ export class CreateCharacterDto {
 
   @ValidateNested()
   @IsOptional()
-  @Type(() => CombatDto)
-  combat: CombatDto;
+  @Type(() => AffinitiesDto)
+  affinities: AffinitiesDto;
 
-  @ValidateNested()
+  @ValidateNested({ each: true })
+  @IsArray()
   @IsOptional()
-  @Type(() => TraitsDto)
-  traits: TraitsDto;
+  @Type(() => AbilityDto)
+  abilities: AbilityDto[];
 
-  @ValidateNested()
+  @ValidateNested({ each: true })
+  @IsArray()
   @IsOptional()
-  @Type(() => ActionsDto)
-  actions: ActionsDto;
+  @Type(() => SpellcastingDto)
+  spellcasting: SpellcastingDto[];
 }
