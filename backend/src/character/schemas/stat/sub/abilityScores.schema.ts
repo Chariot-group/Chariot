@@ -2,22 +2,22 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class AbilityScores {
-  @Prop({ required: true })
+  @Prop({ default: 10 })
   strength: number;
 
-  @Prop({ required: true })
+  @Prop({ default: 10 })
   dexterity: number;
 
-  @Prop({ required: true })
+  @Prop({ default: 10 })
   constitution: number;
 
-  @Prop({ required: true })
+  @Prop({ default: 10 })
   intelligence: number;
 
-  @Prop({ required: true })
+  @Prop({ default: 10 })
   wisdom: number;
 
-  @Prop({ required: true })
+  @Prop({ default: 10 })
   charisma: number;
 }
 

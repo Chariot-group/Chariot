@@ -4,22 +4,22 @@ import { SchemaFactory } from '@nestjs/mongoose';
 @Schema({ _id: false })
 export class Background {
   @Prop()
-  personalityTraits: string;
+  personalityTraits?: string;
 
   @Prop()
-  ideals: string;
+  ideals?: string;
 
   @Prop()
-  bonds: string;
+  bonds?: string;
 
   @Prop()
-  flaws: string;
+  flaws?: string;
 
   @Prop()
-  alliesAndOrgs: string;
+  alliesAndOrgs?: string;
 
   @Prop()
-  backstory: string;
+  backstory?: string;
 }
 
 export const BackgroundSchema = SchemaFactory.createForClass(Background);

@@ -19,7 +19,7 @@ export class Treasure {
   pp: number;
 
   @Prop()
-  notes: string;
+  notes?: string;
 }
 
 export const TreasureSchema = SchemaFactory.createForClass(Treasure);

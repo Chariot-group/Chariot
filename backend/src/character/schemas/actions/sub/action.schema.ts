@@ -3,18 +3,18 @@ import { Damage } from '@/character/schemas/actions/sub/damage.schema';
 import { Schema } from '@nestjs/mongoose';
 @Schema({ _id: false })
 export class Action {
-  @Prop({ required: true })
-  name: string;
+  @Prop()
+  name?: string;
 
-  @Prop({ required: true })
-  type: string;
+  @Prop()
+  type?: string;
 
-  @Prop({ required: true })
-  attackBonus: number;
+  @Prop()
+  attackBonus?: number;
 
-  @Prop({ type: Damage, required: true })
+  @Prop({ type: Damage, default: {} })
   damage: Damage;
 
-  @Prop({ required: true })
-  range: string;
+  @Prop()
+  range?: string;
 }

@@ -2,11 +2,11 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class Damage {
-  @Prop({ required: true })
-  dice: string;
+  @Prop()
+  dice?: string;
 
-  @Prop({ required: true })
-  type: string;
+  @Prop()
+  type?: string;
 }
 
 export const DamageSchema = SchemaFactory.createForClass(Damage);

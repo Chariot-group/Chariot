@@ -21,56 +21,50 @@ export class Stats {
   })
   size: (typeof sizes)[number];
 
-  @Prop({ required: true })
+  @Prop({ default: 0 })
   maxHitPoints: number;
 
-  @Prop({ required: true })
+  @Prop({
+    default: function () {
+      return this.maxHitPoints;
+    },
+  })
   currentHitPoints: number;
 
-  @Prop({ required: true })
+  @Prop({ default: 0 })
   tempHitPoints: number;
 
-  @Prop({ required: true })
+  @Prop({ default: 0 })
   armorClass: number;
 
-  @Prop({ type: Speed, required: true })
+  @Prop({ type: Speed, default: {} })
   speed: Speed;
 
-  @Prop({ type: AbilityScores, required: true })
+  @Prop({ type: AbilityScores, default: {} })
   abilityScores: AbilityScores;
 
   @Prop({ default: 0 })
   darkvision: number;
 
-  @Prop({ type: [String], required: true })
+  @Prop({ type: [String], default: [] })
   languages: string[];
 
-  @Prop({ required: true })
+  @Prop({ default: 0 })
   passivePerception: number;
+
+  @Prop({ type: SavingThrows, default: {} })
+  savingThrows: SavingThrows;
+
+  @Prop({ type: Skills, default: {} })
+  skills: Skills;
 }
 
 export const StatsSchema = SchemaFactory.createForClass(Stats);
 
 @Schema({ _id: false })
 export class PlayerStats extends Stats {
-  @Prop({ type: SavingThrows, required: true })
-  savingThrows: SavingThrows;
-
-  @Prop({ type: Skills, required: true })
-  skills: Skills;
-
-  @Prop({ required: true })
+  @Prop({ default: 0 })
   proficiencyBonus: number;
 }
 
 export const PlayerStatsSchema = SchemaFactory.createForClass(PlayerStats);
-@Schema({ _id: false })
-export class NPCStats extends Stats {
-  @Prop({ type: SavingThrows })
-  savingThrows?: SavingThrows;
-
-  @Prop({ type: Skills })
-  skills?: Skills;
-}
-
-export const NPCStatsSchema = SchemaFactory.createForClass(NPCStats);

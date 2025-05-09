@@ -17,10 +17,10 @@ export class Character extends BaseSchema {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ type: Stats, required: true })
+  @Prop({ type: Stats, default: {} })
   stats: Stats;
 
-  @Prop({ type: Affinities })
+  @Prop({ type: Affinities, default: {} })
   affinities: Affinities;
 
   @Prop({ type: [Ability], default: [] })

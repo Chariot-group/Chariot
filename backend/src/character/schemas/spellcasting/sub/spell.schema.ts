@@ -3,20 +3,20 @@ import { SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class Spell {
-  @Prop({ required: true })
-  name: string;
+  @Prop()
+  name?: string;
 
-  @Prop({ required: true })
-  level: number;
+  @Prop()
+  level?: number;
 
-  @Prop({ required: true })
-  school: string;
+  @Prop()
+  schoo?: string;
 
   @Prop()
   description?: string;
 
-  @Prop()
-  components?: string[];
+  @Prop({ default: [] })
+  components: string[];
 
   @Prop()
   castingTime?: string;

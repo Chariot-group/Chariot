@@ -9,14 +9,14 @@ export type NPCDocument = NPC & Document;
 
 @Schema()
 export class NPC extends Character {
-  @Prop({ type: [Actions], required: true, default: [] })
+  @Prop({ type: [Actions], default: [] })
   actions: Actions[];
 
-  @Prop({ type: [Challenge], required: true, default: [] })
+  @Prop({ type: [Challenge], default: [] })
   challenge: Challenge[];
 
-  @Prop({ type: NPCProfile, required: true })
-  profile: NPCProfile;
+  @Prop({ type: NPCProfile, default: {} })
+  profile?: NPCProfile;
 }
 
 export const NPCSchema = SchemaFactory.createForClass(NPC);

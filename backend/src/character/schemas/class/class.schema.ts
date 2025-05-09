@@ -2,17 +2,17 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class Class {
-  @Prop({ required: true })
-  name: string;
+  @Prop()
+  name?: string;
 
   @Prop()
-  subclass: string;
+  subclass?: string;
 
-  @Prop({ required: true })
+  @Prop({ default: 1 })
   level: number;
 
-  @Prop({ required: true })
-  hitDice: number;
+  @Prop()
+  hitDice?: number;
 }
 
 export const ClassSchema = SchemaFactory.createForClass(Class);

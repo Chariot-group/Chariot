@@ -5,13 +5,13 @@ import { Spell } from '@/character/schemas/spellcasting/sub/spell.schema';
 
 @Schema({ _id: false })
 export class Spellcasting {
-  @Prop({ required: true })
-  ability: string;
+  @Prop()
+  ability?: string;
 
-  @Prop({ required: true })
-  saveDC: number;
+  @Prop()
+  saveDC?: number;
 
-  @Prop({ required: true })
+  @Prop()
   attackBonus: number;
   @Prop({
     type: Map,
@@ -23,7 +23,7 @@ export class Spellcasting {
       { _id: false },
     ),
   })
-  spellSlotsByLevel: Map<number, { total: number; used: number }>;
+  spellSlotsByLevel?: Map<number, { total?: number; used?: number }>;
 
   @Prop({ default: 0 })
   totalSlots: number;

@@ -2,19 +2,19 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
 export class Speed {
-  @Prop({ required: false })
+  @Prop()
   walk?: number;
 
-  @Prop({ required: false })
+  @Prop()
   climb?: number;
 
-  @Prop({ required: false })
+  @Prop()
   swim?: number;
 
-  @Prop({ required: false })
+  @Prop()
   fly?: number;
 
-  @Prop({ required: false })
+  @Prop()
   burrow?: number;
 }
 export const SpeedSchema = SchemaFactory.createForClass(Speed);
