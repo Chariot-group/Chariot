@@ -449,52 +449,54 @@
       "passivePerception": 19
     },
     "abilities": [],
-    "spellcasting": {
-      "ability": "intelligence",
-      "saveDC": 18,
-      "attackBonus": 10,
-      "spellSlotsByLevel": {
-        "1": { "total": 4, "used": 0 },
-        "2": { "total": 3, "used": 0 },
-        "3": { "total": 3, "used": 0 },
-        "4": { "total": 3, "used": 0 },
-        "5": { "total": 2, "used": 0 },
-        "6": { "total": 1, "used": 0 },
-        "7": { "total": 1, "used": 0 },
-        "8": { "total": 1, "used": 0 },
-        "9": { "total": 1, "used": 0 }
-      },
-      "totalSlots": 19,
-      "spells": [
-        {
-          "name": "Mage Hand",
-          "level": 0,
-          "school": "conjuration",
-          "castingTime": "1 action",
-          "range": "30 feet",
-          "components": ["V", "S"],
-          "duration": "1 minute"
+    "spellcasting": [
+      {
+        "ability": "intelligence",
+        "saveDC": 18,
+        "attackBonus": 10,
+        "spellSlotsByLevel": {
+          "1": { "total": 4, "used": 0 },
+          "2": { "total": 3, "used": 0 },
+          "3": { "total": 3, "used": 0 },
+          "4": { "total": 3, "used": 0 },
+          "5": { "total": 2, "used": 0 },
+          "6": { "total": 1, "used": 0 },
+          "7": { "total": 1, "used": 0 },
+          "8": { "total": 1, "used": 0 },
+          "9": { "total": 1, "used": 0 }
         },
-        {
-          "name": "Disrupt Undead",
-          "level": 0,
-          "school": "necromancy",
-          "castingTime": "1 action",
-          "range": "60 feet",
-          "components": ["V", "S"],
-          "duration": "Instantaneous"
-        },
-        {
-          "name": "Dispel Magic",
-          "level": 3,
-          "school": "abjuration",
-          "castingTime": "1 action",
-          "range": "120 feet",
-          "components": ["V", "S"],
-          "duration": "Instantaneous"
-        }
-      ]
-    },
+        "totalSlots": 19,
+        "spells": [
+          {
+            "name": "Mage Hand",
+            "level": 0,
+            "school": "conjuration",
+            "castingTime": "1 action",
+            "range": "30 feet",
+            "components": ["V", "S"],
+            "duration": "1 minute"
+          },
+          {
+            "name": "Disrupt Undead",
+            "level": 0,
+            "school": "necromancy",
+            "castingTime": "1 action",
+            "range": "60 feet",
+            "components": ["V", "S"],
+            "duration": "Instantaneous"
+          },
+          {
+            "name": "Dispel Magic",
+            "level": 3,
+            "school": "abjuration",
+            "castingTime": "1 action",
+            "range": "120 feet",
+            "components": ["V", "S"],
+            "duration": "Instantaneous"
+          }
+        ]
+      }
+    ],
     "actions": {
       "standard": [],
       "legendary": [],
@@ -675,36 +677,38 @@
         "description": "You can cast bard spells using Charisma as your spellcasting ability."
       }
     ],
-    "spellcasting": {
-      "ability": "charisma",
-      "saveDC": 13,
-      "attackBonus": 5,
-      "spellSlotsByLevel": {
-        "1": { "total": 4, "used": 0 },
-        "2": { "total": 2, "used": 0 }
-      },
-      "totalSlots": 6,
-      "spells": [
-        {
-          "name": "Vicious Mockery",
-          "level": 0,
-          "school": "enchantment",
-          "castingTime": "1 action",
-          "range": "60 feet",
-          "components": ["V"],
-          "duration": "Instantaneous"
+    "spellcasting": [
+      {
+        "ability": "charisma",
+        "saveDC": 13,
+        "attackBonus": 5,
+        "spellSlotsByLevel": {
+          "1": { "total": 4, "used": 0 },
+          "2": { "total": 2, "used": 0 }
         },
-        {
-          "name": "Healing Word",
-          "level": 1,
-          "school": "evocation",
-          "castingTime": "1 bonus action",
-          "range": "60 feet",
-          "components": ["V"],
-          "duration": "Instantaneous"
-        }
-      ]
-    },
+        "totalSlots": 6,
+        "spells": [
+          {
+            "name": "Vicious Mockery",
+            "level": 0,
+            "school": "enchantment",
+            "castingTime": "1 action",
+            "range": "60 feet",
+            "components": ["V"],
+            "duration": "Instantaneous"
+          },
+          {
+            "name": "Healing Word",
+            "level": 1,
+            "school": "evocation",
+            "castingTime": "1 bonus action",
+            "range": "60 feet",
+            "components": ["V"],
+            "duration": "Instantaneous"
+          }
+        ]
+      }
+    ],
     "affinities": {
       "resistances": [],
       "immunities": [],
@@ -804,7 +808,7 @@
         "description": "When you rage, you can choose to go into a frenzy. If you do so, for the duration of your rage you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion."
       }
     ],
-    "spellcasting": null,
+    "spellcasting": [],
     "affinities": {
       "resistances": ["bludgeoning", "piercing", "slashing (while raging)"],
       "immunities": [],
@@ -902,7 +906,7 @@
         "description": "You can take a bonus action on each of your turns to Dash, Disengage, or Hide."
       }
     ],
-    "spellcasting": null,
+    "spellcasting": [],
     "affinities": {
       "resistances": [],
       "immunities": [],
@@ -1000,26 +1004,28 @@
         "description": "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions."
       }
     ],
-    "spellcasting": {
-      "ability": "wisdom",
-      "saveDC": 12,
-      "attackBonus": 4,
-      "spellSlotsByLevel": {
-        "1": { "total": 2, "used": 0 }
-      },
-      "totalSlots": 2,
-      "spells": [
-        {
-          "name": "Hunter's Mark",
-          "level": 1,
-          "school": "divination",
-          "castingTime": "1 bonus action",
-          "range": "90 feet",
-          "components": ["V"],
-          "duration": "Concentration, up to 1 hour"
-        }
-      ]
-    },
+    "spellcasting": [
+      {
+        "ability": "wisdom",
+        "saveDC": 12,
+        "attackBonus": 4,
+        "spellSlotsByLevel": {
+          "1": { "total": 2, "used": 0 }
+        },
+        "totalSlots": 2,
+        "spells": [
+          {
+            "name": "Hunter's Mark",
+            "level": 1,
+            "school": "divination",
+            "castingTime": "1 bonus action",
+            "range": "90 feet",
+            "components": ["V"],
+            "duration": "Concentration, up to 1 hour"
+          }
+        ]
+      }
+    ],
     "affinities": {
       "resistances": [],
       "immunities": [],
@@ -1122,54 +1128,56 @@
         "description": "Communication rudimentaire avec les animaux."
       }
     ],
-    "spellcasting": {
-      "ability": "wisdom",
-      "saveDC": 13,
-      "attackBonus": 5,
-      "spellSlotsByLevel": {
-        "1": { "total": 4, "used": 0 },
-        "2": { "total": 2, "used": 0 }
-      },
-      "totalSlots": 6,
-      "spells": [
-        {
-          "name": "Entangle",
-          "level": 1,
-          "school": "conjuration",
-          "castingTime": "1 action",
-          "range": "90 feet",
-          "components": ["V", "S"],
-          "duration": "Concentration, up to 1 minute"
+    "spellcasting": [
+      {
+        "ability": "wisdom",
+        "saveDC": 13,
+        "attackBonus": 5,
+        "spellSlotsByLevel": {
+          "1": { "total": 4, "used": 0 },
+          "2": { "total": 2, "used": 0 }
         },
-        {
-          "name": "Cure Wounds",
-          "level": 1,
-          "school": "evocation",
-          "castingTime": "1 action",
-          "range": "Touch",
-          "components": ["V", "S"],
-          "duration": "Instantaneous"
-        },
-        {
-          "name": "Flaming Sphere",
-          "level": 2,
-          "school": "conjuration",
-          "castingTime": "1 action",
-          "range": "60 feet",
-          "components": ["V", "S", "M"],
-          "duration": "Concentration, up to 1 minute"
-        },
-        {
-          "name": "Moonbeam",
-          "level": 2,
-          "school": "evocation",
-          "castingTime": "1 action",
-          "range": "120 feet",
-          "components": ["V", "S", "M"],
-          "duration": "Concentration, up to 1 minute"
-        }
-      ]
-    },
+        "totalSlots": 6,
+        "spells": [
+          {
+            "name": "Entangle",
+            "level": 1,
+            "school": "conjuration",
+            "castingTime": "1 action",
+            "range": "90 feet",
+            "components": ["V", "S"],
+            "duration": "Concentration, up to 1 minute"
+          },
+          {
+            "name": "Cure Wounds",
+            "level": 1,
+            "school": "evocation",
+            "castingTime": "1 action",
+            "range": "Touch",
+            "components": ["V", "S"],
+            "duration": "Instantaneous"
+          },
+          {
+            "name": "Flaming Sphere",
+            "level": 2,
+            "school": "conjuration",
+            "castingTime": "1 action",
+            "range": "60 feet",
+            "components": ["V", "S", "M"],
+            "duration": "Concentration, up to 1 minute"
+          },
+          {
+            "name": "Moonbeam",
+            "level": 2,
+            "school": "evocation",
+            "castingTime": "1 action",
+            "range": "120 feet",
+            "components": ["V", "S", "M"],
+            "duration": "Concentration, up to 1 minute"
+          }
+        ]
+      }
+    ],
     "affinities": {
       "resistances": [],
       "immunities": [],
@@ -1280,66 +1288,68 @@
         "description": "Les morts-vivants détruits automatiquement si ratent leur sauvegarde contre le renvoi."
       }
     ],
-    "spellcasting": {
-      "ability": "wisdom",
-      "saveDC": 17,
-      "attackBonus": 9,
-      "spellSlotsByLevel": {
-        "1": { "total": 4, "used": 0 },
-        "2": { "total": 3, "used": 0 },
-        "3": { "total": 3, "used": 0 },
-        "4": { "total": 3, "used": 0 },
-        "5": { "total": 2, "used": 0 }
-      },
-      "totalSlots": 15,
-      "spells": [
-        {
-          "name": "Cure Wounds",
-          "level": 1,
-          "school": "evocation",
-          "castingTime": "1 action",
-          "range": "Touch",
-          "components": ["V", "S"],
-          "duration": "Instantaneous"
+    "spellcasting": [
+      {
+        "ability": "wisdom",
+        "saveDC": 17,
+        "attackBonus": 9,
+        "spellSlotsByLevel": {
+          "1": { "total": 4, "used": 0 },
+          "2": { "total": 3, "used": 0 },
+          "3": { "total": 3, "used": 0 },
+          "4": { "total": 3, "used": 0 },
+          "5": { "total": 2, "used": 0 }
         },
-        {
-          "name": "Spiritual Weapon",
-          "level": 2,
-          "school": "evocation",
-          "castingTime": "1 bonus action",
-          "range": "60 feet",
-          "components": ["V", "S"],
-          "duration": "1 minute"
-        },
-        {
-          "name": "Spirit Guardians",
-          "level": 3,
-          "school": "conjuration",
-          "castingTime": "1 action",
-          "range": "Self (15-foot radius)",
-          "components": ["V", "S", "M"],
-          "duration": "Concentration, up to 10 minutes"
-        },
-        {
-          "name": "Guardian of Faith",
-          "level": 4,
-          "school": "conjuration",
-          "castingTime": "1 action",
-          "range": "30 feet",
-          "components": ["V"],
-          "duration": "8 hours"
-        },
-        {
-          "name": "Flame Strike",
-          "level": 5,
-          "school": "evocation",
-          "castingTime": "1 action",
-          "range": "60 feet",
-          "components": ["V", "S", "M"],
-          "duration": "Instantaneous"
-        }
-      ]
-    },
+        "totalSlots": 15,
+        "spells": [
+          {
+            "name": "Cure Wounds",
+            "level": 1,
+            "school": "evocation",
+            "castingTime": "1 action",
+            "range": "Touch",
+            "components": ["V", "S"],
+            "duration": "Instantaneous"
+          },
+          {
+            "name": "Spiritual Weapon",
+            "level": 2,
+            "school": "evocation",
+            "castingTime": "1 bonus action",
+            "range": "60 feet",
+            "components": ["V", "S"],
+            "duration": "1 minute"
+          },
+          {
+            "name": "Spirit Guardians",
+            "level": 3,
+            "school": "conjuration",
+            "castingTime": "1 action",
+            "range": "Self (15-foot radius)",
+            "components": ["V", "S", "M"],
+            "duration": "Concentration, up to 10 minutes"
+          },
+          {
+            "name": "Guardian of Faith",
+            "level": 4,
+            "school": "conjuration",
+            "castingTime": "1 action",
+            "range": "30 feet",
+            "components": ["V"],
+            "duration": "8 hours"
+          },
+          {
+            "name": "Flame Strike",
+            "level": 5,
+            "school": "evocation",
+            "castingTime": "1 action",
+            "range": "60 feet",
+            "components": ["V", "S", "M"],
+            "duration": "Instantaneous"
+          }
+        ]
+      }
+    ],
     "affinities": {
       "resistances": [],
       "immunities": [],
@@ -1470,7 +1480,214 @@
         "description": "+2 dégâts si une seule arme à une main (comme Animus)."
       }
     ],
-    "spellcasting": null,
+    "spellcasting": [],
+    "affinities": {
+      "resistances": [],
+      "immunities": [],
+      "vulnerabilities": []
+    }
+  },
+  {
+    "name": "Varis Umbros",
+    "kind": "player",
+    "inspiration": false,
+    "progression": {
+      "level": 12,
+      "experience": 85000
+    },
+    "class": [
+      {
+        "name": "Occultist",
+        "subclass": "The Great Old One",
+        "level": 5,
+        "hitDie": 8
+      },
+      {
+        "name": "Mage",
+        "subclass": "School of Divination",
+        "level": 7,
+        "hitDie": 6
+      }
+    ],
+    "profile": {
+      "alignment": "neutral",
+      "race": "half-elf",
+      "background": "Sage"
+    },
+    "appearance": {
+      "age": 135,
+      "height": 6.1,
+      "weight": 165,
+      "eyes": "silver",
+      "hair": "white",
+      "skin": "ashen"
+    },
+    "background": {
+      "personalityTraits": "Reserved and analytical, always searching for hidden patterns.",
+      "bonds": "I must uncover the secrets whispered to me in dreams.",
+      "flaws": "My obsession with forbidden knowledge blinds me to consequences.",
+      "ideals": "Truth must be known, no matter the cost.",
+      "alliesAndOrgs": "Former member of the Arcane Conclave.",
+      "backstory": "Varis was a gifted diviner who was touched by an unknowable entity. He now balances mortal knowledge with maddening whispers from beyond."
+    },
+    "treasure": {
+      "cp": 10,
+      "sp": 25,
+      "ep": 5,
+      "gp": 300,
+      "pp": 2,
+      "notes": "Arcane focus shaped like a black eye, ring of mind shielding, spellbook bound in starmetal."
+    },
+    "stats": {
+      "size": "Medium",
+      "maxHitPoints": 74,
+      "currentHitPoints": 74,
+      "tempHitPoints": 0,
+      "armorClass": 15,
+      "speed": {
+        "walk": 30
+      },
+      "abilityScores": {
+        "strength": 10,
+        "dexterity": 14,
+        "constitution": 14,
+        "intelligence": 18,
+        "wisdom": 12,
+        "charisma": 16
+      },
+      "savingThrows": {
+        "strength": 0,
+        "dexterity": 2,
+        "constitution": 2,
+        "intelligence": 6,
+        "wisdom": 1,
+        "charisma": 5
+      },
+      "skills": {
+        "arcana": 9,
+        "history": 9,
+        "investigation": 9,
+        "insight": 5
+      },
+      "senses": {
+        "darkvision": 60
+      },
+      "languages": ["Common", "Elvish", "Deep Speech", "Infernal"],
+      "passivePerception": 11
+    },
+    "abilities": [
+      {
+        "name": "Awakened Mind",
+        "description": "You can telepathically speak to any creature within 30 feet that understands a language."
+      },
+      {
+        "name": "Portent (Divination)",
+        "description": "At the start of each day, roll two d20s. You can replace any attack roll, saving throw, or ability check with one of these rolls."
+      },
+      {
+        "name": "Eldritch Invocations",
+        "description": "Includes Agonizing Blast, Misty Visions, and Eldritch Sight."
+      }
+    ],
+    "spellcasting": [
+      {
+        "source": "Mage",
+        "ability": "intelligence",
+        "saveDC": 14,
+        "attackBonus": 6,
+        "totalSlots": 11,
+        "spellSlotsByLevel": {
+          "1": { "total": 4, "used": 0 },
+          "2": { "total": 3, "used": 0 },
+          "3": { "total": 3, "used": 0 },
+          "4": { "total": 1, "used": 0 }
+        },
+        "spells": [
+          {
+            "name": "Shield",
+            "level": 1,
+            "school": "abjuration",
+            "castingTime": "1 reaction",
+            "range": "Self",
+            "components": ["V", "S"],
+            "duration": "1 round"
+          },
+          {
+            "name": "Misty Step",
+            "level": 2,
+            "school": "conjuration",
+            "castingTime": "1 bonus action",
+            "range": "Self",
+            "components": ["V"],
+            "duration": "Instantaneous"
+          },
+          {
+            "name": "Counterspell",
+            "level": 3,
+            "school": "abjuration",
+            "castingTime": "1 reaction",
+            "range": "60 feet",
+            "components": ["S"],
+            "duration": "Instantaneous"
+          },
+          {
+            "name": "Arcane Eye",
+            "level": 4,
+            "school": "divination",
+            "castingTime": "1 action",
+            "range": "30 feet",
+            "components": ["V", "S", "M"],
+            "duration": "Concentration, up to 1 hour"
+          }
+        ]
+      },
+      {
+        "source": "Occultist",
+        "ability": "charisma",
+        "saveDC": 13,
+        "attackBonus": 5,
+        "totalSlots": 2,
+        "slotLevel": 3,
+        "spells": [
+          {
+            "name": "Eldritch Blast",
+            "level": 0,
+            "school": "evocation",
+            "castingTime": "1 action",
+            "range": "120 feet",
+            "components": ["V", "S"],
+            "duration": "Instantaneous"
+          },
+          {
+            "name": "Hex",
+            "level": 1,
+            "school": "enchantment",
+            "castingTime": "1 bonus action",
+            "range": "90 feet",
+            "components": ["V", "S", "M"],
+            "duration": "Concentration, up to 1 hour"
+          },
+          {
+            "name": "Darkness",
+            "level": 2,
+            "school": "evocation",
+            "castingTime": "1 action",
+            "range": "60 feet",
+            "components": ["V", "M"],
+            "duration": "Concentration, up to 10 minutes"
+          },
+          {
+            "name": "Dispel Magic",
+            "level": 3,
+            "school": "abjuration",
+            "castingTime": "1 action",
+            "range": "120 feet",
+            "components": ["V", "S"],
+            "duration": "Instantaneous"
+          }
+        ]
+      }
+    ],
     "affinities": {
       "resistances": [],
       "immunities": [],
