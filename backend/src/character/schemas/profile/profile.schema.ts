@@ -12,9 +12,6 @@ export const ProfileSchema = SchemaFactory.createForClass(Profile);
 @Schema({ _id: false })
 export class PlayerProfile extends Profile {
   @Prop()
-  background?: string;
-
-  @Prop()
   race?: string;
 
   @Prop()
