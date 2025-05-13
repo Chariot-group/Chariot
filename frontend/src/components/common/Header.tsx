@@ -26,6 +26,10 @@ export function Header({ campaign }: HeaderProps) {
     async (id: string) => {
         try {
             let response = await AuthService.profile(id);
+            if(!response.data){
+              logout();
+              return;
+            }
             setUser(response.data);
         } catch (err) {
             console.error("Error fetching user:", err);
