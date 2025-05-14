@@ -60,7 +60,6 @@ export default function CampaignsPage() {
 
             groupsLabelRef.current.forEach(async (group) => {
                 if (!Number.isInteger(Number(group._id))) {
-                    console.log('update', group);
                     await GroupService.updateGroup(group._id, {label: group.label});
                 }else {
                     newGroupRef.current.forEach((newGroup) => {
