@@ -63,9 +63,13 @@ export class CharacterService {
 
       const newCharacter = new this.characterModel({
         ...createCharacterDto,
-        createdBy: userId,
+        createdBy: new Types.ObjectId(userId),
       });
       const savedCharacter = await newCharacter.save();
+      let group = await this.groupModel.updateMany(
+        { _id: { $in: createCharacterDto.groups.map((id) => id) } },
+        { $addToSet: { characters: savedCharacter._id } },
+      );
       const end = Date.now();
 
       const message = `Character created in ${end - start}ms`;
