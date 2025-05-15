@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from '@/auth/auth.controller';
-import { AuthService } from '@/auth/auth.service';
-import { UserModule } from '@/user/user.module';
+import { AuthController } from '@/resources/auth/auth.controller';
+import { AuthService } from '@/resources/auth/auth.service';
+import { UserModule } from '@/resources/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Algorithm } from 'jsonwebtoken';
 import { JwtStrategy } from '@/common/strategies/jwt.strategy';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '@/user/schemas/user.schema';
+import { User, UserSchema } from '@/resources/user/schemas/user.schema';
 import { MaillingModule } from '@/mailling/mailling.module';
 
 @Module({
