@@ -1,7 +1,7 @@
 "use client";
 
 import Field from "@/components/common/Field";
-import DeleteValidation from "@/components/common/modals/DeleteValidation";
+import DeleteValidation from "@/components/modals/DeleteValidation";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
