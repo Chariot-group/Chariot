@@ -72,7 +72,6 @@ export default function CampaignsPage() {
 
             newGroupRef.current.forEach(async (group) => {
                 const {_id, ...groupWhitoutId} = group;
-                console.log('create', groupWhitoutId);
                 await GroupService.createGroup(groupWhitoutId);
             });
 
@@ -90,7 +89,6 @@ export default function CampaignsPage() {
         async (updateCampaign: Partial<ICampaign>) => {
           try {
             if(!updateCampaign._id) return;
-            console.log("updateCampaign", updateCampaign);
             const {groups, ...campaigns} = updateCampaign;
             let response = await CampaignService.updateCampaign(updateCampaign._id, campaigns);
 

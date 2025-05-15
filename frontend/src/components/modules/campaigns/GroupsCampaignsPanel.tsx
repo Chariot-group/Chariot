@@ -63,7 +63,6 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
             idCampaign: idCampaign,
             type: to,
           }] };
-          console.log(t);
           return t;
         }
         return g;

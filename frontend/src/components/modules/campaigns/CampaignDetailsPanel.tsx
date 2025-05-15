@@ -41,7 +41,9 @@ export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete, 
 
     return (
         <div className="flex flex-col w-full gap-3 p-5">
-            <DeleteValidation isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title={t("modal.title")} message={t("modal.description")} confirmMessage={t("modal.confirm")} onConfirm={() => onDelete(campaign)}  />
+            { deleteModalOpen &&
+                <DeleteValidation isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title={t("modal.title")} message={t("modal.description")} confirmMessage={t("modal.confirm")} onConfirm={() => onDelete(campaign)}  />
+            }
             <div className="w-full flex flex-col gap-2">
                 <div className="w-full flex justify-between items-center">
                     <Label htmlFor={"description"} className="text-foreground">{t("labels.description")}</Label>

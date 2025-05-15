@@ -93,7 +93,6 @@ export default function CampaignGroupsPage() {
             try {
                 if(!updateGroup._id) return;
                 const { campaigns, characters, ...group } = updateGroup;
-                console.log("characters", characters);
                 let response = await GroupService.updateGroup(updateGroup._id, group);
 
                 setGroupSelected(response.data);
@@ -296,7 +295,7 @@ export default function CampaignGroupsPage() {
             <Header campaign={campaign} />
             <main className="h-full flex flex-row">
                 <div className="w-[15%]">
-                    <GroupListPanel search={search} setSearch={setSearch} idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} />
+                    <GroupListPanel search={search} setSearch={setSearch} idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} changeLabel={() => {}} />
                 </div>
                 <div className="h-[90vh] justify-center flex flex-col">
                     <div className="h-[80vh] border border-ring"></div>

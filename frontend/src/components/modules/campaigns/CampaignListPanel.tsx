@@ -7,6 +7,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import CampaignService from "@/services/campaignService";
+import { create } from "domain";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -55,6 +56,9 @@ const CampaignListPanel = ({
           offset,
           label: encodeURIComponent(search),
         });
+        if(response.statusCode === 401){
+          return;
+        }
         if (reset) {
           setCampaigns(response.data);
           setSelectedCampaign(response.data[0] || null);
@@ -88,7 +92,7 @@ const CampaignListPanel = ({
     fetchCampaigns(search, 1, true);
   }, [currentLocale, search, selectedCampaign?.deletedAt]);
 
-  const [crearteModalOpen, setCreateModalOpen] = useState<boolean>(false);
+  const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
   
   const createCampaign = useCallback(async (label: string) => {
     try {
@@ -101,7 +105,10 @@ const CampaignListPanel = ({
 
   return (
     <div className="w-full h-full flex flex-col">
-      <CreateCampaign isOpen={crearteModalOpen} onClose={() => setCreateModalOpen(false)} onConfirm={createCampaign} />
+      {
+        createModalOpen &&
+        <CreateCampaign isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} onConfirm={createCampaign} />
+      }
 
       <CardHeader className="flex-none h-auto items-center gap-3">
         <CardTitle className="text-foreground font-bold">
