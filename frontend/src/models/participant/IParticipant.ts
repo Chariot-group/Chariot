@@ -1,4 +1,4 @@
-import ICharacter from "../characters/ICharacter";
+import ICharacter from "@/models/characters/ICharacter";
 
 export interface IParticipant {
   character: ICharacter;

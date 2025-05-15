@@ -128,7 +128,7 @@ const CampaignListPanel = ({
       >
         <div className="flex flex-col gap-3">
           {loading && <Loading />}
-          {campaigns.length > 0 &&
+          {campaigns && campaigns.length > 0 &&
             campaigns.map((campaign) => (
               <Card
                 key={campaign._id}
@@ -142,7 +142,7 @@ const CampaignListPanel = ({
                 </span>
               </Card>
             ))}
-          {campaigns.length === 0 && !loading && (
+          {campaigns && campaigns.length === 0 && !loading && (
             <div className="row-start-2 col-span-3 flex items-top justify-center">
               <p className="text-gray-500">{t("noCampaigns")}</p>
             </div>
