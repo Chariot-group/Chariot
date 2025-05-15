@@ -218,7 +218,7 @@ export default function CampaignGroupsPage() {
         return () => {
           window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isUpdating]);
+    }, [isUpdating, groupSelected]);
 
     const addCharacter = (idGroup: string) => {
         const newCharacter: Partial<ICharacter> = {
@@ -321,7 +321,7 @@ export default function CampaignGroupsPage() {
             <Header campaign={campaign} />
             <main className="h-full flex flex-row">
                 <div className="w-[15%]">
-                    <GroupListPanel search={search} setSearch={setSearch} idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} changeLabel={() => {}} />
+                    <GroupListPanel search={search} setSearch={setSearch} idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} changeLabel={() => { } } updatedGroup={[]} />
                 </div>
                 <div className="h-[90vh] justify-center flex flex-col">
                     <div className="h-[80vh] border border-ring"></div>
