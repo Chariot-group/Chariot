@@ -109,7 +109,7 @@ export class AuthService {
     async resetPassword(resetPasswordDto: ResetPasswordDto) {
         try {
 
-            const { email, local } = resetPasswordDto;
+            const { email, locale } = resetPasswordDto;
             await this.validateResourceByEmail(email);
 
             const user = await this.userService.findByEmail(email);
@@ -122,7 +122,7 @@ export class AuthService {
                 .exec();
             const end: number = Date.now();
 
-            this.maillingService.sendOTP(user.username, user.email, otp, local);
+            this.maillingService.sendOTP(user.username, user.email, otp, locale);
 
             if (userUpdate.modifiedCount === 0) {
                 const message = `User #${email} not found`;

@@ -26,6 +26,7 @@ export class AuthController {
     return this.userService.create(createUserDto);
   }
 
+  @Public()
   @Patch(':id/change-password')
   forgotPassword(
     @Param('id') id: string,
@@ -34,6 +35,7 @@ export class AuthController {
     return this.authService.forgotPassword(id, changePassword);
   }
 
+  @Public()
   @Patch('/reset-password')
   resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
       return this.authService.resetPassword(resetPasswordDto);
