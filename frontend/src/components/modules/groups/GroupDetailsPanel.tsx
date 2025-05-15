@@ -11,13 +11,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/useToast";
-import { ICampaign } from "@/models/campaigns/ICampaign";
 import { IGroup } from "@/models/groups/IGroup";
-import GroupService from "@/services/groupService";
 import { PenBoxIcon, SaveIcon, TrashIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface GroupDetailsPanelProps {
   group: IGroup;

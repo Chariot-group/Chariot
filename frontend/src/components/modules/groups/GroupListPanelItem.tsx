@@ -2,10 +2,9 @@ import React, { useRef } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { Card } from "@/components/ui/card";
 import { IGroup } from "@/models/groups/IGroup";
-import { Circle, CircleAlert, CircleDotIcon, DotIcon, Grip } from "lucide-react";
+import { Grip } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 
 interface Props {
   group: IGroup;

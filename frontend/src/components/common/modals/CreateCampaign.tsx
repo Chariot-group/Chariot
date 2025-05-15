@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/useToast';
-import { on } from 'events';
 import { useTranslations } from 'next-intl';
 import { useState, useEffect, useRef } from 'react';
 

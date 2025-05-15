@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
-import { CrosshairIcon, CrossIcon, PenBoxIcon, SaveIcon, TrashIcon, XIcon } from "lucide-react";
+import { PenBoxIcon, SaveIcon, TrashIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
