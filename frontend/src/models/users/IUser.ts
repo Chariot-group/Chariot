@@ -1,4 +1,4 @@
-import { ICampaign } from "../campaigns/ICampaign";
+import { ICampaign } from "@/models/campaigns/ICampaign";
 
 export interface IUser {
     _id: string,

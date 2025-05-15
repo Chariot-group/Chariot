@@ -1,4 +1,4 @@
-import IDamage from "./IDamage";
+import IDamage from "@/models/characters/actions/sub/IDamage";
 
 export default interface IAction {
     name: string;

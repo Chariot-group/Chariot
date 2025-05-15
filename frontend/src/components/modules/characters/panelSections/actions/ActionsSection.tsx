@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import IActions from "@/models/characters/actions/IActions";
-import { ActionCard } from "./cards/ActionCard";
+import { ActionCard } from "@/components/modules/characters/panelSections/actions/cards/ActionCard";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { PlusCircleIcon } from "lucide-react";
