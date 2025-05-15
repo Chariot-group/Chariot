@@ -6,5 +6,5 @@ export class ResetPasswordDto {
     readonly email: string;
 
     @IsLocale()
-    readonly local: string;
+    readonly locale: string;
 }
