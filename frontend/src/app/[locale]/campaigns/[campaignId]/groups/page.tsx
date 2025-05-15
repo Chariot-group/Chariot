@@ -96,6 +96,17 @@ export default function CampaignGroupsPage() {
                 let response = await GroupService.updateGroup(updateGroup._id, group);
 
                 setGroupSelected(response.data);
+                setGroups((prev) => {
+                    return prev.map((group) => {
+                        if (group._id === response.data._id) {
+                            return {
+                                ...group,
+                                label: response.data.label,
+                            }
+                        }
+                        return group;
+                    });
+                });
             } catch (err) {
                 error(t("toasts.errorGroup"));
             }
