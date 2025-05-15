@@ -97,8 +97,7 @@ const CampaignListPanel = ({
   const createCampaign = useCallback(async (label: string) => {
     try {
       const response = await CampaignService.createCampaign({label, description: "", groups: {main: [], npc: [], archived: []}});
-      setCampaigns([response.data, ...campaigns]);
-      setSelectedCampaign(response.data);
+      fetchCampaigns(search, 1, true);
       success(t("created"));
     } catch(err){
       error(t("error"));

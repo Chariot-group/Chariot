@@ -73,12 +73,10 @@ const GroupListPanelItem = ({
 
       onMouseDown={!isOverlay && !grabbled ? handleMouseDown : undefined}
       onMouseUp={!isOverlay && !grabbled ? handleMouseUp : undefined}
-      className={`flex p-2 border-ring items-center shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] ${
+      className={`flex p-2 cursor-pointer border-ring items-center shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] ${
         reverse ? "bg-background" : "bg-card"
       } ${
-        !grabbled
-          ? "justify-between cursor-grab"
-          : "cursor-pointer justify-center"
+        grabbled && "cursor-pointer justify-center"
       } ${isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""} ${
         groupSelected?._id === group._id ? "border-2" : ""
       } ${
@@ -93,7 +91,7 @@ const GroupListPanelItem = ({
     >
       {
         !grabbled && (
-          <span className={`${grabbled ? 'cursor-grab': 'cursor-pointer'} text-foreground font-bold`}>{group.label}</span>
+          <span className={`cursor-pointer text-foreground font-bold`}>{group.label}</span>
         )
       }
 

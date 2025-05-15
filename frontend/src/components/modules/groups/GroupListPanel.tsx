@@ -111,10 +111,11 @@ export default function GroupListPanel({
       const response = await GroupService.createGroup({
         label: t("newGroup.label"),
         description: "",
-        campaigns: [{ idCampaign, type: "npc" }],
+        campaigns: [{ idCampaign: idCampaign, type: "npc" }],
       });
       setNewGroup(response.data);
       fetchGroups(search, 1, true);
+      setSearch("");
     } catch (err) {
       error(t("error"));
     } finally {
@@ -137,7 +138,7 @@ export default function GroupListPanel({
   }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
 
   const isUpdated = (group: IGroup) => {
-    return updatedGroup.some((g) => g._id === group._id);
+    return updatedGroup && updatedGroup.some((g) => g._id === group._id);
   };
 
   return (
