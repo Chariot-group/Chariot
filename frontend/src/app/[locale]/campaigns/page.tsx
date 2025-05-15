@@ -152,7 +152,7 @@ export default function CampaignsPage() {
         return () => {
           window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isUpdating]);
+    }, [isUpdating, selectedCampaign]);
 
     useBeforeUnload(isUpdating, t("form.unsave"));
 
