@@ -20,8 +20,10 @@ interface Props {
   groupsRef: RefObject<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>; // Liste des groupes
   newGroupRef: RefObject<any[]>; // Liste des nouveaux groupes
   groupsLabelRef: RefObject<IGroup[]>; // Liste des groupes à ne pas afficher
+  setUpdatedGroup: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
+  updatedGroup: IGroup[]; // Liste des groupes à ne pas afficher
 }
-export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef, newGroupRef, groupsLabelRef }: Props) {
+export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef, newGroupRef, groupsLabelRef, setUpdatedGroup, updatedGroup }: Props) {
   const t = useTranslations("GroupListPanel");
   const { error } = useToast();
 
@@ -80,6 +82,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
         setter((prev) => prev.filter((g) => g._id !== group._id));
     });
 
+    setUpdatedGroup([...updatedGroup, group]);
     groupSetters[to]((prev) => [...prev, group]);
   };
 
@@ -92,6 +95,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
         campaigns: [{ idCampaign: idCampaign, type: "npc" }],
       };
       newGroupRef.current.push(current);
+      setUpdatedGroup([...updatedGroup, current as unknown as IGroup]);
       setNpcGroups((prev) => [...prev, current as unknown as IGroup]);
     } catch(err){
         error(t("error"));
@@ -102,6 +106,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
   const [npcSearch, setNpcSearch] = useState<string>("");
   const [archivedSearch, setArchivedSearch] = useState<string>("");
 
+
   const changeLabel = (label: string, group: IGroup) => {
     if(groupsLabelRef.current.find((g) => g._id === group._id)){
       groupsLabelRef.current = groupsLabelRef.current.map((g) => {
@@ -110,6 +115,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
         }
         return g;
       });
+      setUpdatedGroup([...updatedGroup, group]);
     } else {
       groupsLabelRef.current.push({ ...group, label });
     }
@@ -146,6 +152,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
         <GroupDnDWrapper onDragEnd={handleDragEnd}>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              updatedGroup={updatedGroup}
               changeLabel={changeLabel}
               groups={mainGroups}
               setGroups={setMainGroups}
@@ -165,6 +172,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
           </div>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              updatedGroup={updatedGroup}
               changeLabel={changeLabel}
               groups={npcGroups}
               setGroups={setNpcGroups}
@@ -184,6 +192,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
           </div>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              updatedGroup={updatedGroup}
               changeLabel={changeLabel}
               groups={archivedGroups}
               setGroups={setArchivedGroups}

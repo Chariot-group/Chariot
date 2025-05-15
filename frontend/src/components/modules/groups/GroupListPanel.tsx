@@ -29,6 +29,7 @@ interface Props {
   disabledGroups?: IGroup[]; // Liste des groupes à ne pas afficher
   context?: boolean;
   changeLabel: (label: string, group: IGroup) => void; // Fonction pour changer le label d'un groupe
+  updatedGroup: IGroup[]; // Liste des groupes à ne pas afficher
 }
 export default function GroupListPanel({
   groups,
@@ -45,7 +46,8 @@ export default function GroupListPanel({
   setSearch,
   disabledGroups,
   context = false,
-  changeLabel
+  changeLabel,
+  updatedGroup
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -134,6 +136,10 @@ export default function GroupListPanel({
     fetchGroups(search, 1, true);
   }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
 
+  const isUpdated = (group: IGroup) => {
+    return updatedGroup.some((g) => g._id === group._id);
+  };
+
   return (
     <div className="w-full h-full flex flex-col">
       <CardHeader className="flex-none h-auto items-center gap-3">
@@ -174,6 +180,7 @@ export default function GroupListPanel({
                 groupSelected={groupSelected}
                 disabled={disabledGroups?.some((g) => g._id === group._id)}
                 clickable={!context}
+                updated={isUpdated(group)}
               />
             ))}
           {groups.length === 0 && !loading && !isOver && (

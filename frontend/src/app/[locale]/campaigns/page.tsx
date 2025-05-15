@@ -37,6 +37,8 @@ export default function CampaignsPage() {
     let newGroupRef = useRef<any[]>([]);
     let groupsRef = useRef<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>(new Map());
     let groupsLabelRef = useRef<IGroup[]>([]);
+    const [updatedGroup, setUpdatedGroup] = useState<IGroup[]>([]);
+
 
     const startUpdate = () => {
         if (selectedCampaign) {
@@ -55,6 +57,7 @@ export default function CampaignsPage() {
             newGroupRef.current = [];
             setIsUpdating(false);
             setLoading(false);
+            setUpdatedGroup([]);
             success(t("toasts.cancel"));
         }
     }
@@ -84,6 +87,8 @@ export default function CampaignsPage() {
             newGroupRef.current = [];
             groupsLabelRef.current = [];
             groupsRef.current = new Map();
+
+            setUpdatedGroup([]);
             
             success(t("toasts.save"));
         }
@@ -176,7 +181,7 @@ export default function CampaignsPage() {
                                     <div className="w-[80vh] border border-ring"></div>
                                 </div>
                                 <div className="w-full h-full flex flex-row items-center p-5">
-                                    <GroupsCampaignsPanel idCampaign={selectedCampaign._id} isUpdating={isUpdating} groupsRef={groupsRef} newGroupRef={newGroupRef} groupsLabelRef={groupsLabelRef} />
+                                    <GroupsCampaignsPanel setUpdatedGroup={setUpdatedGroup} updatedGroup={updatedGroup} idCampaign={selectedCampaign._id} isUpdating={isUpdating} groupsRef={groupsRef} newGroupRef={newGroupRef} groupsLabelRef={groupsLabelRef} />
                                 </div>
                             </div>
                         )} 

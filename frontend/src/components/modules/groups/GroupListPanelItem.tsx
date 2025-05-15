@@ -2,9 +2,10 @@ import React, { useRef } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { Card } from "@/components/ui/card";
 import { IGroup } from "@/models/groups/IGroup";
-import { Grip } from "lucide-react";
+import { Circle, CircleAlert, CircleDotIcon, DotIcon, Grip } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 interface Props {
   group: IGroup;
@@ -17,6 +18,7 @@ interface Props {
   disabled?: boolean;
   clickable?: boolean;
   changeLabel: (label: string, group: IGroup) => void;
+  updated: boolean;
 }
 
 const GroupListPanelItem = ({
@@ -29,7 +31,8 @@ const GroupListPanelItem = ({
   idCampaign,
   disabled = false,
   clickable = true,
-  changeLabel
+  changeLabel,
+  updated
 }: Props) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: group._id,
@@ -70,14 +73,16 @@ const GroupListPanelItem = ({
 
       onMouseDown={!isOverlay && !grabbled ? handleMouseDown : undefined}
       onMouseUp={!isOverlay && !grabbled ? handleMouseUp : undefined}
-      className={`flex p-2 gap-3 border-ring items-center shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] ${
+      className={`flex p-2 border-ring items-center shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] ${
         reverse ? "bg-background" : "bg-card"
       } ${
-        grabbled
+        !grabbled
           ? "justify-between cursor-grab"
           : "cursor-pointer justify-center"
       } ${isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""} ${
         groupSelected?._id === group._id ? "border-2" : ""
+      } ${
+        updated && "pl-0"
       }
         ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
       onClick={(e) => {
@@ -93,20 +98,23 @@ const GroupListPanelItem = ({
       }
 
       {
-        grabbled && (
-          <Input value={group.label} id={group._id} className="bg-card" onChange={(e) => changeLabel(e.target.value, group)}></Input>
-        )
+        grabbled && updated && <span className="rounded-full bg-secondary size-2 m-1" ></span>
       }
 
-      {grabbled && (
-        <span
-          {...listeners}
-          {...attributes}
-          className="cursor-grab active:cursor-grabbing"
-        >
-          <Grip />
-        </span>
-      )}
+      {
+        grabbled && (
+          <div className="flex items-center gap-2">
+            <Input value={group.label} id={group._id} className="bg-card" onChange={(e) => changeLabel(e.target.value, group)}></Input>
+            <span
+              {...listeners}
+              {...attributes}
+              className="cursor-grab active:cursor-grabbing"
+            >
+              <Grip />
+            </span>
+          </div>
+        )
+      }
     </Card>
   );
 };
