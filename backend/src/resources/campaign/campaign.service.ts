@@ -49,20 +49,20 @@ export class CampaignService {
   private async validateResource(id: string): Promise<void> {
 
     if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching campaign ${id}: Id is not a valid mongoose id`;
+      const message = `Error while fetching campaign #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new BadRequestException(message);
     }
     const campaign = await this.campaignModel.findById(id).exec();
 
     if (!campaign) {
-      const message = `Campaign ${id} not found`;
+      const message = `Campaign #${id} not found`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new NotFoundException(message);
     }
 
     if (campaign.deletedAt) {
-      const message = `Campaign ${id} is gone`;
+      const message = `Campaign #${id} is gone`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new GoneException(message);
     }
@@ -206,7 +206,7 @@ export class CampaignService {
         .exec();
       const end: number = Date.now();
 
-      const message = `Campaign found in ${end - start}ms`;
+      const message = `Campaign #${id} found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -221,7 +221,7 @@ export class CampaignService {
         throw error;
       }
 
-      const message = `Error while fetching campaign ${id}: ${error.message}`;
+      const message = `Error while fetching campaign #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -311,7 +311,7 @@ export class CampaignService {
 
       const end = Date.now();
 
-      const message = `Campaign updated in ${end - start}ms`;
+      const message = `Campaign #${id} updated in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
 
       return {
@@ -326,7 +326,7 @@ export class CampaignService {
       ) {
         throw error;
       }
-      const message = `Error updating campaign: ${error.message}`;
+      const message = `Error updating campaign #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -353,7 +353,7 @@ export class CampaignService {
 
       const end: number = Date.now();
 
-      const message = `Campaign delete in ${end - start}ms`;
+      const message = `Campaign #${id} delete in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -368,7 +368,7 @@ export class CampaignService {
         throw error;
       }
 
-      const message = `Error while deleting character ${id}: ${error.message}`;
+      const message = `Error while deleting campaign #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }

@@ -56,20 +56,20 @@ export class GroupService {
   private async validateResource(id: string): Promise<void> {
     
     if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching group ${id}: Id is not a valid mongoose id`;
+      const message = `Error while fetching group #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new BadRequestException(message);
     }
     const group = await this.groupModel.findById(id).exec();
     
     if (!group) {
-      const message = `Group ${id} not found`;
+      const message = `Group #${id} not found`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new NotFoundException(message);
     }
     
     if (group.deletedAt) {
-      const message = `group ${id} is gone`;
+      const message = `group #${id} is gone`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new GoneException(message);
     }
@@ -173,7 +173,7 @@ export class GroupService {
       if (campaignId) {
         const campaign = await this.campaignModel.findById(campaignId).lean();
         if (!campaign) {
-          const message = `Error while fetching groups: Campaign ${campaignId} not found`;
+          const message = `Error while fetching groups: Campaign #${campaignId} not found`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new NotFoundException(message);
         }
@@ -243,7 +243,7 @@ export class GroupService {
         .exec();
       const end: number = Date.now();
 
-      const message = `Group found in ${end - start}ms`;
+      const message = `Group #${id} found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -258,7 +258,7 @@ export class GroupService {
         throw error;
       }
 
-      const message = `Error while fetching group ${id}: ${error.message}`;
+      const message = `Error while fetching group #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -357,7 +357,7 @@ export class GroupService {
         throw new NotFoundException(message);
       }
 
-      const message = `Group update in ${end - start}ms`;
+      const message = `Group #${id} update in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -371,7 +371,7 @@ export class GroupService {
       ) {
         throw error;
       }
-      const message = `Error while updating group: ${error.message}`;
+      const message = `Error while updating group #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -398,7 +398,7 @@ export class GroupService {
 
       const end: number = Date.now();
 
-      const message = `Group delete in ${end - start}ms`;
+      const message = `Group #${id} delete in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
