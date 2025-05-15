@@ -13,7 +13,7 @@ import CampaignService from "@/services/campaignService";
 import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function CampaignsPage() {
 
@@ -26,6 +26,10 @@ export default function CampaignsPage() {
     //Recherche
     const searchParams = useSearchParams()
     const [search, setSearch] = useState(searchParams.get('search') ?? "");
+
+    useEffect(() => {  
+        setSearch(searchParams.get('search') ?? "");
+    }, [searchParams]);
 
     //Update
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
