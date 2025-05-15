@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
-import GroupListPanel from "../groups/GroupListPanel";
+import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { IGroup, IGroupWithRelations } from "@/models/groups/IGroup";
 import { Group } from "lucide-react";
 import GroupService from "@/services/groupService";

@@ -1,6 +1,6 @@
 import { APIContentType } from "@/constants/APIContentType";
-import apiClient from "./apiConfig";
-import { IGroup } from "@/models/groups/IGroup";
+import apiClient from "@/services/apiConfig";
+
 
 const END_POINT = "/campaigns";
 

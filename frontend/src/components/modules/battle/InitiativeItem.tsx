@@ -5,7 +5,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { IParticipant } from "@/models/participant/IParticipant";
 import { Heart, Shield, Sword } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import CharacterDetailsModal from "../characters/CharacterDetailsModal";
+import CharacterDetailsModal from "@/components/modules/characters/CharacterDetailsModal";
 import { useTranslations } from "next-intl";
 import CharacterService from "@/services/characterService";
 

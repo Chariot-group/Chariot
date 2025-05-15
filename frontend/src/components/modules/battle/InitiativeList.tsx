@@ -1,5 +1,5 @@
 import React from "react";
-import InitiativeItem from "./InitiativeItem";
+import InitiativeItem from "@/components/modules/battle/InitiativeItem";
 import ICharacter from "@/models/characters/ICharacter";
 import {
   Table,
