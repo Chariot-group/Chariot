@@ -16,7 +16,27 @@ export default function ValidationPopup({ isOpen, onClose, title, message, onCon
   // Pour gérer l'animation
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const t = useTranslations("Global");
-  
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        onConfirm();
+        onClose();
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onConfirm, onClose]);
+
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
