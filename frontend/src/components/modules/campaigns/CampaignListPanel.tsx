@@ -1,6 +1,6 @@
 "use client";
 import Loading from "@/components/common/Loading";
-import CreateCampaign from "@/components/common/modals/CreateCampaign";
+import CreateCampaign from "@/components/modals/CreateCampaign";
 import SearchInput from "@/components/common/SearchBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
