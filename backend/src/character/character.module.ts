@@ -8,7 +8,8 @@ import {
 } from '@/character/schemas/character.schema';
 import { Group, GroupSchema } from '@/group/schemas/group.schema';
 import { PlayerSchema } from '@/character/schemas/player.schema';
-import { NPCSchema } from '@/character/schemas/npc.schema';
+import { NPCSchema } from '@/character/npc/schemas/npc.schema';
+import { NpcModule } from './npc/npc.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { NPCSchema } from '@/character/schemas/npc.schema';
       },
     ]),
     MongooseModule.forFeature([{ name: Group.name, schema: GroupSchema }]),
+    NpcModule,
   ],
   exports: [CharacterService],
   controllers: [CharacterController],

@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Action } from '@/character/schemas/actions/sub/action.schema';
+import { Action } from '@/character/npc/schemas/actions/sub/action.schema';
 
 @Schema({ _id: false })
 export class Actions {

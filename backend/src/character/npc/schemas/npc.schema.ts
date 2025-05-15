@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Character } from '@/character/schemas/character.schema';
-import { Actions } from '@/character/schemas/actions/actions.schema';
-import { Challenge } from '@/character/schemas/challenge/challenge.schema';
+import { Actions } from '@/character/npc/schemas/actions/actions.schema';
+import { Challenge } from '@/character/npc/schemas/challenge/challenge.schema';
 import { NPCProfile } from '@/character/schemas/profile/profile.schema';
 
 export type NPCDocument = NPC & Document;
