@@ -249,6 +249,7 @@ export class CampaignService {
 
       // Find existing campaign
       const existingCampaign = await this.campaignModel.findById(id);
+
       // Handle label update attempt
       if (
         updateCampaignDto.label &&
@@ -310,8 +311,11 @@ export class CampaignService {
 
       const end = Date.now();
 
+      const message = `Campaign updated in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+
       return {
-        message: `Campaign updated in ${end - start}ms`,
+        message: message,
         data: updatedCampaign,
       };
     } catch (error) {

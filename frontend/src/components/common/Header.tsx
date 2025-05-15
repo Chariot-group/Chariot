@@ -26,6 +26,10 @@ export function Header({ campaign }: HeaderProps) {
     async (id: string) => {
         try {
             let response = await AuthService.profile(id);
+            if(!response.data){
+              logout();
+              return;
+            }
             setUser(response.data);
         } catch (err) {
             console.error("Error fetching user:", err);
@@ -57,9 +61,13 @@ export function Header({ campaign }: HeaderProps) {
           </Button>
         )}
         {!campaign && <div className="w-1/12"></div>}
-        <h1 className="text-foreground text-2xl font-bold">{`${t("home")} ${
-          campaign ? `- ${campaign.label}` : ""
-        }`}</h1>
+        <div className="flex flex-col items-center">
+          <Link href={"/campaigns"}><h1 className="text-foreground text-2xl font-bold">{`${t("home")}`}</h1></Link>
+          {campaign && (
+            <Link href={`/campaigns?search=${campaign.label}`} className="text-foreground hover:underline underline-offset-2"><p className="text-foreground">{campaign.label}</p></Link>
+            ) 
+          }
+        </div>
         <div className="flex flex-row items-center gap-4">
           <LocaleSwitcher />
           {

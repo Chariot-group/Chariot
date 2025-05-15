@@ -5,7 +5,7 @@ import "@/app/globals.css";
 
 
 const CustomToastContainer = () => {
-  return <ToastContainer position="top-right" autoClose={5000} hideProgressBar />;
+  return <ToastContainer position="bottom-right" autoClose={2000} hideProgressBar />;
 };
 
 export default CustomToastContainer;
