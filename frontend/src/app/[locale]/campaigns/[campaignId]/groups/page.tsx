@@ -168,15 +168,6 @@ export default function CampaignGroupsPage() {
         async (deleteGroup: IGroup) => {
             try {
                 await GroupService.deleteGroup(deleteGroup._id);
-                /*setGroupSelected((prev) => {
-                    console.log(prev);
-
-                    if (!prev) return null;
-                    return {
-                        ...prev,
-                        deletedAt: new Date()
-                    }
-                });*/
                 setGroups((prev) => {
                     return prev.filter((group) => group._id !== deleteGroup._id);
                 });
