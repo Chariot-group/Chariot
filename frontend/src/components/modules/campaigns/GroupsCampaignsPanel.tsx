@@ -1,11 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import GroupListPanel from "../groups/GroupListPanel";
+import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { IGroup } from "@/models/groups/IGroup";
 import { RefObject, useCallback, useState } from "react";
 import { DragEndEvent } from "@dnd-kit/core";
-import GroupDnDWrapper from "../groups/GroupDndProvider";
+import GroupDnDWrapper from "@/components/modules/groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useToast } from "@/hooks/useToast";
 import { MousePointerClick, PlusCircleIcon } from "lucide-react";

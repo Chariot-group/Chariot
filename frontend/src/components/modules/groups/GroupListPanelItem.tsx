@@ -16,8 +16,8 @@ interface Props {
   idCampaign: string;
   disabled?: boolean;
   clickable?: boolean;
-  changeLabel: (label: string, group: IGroup) => void;
-  updated: boolean;
+  changeLabel?: (label: string, group: IGroup) => void;
+  updated?: boolean;
 }
 
 const GroupListPanelItem = ({
@@ -99,7 +99,7 @@ const GroupListPanelItem = ({
       }
 
       {
-        grabbled && (
+        grabbled && changeLabel && (
           <div className="flex items-center gap-2">
             <Input value={group.label} id={group._id} className="bg-card" onChange={(e) => changeLabel(e.target.value, group)}></Input>
             <span

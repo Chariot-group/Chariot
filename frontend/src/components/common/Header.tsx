@@ -3,14 +3,14 @@ import { Button } from "../ui/button";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import LocaleSwitcher from "../locale/LocaleSwitcher";
+import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
 import { useParams } from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import jwt from 'jsonwebtoken'
 import AuthService from "@/services/authService";
 import { IUser } from "@/models/users/IUser";
 import stringService from "@/services/stringService";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
 
 interface HeaderProps {

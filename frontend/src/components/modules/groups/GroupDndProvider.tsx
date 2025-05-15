@@ -39,10 +39,11 @@ export default function GroupDnDWrapper({
       <DragOverlay>
         {activeGroup ? (
           <GroupListPanelItem
+            idCampaign={""} 
             group={activeGroup}
             currentPanelType={"overlay"}
-            grabbled={true} 
-            idCampaign={""} changeLabel={() => {} } updated={false} />
+            grabbled={true}
+            />
         ) : null}
       </DragOverlay>
     </DndContext>

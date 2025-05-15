@@ -11,7 +11,7 @@ import SearchInput from "@/components/common/SearchBar";
 import Loading from "@/components/common/Loading";
 import { Button } from "@/components/ui/button";
 import { useDroppable } from "@dnd-kit/core";
-import GroupListPanelItem from "./GroupListPanelItem";
+import GroupListPanelItem from "@/components/modules/groups/GroupListPanelItem";
 
 interface Props {
   groups: IGroup[]; // Liste des groupes à afficher
