@@ -20,6 +20,7 @@
     "login": "Iniciar sesión",
     "email": "Correo electrónico",
     "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
     "noAccount": {
       "text": "¿No tienes una cuenta ?",
       "link": "¡Disfruta del acceso gratuito !"
@@ -382,5 +383,51 @@
   "BattlePage": {
     "battle": "Iniciar combate",
     "back": "Volver a la selección"
+  },
+  "confirmEmail": {
+    "title": "Restablecer tu contraseña",
+    "description": "Ingresa tu dirección de correo electrónico. Si existe una cuenta con este correo, recibirás un email con un código para restablecer tu contraseña.",
+    "label": "Correo electrónico",
+    "placeholder": "Ingresa tu correo electrónico",
+    "send": "Enviar código",
+    "toasts": {
+      "sendingEmail": "¡Se ha enviado un correo! Revisa tu carpeta de spam.",
+      "invalidEmail": "Correo electrónico inválido",
+      "emailNotFound": "No se encontró una cuenta con este correo",
+      "internal": "Ocurrió un error al intentar enviar el correo"
+    },
+    "cancel": "Cancelar"
+  },
+  "forgetPassword": {
+    "wrongEmail": "¿Usaste el correo equivocado?",
+    "step": {
+      "step1": "Ingresa tu correo electrónico",
+      "step2": "Verifica tu código",
+      "step3": "Cambia tu contraseña"
+    }
+  },
+  "confirmOTP": {
+    "title": "Restablecer tu contraseña",
+    "description": "Ingresa el código que recibiste por correo.",
+    "label": "OTP",
+    "placeholder": "Ingresa tu código",
+    "send": "Verificar código",
+    "cancel": "Cancelar"
+  },
+  "changePassword": {
+    "title": "Restablecer tu contraseña",
+    "description": "¡Es momento de cambiar tu contraseña!",
+    "password": "Contraseña",
+    "placeholderPassword": "Ingresa tu nueva contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "placeholderConfirmPassword": "Confirma tu contraseña",
+    "send": "Cambiar contraseña",
+    "toasts": {
+      "passwordChanged": "¡Contraseña cambiada!",
+      "invalidOTP": "El código es inválido",
+      "passwordsNotMatching": "Las contraseñas no coinciden",
+      "internal": "Ocurrió un error al intentar cambiar la contraseña"
+    },
+    "cancel": "Cancelar"
   }
 }
