@@ -46,6 +46,28 @@ export class CampaignService {
     }
   }
 
+  private async validateResource(id: string): Promise<void> {
+
+    if (!Types.ObjectId.isValid(id)) {
+      const message = `Error while fetching campaign ${id}: Id is not a valid mongoose id`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new BadRequestException(message);
+    }
+    const campaign = await this.campaignModel.findById(id).exec();
+
+    if (!campaign) {
+      const message = `Campaign ${id} not found`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new NotFoundException(message);
+    }
+
+    if (campaign.deletedAt) {
+      const message = `Campaign ${id} is gone`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new GoneException(message);
+    }
+  }
+
   async create(createCampaignDto: CreateCampaignDto, userId: string) {
     try {
       const { groups, ...campaignData } = createCampaignDto;
@@ -172,12 +194,9 @@ export class CampaignService {
 
   async findOne(id: string) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while fetching campaign ${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
 
+      await this.validateResource(id);
+      
       const start: number = Date.now();
       const campaign = await this.campaignModel
         .findById(id)
@@ -186,18 +205,6 @@ export class CampaignService {
         .populate({ path: 'groups.archived', populate: { path: 'characters' } })
         .exec();
       const end: number = Date.now();
-
-      if (!campaign) {
-        const message = `Campaign ${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (campaign.deletedAt) {
-        const message = `Campaign ${id} is gone`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       const message = `Campaign found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
@@ -222,7 +229,9 @@ export class CampaignService {
 
   async update(id: string, updateCampaignDto: UpdateCampaignDto) {
     try {
-      this.logger.error(updateCampaignDto.groups, null, this.SERVICE_NAME);
+      
+      await this.validateResource(id);
+
       if (updateCampaignDto.groups) {
         await this.validateGroupRelations(
           updateCampaignDto.groups.main,
@@ -235,29 +244,11 @@ export class CampaignService {
         );
       }
 
-      // Validate ID
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Invalid campaign ID: ${id}`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
 
       const start = Date.now();
 
       // Find existing campaign
       const existingCampaign = await this.campaignModel.findById(id);
-      if (!existingCampaign) {
-        const message = `Campaign ${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (existingCampaign.deletedAt) {
-        const message = `Campaign ${id} has been deleted`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
-
       // Handle label update attempt
       if (
         updateCampaignDto.label &&
@@ -339,26 +330,11 @@ export class CampaignService {
 
   async remove(id: string) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while deleting campaign #${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
+      await this.validateResource(id);
 
       const start: number = Date.now();
 
       const campaign = await this.campaignModel.findById(id).exec();
-      if (!campaign) {
-        const message = `Campaign #${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (campaign.deletedAt) {
-        const message = `Campaign #${id} already deleted`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       campaign.deletedAt = new Date();
       campaign.groups.main.forEach(async (groupId) => {

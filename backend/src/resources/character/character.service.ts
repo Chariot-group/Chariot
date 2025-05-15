@@ -43,6 +43,28 @@ export class CharacterService {
     }
   }
 
+  private async validateResource(id: string): Promise<void> {
+  
+    if (!Types.ObjectId.isValid(id)) {
+      const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new BadRequestException(message);
+    }
+    const character = await this.characterModel.findById(id).exec();
+  
+    if (!character) {
+      const message = `Character ${id} not found`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new NotFoundException(message);
+    }
+  
+    if (character.deletedAt) {
+      const message = `Character ${id} is gone`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new GoneException(message);
+    }
+  }
+
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
@@ -142,11 +164,7 @@ export class CharacterService {
 
   async findOne(id: string) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
+      await this.validateResource(id);
 
       const start: number = Date.now();
       const character = await this.characterModel
@@ -154,18 +172,6 @@ export class CharacterService {
         .populate('groups')
         .exec();
       const end: number = Date.now();
-
-      if (!character) {
-        const message = `Character ${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (character.deletedAt) {
-        const message = `Character ${id} is gone`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       const message = `Character found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
@@ -191,25 +197,9 @@ export class CharacterService {
   async update(id: string, updateCharacterDto: UpdateCharacterDto) {
     try {
       let { groups, ...characterData } = updateCharacterDto;
+      await this.validateResource(id);
 
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while updating character #${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
       let character = await this.characterModel.findById(id).exec();
-
-      if (!character) {
-        const message = `Character #${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (character.deletedAt) {
-        const message = `Character #${id} already deleted`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       //Vérification ids characters
       if (groups) {
@@ -297,26 +287,12 @@ export class CharacterService {
 
   async remove(id: string) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while deleting character #${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
+      
+      await this.validateResource(id);
 
       const start: number = Date.now();
 
       const character = await this.characterModel.findById(id).exec();
-      if (!character) {
-        const message = `Character #${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (character.deletedAt) {
-        const message = `Character #${id} already deleted`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       character.deletedAt = new Date();
       character.groups.forEach(async (groupId) => {

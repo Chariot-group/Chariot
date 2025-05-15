@@ -53,6 +53,28 @@ export class GroupService {
     }
   }
 
+  private async validateResource(id: string): Promise<void> {
+    
+    if (!Types.ObjectId.isValid(id)) {
+      const message = `Error while fetching group ${id}: Id is not a valid mongoose id`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new BadRequestException(message);
+    }
+    const group = await this.groupModel.findById(id).exec();
+    
+    if (!group) {
+      const message = `Group ${id} not found`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new NotFoundException(message);
+    }
+    
+    if (group.deletedAt) {
+      const message = `group ${id} is gone`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new GoneException(message);
+    }
+  }
+
   private async validatecampaignRelations(
     campaignIds: string[],
   ): Promise<void> {
@@ -210,11 +232,8 @@ export class GroupService {
 
   async findOne(id: string) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while fetching group ${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
+      
+      await this.validateResource(id);
 
       const start: number = Date.now();
       const group = await this.groupModel
@@ -223,18 +242,6 @@ export class GroupService {
         .populate('campaigns')
         .exec();
       const end: number = Date.now();
-
-      if (!group) {
-        const message = `Group ${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (group.deletedAt) {
-        const message = `Group ${id} is gone`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       const message = `Group found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
@@ -260,28 +267,12 @@ export class GroupService {
   async update(id: string, updateGroupDto: UpdateGroupDto) {
     try {
       let { characters, campaigns, ...groupData } = updateGroupDto;
+      await this.validateResource(id);
 
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while updating group #${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
       let group = await this.groupModel
         .findById(id)
         .populate('campaigns')
         .exec();
-
-      if (!group) {
-        const message = `Group #${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (group.deletedAt) {
-        const message = `Group #${id} already deleted`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       if (characters) {
         await this.validateCharacterRelations(characters);
@@ -388,25 +379,9 @@ export class GroupService {
 
   async remove(id: string) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while deleting group #${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
+      await this.validateResource(id);
 
       const group = await this.groupModel.findById(id).exec();
-
-      if (!group) {
-        const message = `Error while deleting group #${id}: Group not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (group.deletedAt) {
-        const message = `Error while deleting group #${id}: Group already deleted`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
 
       const start: number = Date.now();
       group.deletedAt = new Date();
