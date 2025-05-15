@@ -1,7 +1,7 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from '@/app.module';
 import { WinstonModule } from 'nest-winston';
-import { instance } from '@/../logger/winston.logger';
+import { instance } from '@/logger/winston.logger';
 import { ValidationPipe } from '@nestjs/common';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import * as cookieParser from 'cookie-parser';
