@@ -7,9 +7,10 @@ import {
   CharacterSchema,
 } from '@/character/schemas/character.schema';
 import { Group, GroupSchema } from '@/group/schemas/group.schema';
-import { PlayerSchema } from '@/character/schemas/player.schema';
+import { PlayerSchema } from '@/character/player/schemas/player.schema';
 import { NPCSchema } from '@/character/npc/schemas/npc.schema';
 import { NpcModule } from './npc/npc.module';
+import { PlayerModule } from './player/player.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { NpcModule } from './npc/npc.module';
     ]),
     MongooseModule.forFeature([{ name: Group.name, schema: GroupSchema }]),
     NpcModule,
+    PlayerModule,
   ],
   exports: [CharacterService],
   controllers: [CharacterController],

@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { Character } from '@/character/schemas/character.schema';
-import { Progression } from '@/character/schemas/progression/progression.schema';
-import { Class } from '@/character/schemas/class/class.schema';
+import { Progression } from '@/character/player/schemas/progression/progression.schema';
+import { Class } from '@/character/player/schemas/class/class.schema';
 import { PlayerProfile } from '@/character/schemas/profile/profile.schema';
-import { Appearance } from '@/character/schemas/appearance/appearance.schema';
-import { Background } from '@/character/schemas/background/background.schema';
-import { Treasure } from '@/character/schemas/treasure/treasure.schema';
+import { Appearance } from '@/character/player/schemas/appearance/appearance.schema';
+import { Background } from '@/character/player/schemas/background/background.schema';
+import { Treasure } from '@/character/player/schemas/treasure/treasure.schema';
 import { PlayerStats } from '@/character/schemas/stat/stats.schema';
 
 export type PlayerDocument = Player & Document;
