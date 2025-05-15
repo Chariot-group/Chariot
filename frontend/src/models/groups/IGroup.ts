@@ -1,5 +1,5 @@
-import { ICampaign } from "../campaigns/ICampaign";
-import ICharacter from "../characters/ICharacter";
+import { ICampaign } from "@/models/campaigns/ICampaign";
+import ICharacter from "@/models/characters/ICharacter";
 
 export interface IGroup {
   _id: string;
