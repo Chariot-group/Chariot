@@ -19,6 +19,7 @@
     "login": "Login",
     "email": "Email",
     "password": "Password",
+    "forgotPassword": "Forgot password ?",
     "noAccount": {
       "text": "Don't have an account ?",
       "link": "Enjoy free access !"
@@ -380,5 +381,51 @@
   "BattlePage": {
     "battle": "Start battle",
     "back": "Back to selection"
+  },
+  "confirmEmail": {
+    "title": "Reset your password",
+    "description": "Enter your email address. If an account exists with this email, you will receive an email containing a code to reset your password.",
+    "label": "Email",
+    "placeholder": "Enter your email",
+    "send": "Send code",
+    "toasts": {
+      "sendingEmail": "An email has been sent! Check your spam folder.",
+      "invalidEmail": "Invalid email",
+      "emailNotFound": "No account found with this email",
+      "internal": "An error occurred while trying to send the email"
+    },
+    "cancel": "Cancel"
+  },
+  "forgetPassword": {
+    "wrongEmail": "Used the wrong email?",
+    "step": {
+      "step1": "Enter your email",
+      "step2": "Verify your code",
+      "step3": "Change your password"
+    }
+  },
+  "confirmOTP": {
+    "title": "Reset your password",
+    "description": "Enter the code you received by email.",
+    "label": "OTP",
+    "placeholder": "Enter your code",
+    "send": "Verify code",
+    "cancel": "Cancel"
+  },
+  "changePassword": {
+    "title": "Reset your password",
+    "description": "It's time to change your password!",
+    "password": "Password",
+    "placeholderPassword": "Enter your new password",
+    "confirmPassword": "Confirm password",
+    "placeholderConfirmPassword": "Confirm your password",
+    "send": "Change password",
+    "toasts": {
+      "passwordChanged": "Password changed!",
+      "invalidOTP": "The code is invalid",
+      "passwordsNotMatching": "Passwords do not match",
+      "internal": "An error occurred while trying to change the password"
+    },
+    "cancel": "Cancel"
   }
 }

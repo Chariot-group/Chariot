@@ -36,6 +36,43 @@ const AuthService = {
       return err.response?.data;
     }
   },
+
+  async resetPassword(email: string, locale: string) {
+    try {
+      const response = await apiClient(APIContentType.JSON).patch(`/auth/reset-password`, {
+        email,
+        locale,
+      });
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return err.response?.data;
+    }
+  },
+
+  async changePassword(id: string, otp: string, newPassword: string, confirmPassword: string) {
+    try {
+      const response = await apiClient(APIContentType.JSON).patch(`/auth/${id}/change-password`, {
+        otp,
+        newPassword,
+        confirmPassword,
+      });
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return err.response?.data;
+    }
+  },
 };
 
 export default AuthService;
