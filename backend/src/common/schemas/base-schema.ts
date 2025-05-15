@@ -1,6 +1,6 @@
 import { Prop, Schema } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
-import { User } from '@/user/schemas/user.schema';
+import { User } from '@/resources/user/schemas/user.schema';
 
 @Schema()
 export class BaseSchema {
