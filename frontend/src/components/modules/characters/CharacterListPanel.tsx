@@ -7,7 +7,7 @@ import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { useToast } from "@/hooks/useToast";
 import ICharacter from "@/models/characters/ICharacter";
 import { IGroup } from "@/models/groups/IGroup";
-import CharacterService from "@/services/CharacterService";
+import CharacterService from "@/services/characterService";
 import { Plus, PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
