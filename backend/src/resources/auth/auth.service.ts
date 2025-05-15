@@ -1,14 +1,14 @@
-import { UserService } from '@/user/user.service';
+import { UserService } from '@/resources/user/user.service';
 import { BadRequestException, GoneException, Injectable, InternalServerErrorException, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { SignInDto } from '@/auth/dto/signIn.dto';
+import { SignInDto } from '@/resources/auth/dto/signIn.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { changePasswordDto } from '@/auth/dto/changePassword.dto';
+import { changePasswordDto } from '@/resources/auth/dto/changePassword.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { User, UserDocument } from '@/user/schemas/user.schema';
+import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { MaillingService } from '@/mailling/mailling.service';
-import { ResetPasswordDto } from '@/auth/dto/resetPassword.dto';
+import { ResetPasswordDto } from '@/resources/auth/dto/resetPassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +22,50 @@ export class AuthService {
 
       private readonly SERVICE_NAME = AuthService.name;
       private readonly logger = new Logger(this.SERVICE_NAME);
+
+    private async validateResourceByEmail(email: string): Promise<void> {
+        
+        const user = await this.userService.findByEmail(email);
+        if (!user) {
+            const message = `User ${email} not found`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new NotFoundException(message);
+        }
+
+        if (user.deletedAt) {
+            const message = `User ${email} deleted`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new GoneException(message);
+        }
+    }
+
+    private async validateResourceById(id: string, changePassword: changePasswordDto): Promise<void> {
+        
+        if (!Types.ObjectId.isValid(id)) {
+            const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new BadRequestException(message);
+        }
+        let user = await this.userModel.findById(id);
+
+        if (!user) {
+            const message = `User #${id} not found`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new NotFoundException(message);
+        }
+
+        if (user.deletedAt) {
+            const message = `User #${id} deleted`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new GoneException(message);
+        }
+
+        if(user.otp == null || changePassword.otp !== user.otp) {
+            const message = `Error while updating user #${id}: Otp is incorrect`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new UnauthorizedException(message);
+        }
+    }
 
     async signIn(signInDto: SignInDto) {
         try{
@@ -60,19 +104,9 @@ export class AuthService {
         try {
 
             const { email, local } = resetPasswordDto;
+            await this.validateResourceByEmail(email);
 
             const user = await this.userService.findByEmail(email);
-            if (!user) {
-                const message = `User ${email} not found`;
-                this.logger.error(message, null, this.SERVICE_NAME);
-                throw new NotFoundException(message);
-            }
-
-            if (user.deletedAt) {
-                const message = `User ${email} deleted`;
-                this.logger.error(message, null, this.SERVICE_NAME);
-                throw new GoneException(message);
-            }
 
             const otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -111,30 +145,8 @@ export class AuthService {
 
     async forgotPassword(id: string, changePassword: changePasswordDto){
         try {
-            if (!Types.ObjectId.isValid(id)) {
-                const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
-                this.logger.error(message, null, this.SERVICE_NAME);
-                throw new BadRequestException(message);
-            }
-            let userCurrent = await this.userModel.findById(id);
 
-            if (!userCurrent) {
-                const message = `User #${id} not found`;
-                this.logger.error(message, null, this.SERVICE_NAME);
-                throw new NotFoundException(message);
-            }
-
-            if (userCurrent.deletedAt) {
-                const message = `User #${id} deleted`;
-                this.logger.error(message, null, this.SERVICE_NAME);
-                throw new GoneException(message);
-            }
-
-            if(userCurrent.otp == null || changePassword.otp !== userCurrent.otp) {
-                const message = `Error while updating user #${id}: Otp is incorrect`;
-                this.logger.error(message, null, this.SERVICE_NAME);
-                throw new UnauthorizedException(message);
-            }
+            await this.validateResourceById(id, changePassword);
 
             if (changePassword.newPassword !== changePassword.confirmPassword) {
                 const message = `Error while updating user #${id}: Passwords do not match`;
