@@ -12,7 +12,8 @@
     "createTooltip": "Ajouter une campagne",
     "noCampaigns": "Aucune campagne trouvée",
     "error": "Erreur lors du chargement des campagnes",
-    "create": "Ajouter une campagne"
+    "create": "Ajouter une campagne",
+    "created": "Campagne créée avec succès"
   },
   "LoginPage": {
     "title": "Bienvenue sur Chariot!",
@@ -259,7 +260,9 @@
     },
     "actions": {
       "delete": "Supprimer la campagne",
-      "update": "Modifier la campagne"
+      "update": "Modifier la campagne",
+      "cancel": "Annuler",
+      "save": "Sauvegarder"
     },
     "modal": {
       "title": "Supprimer la campagne",
@@ -277,6 +280,8 @@
       "groupDelete": "Supprimer le groupe",
       "update": "Modifier le groupe",
       "backCampaign": "Retour à la campagne",
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
       "modal": {
         "title": "Supprimer le group",
         "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
@@ -297,8 +302,6 @@
   "GroupPage": {
     "yourCharacters": "Vos personnages",
     "form": {
-      "cancel": "Annuler",
-      "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
     },
     "toasts": {
@@ -322,7 +325,8 @@
     "actions": {
       "create": "Créer une campagne",
       "cancel": "Annuler"
-    }
+    },
+    "emptyName": "Le nom de la campagne ne peut pas être vide"
   },
   "CampaignPage": {
     "tutorial": {
@@ -333,8 +337,6 @@
       "step5": "Etape 5: Let’s play !"
     },
     "form": {
-      "cancel": "Annuler",
-      "save": "Sauvegarder",
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
     },
     "toasts": {

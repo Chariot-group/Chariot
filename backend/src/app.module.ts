@@ -3,18 +3,17 @@ import { AppController } from '@/app.controller';
 import { AppService } from '@/app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserModule } from '@/user/user.module';
-import { CharacterModule } from '@/character/character.module';
-import { GroupModule } from '@/group/group.module';
-import { CampaignModule } from '@/campaign/campaign.module';
+import { UserModule } from '@/resources/user/user.module';
+import { GroupModule } from '@/resources/group/group.module';
+import { CampaignModule } from '@/resources/campaign/campaign.module';
 import { SeederModule } from '@/seeder/seeder.module';
-import { AuthModule } from '@/auth/auth.module';
+import { AuthModule } from '@/resources/auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
 import { MaillingService } from '@/mailling/mailling.service';
 import { MaillingModule } from '@/mailling/mailling.module';
-
+import { CharacterModule } from '@/resources/character/character.module';
 
 @Module({
   imports: [
@@ -42,7 +41,7 @@ import { MaillingModule } from '@/mailling/mailling.module';
         from: `"No Reply" <${process.env.RECEIVER_EMAIL}>`,
       },
       template: {
-        dir: join(process.cwd(), 'src/templates'),
+        dir: join(process.cwd(), 'src/mailling/templates'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,

@@ -4,15 +4,18 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Campaign, CampaignDocument } from '@/campaign/schemas/campaign.schema';
+import {
+  Campaign,
+  CampaignDocument,
+} from '@/resources/campaign/schemas/campaign.schema';
+import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
+import { User, UserDocument } from '@/resources/user/schemas/user.schema';
+import 'reflect-metadata';
+import * as bcrypt from 'bcrypt';
 import {
   Character,
   CharacterDocument,
-} from '@/character/schemas/character.schema';
-import { Group, GroupDocument } from '@/group/schemas/group.schema';
-import { User, UserDocument } from '@/user/schemas/user.schema';
-import 'reflect-metadata';
-import * as bcrypt from 'bcrypt';
+} from '@/resources/character/schemas/character.schema';
 
 @Injectable()
 export class SeederService {
