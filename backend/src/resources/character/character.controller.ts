@@ -13,7 +13,7 @@ import {
 import { CharacterService } from '@/resources/character/character.service';
 import { CreateCharacterDto } from '@/resources/character/dto/create-character.dto';
 import { UpdateCharacterDto } from '@/resources/character/dto/update-character.dto';
-import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
+import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';
 import { IsCreator } from '@/common/decorators/is-creator.decorator';
 import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
 @UseGuards(IsCreatorGuard)

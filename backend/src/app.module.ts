@@ -42,7 +42,7 @@ import { MaillingModule } from '@/mailling/mailling.module';
         from: `"No Reply" <${process.env.RECEIVER_EMAIL}>`,
       },
       template: {
-        dir: join(process.cwd(), 'src/templates'),
+        dir: join(process.cwd(), 'src/mailling/templates'),
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,

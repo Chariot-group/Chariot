@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '@/resources/user/user.service';
 import { UpdateUserDto } from '@/resources/user/dto/update-user.dto';
-import { ParseNullableIntPipe } from '@/pipes/parse-nullable-int.pipe';
+import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';
 
 @Controller('users')
 export class UserController {
