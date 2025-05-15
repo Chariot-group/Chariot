@@ -8,7 +8,6 @@ import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import CampaignService from "@/services/campaignService";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 interface Props {
@@ -31,7 +30,7 @@ const CampaignListPanel = ({
   const currentLocale = useLocale();
   const t = useTranslations("CampaignListPanel");
 
-  const { error } = useToast();
+  const { error, success } = useToast();
 
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
 
@@ -55,6 +54,9 @@ const CampaignListPanel = ({
           offset,
           label: encodeURIComponent(search),
         });
+        if(response.statusCode === 401){
+          return;
+        }
         if (reset) {
           setCampaigns(response.data);
           setSelectedCampaign(response.data[0] || null);
@@ -88,12 +90,13 @@ const CampaignListPanel = ({
     fetchCampaigns(search, 1, true);
   }, [currentLocale, search, selectedCampaign?.deletedAt]);
 
-  const [crearteModalOpen, setCreateModalOpen] = useState<boolean>(false);
+  const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
   
   const createCampaign = useCallback(async (label: string) => {
     try {
       const response = await CampaignService.createCampaign({label, description: "", groups: {main: [], npc: [], archived: []}});
-      setSelectedCampaign(response.data);
+      fetchCampaigns(search, 1, true);
+      success(t("created"));
     } catch(err){
       error(t("error"));
     }
@@ -101,7 +104,10 @@ const CampaignListPanel = ({
 
   return (
     <div className="w-full h-full flex flex-col">
-      <CreateCampaign isOpen={crearteModalOpen} onClose={() => setCreateModalOpen(false)} onConfirm={createCampaign} />
+      {
+        createModalOpen &&
+        <CreateCampaign isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} onConfirm={createCampaign} />
+      }
 
       <CardHeader className="flex-none h-auto items-center gap-3">
         <CardTitle className="text-foreground font-bold">
@@ -116,7 +122,7 @@ const CampaignListPanel = ({
           <Card
           onClick={() => setCreateModalOpen(true)}
             ref={cardRef}
-            className="w-full bg-primary justify-center flex p-2 gap-3 border-ring hover:border-2 hover:border-primary cursor-pointer shadow-md"
+            className="w-full bg-primary justify-center flex p-2 gap-3 border-ring hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] hover:border-primary cursor-pointer shadow-md"
           >
             <span className="text-background font-bold">{t("create")}</span>
           </Card>
@@ -132,8 +138,8 @@ const CampaignListPanel = ({
             campaigns.map((campaign) => (
               <Card
                 key={campaign._id}
-                className={`flex p-2 gap-3 border-ring shadow-md hover:border-2 bg-background ${
-                  selectedCampaign?._id === campaign._id ? "border-2" : "border"
+                className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${
+                  selectedCampaign?._id === campaign._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"
                 }`}
                 onClick={() => setSelectedCampaign(campaign)}
               >

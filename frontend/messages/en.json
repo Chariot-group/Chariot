@@ -12,7 +12,8 @@
     "createTooltip": "Add a campaign",
     "noCampaigns": "No campaigns found",
     "error": "Error loading campaigns",
-    "create": "Add a campaign"
+    "create": "Add a campaign",
+    "created": "Campaign created successfully"
   },
   "LoginPage": {
     "title": "Welcome to Chariot!",
@@ -259,7 +260,9 @@
     },
     "actions": {
       "delete": "Delete campaign",
-      "update": "Update campaign"
+      "update": "Update campaign",
+      "cancel": "Cancel",
+      "save": "Save"
     },
     "modal": {
       "title": "Delete campaign",
@@ -277,6 +280,8 @@
       "groupDelete": "Delete group",
       "update": "Update group",
       "backCampaign": "Back to campaign",
+      "cancel": "Cancel",
+      "save": "Save",
       "modal": {
         "title": "Delete group",
         "description": "Are you sure you want to delete this group ?",
@@ -297,8 +302,6 @@
   "GroupPage": {
     "yourCharacters": "Your characters",
     "form": {
-      "cancel": "cancel",
-      "save": "Save",
       "unsave": "You have unsaved changes. Do you want to continue?"
     },
     "toasts": {
@@ -322,7 +325,8 @@
     "actions": {
       "create": "Create a campaign",
       "cancel": "Cancel"
-    }
+    },
+    "emptyName": "The campaign name cannot be empty"
   },
   "CampaignPage": {
     "tutorial": {
@@ -333,8 +337,6 @@
       "step5": "Step 5: Let’s play!"
     },
     "form": {
-      "cancel": "cancel",
-      "save": "Save",
       "unsave": "You have unsaved changes. Do you want to continue?"
     },
     "toasts": {

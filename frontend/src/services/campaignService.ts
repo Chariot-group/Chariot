@@ -15,13 +15,15 @@ const CampaignService = {
         params: query,
       });
 
-      if (!response || !response.data || response === undefined) {
-        throw new Error("Invalid API response");
-      }
-
       return response.data;
     } catch (err: any) {
       console.error("API error:", err);
+      if (err.status === 401) {
+        return {
+          statusCode: 401,
+          message: "Unauthorized",
+        };
+      }
       return "error";
     }
   },

@@ -31,7 +31,6 @@ export default function CampaignGroupsPage() {
     const searchParams = useSearchParams();
     const [search, setSearch] = useState(searchParams.get('search') ?? "");
 
-
     //Update
     const [isUpdating, setIsUpdating] = useState<boolean>(false);
     let groupTempRef = useRef<IGroup | null>(null);
@@ -94,10 +93,20 @@ export default function CampaignGroupsPage() {
             try {
                 if(!updateGroup._id) return;
                 const { campaigns, characters, ...group } = updateGroup;
-                console.log("characters", characters);
                 let response = await GroupService.updateGroup(updateGroup._id, group);
 
                 setGroupSelected(response.data);
+                setGroups((prev) => {
+                    return prev.map((group) => {
+                        if (group._id === response.data._id) {
+                            return {
+                                ...group,
+                                label: response.data.label,
+                            }
+                        }
+                        return group;
+                    });
+                });
             } catch (err) {
                 error(t("toasts.errorGroup"));
             }
@@ -159,13 +168,10 @@ export default function CampaignGroupsPage() {
         async (deleteGroup: IGroup) => {
             try {
                 await GroupService.deleteGroup(deleteGroup._id);
-                setGroupSelected((prev) => {
-                    if (!prev) return null;
-                    return {
-                        ...prev,
-                        deletedAt: new Date()
-                    }
+                setGroups((prev) => {
+                    return prev.filter((group) => group._id !== deleteGroup._id);
                 });
+                setGroupSelected(groups[0] ?? null);
                 success(t("toasts.groupDeleted"));
             } catch (err) {
                 error(t("toasts.errorDeleteGroup"));
@@ -195,6 +201,24 @@ export default function CampaignGroupsPage() {
             setNewCharacter(null);
         }
     }, [characterSelected]);
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+          if (event.key === 'Enter' && isUpdating) {
+            saveAction();
+            return;
+          }
+    
+          if (event.key === 'Escape' && isUpdating) {
+            cancelUpdate();
+            return;
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isUpdating, groupSelected]);
 
     const addCharacter = (idGroup: string) => {
         const newCharacter: Partial<ICharacter> = {
@@ -297,7 +321,7 @@ export default function CampaignGroupsPage() {
             <Header campaign={campaign} />
             <main className="h-full flex flex-row">
                 <div className="w-[15%]">
-                    <GroupListPanel search={search} setSearch={setSearch} idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} />
+                    <GroupListPanel search={search} setSearch={setSearch} idCampaign={campaignId?.toString() ?? ""} groupSelected={groupSelected} setGroupSelected={setGroupSelected} groups={groups} setGroups={setGroups} changeLabel={() => { } } updatedGroup={[]} />
                 </div>
                 <div className="h-[90vh] justify-center flex flex-col">
                     <div className="h-[80vh] border border-ring"></div>
@@ -311,7 +335,7 @@ export default function CampaignGroupsPage() {
                     !loading && groupSelected && campaign && (
                         <div className="w-[85%] h[100vh] flex flex-col">
                             <div className="w-full">
-                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} campaign={campaign} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} />
+                                <GroupDetailsPanel group={groupSelected} setGroup={setGroupSelected} onDelete={deleteGroup} isUpdating={isUpdating} startUpdate={startUpdate} saveActions={saveAction} cancelUpdate={cancelUpdate} />
                             </div>
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>
@@ -340,16 +364,6 @@ export default function CampaignGroupsPage() {
                     )
                 }
             </main>
-            <footer className="absolute bottom-0 w-full flex flex-row justify-end items-left">
-                {
-                    isUpdating && groupSelected && (
-                        <div>
-                            <Button variant={"outline"} onClick={cancelUpdate} className="mr-5 mb-2" >{t('form.cancel')}</Button>
-                            <Button variant={"secondary"} onClick={() => saveAction()} className="mr-5 mb-2" >{t('form.save')}</Button>
-                        </div>
-                    )
-                }
-            </footer>
         </div>
     );
 }

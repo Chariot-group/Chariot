@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
-import { PenBoxIcon, TrashIcon } from "lucide-react";
+import { PenBoxIcon, SaveIcon, TrashIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
@@ -17,8 +16,10 @@ interface CampaignDetailsPanelProps {
     onDelete: (campaign: ICampaign) => void;
     isUpdating: boolean;
     startUpdate: () => void;
+    cancelUpdate: () => void;
+    saveActions: () => void;
 } 
-export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete, isUpdating, startUpdate }: CampaignDetailsPanelProps) {
+export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete, isUpdating, startUpdate, cancelUpdate, saveActions }: CampaignDetailsPanelProps) {
 
     const t = useTranslations("CampaignDetails");
 
@@ -39,13 +40,15 @@ export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete, 
 
     return (
         <div className="flex flex-col w-full gap-3 p-5">
-            <DeleteValidation isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title={t("modal.title")} message={t("modal.description")} confirmMessage={t("modal.confirm")} onConfirm={() => onDelete(campaign)}  />
+            { deleteModalOpen &&
+                <DeleteValidation isOpen={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} title={t("modal.title")} message={t("modal.description")} confirmMessage={t("modal.confirm")} onConfirm={() => onDelete(campaign)}  />
+            }
             <div className="w-full flex flex-col gap-2">
                 <div className="w-full flex justify-between items-center">
                     <Label htmlFor={"description"} className="text-foreground">{t("labels.description")}</Label>
-                    <div className="flex flex-row gap-3 items-center">
-                        {
-                            !isUpdating && campaign && (
+                    {
+                        !isUpdating && campaign && (
+                            <div className="flex flex-row gap-3 items-center">
                                 <Tooltip>
                                     <TooltipTrigger asChild>
                                         <Button variant="secondary" onClick={() => startUpdate()}>
@@ -56,19 +59,45 @@ export default function CampaignDetailsPanel({ campaign, setCampaign, onDelete, 
                                         <p>{t("actions.update")}</p>
                                     </TooltipContent>
                                 </Tooltip>
-                            )
-                        }
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <TrashIcon onClick={() => setDeleteModalOpen(true)} className="text-primary cursor-pointer"/>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>{t("actions.delete")}</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    </div>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <TrashIcon onClick={() => setDeleteModalOpen(true)} className="text-primary cursor-pointer"/>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>{t("actions.delete")}</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                        )
+                    }
+                    {
+                        isUpdating && campaign && (
+                            <div className="flex flex-row gap-3 items-center">
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Button variant="outline" onClick={() => cancelUpdate()}>
+                                            <XIcon className="text-forground cursor-pointer"/>
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>{t("actions.cancel")}</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Button variant="secondary" onClick={() => saveActions()}>
+                                            <SaveIcon className="text-forground cursor-pointer"/>
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>{t("actions.save")}</p>
+                                    </TooltipContent>
+                                </Tooltip>
+                            </div>
+                        )
+                    }
                 </div>
-                <Textarea readOnly={!isUpdating} className="h-[10dvh] bg-card" placeholder={t("placeholders.description")} value={description} onChange={(e) => setDescription(e.target.value)}/>
+                <Textarea readOnly={!isUpdating} className="h-[10dvh] bg-card border-ring" placeholder={t("placeholders.description")} value={description} onChange={(e) => setDescription(e.target.value)}/>
             </div>
         </div>
     );

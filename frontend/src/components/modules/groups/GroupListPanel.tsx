@@ -28,6 +28,8 @@ interface Props {
   setSearch: (search: string) => void;
   disabledGroups?: IGroup[]; // Liste des groupes à ne pas afficher
   context?: boolean;
+  changeLabel: (label: string, group: IGroup) => void; // Fonction pour changer le label d'un groupe
+  updatedGroup: IGroup[]; // Liste des groupes à ne pas afficher
 }
 export default function GroupListPanel({
   groups,
@@ -44,6 +46,8 @@ export default function GroupListPanel({
   setSearch,
   disabledGroups,
   context = false,
+  changeLabel,
+  updatedGroup
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -107,10 +111,11 @@ export default function GroupListPanel({
       const response = await GroupService.createGroup({
         label: t("newGroup.label"),
         description: "",
-        campaigns: [{ idCampaign, type: "npc" }],
+        campaigns: [{ idCampaign: idCampaign, type: "npc" }],
       });
       setNewGroup(response.data);
       fetchGroups(search, 1, true);
+      setSearch("");
     } catch (err) {
       error(t("error"));
     } finally {
@@ -118,19 +123,24 @@ export default function GroupListPanel({
     }
   }, []);
 
-    useEffect(() => {
-      if(newGroup) {
-        setGroupSelected(newGroup);
-        setNewGroup(null);
-      }
-    }, [groupSelected]);
+  useEffect(() => {
+    if(newGroup) {
+      setGroupSelected(newGroup);
+      setNewGroup(null);
+    }
+  }, [groupSelected]);
 
   useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
 
-    useEffect(() => {
-        setGroups([]);
-        fetchGroups(search, 1, true);
-    }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
+  useEffect(() => {
+    setGroups([]);
+    fetchGroups(search, 1, true);
+  }, [currentLocal, search, groupSelected?.deletedAt, idCampaign]);
+
+  const isUpdated = (group: IGroup) => {
+    return updatedGroup && updatedGroup.some((g) => g._id === group._id);
+  };
+
   return (
     <div className="w-full h-full flex flex-col">
       <CardHeader className="flex-none h-auto items-center gap-3">
@@ -160,6 +170,7 @@ export default function GroupListPanel({
           {groups.length > 0 &&
             groups.map((group) => (
               <GroupListPanelItem
+                changeLabel={changeLabel}
                 idCampaign={idCampaign}
                 key={group._id}
                 group={group}
@@ -170,6 +181,7 @@ export default function GroupListPanel({
                 groupSelected={groupSelected}
                 disabled={disabledGroups?.some((g) => g._id === group._id)}
                 clickable={!context}
+                updated={isUpdated(group)}
               />
             ))}
           {groups.length === 0 && !loading && !isOver && (

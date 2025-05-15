@@ -121,7 +121,7 @@ export class GroupService {
         throw error;
       }
       const errorMessage = `Error while creating group: ${error.message}`;
-      this.logger.error(errorMessage);
+      this.logger.error(errorMessage, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(errorMessage);
     }
   }
