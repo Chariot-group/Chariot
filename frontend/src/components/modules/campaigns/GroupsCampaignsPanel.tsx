@@ -1,16 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import GroupListPanel from "../groups/GroupListPanel";
 import { IGroup } from "@/models/groups/IGroup";
 import { RefObject, useCallback, useState } from "react";
 import { DragEndEvent } from "@dnd-kit/core";
-import GroupService from "@/services/groupService";
 import GroupDnDWrapper from "../groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useToast } from "@/hooks/useToast";
-import { CrossIcon, EyeIcon, PlusCircleIcon } from "lucide-react";
+import { MousePointerClick, PlusCircleIcon } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import Link from "next/link";
 
@@ -133,7 +131,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex flex-row gap-3 justify-start items-center">
-        <Link href={`/campaigns/${idCampaign}/groups`} className="text-foreground hover:underline underline-offset-2"><h2>{t("title.default")}</h2></Link>
+        <Link href={`/campaigns/${idCampaign}/groups`} className="text-foreground hover:underline underline-offset-2"><h2 className="flex gap-1 items-center"><MousePointerClick className="h-[2dvh]"/> {t("title.default")}</h2></Link>
         {
           isUpdating && (
             <Tooltip>
