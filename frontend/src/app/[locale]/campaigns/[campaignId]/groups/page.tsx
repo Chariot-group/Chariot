@@ -202,6 +202,24 @@ export default function CampaignGroupsPage() {
         }
     }, [characterSelected]);
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+          if (event.key === 'Enter' && isUpdating) {
+            saveAction();
+            return;
+          }
+    
+          if (event.key === 'Escape' && isUpdating) {
+            cancelUpdate();
+            return;
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isUpdating]);
+
     const addCharacter = (idGroup: string) => {
         const newCharacter: Partial<ICharacter> = {
             "name": "Goblin",

@@ -131,6 +131,24 @@ export default function CampaignsPage() {
         }
     }, []);
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+          if (event.key === 'Enter' && isUpdating) {
+            saveActions();
+            return;
+          }
+    
+          if (event.key === 'Escape' && isUpdating) {
+            cancelUpdate();
+            return;
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isUpdating]);
+
     useBeforeUnload(isUpdating, t("form.unsave"));
 
     return (

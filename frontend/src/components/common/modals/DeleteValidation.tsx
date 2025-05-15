@@ -17,26 +17,17 @@ export default function ValidationPopup({ isOpen, onClose, title, message, onCon
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const t = useTranslations("Global");
 
-  //Ferme la popup si l'utilisateur clique sur 'esc'
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onClose();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [onConfirm, onClose]);
-
-  //Valide la popup si l'utilisateur clique sur 'enter'
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
         onConfirm();
         onClose();
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        onClose();
+        return;
       }
     };
 

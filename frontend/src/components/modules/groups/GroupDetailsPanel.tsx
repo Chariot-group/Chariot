@@ -58,14 +58,18 @@ export default function GroupDetailsPanel({
 
   return (
     <div className="flex flex-col h-full w-full gap-3 p-5">
-      <DeleteValidation
-        isOpen={deleteModalOpen}
-        onClose={() => setDeleteModalOpen(false)}
-        title={t("actions.modal.title")}
-        message={t("actions.modal.description")}
-        confirmMessage={t("actions.modal.confirm")}
-        onConfirm={() => onDelete(group)}
-      />
+      {
+        group && deleteModalOpen && 
+        <DeleteValidation
+          isOpen={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          title={t("actions.modal.title")}
+          message={t("actions.modal.description")}
+          confirmMessage={t("actions.modal.confirm")}
+          onConfirm={() => onDelete(group)}
+        />
+      }
+      
       <div className="flex flex-row gap-3 justify-between">
         <Field
           isActive={isUpdating}
