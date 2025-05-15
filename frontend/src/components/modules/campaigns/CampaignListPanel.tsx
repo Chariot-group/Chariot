@@ -32,7 +32,7 @@ const CampaignListPanel = ({
   const currentLocale = useLocale();
   const t = useTranslations("CampaignListPanel");
 
-  const { error } = useToast();
+  const { error, success } = useToast();
 
   const [campaigns, setCampaigns] = useState<ICampaign[]>([]);
 
@@ -97,7 +97,9 @@ const CampaignListPanel = ({
   const createCampaign = useCallback(async (label: string) => {
     try {
       const response = await CampaignService.createCampaign({label, description: "", groups: {main: [], npc: [], archived: []}});
+      setCampaigns([response.data, ...campaigns]);
       setSelectedCampaign(response.data);
+      success(t("created"));
     } catch(err){
       error(t("error"));
     }
