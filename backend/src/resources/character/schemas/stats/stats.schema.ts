@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Speed } from '@/resources/character/schemas/stat/sub/speed.schema';
-import { AbilityScores } from '@/resources/character/schemas/stat/sub/abilityScores.schema';
-import { SavingThrows } from '@/resources/character/schemas/stat/sub/savingThrows.schema';
-import { Skills } from '@/resources/character/schemas/stat/sub/skill.schema';
+import { Speed } from '@/resources/character/schemas/stats/sub/speed.schema';
+import { AbilityScores } from '@/resources/character/schemas/stats/sub/abilityScores.schema';
+import { SavingThrows } from '@/resources/character/schemas/stats/sub/savingThrows.schema';
+import { Skills } from '@/resources/character/schemas/stats/sub/skill.schema';
 
 const sizes = [
   'Tiny',

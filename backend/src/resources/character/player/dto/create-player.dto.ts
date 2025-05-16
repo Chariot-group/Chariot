@@ -6,12 +6,12 @@ import {
   IsOptional,
   ValidateNested,
 } from 'class-validator';
-import { ProgressionDto } from '@/resources/character/dto/progression/progression.dto';
-import { ClassDto } from '@/resources/character/dto/class/class.dto';
+import { ProgressionDto } from '@/resources/character/player/dto/progression/progression.dto';
+import { ClassDto } from '@/resources/character/player/dto/class/class.dto';
 import { ProfileDto } from '@/resources/character/dto/profile/profile.dto';
-import { AppearanceDto } from '@/resources/character/dto/appearance/appearance.dto';
-import { BackgroundDto } from '@/resources/character/dto/background/background.dto';
-import { TreasureDto } from '@/resources/character/dto/treasure/treasure.dto';
+import { AppearanceDto } from '@/resources/character/player/dto/appearance/appearance.dto';
+import { BackgroundDto } from '@/resources/character/player/dto/background/background.dto';
+import { TreasureDto } from '@/resources/character/player/dto/treasure/treasure.dto';
 import { PlayerStatsDto } from '@/resources/character/dto/stats/stats.dto';
 
 export class CreatePlayerDto extends CreateCharacterDto {

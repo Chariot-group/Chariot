@@ -5,7 +5,7 @@ import { Group } from '@/resources/group/schemas/group.schema';
 import { BaseSchema } from '@/common/schemas/base-schema';
 import { Ability } from '@/resources/character/schemas/ability/ability.schema';
 import { Spellcasting } from '@/resources/character/schemas/spellcasting/spellcasting.schema';
-import { Stats } from '@/resources/character/schemas/stat/stats.schema';
+import { Stats } from '@/resources/character/schemas/stats/stats.schema';
 
 export type CharacterDocument = Character & Document;
 

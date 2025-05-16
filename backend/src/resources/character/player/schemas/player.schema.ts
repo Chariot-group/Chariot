@@ -7,7 +7,7 @@ import { PlayerProfile } from '@/resources/character/schemas/profile/profile.sch
 import { Appearance } from '@/resources/character/player/schemas/appearance/appearance.schema';
 import { Background } from '@/resources/character/player/schemas/background/background.schema';
 import { Treasure } from '@/resources/character/player/schemas/treasure/treasure.schema';
-import { PlayerStats } from '@/resources/character/schemas/stat/stats.schema';
+import { PlayerStats } from '@/resources/character/schemas/stats/stats.schema';
 
 export type PlayerDocument = Player & Document;
 
