@@ -153,7 +153,7 @@ export class UserService {
   async findOne(id: string) {
     try {
       if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while fetching campaign ${id}: Id is not a valid mongoose id`;
+        const message = `Error while fetching campaign #${id}: Id is not a valid mongoose id`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new BadRequestException(message);
       }
@@ -163,18 +163,18 @@ export class UserService {
       const end: number = Date.now();
 
       if (!user) {
-        const message = `User ${id} not found`;
+        const message = `User #${id} not found`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new NotFoundException(message);
       }
 
       if (user.deletedAt) {
-        const message = `User ${id} is gone`;
+        const message = `User #${id} is gone`;
         this.logger.error(message, null, this.SERVICE_NAME);
         throw new GoneException(message);
       }
 
-      const message = `User found in ${end - start}ms`;
+      const message = `User #${id} found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -188,7 +188,7 @@ export class UserService {
       ) {
         throw error;
       }
-      const message = `Error while getting user: ${error.message}`;
+      const message = `Error while getting user #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -212,7 +212,7 @@ export class UserService {
         return null;
       }
 
-      const message = `User found in ${end - start}ms`;
+      const message = `User ${email} found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
 
       return user;
@@ -287,7 +287,7 @@ export class UserService {
         throw new NotFoundException(message);
       }
 
-      const message = `User update in ${end - start}ms`;
+      const message = `User #${id} update in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -301,7 +301,7 @@ export class UserService {
       ) {
         throw error;
       }
-      const message = `Error while updating user: ${error.message}`;
+      const message = `Error while updating user #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -336,7 +336,7 @@ export class UserService {
 
       const end: number = Date.now();
 
-      const message = `User delete in ${end - start}ms`;
+      const message = `User #${id} delete in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -351,7 +351,7 @@ export class UserService {
         throw error;
       }
 
-      const message = `Error while deleting character ${id}: ${error.message}`;
+      const message = `Error while deleting character #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
