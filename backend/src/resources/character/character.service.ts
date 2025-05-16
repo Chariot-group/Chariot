@@ -48,8 +48,6 @@ export class CharacterService {
 
   async create(createCharacterDto: CreateCharacterDto, userId: string) {
     try {
-      const start = Date.now();
-
       if (createCharacterDto.groups) {
         for (const groupId of createCharacterDto.groups) {
           if (!Types.ObjectId.isValid(groupId)) {
@@ -61,6 +59,7 @@ export class CharacterService {
         await this.validateGroupRelations(createCharacterDto.groups);
       }
 
+      const start = Date.now();
       const newCharacter = new this.characterModel({
         ...createCharacterDto,
         createdBy: new Types.ObjectId(userId),
@@ -85,10 +84,9 @@ export class CharacterService {
       ) {
         throw error;
       }
-      this.logger.error(`Error creating character: ${error.message}`);
-      throw new InternalServerErrorException(
-        'Une erreur est survenue lors de la création du personnage',
-      );
+      let message = `Error creating character: ${error.message}`;
+      this.logger.error(message);
+      throw new InternalServerErrorException(message);
     }
   }
 
@@ -142,11 +140,7 @@ export class CharacterService {
 
   async findOne(id: string) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
+      await this.validateResource(id);
 
       const start: number = Date.now();
       const character = await this.characterModel
@@ -155,19 +149,7 @@ export class CharacterService {
         .exec();
       const end: number = Date.now();
 
-      if (!character) {
-        const message = `Character ${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new NotFoundException(message);
-      }
-
-      if (character.deletedAt) {
-        const message = `Character ${id} is gone`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new GoneException(message);
-      }
-
-      const message = `Character found in ${end - start}ms`;
+      const message = `Character #${id} found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -182,7 +164,7 @@ export class CharacterService {
         throw error;
       }
 
-      const message = `Error while fetching character ${id}: ${error.message}`;
+      const message = `Error while fetching character #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -275,7 +257,7 @@ export class CharacterService {
         throw new NotFoundException(message);
       }
 
-      const message = `Character update in ${end - start}ms`;
+      const message = `Character #${id} update in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -289,7 +271,7 @@ export class CharacterService {
       ) {
         throw error;
       }
-      const message = `Error while updating character: ${error.message}`;
+      const message = `Error while updating #${id} character: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
@@ -328,7 +310,7 @@ export class CharacterService {
 
       const end: number = Date.now();
 
-      const message = `Character delete in ${end - start}ms`;
+      const message = `Character #${id} delete in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
@@ -342,7 +324,7 @@ export class CharacterService {
       ) {
         throw error;
       }
-      const message = `Error while deleting character ${id}: ${error.message}`;
+      const message = `Error while deleting character #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }

@@ -87,7 +87,7 @@ export class AuthService {
             const token = this.jwtService.sign({iss: process.env.BACKEND_URL, sub: user._id, aud: process.env.FRONTEND_URL });
             const end = Date.now();
 
-            const message = `User logged in ${end - start}ms`;
+            const message = `User ${signInDto.email} logged in ${end - start}ms`;
             this.logger.verbose(message, this.SERVICE_NAME);
             return {
                 message,
@@ -100,7 +100,7 @@ export class AuthService {
               ) {
                 throw error;
               }
-              const message = `Error while sign in user: ${error.message}`;
+              const message = `Error while sign in user ${signInDto.email}: ${error.message}`;
               this.logger.error(message, null, this.SERVICE_NAME);
               throw new InternalServerErrorException(message);
         }
@@ -125,12 +125,12 @@ export class AuthService {
             this.maillingService.sendOTP(user.username, user.email, otp, locale);
 
             if (userUpdate.modifiedCount === 0) {
-                const message = `User #${email} not found`;
+                const message = `User ${email} not found`;
                 this.logger.error(message, null, this.SERVICE_NAME);
                 throw new NotFoundException(message);
             }
             
-            const message = `User update in ${end - start}ms`;
+            const message = `User ${email} update in ${end - start}ms`;
             this.logger.verbose(message, this.SERVICE_NAME);
             return {
                 message,
@@ -143,7 +143,7 @@ export class AuthService {
                 error instanceof GoneException ) {
                 throw error;
             }
-            const message = `Error while reset password of user: ${error.message}`;
+            const message = `Error while reset password of user ${resetPasswordDto.email}: ${error.message}`;
             this.logger.error(message, null, this.SERVICE_NAME);
             throw new InternalServerErrorException(message);
         }
@@ -172,7 +172,7 @@ export class AuthService {
             }).exec();
             const end: number = Date.now();
 
-            const message = `Password update in ${end - start}ms`;
+            const message = `Password of #${id} update in ${end - start}ms`;
             this.logger.verbose(message, this.SERVICE_NAME);
             return {
                 message,
@@ -187,7 +187,7 @@ export class AuthService {
               ) {
                 throw error;
               }
-              const message = `Error while changing password: ${error.message}`;
+              const message = `Error while changing password of #${id}: ${error.message}`;
               this.logger.error(message, null, this.SERVICE_NAME);
               throw new InternalServerErrorException(message);
         }
