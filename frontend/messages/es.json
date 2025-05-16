@@ -13,7 +13,7 @@
     "noCampaigns": "No se encontraron campañas",
     "error": "Error al cargar las campañas",
     "create": "Añadir campaña",
-    "created": "Campaña creada con éxito"
+    "created": "Campaña creada"
   },
   "LoginPage": {
     "title": "Bienvenido a Chariot!",
@@ -307,12 +307,12 @@
     },
     "toasts": {
       "cancel": "Grupo no guardado",
-      "save": "Grupo guardado con éxito",
+      "save": "Grupo guardado",
       "errorGroup": "Error al guardar el grupo",
       "errorCreateCharacter": "Error al crear el personaje",
       "errorDeleteCharacter": "Error al eliminar el personaje",
       "errorDeleteGroup": "Error al eliminar el grupo",
-      "groupDeleted": "Grupo eliminado con éxito",
+      "groupDeleted": "Grupo eliminado",
       "errorFindCampaign": "Error al encontrar la campaña"
     }
   },
@@ -342,9 +342,9 @@
     },
     "toasts": {
       "cancel": "Campaña no guardada",
-      "save": "Campaña guardada con éxito",
+      "save": "Campaña guardada",
       "errorDetetingCampaign": "Error al eliminar la campaña",
-      "deletedCampaign": "Campaña eliminada con éxito"
+      "deletedCampaign": "Campaña eliminada"
     }
   },
   "InitiativeTracker": {
