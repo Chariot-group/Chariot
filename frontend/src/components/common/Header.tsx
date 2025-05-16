@@ -35,7 +35,7 @@ export function Header({ campaign }: HeaderProps) {
             console.error("Error fetching user:", err);
         }
     },
-    []
+    [router]
   );
 
   const logout = () => {
