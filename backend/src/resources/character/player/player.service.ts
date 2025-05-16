@@ -29,36 +29,36 @@ export class PlayerService {
 
     for (const groupId of groupIds) {
       if (!Types.ObjectId.isValid(groupId)) {
-        throw new BadRequestException(`Invalid group ID: ${groupId}`);
+        throw new BadRequestException(`Invalid group ID: #${groupId}`);
       }
 
       const group = await this.groupModel.findById(groupId).exec();
       if (!group) {
-        throw new NotFoundException(`Group not found: ${groupId}`);
+        throw new NotFoundException(`Group not found: #${groupId}`);
       }
 
       if (group.deletedAt) {
-        throw new GoneException(`Group already deleted: ${groupId}`);
+        throw new GoneException(`Group already deleted: #${groupId}`);
       }
     }
   }
 
   private async validateResource(id: string): Promise<void> {
     if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
+      const message = `Error while fetching character #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new BadRequestException(message);
     }
     const player = await this.characterModel.findById(id).exec();
 
     if (!player) {
-      const message = `Player ${id} not found`;
+      const message = `Player #${id} not found`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new NotFoundException(message);
     }
 
     if (player.deletedAt) {
-      const message = `Player ${id} is gone`;
+      const message = `Player #${id} is gone`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new GoneException(message);
     }
@@ -70,7 +70,7 @@ export class PlayerService {
         for (const groupId of createPlayerDto.groups) {
           if (!Types.ObjectId.isValid(groupId)) {
             throw new BadRequestException(
-              `Invalid group ID format: ${groupId}`,
+              `Invalid group ID format: #${groupId}`,
             );
           }
         }
@@ -139,7 +139,7 @@ export class PlayerService {
         const goneGroups = groupCheckResults.filter((group) => group.deletedAt);
         if (goneGroups.length > 0) {
           const goneGroupIds = goneGroups.map((group) => group._id.toString());
-          const message = `Gone group IDs: ${goneGroupIds.join(', ')}`;
+          const message = `Gone group IDs: #${goneGroupIds.join(', #')}`;
           this.logger.error(message, null, this.SERVICE_NAME);
           throw new GoneException(message);
         }
