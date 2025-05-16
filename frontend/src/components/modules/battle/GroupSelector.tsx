@@ -55,6 +55,7 @@ const GroupSelector = ({
       <div className="flex flex-row items-center justify-around w-1/2">
         <div>
           <GroupListPanel
+            updatedGroup={[]}
             addable={false}
             context
             search={searchLeft}
@@ -88,6 +89,7 @@ const GroupSelector = ({
         <p className="text-6xl">{t("versus")}</p>
         <div>
           <GroupListPanel
+            updatedGroup={[]}
             addable={false}
             context
             search={searchRight}
