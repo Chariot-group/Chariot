@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 interface HeaderProps {
   campaign: ICampaign | null;
 }
+//cerrar sesión
 export function Header({ campaign }: HeaderProps) {
   const t = useTranslations("Header");
   const router = useRouter();
@@ -79,7 +80,7 @@ export function Header({ campaign }: HeaderProps) {
                   </Avatar>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-2 mr-5">
-                  <a onClick={logout} className="hover:underline underline-offset-4 cursor-pointer">Se déconnecter</a>
+                  <a onClick={logout} className="hover:underline underline-offset-4 cursor-pointer">{t('signout')}</a>
                 </PopoverContent>
               </Popover>
             )

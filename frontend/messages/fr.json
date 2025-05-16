@@ -272,7 +272,8 @@
   },
   "Header": {
     "home": "CHARIOT",
-    "launchBattle": "Initier un combat"
+    "launchBattle": "Initier un combat",
+    "signout": "Se déconnecter"
   },
   "GroupDetailsPanel": {
     "error": "Erreur lors de la mise à jour du groupe",
@@ -362,7 +363,7 @@
     "actions": "Action(s)"
   },
   "InitiativeItem": {
-    "detail": "Détail"
+    "detail": "Détails"
   },
   "MobileRestraint": {
     "title": "Application non disponible sur mobile",

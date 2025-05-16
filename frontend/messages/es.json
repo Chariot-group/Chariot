@@ -7,7 +7,7 @@
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇬🇧 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
   },
   "CampaignListPanel": {
-    "title": "Tus campañas",
+    "title": "Sus campañas",
     "search": "Buscar una campaña",
     "createTooltip": "Añadir campaña",
     "noCampaigns": "No se encontraron campañas",
@@ -35,10 +35,10 @@
     }
   },
   "CharacterListPanel": {
-    "addCharacter": "Agregar personaje",
+    "addCharacter": "Añadir personaje",
     "title": "Lista de personajes",
     "search": "Buscar un personaje",
-    "create": "Agregar un personaje",
+    "create": "Añadir un personaje",
     "noCharacters": "No se encontraron personajes",
     "error": "Error al cargar los personajes"
   },
@@ -46,16 +46,16 @@
     "title": {
       "main": "Principales",
       "npc": "PNJ",
-      "default": "Tus grupos",
+      "default": "Sus grupos",
       "archived": "Archivados"
     },
     "newGroup": {
       "label": "Nuevo grupo"
     },
     "search": "Buscar un grupo",
-    "create": "Agregar un grupo",
+    "create": "Añadir un grupo",
     "noGroups": "No se encontraron grupos",
-    "dropHere": "Suelta aquí para agregar al grupo",
+    "dropHere": "Suelta aquí para añadir al grupo",
     "error": "Error al cargar los grupos"
   },
   "CharacterDetailsPanel": {
@@ -67,11 +67,11 @@
     },
     "actions": {
       "characterDelete": "Eliminar personaje",
-      "actionsAdd": "Agregar acción",
+      "actionsAdd": "Añadir acción",
       "actionsDelete": "Eliminar acción",
-      "languagesAdd": "Agregar idioma",
+      "languagesAdd": "Añadir idioma",
       "languagesDelete": "Eliminar idioma",
-      "abilitiesAdd": "Agregar habilidad",
+      "abilitiesAdd": "Añadir habilidad",
       "abilitiesDelete": "Eliminar habilidad",
       "modal": {
         "title": "Eliminar personaje",
@@ -272,7 +272,8 @@
   },
   "Header": {
     "home": "CHARIOT",
-    "launchBattle": "Iniciar un combate"
+    "launchBattle": "Iniciar un combate",
+    "signout": "Cerrar sesión"
   },
   "GroupDetailsPanel": {
     "error": "Error al actualizar el grupo",
@@ -300,7 +301,7 @@
     }
   },
   "GroupPage": {
-    "yourCharacters": "Tus personajes",
+    "yourCharacters": "Sus personajes",
     "form": {
       "unsave": "Tienes cambios sin guardar. ¿Continuar?"
     },
@@ -362,7 +363,7 @@
     "actions": "Acción(es)"
   },
   "InitiativeItem": {
-    "detail": "Detalle"
+    "detail": "Detalles"
   },
   "MobileRestraint": {
     "title": "Pantalla pequeña",
@@ -377,7 +378,7 @@
     }
   },
   "GroupSelector": {
-    "title": "Elige los dos grupos que se enfrentarán",
+    "title": "Elige a los dos grupos que se enfrentarán",
     "versus": "VS"
   },
   "BattlePage": {
