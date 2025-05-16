@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { CircleDashedIcon, CrossIcon, DeleteIcon, Search, XIcon } from "lucide-react";
 
 interface Props {
   value: string;
@@ -23,7 +23,15 @@ const SearchInput = ({
         reverse ? "bg-background" : "bg-card"
       }`}
     />
-    <Search className="size-5 absolute right-3 top-1/2 -translate-y-1/2" />
+    {
+      value.length <= 0 && 
+      <Search className="size-5 absolute right-3 top-1/2 -translate-y-1/2" />
+    }
+    {
+      value.length > 0 && 
+      <XIcon className="cursor-pointer size-5 absolute right-3 top-1/2 -translate-y-1/2" onClick={() => onChange("")} />
+
+    }
   </div>
 );
 
