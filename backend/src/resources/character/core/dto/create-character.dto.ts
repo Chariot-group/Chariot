@@ -6,10 +6,10 @@ import {
   IsArray,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { StatsDto } from '@/resources/character/dto/stats/stats.dto';
-import { AffinitiesDto } from '@/resources/character/dto/affinities/affinities.dto';
-import { AbilityDto } from '@/resources/character/dto/ability/ability.dto';
-import { SpellcastingDto } from '@/resources/character/dto/spellcasting/spellcasting.dto';
+import { StatsDto } from '@/resources/character/core/dto/stats/stats.dto';
+import { AffinitiesDto } from '@/resources/character/core/dto/affinities/affinities.dto';
+import { AbilityDto } from '@/resources/character/core/dto/ability/ability.dto';
+import { SpellcastingDto } from '@/resources/character/core/dto/spellcasting/spellcasting.dto';
 
 export class CreateCharacterDto {
   @IsString()

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Character } from '@/resources/character/schemas/character.schema';
+import { Character } from '@/resources/character/core/schemas/character.schema';
 import { Progression } from '@/resources/character/player/schemas/progression/progression.schema';
 import { Class } from '@/resources/character/player/schemas/class/class.schema';
 import { PlayerProfile } from '@/resources/character/player/schemas/profile/player-profile.schema';

@@ -11,8 +11,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CharacterService } from '@/resources/character/character.service';
-import { CreateCharacterDto } from '@/resources/character/dto/create-character.dto';
-import { UpdateCharacterDto } from '@/resources/character/dto/update-character.dto';
+import { CreateCharacterDto } from '@/resources/character/core/dto/create-character.dto';
+import { UpdateCharacterDto } from '@/resources/character/core/dto/update-character.dto';
 import { IsCreator } from '@/common/decorators/is-creator.decorator';
 import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
 import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';

@@ -1,4 +1,4 @@
-import { CreateCharacterDto } from '@/resources/character/dto/create-character.dto';
+import { CreateCharacterDto } from '@/resources/character/core/dto/create-character.dto';
 import { Type } from 'class-transformer';
 import {
   IsArray,

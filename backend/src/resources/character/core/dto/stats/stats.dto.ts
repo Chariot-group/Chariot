@@ -4,12 +4,12 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { Size } from '@/resources/character/constants/sizes.constant';
+import { Size } from '@/resources/character/core/constants/sizes.constant';
 import { AbilityScoresDto } from './sub/abilityScores.dto';
 import { Type } from 'class-transformer';
-import { SavingThrowsDto } from '@/resources/character/dto/stats/sub/savingThrows.dto';
-import { SpeedDto } from '@/resources/character/dto/stats/sub/speed.dto';
-import { SkillDto } from '@/resources/character/dto/stats/sub/skill.dto';
+import { SavingThrowsDto } from '@/resources/character/core/dto/stats/sub/savingThrows.dto';
+import { SpeedDto } from '@/resources/character/core/dto/stats/sub/speed.dto';
+import { SkillDto } from '@/resources/character/core/dto/stats/sub/skill.dto';
 
 export class StatsDto {
   @IsOptional()

@@ -1,7 +1,7 @@
 import { Prop, Schema } from '@nestjs/mongoose';
 import { SchemaFactory } from '@nestjs/mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
-import { Spell } from '@/resources/character/schemas/spellcasting/sub/spell.schema';
+import { Spell } from '@/resources/character/core/schemas/spellcasting/sub/spell.schema';
 
 @Schema({ _id: false })
 export class Spellcasting {

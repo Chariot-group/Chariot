@@ -1,4 +1,4 @@
-import { Profile } from '@/resources/character/schemas/profile/profile.schema';
+import { Profile } from '@/resources/character/core/schemas/profile/profile.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })

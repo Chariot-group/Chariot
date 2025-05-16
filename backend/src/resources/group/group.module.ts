@@ -10,7 +10,7 @@ import {
 import {
   Character,
   CharacterSchema,
-} from '@/resources/character/schemas/character.schema';
+} from '@/resources/character/core/schemas/character.schema';
 import { CharacterModule } from '@/resources/character/character.module';
 
 @Module({

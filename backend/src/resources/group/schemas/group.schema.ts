@@ -3,13 +3,12 @@ import { Document } from 'mongoose';
 import mongoose from 'mongoose';
 import { Campaign } from '@/resources/campaign/schemas/campaign.schema';
 import { BaseSchema } from '@/common/schemas/base-schema';
-import { Character } from '@/resources/character/schemas/character.schema';
+import { Character } from '@/resources/character/core/schemas/character.schema';
 
 export type GroupDocument = Group & Document;
 
 @Schema({ timestamps: true })
 export class Group extends BaseSchema {
-
   @Prop({ type: mongoose.Schema.Types.ObjectId, auto: true })
   _id: mongoose.Schema.Types.ObjectId;
 

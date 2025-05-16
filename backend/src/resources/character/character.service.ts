@@ -6,13 +6,13 @@ import {
   NotFoundException,
   GoneException,
 } from '@nestjs/common';
-import { CreateCharacterDto } from '@/resources/character/dto/create-character.dto';
-import { UpdateCharacterDto } from '@/resources/character/dto/update-character.dto';
+import { CreateCharacterDto } from '@/resources/character/core/dto/create-character.dto';
+import { UpdateCharacterDto } from '@/resources/character/core/dto/update-character.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   Character,
   CharacterDocument,
-} from '@/resources/character/schemas/character.schema';
+} from '@/resources/character/core/schemas/character.schema';
 import { Model, SortOrder, Types } from 'mongoose';
 import { Group } from '@/resources/group/schemas/group.schema';
 

@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   Character,
   CharacterSchema,
-} from '@/resources/character/schemas/character.schema';
+} from '@/resources/character/core/schemas/character.schema';
 import { Group, GroupSchema } from '@/resources/group/schemas/group.schema';
 import { PlayerSchema } from '@/resources/character/player/schemas/player.schema';
 import { NPCSchema } from '@/resources/character/npc/schemas/npc.schema';

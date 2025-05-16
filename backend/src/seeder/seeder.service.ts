@@ -15,7 +15,7 @@ import * as bcrypt from 'bcrypt';
 import {
   Character,
   CharacterDocument,
-} from '@/resources/character/schemas/character.schema';
+} from '@/resources/character/core/schemas/character.schema';
 
 @Injectable()
 export class SeederService {

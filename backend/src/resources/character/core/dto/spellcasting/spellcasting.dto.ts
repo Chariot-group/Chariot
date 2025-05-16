@@ -5,7 +5,7 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { SpellDto } from '@/resources/character/dto/spellcasting/sub/spell.dto';
+import { SpellDto } from '@/resources/character/core/dto/spellcasting/sub/spell.dto';
 import { Type } from 'class-transformer';
 
 export class SpellcastingDto {

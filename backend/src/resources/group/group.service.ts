@@ -13,8 +13,14 @@ import { GroupDocument } from '@/resources/group/schemas/group.schema';
 import { CreateGroupDto } from '@/resources/group/dto/create-group.dto';
 import { UpdateGroupDto } from '@/resources/group/dto/update-group.dto';
 import { Model, Types } from 'mongoose';
-import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
-import { Character, CharacterDocument } from '../character/schemas/character.schema';
+import {
+  Campaign,
+  CampaignDocument,
+} from '@/resources/campaign/schemas/campaign.schema';
+import {
+  Character,
+  CharacterDocument,
+} from '@/resources/character/core/schemas/character.schema';
 
 @Injectable()
 export class GroupService {
@@ -51,20 +57,19 @@ export class GroupService {
   }
 
   private async validateResource(id: string): Promise<void> {
-    
     if (!Types.ObjectId.isValid(id)) {
       const message = `Error while fetching group #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new BadRequestException(message);
     }
     const group = await this.groupModel.findById(id).exec();
-    
+
     if (!group) {
       const message = `Group #${id} not found`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new NotFoundException(message);
     }
-    
+
     if (group.deletedAt) {
       const message = `group #${id} is gone`;
       this.logger.error(message, null, this.SERVICE_NAME);
@@ -229,7 +234,6 @@ export class GroupService {
 
   async findOne(id: string) {
     try {
-      
       await this.validateResource(id);
 
       const start: number = Date.now();

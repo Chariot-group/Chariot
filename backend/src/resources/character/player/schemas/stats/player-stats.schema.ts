@@ -1,4 +1,4 @@
-import { Stats } from '@/resources/character/schemas/stats/stats.schema';
+import { Stats } from '@/resources/character/core/schemas/stats/stats.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
