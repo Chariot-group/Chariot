@@ -1,5 +1,6 @@
 import { Prop, Schema } from '@nestjs/mongoose';
 import { SchemaFactory } from '@nestjs/mongoose';
+import { EffectType } from '@/resources/character/core/constants/effect-types.constant';
 
 @Schema({ _id: false })
 export class Spell {
@@ -28,7 +29,7 @@ export class Spell {
   range?: string;
 
   @Prop()
-  effectType?: 'attack' | 'heal' | 'utility';
+  effectType?: EffectType;
 
   @Prop()
   damage?: string;
