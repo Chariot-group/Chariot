@@ -1,4 +1,4 @@
-const sizes = [
+export const SIZES = [
   'Tiny',
   'Small',
   'Medium',
@@ -7,4 +7,4 @@ const sizes = [
   'Gargantuan',
 ] as const;
 
-export type Size = (typeof sizes)[number];
+export type Size = (typeof SIZES)[number];

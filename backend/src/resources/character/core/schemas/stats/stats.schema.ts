@@ -3,23 +3,19 @@ import { Speed } from '@/resources/character/core/schemas/stats/sub/speed.schema
 import { AbilityScores } from '@/resources/character/core/schemas/stats/sub/abilityScores.schema';
 import { SavingThrows } from '@/resources/character/core/schemas/stats/sub/savingThrows.schema';
 import { Skills } from '@/resources/character/core/schemas/stats/sub/skill.schema';
+import {
+  SIZES,
+  Size,
+} from '@/resources/character/core/constants/sizes.constant';
 
-const sizes = [
-  'Tiny',
-  'Small',
-  'Medium',
-  'Large',
-  'Huge',
-  'Gargantuan',
-] as const;
 @Schema({ _id: false })
 export class Stats {
   @Prop({
     type: String,
     required: true,
-    enum: sizes,
+    enum: SIZES,
   })
-  size: (typeof sizes)[number];
+  size: Size;
 
   @Prop({ default: 0 })
   maxHitPoints: number;
