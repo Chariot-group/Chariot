@@ -31,7 +31,7 @@
       "internal": "Ocurrió un error al intentar iniciar sesión"
     },
     "success": {
-      "login": "¡ Inicio de sesión exitoso !"
+      "login": "¡ Sesión abierta !"
     }
   },
   "CharacterListPanel": {
