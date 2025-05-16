@@ -1,34 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { NpcService } from './npc.service';
-import { CreateNpcDto } from './dto/create-npc.dto';
-import { UpdateNpcDto } from './dto/update-npc.dto';
+import { Controller, Post, Body, Patch, Param, Req } from '@nestjs/common';
+import { NpcService } from '@/resources/character/npc/npc.service';
+import { CreateNpcDto } from '@/resources/character/npc/dto/create-npc.dto';
+import { UpdateNpcDto } from '@/resources/character/npc/dto/update-npc.dto';
+import { IsCreator } from '@/common/decorators/is-creator.decorator';
+import { CharacterService } from '@/resources/character/character.service';
 
-@Controller('npc')
+@Controller('characters/npcs')
 export class NpcController {
-  constructor(private readonly npcService: NpcService) {}
+  constructor(
+    private readonly npcService: NpcService,
+    private readonly characterService: CharacterService,
+  ) {}
 
   @Post()
-  create(@Body() createNpcDto: CreateNpcDto) {
-    return this.npcService.create(createNpcDto);
+  createNpc(@Req() request, @Body() createNpcDto: CreateNpcDto) {
+    const userId = request.user.userId;
+
+    return this.npcService.create(createNpcDto, userId);
   }
 
-  @Get()
-  findAll() {
-    return this.npcService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.npcService.findOne(+id);
-  }
-
+  @IsCreator(CharacterService)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateNpcDto: UpdateNpcDto) {
-    return this.npcService.update(+id, updateNpcDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.npcService.remove(+id);
+    return this.npcService.update(id, updateNpcDto);
   }
 }

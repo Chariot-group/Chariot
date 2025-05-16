@@ -7,16 +7,14 @@ import { CreateCharacterDto } from '@/resources/character/core/dto/create-charac
 
 export class CreateNpcDto extends CreateCharacterDto {
   @ValidateNested({ each: true })
-  @IsArray()
   @IsOptional()
   @Type(() => ActionsDto)
-  actions: ActionsDto[];
+  actions: ActionsDto;
 
   @ValidateNested({ each: true })
-  @IsArray()
   @IsOptional()
   @Type(() => ChallengeDto)
-  challenge: ChallengeDto[];
+  challenge: ChallengeDto;
 
   @ValidateNested()
   @IsOptional()

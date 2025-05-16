@@ -15,9 +15,6 @@ export class CreateCharacterDto {
   @IsString()
   name: string;
 
-  @IsString()
-  kind?: 'player' | 'npc';
-
   @IsMongoId({ each: true })
   @IsArray()
   @IsOptional()

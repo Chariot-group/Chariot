@@ -1,34 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PlayerService } from './player.service';
-import { CreatePlayerDto } from './dto/create-player.dto';
-import { UpdatePlayerDto } from './dto/update-player.dto';
+import { Controller, Post, Body, Patch, Param, Req } from '@nestjs/common';
+import { PlayerService } from '@/resources/character/player/player.service';
+import { CreatePlayerDto } from '@/resources/character/player/dto/create-player.dto';
+import { UpdatePlayerDto } from '@/resources/character/player/dto/update-player.dto';
+import { IsCreator } from '@/common/decorators/is-creator.decorator';
+import { CharacterService } from '@/resources/character/character.service';
 
-@Controller('player')
+@Controller('characters/players')
 export class PlayerController {
-  constructor(private readonly playerService: PlayerService) {}
+  constructor(
+    private readonly playerService: PlayerService,
+    private readonly characterService: CharacterService,
+  ) {}
 
   @Post()
-  create(@Body() createPlayerDto: CreatePlayerDto) {
-    return this.playerService.create(createPlayerDto);
+  createPlayer(@Req() request, @Body() createPlayerDto: CreatePlayerDto) {
+    const userId = request.user.userId;
+
+    return this.playerService.create(createPlayerDto, userId);
   }
 
-  @Get()
-  findAll() {
-    return this.playerService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.playerService.findOne(+id);
-  }
-
+  @IsCreator(CharacterService)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
-    return this.playerService.update(+id, updatePlayerDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.playerService.remove(+id);
+    return this.playerService.update(id, updatePlayerDto);
   }
 }
