@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 interface HeaderProps {
   campaign: ICampaign | null;
 }
-//cerrar sesión
+
 export function Header({ campaign }: HeaderProps) {
   const t = useTranslations("Header");
   const router = useRouter();
