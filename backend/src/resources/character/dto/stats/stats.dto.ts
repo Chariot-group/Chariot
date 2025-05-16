@@ -69,9 +69,3 @@ export class StatsDto {
   @Type(() => Object)
   senses: { name: string; value: number }[];
 }
-
-export class PlayerStatsDto extends StatsDto {
-  @IsOptional()
-  @IsNumber()
-  proficiencyBonus?: number;
-}

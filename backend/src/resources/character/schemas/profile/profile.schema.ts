@@ -8,25 +8,3 @@ export class Profile {
 }
 
 export const ProfileSchema = SchemaFactory.createForClass(Profile);
-
-@Schema({ _id: false })
-export class PlayerProfile extends Profile {
-  @Prop()
-  race?: string;
-
-  @Prop()
-  subrace?: string;
-}
-
-export const PlayerProfileSchema = SchemaFactory.createForClass(PlayerProfile);
-
-@Schema({ _id: false })
-export class NPCProfile extends Profile {
-  @Prop()
-  type?: string;
-
-  @Prop()
-  subtype?: string;
-}
-
-export const NPCProfileSchema = SchemaFactory.createForClass(NPCProfile);

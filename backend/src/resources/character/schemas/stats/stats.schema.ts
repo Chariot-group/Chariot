@@ -63,11 +63,3 @@ export class Stats {
 }
 
 export const StatsSchema = SchemaFactory.createForClass(Stats);
-
-@Schema({ _id: false })
-export class PlayerStats extends Stats {
-  @Prop({ default: 0 })
-  proficiencyBonus: number;
-}
-
-export const PlayerStatsSchema = SchemaFactory.createForClass(PlayerStats);
