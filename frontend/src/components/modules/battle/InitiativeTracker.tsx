@@ -132,11 +132,11 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
   return (
     <div className="p-5">
       <div className="relative flex justify-between my-4">
-        <Button variant="outline" onClick={handleReset}>
-          <Link href={`/campaigns/${campaignId}/battle/select`}>
+        <Link href={`/campaigns/${campaignId}/battle/select`}>
+          <Button variant="outline" onClick={handleReset}>
             {t("backToSelection")}
-          </Link>
-        </Button>
+          </Button>
+        </Link>
         <p className="text-3xl absolute left-[47%] text-center ">
           {t("round")} : {currentRound}
         </p>
