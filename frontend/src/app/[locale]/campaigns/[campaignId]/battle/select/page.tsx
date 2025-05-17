@@ -33,7 +33,7 @@ const BattleSelectionPage = () => {
       </div>
       {fightingGroups[0] && fightingGroups[1] && (
         <div className="flex justify-end p-5">
-          <Button>
+          <Button className="text-xl h-12 px-6">
             <Link
               href={`/campaigns/${campaignId}/battle/${fightingGroups[0]?._id}/${fightingGroups[1]?._id}`}
             >
