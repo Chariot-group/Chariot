@@ -30,6 +30,7 @@ interface Props {
   context?: boolean;
   changeLabel?: (label: string, group: IGroup) => void; // Fonction pour changer le label d'un groupe
   updatedGroup?: IGroup[]; // Liste des groupes à ne pas afficher
+  onlyWithMembers?: boolean; // Si vrai, n'affiche que les groupes avec des membres
 }
 export default function GroupListPanel({
   groups,
@@ -48,6 +49,7 @@ export default function GroupListPanel({
   context = false,
   changeLabel,
   updatedGroup,
+  onlyWithMembers = false,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -76,6 +78,7 @@ export default function GroupListPanel({
             offset,
             label: encodeURIComponent(search),
             type,
+            onlyWithMembers,
           },
           idCampaign
         );

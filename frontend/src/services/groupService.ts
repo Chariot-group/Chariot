@@ -1,7 +1,6 @@
 import { APIContentType } from "@/constants/APIContentType";
 import apiClient from "@/services/apiConfig";
 
-
 const END_POINT = "/campaigns";
 
 const GroupService = {
@@ -12,6 +11,7 @@ const GroupService = {
       label?: string;
       sort?: string;
       type: string;
+      onlyWithMembers?: boolean;
     },
     idCampaingn: string
   ) {
@@ -51,7 +51,6 @@ const GroupService = {
       return "error";
     }
   },
-  
   async findOne(id: string) {
     try {
       const response = await apiClient(APIContentType.JSON).get(
