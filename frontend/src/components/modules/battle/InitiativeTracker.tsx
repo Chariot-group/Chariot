@@ -172,7 +172,7 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
           </div>
         )}
         {!currentParticipant && (
-          <Button onClick={handleBattleStart}>
+          <Button className="absolute left-[47%]" onClick={handleBattleStart}>
             {t("start")} <Swords />
           </Button>
         )}
