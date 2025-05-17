@@ -82,7 +82,7 @@ const GroupSelector = ({
           }
         />
       </div>
-      <p className="text-6xl">{t("versus")}</p>
+      <p className="text-4xl">{t("versus")}</p>
       <div>
         <GroupListPanel
           onlyWithMembers={true}

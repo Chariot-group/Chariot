@@ -56,7 +56,7 @@ export function Header({ campaign }: HeaderProps) {
       <div className="flex justify-between items-center">
         {campaign && (
           <Button>
-            <Link href={`/campaigns/${campaign._id}/battle`}>
+            <Link href={`/campaigns/${campaign._id}/battle/select`}>
               {t("launchBattle")}
             </Link>
           </Button>

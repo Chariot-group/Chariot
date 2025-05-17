@@ -353,7 +353,8 @@
     "start": "Commencer",
     "next": "Suivant",
     "previous": "Précédent",
-    "round": "Tour"
+    "round": "Tour",
+    "backToSelection": "Retour à la sélection"
   },
   "InitiativeList": {
     "initiative": "Initiative",
@@ -379,11 +380,13 @@
     }
   },
   "GroupSelector": {
-    "title": "Choisisser les deux groupes qui vont s’affronter",
     "versus": "VS"
   },
+  "GroupSelectorPage": {
+    "title": "Choisisser les deux groupes qui vont s’affronter",
+    "battle": "Lancer le combat"
+  },
   "BattlePage": {
-    "battle": "Lancer le combat",
     "back": "Retour à la sélection"
   },
   "confirmEmail": {
