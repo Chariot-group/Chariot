@@ -50,6 +50,7 @@ const GroupSelector = ({
     <>
       <div>
         <GroupListPanel
+          displayMembersCount={true}
           onlyWithMembers={true}
           updatedGroup={[]}
           addable={false}
@@ -85,6 +86,7 @@ const GroupSelector = ({
       <p className="text-4xl">{t("versus")}</p>
       <div>
         <GroupListPanel
+          displayMembersCount={true}
           onlyWithMembers={true}
           updatedGroup={[]}
           addable={false}

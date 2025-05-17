@@ -31,6 +31,7 @@ interface Props {
   changeLabel?: (label: string, group: IGroup) => void; // Fonction pour changer le label d'un groupe
   updatedGroup?: IGroup[]; // Liste des groupes à ne pas afficher
   onlyWithMembers?: boolean; // Si vrai, n'affiche que les groupes avec des membres
+  displayMembersCount?: boolean; // Si vrai, affiche le nombre de membres du groupe
 }
 export default function GroupListPanel({
   groups,
@@ -50,6 +51,7 @@ export default function GroupListPanel({
   changeLabel,
   updatedGroup,
   onlyWithMembers = false,
+  displayMembersCount = false,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -175,6 +177,7 @@ export default function GroupListPanel({
           {groups.length > 0 &&
             groups.map((group) => (
               <GroupListPanelItem
+                displayMembersCount={displayMembersCount}
                 changeLabel={changeLabel}
                 idCampaign={idCampaign}
                 key={group._id}

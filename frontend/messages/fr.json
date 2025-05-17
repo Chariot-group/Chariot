@@ -58,6 +58,9 @@
     "dropHere": "Déposez ici pour ajouter au groupe",
     "error": "Erreur lors du chargement des groupes"
   },
+  "GroupListPanelItem": {
+    "members": "membres"
+  },
   "CharacterDetailsPanel": {
     "navigation": {
       "global": "Général",
