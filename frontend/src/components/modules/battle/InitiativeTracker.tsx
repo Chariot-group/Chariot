@@ -13,9 +13,7 @@ interface Props {
 const InitiativeTracker = ({ groups }: Props) => {
   const t = useTranslations("InitiativeTracker");
   const [participants, setParticipants] = useState<IParticipant[]>([]);
-  const [currentParticipant, setCurrentParticipant] = useState<
-    IParticipant | undefined
-  >(undefined);
+  const [currentParticipant, setCurrentParticipant] = useState<IParticipant | undefined>(undefined);
   const [currentRound, setCurrentRound] = useState<number>(0);
 
   useEffect(() => {
@@ -65,14 +63,10 @@ const InitiativeTracker = ({ groups }: Props) => {
 
   const handleNext = () => {
     if (!currentParticipant) return;
-    const currentIndex = participants.findIndex(
-      (p) => p === currentParticipant
-    );
+    const currentIndex = participants.findIndex((p) => p === currentParticipant);
     const total = participants.length;
 
-    const validParticipants = participants.filter(
-      (p) => p.character.stats.currentHitPoints > 0
-    );
+    const validParticipants = participants.filter((p) => p.character.stats.currentHitPoints > 0);
     if (validParticipants.length === 0) return;
 
     const nextParticipant = [...Array(total - 1)]
@@ -82,9 +76,7 @@ const InitiativeTracker = ({ groups }: Props) => {
 
     if (nextParticipant) {
       setCurrentParticipant(nextParticipant);
-      if (
-        nextParticipant.character._id === validParticipants[0].character._id
-      ) {
+      if (nextParticipant.character._id === validParticipants[0].character._id) {
         setCurrentRound((prev) => prev + 1);
       }
     }
@@ -92,14 +84,10 @@ const InitiativeTracker = ({ groups }: Props) => {
 
   const handlePrevious = () => {
     if (!currentParticipant) return;
-    const currentIndex = participants.findIndex(
-      (p) => p === currentParticipant
-    );
+    const currentIndex = participants.findIndex((p) => p === currentParticipant);
     const total = participants.length;
 
-    const validParticipants = participants.filter(
-      (p) => p.character.stats.currentHitPoints > 0
-    );
+    const validParticipants = participants.filter((p) => p.character.stats.currentHitPoints > 0);
     if (validParticipants.length === 0) return;
 
     const previousParticipant = [...Array(total - 1)]
@@ -110,11 +98,7 @@ const InitiativeTracker = ({ groups }: Props) => {
     if (previousParticipant) {
       setCurrentParticipant(previousParticipant);
 
-      if (
-        currentParticipant.character._id ===
-          validParticipants[0].character._id &&
-        currentRound > 0
-      ) {
+      if (currentParticipant.character._id === validParticipants[0].character._id && currentRound > 0) {
         setCurrentRound((prev) => prev - 1);
       }
     }
@@ -139,7 +123,9 @@ const InitiativeTracker = ({ groups }: Props) => {
           {t("round")} : {currentRound}
         </p>
         <div className=" flex flex-row gap-x-2">
-          <Button variant="outline" onClick={handleReset}>
+          <Button
+            variant="outline"
+            onClick={handleReset}>
             {t("reset")} <RefreshCcw />
           </Button>
           {currentParticipant && (
@@ -147,9 +133,7 @@ const InitiativeTracker = ({ groups }: Props) => {
               {!(
                 currentRound === 0 &&
                 currentParticipant.character._id ===
-                  participants.find(
-                    (p) => p.character.stats.currentHitPoints > 0
-                  )?.character._id
+                  participants.find((p) => p.character.stats.currentHitPoints > 0)?.character._id
               ) && (
                 <Button onClick={handlePrevious}>
                   {t("previous")} <ArrowLeft />

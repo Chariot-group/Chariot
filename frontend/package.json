@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "format": "prettier --write .",
     "dev": "npm run generate:locales && next dev",
     "prebuild": "npm run generate:locales",
     "build": "next build",

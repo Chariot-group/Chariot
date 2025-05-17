@@ -5,14 +5,14 @@ import ISkills from "./sub/ISkills";
 import ISpeed from "./sub/ISpeed";
 
 export default interface IStats {
-    maxHitPoints: number;
-    currentHitPoints: number;
-    tempHitPoints: number;
-    hitDice: string;
-    armorClass: number;
-    speed: ISpeed;
-    abilityScores: IAbilityScores;
-    savingThrows?: ISavingThrows;
-    skills?: ISkills;
-    senses: ISenses
+  maxHitPoints: number;
+  currentHitPoints: number;
+  tempHitPoints: number;
+  hitDice: string;
+  armorClass: number;
+  speed: ISpeed;
+  abilityScores: IAbilityScores;
+  savingThrows?: ISavingThrows;
+  skills?: ISkills;
+  senses: ISenses;
 }

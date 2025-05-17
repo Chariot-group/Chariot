@@ -47,7 +47,7 @@ export default function GroupListPanel({
   disabledGroups,
   context = false,
   changeLabel,
-  updatedGroup
+  updatedGroup,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -77,7 +77,7 @@ export default function GroupListPanel({
             label: encodeURIComponent(search),
             type,
           },
-          idCampaign
+          idCampaign,
         );
         if (reset) {
           setGroups(response.data || []);
@@ -90,10 +90,7 @@ export default function GroupListPanel({
             return [
               ...prev,
               ...response.data.filter(
-                (newGroup: { _id: string }) =>
-                  !prev.some(
-                    (existingGroup) => existingGroup._id === newGroup._id
-                  )
+                (newGroup: { _id: string }) => !prev.some((existingGroup) => existingGroup._id === newGroup._id),
               ),
             ];
           });
@@ -104,7 +101,9 @@ export default function GroupListPanel({
       } finally {
         setLoading(false);
       }
-    }, [loading, groupSelected?.deletedAt, idCampaign]);
+    },
+    [loading, groupSelected?.deletedAt, idCampaign],
+  );
 
   const createGroup = useCallback(async () => {
     try {
@@ -124,7 +123,7 @@ export default function GroupListPanel({
   }, []);
 
   useEffect(() => {
-    if(newGroup) {
+    if (newGroup) {
       setGroupSelected(newGroup);
       setNewGroup(null);
     }
@@ -158,9 +157,10 @@ export default function GroupListPanel({
         ref={cardRef}
         className={`flex-1 h-auto overflow-auto scrollbar-hide ${
           isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
-        }`}
-      >
-        <div className="flex flex-col gap-3" ref={setNodeRef}>
+        }`}>
+        <div
+          className="flex flex-col gap-3"
+          ref={setNodeRef}>
           {addable && (
             <Button onClick={() => createGroup()}>
               <span className="text-background font-bold">{t("create")}</span>

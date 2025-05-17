@@ -31,7 +31,7 @@ const GroupListPanelItem = ({
   disabled = false,
   clickable = true,
   changeLabel,
-  updated
+  updated,
 }: Props) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: group._id,
@@ -45,9 +45,7 @@ const GroupListPanelItem = ({
 
   const isOverlay = currentPanelType === "overlay";
 
-  const style = transform
-    ? { transform: `translate(${transform.x}px, ${transform.y}px)` }
-    : undefined;
+  const style = transform ? { transform: `translate(${transform.x}px, ${transform.y}px)` } : undefined;
 
   const pointerStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -69,49 +67,38 @@ const GroupListPanelItem = ({
     <Card
       ref={!isOverlay ? setNodeRef : undefined}
       style={isOverlay ? {} : style}
-
       onMouseDown={!isOverlay && !grabbled ? handleMouseDown : undefined}
       onMouseUp={!isOverlay && !grabbled ? handleMouseUp : undefined}
       className={`flex p-2 cursor-pointer border-ring items-center shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] ${
         reverse ? "bg-background" : "bg-card"
-      } ${
-        grabbled && "cursor-pointer justify-center"
-      } ${isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""} ${
+      } ${grabbled && "cursor-pointer justify-center"} ${isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""} ${
         groupSelected?._id === group._id ? "border-2" : ""
-      } ${
-        updated && "pl-0"
-      }
+      } ${updated && "pl-0"}
         ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
       onClick={(e) => {
         if (setGroupSelected && !disabled && !grabbled) {
           setGroupSelected(group);
         }
-      }}
-    >
-      {
-        !grabbled && (
-          <span className={`cursor-pointer text-foreground font-bold`}>{group.label}</span>
-        )
-      }
+      }}>
+      {!grabbled && <span className={`cursor-pointer text-foreground font-bold`}>{group.label}</span>}
 
-      {
-        grabbled && updated && <span className="rounded-full bg-secondary size-2 m-1" ></span>
-      }
+      {grabbled && updated && <span className="rounded-full bg-secondary size-2 m-1"></span>}
 
-      {
-        grabbled && changeLabel && (
-          <div className="flex items-center gap-2">
-            <Input value={group.label} id={group._id} className="bg-card" onChange={(e) => changeLabel(e.target.value, group)}></Input>
-            <span
-              {...listeners}
-              {...attributes}
-              className="cursor-grab active:cursor-grabbing"
-            >
-              <Grip />
-            </span>
-          </div>
-        )
-      }
+      {grabbled && changeLabel && (
+        <div className="flex items-center gap-2">
+          <Input
+            value={group.label}
+            id={group._id}
+            className="bg-card"
+            onChange={(e) => changeLabel(e.target.value, group)}></Input>
+          <span
+            {...listeners}
+            {...attributes}
+            className="cursor-grab active:cursor-grabbing">
+            <Grip />
+          </span>
+        </div>
+      )}
     </Card>
   );
 };

@@ -23,7 +23,16 @@ interface ICharacterListPanelProps {
   newCharacters: RefObject<Partial<ICharacter>[]>;
   addCharacter: (groupId: string) => void;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({
+  offset = 8,
+  characterSelected,
+  setCharacterSelected,
+  group,
+  isUpdating,
+  removeCharacters,
+  newCharacters,
+  addCharacter,
+}: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -47,11 +56,14 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
       setLoading(true);
 
       try {
-        const response = await CharacterService.getAllCharacters({
-          page: nextPage,
-          offset,
-          name: encodeURIComponent(search),
-        }, group._id);
+        const response = await CharacterService.getAllCharacters(
+          {
+            page: nextPage,
+            offset,
+            name: encodeURIComponent(search),
+          },
+          group._id,
+        );
         if (reset) {
           setCharacters(response.data);
           setCharacterSelected(response.data[0]);
@@ -68,7 +80,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
         setLoading(false);
       }
     },
-    [loading, group._id, group.characters]
+    [loading, group._id, group.characters],
   );
 
   useInfiniteScroll(containerRef, fetchCharacters, page, loading, search);
@@ -81,12 +93,16 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   }, []);
 
   useEffect(() => {
-    if(isUpdating) {
+    if (isUpdating) {
       const updateCharacters = characters.filter((character) => !removeCharacters.current?.includes(character._id));
       //newCharacters en premiere position et seulement si il n'y a pas de doublon
-      const newCharactersFiltered = newCharacters.current.filter((character) => !updateCharacters.some((c) => c._id === character._id));
+      const newCharactersFiltered = newCharacters.current.filter(
+        (character) => !updateCharacters.some((c) => c._id === character._id),
+      );
       updateCharacters.unshift(...newCharactersFiltered.map((character) => character as ICharacter));
-      let filtered = updateCharacters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()));
+      let filtered = updateCharacters.filter((character) =>
+        character.name.toLowerCase().includes(search.toLowerCase()),
+      );
       setCharacters(filtered);
       setCharacterSelected(filtered[0]);
       return;
@@ -97,47 +113,52 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
 
   return (
     <div className="w-full h-full flex flex-col">
-        <CardHeader className="flex-none h-auto items-center gap-3">
-          <CardTitle className="text-foreground font-bold">
-            <div className="flex items-center gap-2">
-              <p>{t("title")}</p>
-              {
-                isUpdating && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(group._id)} />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{t("addCharacter")}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )
-              }
+      <CardHeader className="flex-none h-auto items-center gap-3">
+        <CardTitle className="text-foreground font-bold">
+          <div className="flex items-center gap-2">
+            <p>{t("title")}</p>
+            {isUpdating && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <PlusCircleIcon
+                    className="text-primary hover:cursor-pointer"
+                    onClick={() => addCharacter(group._id)}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("addCharacter")}</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
+        </CardTitle>
+        <SearchInput
+          value={search}
+          onChange={setSearch}
+          placeholder={t("search")}
+        />
+      </CardHeader>
+      <CardContent
+        ref={containerRef}
+        className="flex-1 h-auto overflow-auto scrollbar-hide">
+        <div className="flex flex-col gap-3">
+          {loading && <Loading />}
+          {characters.length > 0 &&
+            characters.map((character) => (
+              <Card
+                key={character._id}
+                className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${characterSelected?._id === character._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"}`}
+                onClick={() => setCharacterSelected(character)}>
+                <span className="text-foreground font-bold">{character.name}</span>
+              </Card>
+            ))}
+          {characters.length === 0 && !loading && (
+            <div className="row-start-2 col-span-3 flex items-top justify-center">
+              <p className="text-gray-500">{t("noCharacters")}</p>
             </div>
-            </CardTitle>
-          <SearchInput
-            value={search}
-            onChange={setSearch}
-            placeholder={t("search")}
-          />
-        </CardHeader>
-        <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
-            <div className="flex flex-col gap-3">
-              {loading && <Loading />}
-              {characters.length > 0  &&
-                characters.map((character) => (
-                  <Card key={character._id} className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${characterSelected?._id === character._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"}`} onClick={() => setCharacterSelected(character)}>
-                    <span className="text-foreground font-bold">{character.name}</span>
-                  </Card>
-                ))
-              }
-              {characters.length === 0 && !loading && (
-                <div className="row-start-2 col-span-3 flex items-top justify-center">
-                  <p className="text-gray-500">{t("noCharacters")}</p>
-                </div>
-              )}
-            </div>
-          </CardContent>
+          )}
+        </div>
+      </CardContent>
     </div>
   );
 };

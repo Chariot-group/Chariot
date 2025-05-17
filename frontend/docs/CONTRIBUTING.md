@@ -14,7 +14,7 @@ Lorsque vous contribuez à l'application Chariot Front, ...
 
 Même s'ils ont la même apparence visuelle :
 
-- Chaque bouton destiné à la navigation devra utiliser la balise next-navigation ```<Link></Link>```
+- Chaque bouton destiné à la navigation devra utiliser la balise next-navigation `<Link></Link>`
 
 ### 🌐 Locales & traduction
 
@@ -66,11 +66,10 @@ _Exemple_ : **CampainIndexDatatable** ou **NPCForm**
 
 _Exemple_ :
 
-```file: /src/modules/Campains/types/IContact.ts```
+`file: /src/modules/Campains/types/IContact.ts`
 
 ```ts
-export interface ICampains {
-}
+export interface ICampains {}
 ```
 
 ### 🏗️ Variables

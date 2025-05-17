@@ -25,14 +25,12 @@ export function CharacterDetailsPanel({
   character,
   onDelete,
   isUpdating,
-  characterTempRef
+  characterTempRef,
 }: ICharacterDetailsPanelProps) {
   const t = useTranslations("CharacterDetailsPanel");
 
   const [name, setName] = useState<string>(character.name);
-  const [classification, setClassification] = useState<IClassification>(
-    character.classification
-  );
+  const [classification, setClassification] = useState<IClassification>(character.classification);
   const [stats, setStats] = useState<IStats>(character.stats);
   const [combat, setCombat] = useState<ICombat>(character.combat);
   const [action, setAction] = useState<IActions>(character.actions[0]);
@@ -84,44 +82,34 @@ export function CharacterDetailsPanel({
         </div>
         <div className="flex flex-row items-center gap-2 text-foreground">
           <span
-            className={`cursor-pointer underline-offset-4 ${
-              global ? "underline" : "hover:underline"
-            }`}
-            onClick={(e) => updateTab("global")}
-          >
+            className={`cursor-pointer underline-offset-4 ${global ? "underline" : "hover:underline"}`}
+            onClick={(e) => updateTab("global")}>
             {t("navigation.global")}
           </span>
           <span
-            className={`cursor-pointer underline-offset-4 ${
-              combatNav ? "underline" : "hover:underline"
-            }`}
-            onClick={(e) => updateTab("combat")}
-          >
+            className={`cursor-pointer underline-offset-4 ${combatNav ? "underline" : "hover:underline"}`}
+            onClick={(e) => updateTab("combat")}>
             {t("navigation.combat")}
           </span>
           <span
-            className={`cursor-pointer underline-offset-4 ${
-              actionsNav ? "underline" : "hover:underline"
-            }`}
-            onClick={(e) => updateTab("actions")}
-          >
+            className={`cursor-pointer underline-offset-4 ${actionsNav ? "underline" : "hover:underline"}`}
+            onClick={(e) => updateTab("actions")}>
             {t("navigation.actions")}
           </span>
           <span
-            className={`cursor-pointer underline-offset-4 ${
-              traitsNav ? "underline" : "hover:underline"
-            }`}
-            onClick={(e) => updateTab("traits")}
-          >
+            className={`cursor-pointer underline-offset-4 ${traitsNav ? "underline" : "hover:underline"}`}
+            onClick={(e) => updateTab("traits")}>
             {t("navigation.traits")}
           </span>
         </div>
         {onDelete && isUpdating && (
-          <Button variant={"link"} onClick={() => onDelete(character)}>
+          <Button
+            variant={"link"}
+            onClick={() => onDelete(character)}>
             {t("actions.characterDelete")}
           </Button>
         )}
-        {!onDelete || !isUpdating && <div className="w-1/5"></div>}
+        {!onDelete || (!isUpdating && <div className="w-1/5"></div>)}
       </div>
       <div className="flex flex-col h-auto flex-1 overflow-auto scrollbar-hide">
         {global && (
@@ -133,11 +121,27 @@ export function CharacterDetailsPanel({
             isUpdating={isUpdating}
           />
         )}
-        {combatNav && <CombatSection combat={combat} setCombat={setCombat} isUpdating={isUpdating} />}
-        {actionsNav && (
-          <ActionsSection actions={action} setActions={setAction} isUpdating={isUpdating} />
+        {combatNav && (
+          <CombatSection
+            combat={combat}
+            setCombat={setCombat}
+            isUpdating={isUpdating}
+          />
         )}
-        {traitsNav && <TraitsSection trait={trait} setTrait={setTrait} isUpdating={isUpdating} />}
+        {actionsNav && (
+          <ActionsSection
+            actions={action}
+            setActions={setAction}
+            isUpdating={isUpdating}
+          />
+        )}
+        {traitsNav && (
+          <TraitsSection
+            trait={trait}
+            setTrait={setTrait}
+            isUpdating={isUpdating}
+          />
+        )}
       </div>
     </Card>
   );

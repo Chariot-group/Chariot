@@ -21,9 +21,7 @@ const BattlePage = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [groupsLeft, setGroupsLeft] = useState<IGroup[]>([]);
   const [groupsRight, setGroupsRight] = useState<IGroup[]>([]);
-  const [groupsToFight, setGroupsToFight] = useState<
-    (IGroupWithRelations | null)[]
-  >([null, null]);
+  const [groupsToFight, setGroupsToFight] = useState<(IGroupWithRelations | null)[]>([null, null]);
   const [groupIds, setGroupIds] = useState<string[]>([]);
   const [fight, setFight] = useState<boolean>(true);
 
@@ -92,7 +90,9 @@ const BattlePage = () => {
         <>
           <InitiativeTracker groups={groupsToFight as IGroupWithRelations[]} />
           <div className="flex justify-end p-5">
-            <Button variant="outline" onClick={() => setFight(!fight)}>
+            <Button
+              variant="outline"
+              onClick={() => setFight(!fight)}>
               {t("back")}
             </Button>
           </div>

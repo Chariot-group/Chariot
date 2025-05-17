@@ -9,12 +9,7 @@ interface Props {
   character: ICharacter;
 }
 
-const CharacterDetailsModal = ({
-  isOpen,
-  onClose,
-  character,
-}: Props) => {
-
+const CharacterDetailsModal = ({ isOpen, onClose, character }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   useEffect(() => {
@@ -31,16 +26,9 @@ const CharacterDetailsModal = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
         className="absolute inset-0 bg-black bg-opacity-50"
-        onClick={onClose}
-      ></div>
-      <div
-        className={`w-3/4 h-3/4 ${
-          isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-        }`}
-      >
-        <CharacterDetailsPanel
-          character={character}
-        />
+        onClick={onClose}></div>
+      <div className={`w-3/4 h-3/4 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+        <CharacterDetailsPanel character={character} />
       </div>
     </div>
   );

@@ -1,7 +1,6 @@
 import { APIContentType } from "@/constants/APIContentType";
 import apiClient from "@/services/apiConfig";
 
-
 const END_POINT = "/campaigns";
 
 const GroupService = {
@@ -13,15 +12,12 @@ const GroupService = {
       sort?: string;
       type: string;
     },
-    idCampaingn: string
+    idCampaingn: string,
   ) {
     try {
-      const response = await apiClient(APIContentType.JSON).get(
-        `${END_POINT}/${idCampaingn}/groups`,
-        {
-          params: query,
-        }
-      );
+      const response = await apiClient(APIContentType.JSON).get(`${END_POINT}/${idCampaingn}/groups`, {
+        params: query,
+      });
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -36,10 +32,7 @@ const GroupService = {
 
   async updateGroup(id: string, data: any) {
     try {
-      const response = await apiClient(APIContentType.JSON).patch(
-        `/groups/${id}`,
-        data
-      );
+      const response = await apiClient(APIContentType.JSON).patch(`/groups/${id}`, data);
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -51,12 +44,10 @@ const GroupService = {
       return "error";
     }
   },
-  
+
   async findOne(id: string) {
     try {
-      const response = await apiClient(APIContentType.JSON).get(
-        `/groups/${id}`
-      );
+      const response = await apiClient(APIContentType.JSON).get(`/groups/${id}`);
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -70,9 +61,7 @@ const GroupService = {
   },
   async deleteGroup(id: string) {
     try {
-      const response = await apiClient(APIContentType.JSON).delete(
-        `/groups/${id}`
-      );
+      const response = await apiClient(APIContentType.JSON).delete(`/groups/${id}`);
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -87,10 +76,7 @@ const GroupService = {
 
   async createGroup(data: any) {
     try {
-      const response = await apiClient(APIContentType.JSON).post(
-        `/groups`,
-        data
-      );
+      const response = await apiClient(APIContentType.JSON).post(`/groups`, data);
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -101,7 +87,7 @@ const GroupService = {
       console.error("API error:", err);
       return "error";
     }
-  }
+  },
 };
 
 export default GroupService;
