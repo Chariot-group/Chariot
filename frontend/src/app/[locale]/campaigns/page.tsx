@@ -109,10 +109,11 @@ export default function CampaignsPage() {
             };
 
             setSelectedCampaign(data as ICampaign);
-            setIsUpdating(false);
+            
           } catch (err) {
-            error(t("errors"));
-            console.error("Error updating characters:", err);
+            error(t("toasts.errorUpdatingCampaign"));
+          } finally {
+            setIsUpdating(false);
           }
         },
         []

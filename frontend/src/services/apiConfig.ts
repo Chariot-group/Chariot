@@ -15,6 +15,22 @@ const apiClient = (contentType: string) => {
     withCredentials: true,
   });
 
+  instance.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.response?.status === 401) {
+
+        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        if (typeof window !== "undefined") {
+          window.location.href = "/auth/login";
+        }
+      }
+
+      return Promise.reject(error);
+    }
+  );
+
   return instance;
 };
 
