@@ -344,7 +344,8 @@
       "cancel": "Modification annulée",
       "save": "Campagne sauvegardée avec succès",
       "errorDetetingCampaign": "Erreur lors de la suppression de la campagne",
-      "deletedCampaign": "Campagne supprimée avec succès"
+      "deletedCampaign": "Campagne supprimée avec succès",
+      "errorUpdatingCampaign": "Erreur lors de la mise à jour de la campagne"
     }
   },
   "InitiativeTracker": {
