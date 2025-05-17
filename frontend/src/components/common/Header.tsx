@@ -19,9 +19,10 @@ import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   campaign: ICampaign | null;
+  battle?: boolean;
 }
 
-export function Header({ campaign }: HeaderProps) {
+export function Header({ campaign, battle }: HeaderProps) {
   const t = useTranslations("Header");
   const router = useRouter();
 
@@ -62,9 +63,14 @@ export function Header({ campaign }: HeaderProps) {
   return (
     <header className="text-white p-4 bg-card border-b-2 border-ring shadow-md">
       <div className="flex justify-between items-center">
-        {campaign && (
+        {campaign && !battle && (
           <Link href={`/campaigns/${campaign._id}/battle/select`}>
             <Button>{t("launchBattle")}</Button>
+          </Link>
+        )}
+        {battle && (
+          <Link href={`/campaigns`}>
+            <Button>{t("backToCampaign")}</Button>
           </Link>
         )}
         {!campaign && <div className="w-1/12"></div>}

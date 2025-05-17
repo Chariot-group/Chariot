@@ -39,7 +39,7 @@ const BattleLayout = ({ children }: Props) => {
 
   return (
     <div>
-      <Header campaign={campaign} />
+      <Header campaign={campaign} battle />
       {children}
     </div>
   );

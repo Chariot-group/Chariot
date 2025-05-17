@@ -277,6 +277,7 @@
   "Header": {
     "home": "CHARIOT",
     "launchBattle": "Iniciar un combate",
+    "backToCampaign": "Volver a la campaña",
     "signout": "Cerrar sesión"
   },
   "GroupDetailsPanel": {
