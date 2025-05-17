@@ -1,4 +1,10 @@
-import { IsString, IsOptional, IsMongoId, ValidateNested, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsMongoId,
+  ValidateNested,
+  IsArray,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { ClassificationDto } from '@/resources/character/dto/sub/classification.dto';
 import { StatsDto } from '@/resources/character/dto/sub/stats.dto';
@@ -10,8 +16,8 @@ export class CreateCharacterDto {
   @IsString()
   name: string;
 
-  @IsMongoId({each:true})
-  @IsArray() 
+  @IsMongoId({ each: true })
+  @IsArray()
   @IsOptional()
   groups?: string[];
 

@@ -15,7 +15,6 @@ import { join } from 'path';
 import { MaillingService } from '@/mailling/mailling.service';
 import { MaillingModule } from '@/mailling/mailling.module';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot({

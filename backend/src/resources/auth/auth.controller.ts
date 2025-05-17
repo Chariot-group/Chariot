@@ -38,6 +38,6 @@ export class AuthController {
   @Public()
   @Patch('/reset-password')
   resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
-      return this.authService.resetPassword(resetPasswordDto);
+    return this.authService.resetPassword(resetPasswordDto);
   }
 }

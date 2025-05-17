@@ -8,7 +8,10 @@ import {
 } from '@nestjs/common';
 import { CreateCampaignDto } from '@/resources/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/resources/campaign/dto/update-campaign.dto';
-import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
+import {
+  Campaign,
+  CampaignDocument,
+} from '@/resources/campaign/schemas/campaign.schema';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
@@ -47,7 +50,6 @@ export class CampaignService {
   }
 
   private async validateResource(id: string): Promise<void> {
-
     if (!Types.ObjectId.isValid(id)) {
       const message = `Error while fetching campaign #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.SERVICE_NAME);
@@ -165,14 +167,14 @@ export class CampaignService {
         .exec();
       const end: number = Date.now();
 
-      let campaignsWithGroupsClean = campaigns.map(doc => ({
+      let campaignsWithGroupsClean = campaigns.map((doc) => ({
         ...doc.toObject(),
         groups: {
-          main: doc.groups.main.map(group => group._id),
-          npc: doc.groups.npc.map(group => group._id),
-          archived: doc.groups.archived.map(group => group._id),
+          main: doc.groups.main.map((group) => group._id),
+          npc: doc.groups.npc.map((group) => group._id),
+          archived: doc.groups.archived.map((group) => group._id),
         },
-      }))
+      }));
 
       const message = `Campaigns found in ${end - start}ms`;
       this.logger.verbose(message, this.SERVICE_NAME);
@@ -194,9 +196,8 @@ export class CampaignService {
 
   async findOne(id: string) {
     try {
-
       await this.validateResource(id);
-      
+
       const start: number = Date.now();
       const campaign = await this.campaignModel
         .findById(id)
@@ -229,7 +230,6 @@ export class CampaignService {
 
   async update(id: string, updateCampaignDto: UpdateCampaignDto) {
     try {
-      
       await this.validateResource(id);
 
       if (updateCampaignDto.groups) {
@@ -243,7 +243,6 @@ export class CampaignService {
           'Archived',
         );
       }
-
 
       const start = Date.now();
 

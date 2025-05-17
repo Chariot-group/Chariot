@@ -14,16 +14,13 @@ import { MaillingModule } from '@/mailling/mailling.module';
   imports: [
     UserModule,
     MaillingModule,
-    MongooseModule.forFeature([
-      { name: User.name, schema: UserSchema },
-    ]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.registerAsync({
       imports: [
-        MongooseModule.forFeature([
-          { name: User.name, schema: UserSchema },
-        ]),
-        ConfigModule, 
-        UserModule],
+        MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+        ConfigModule,
+        UserModule,
+      ],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         global: true,

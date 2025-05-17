@@ -4,7 +4,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
+import {
+  Campaign,
+  CampaignDocument,
+} from '@/resources/campaign/schemas/campaign.schema';
 import {
   Character,
   CharacterDocument,

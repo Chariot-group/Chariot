@@ -44,20 +44,19 @@ export class CharacterService {
   }
 
   private async validateResource(id: string): Promise<void> {
-  
     if (!Types.ObjectId.isValid(id)) {
       const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new BadRequestException(message);
     }
     const character = await this.characterModel.findById(id).exec();
-  
+
     if (!character) {
       const message = `Character ${id} not found`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new NotFoundException(message);
     }
-  
+
     if (character.deletedAt) {
       const message = `Character ${id} is gone`;
       this.logger.error(message, null, this.SERVICE_NAME);
@@ -70,7 +69,6 @@ export class CharacterService {
 
   async create(createCharacterDto: CreateCharacterDto, userId: string) {
     try {
-
       if (createCharacterDto.groups) {
         for (const groupId of createCharacterDto.groups) {
           if (!Types.ObjectId.isValid(groupId)) {
@@ -286,7 +284,6 @@ export class CharacterService {
 
   async remove(id: string) {
     try {
-      
       await this.validateResource(id);
 
       const start: number = Date.now();
