@@ -14,7 +14,7 @@ import { ICampaign } from "@/models/campaigns/ICampaign";
 import ICharacter from "@/models/characters/ICharacter";
 import { IGroup } from "@/models/groups/IGroup";
 import CampaignService from "@/services/campaignService";
-import CharacterService from "@/services/characterService";
+import CharacterService from "@/services/CharacterService";
 import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";

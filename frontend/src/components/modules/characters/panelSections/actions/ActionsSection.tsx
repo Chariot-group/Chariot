@@ -39,19 +39,25 @@ export default function ActionsSection({ actions, setActions, isUpdating }: IAct
                 }
             </div>
             {
-                actions.standard.map((action, index) => (
-                    <ActionCard
-                        onDelete={() => onDelete(index)}
-                        key={index}
-                        action={action}
-                        setAction={(action) => {
-                            const newActions = [...actions.standard];
-                            newActions[index] = action;
-                            setActions({ ...actions, standard: newActions });
-                        }}
-                        isUpdating={isUpdating}
-                    />
-                ))
+                actions.standard.length > 0 ? (
+                    actions.standard.map((action, index) => (
+                        <ActionCard
+                            onDelete={() => onDelete(index)}
+                            key={index}
+                            action={action}
+                            setAction={(action) => {
+                                const newActions = [...actions.standard];
+                                newActions[index] = action;
+                                setActions({ ...actions, standard: newActions });
+                            }}
+                            isUpdating={isUpdating}
+                        />
+                    ))
+                ) : (
+                    <div className="flex items-center justify-center p-4 text-muted-foreground">
+                        {t("actions.noActions")}
+                    </div>
+                )
             }
         </div>
     )

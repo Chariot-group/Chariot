@@ -15,20 +15,25 @@ export default function ClassificationCard({ classification, setClassification, 
 
     const t = useTranslations("CharacterDetailsPanel");
 
-    const [alignment, setAlignment] = useState<string>(classification.alignment);
-    const [size, setSize] = useState<string>(classification.size);
-    const [type, setType] = useState<string>(classification.type);
-    const [subType, setSubType] = useState<string>(classification.subtype);
+    const [alignment, setAlignment] = useState<string>(classification?.alignment ?? "");
+    const [size, setSize] = useState<string>(classification?.size ?? "");
+    const [type, setType] = useState<string>(classification?.type ?? "");
+    const [subType, setSubType] = useState<string>(classification?.subtype ?? "");
 
     const onChange = () => {
-        setClassification({alignment, size, type, subtype: subType});
+        setClassification({
+            alignment: alignment ?? "",
+            size: size ?? "",
+            type: type ?? "",
+            subtype: subType ?? ""
+        });
     }
 
     useEffect(() => {
-        setAlignment(classification.alignment);
-        setSize(classification.size);
-        setType(classification.type);
-        setSubType(classification.subtype);
+        setAlignment(classification?.alignment ?? "");
+        setSize(classification?.size ?? "");
+        setType(classification?.type ?? "");
+        setSubType(classification?.subtype ?? "");
     }, [classification]);
 
     return (

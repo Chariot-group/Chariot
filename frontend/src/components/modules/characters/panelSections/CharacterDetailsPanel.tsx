@@ -14,6 +14,7 @@ import ICombat from "@/models/characters/combat/ICombat";
 import IActions from "@/models/characters/actions/IActions";
 import ActionsSection from "./actions/ActionsSection";
 import TraitsSection from "./traits/TraitsSection";
+import { DEFAULT_CLASSIFICATION, DEFAULT_COMBAT, DEFAULT_TRAIT, DEFAULT_ACTIONS } from "@/constants/characterDefaults";
 
 interface ICharacterDetailsPanelProps {
   character: ICharacter;
@@ -31,20 +32,20 @@ export function CharacterDetailsPanel({
 
   const [name, setName] = useState<string>(character.name);
   const [classification, setClassification] = useState<IClassification>(
-    character.classification
+    character.classification ?? DEFAULT_CLASSIFICATION
   );
   const [stats, setStats] = useState<IStats>(character.stats);
-  const [combat, setCombat] = useState<ICombat>(character.combat);
-  const [action, setAction] = useState<IActions>(character.actions[0]);
-  const [trait, setTrait] = useState(character.traits[0]);
+  const [combat, setCombat] = useState<ICombat>(character.combat ?? DEFAULT_COMBAT);
+  const [action, setAction] = useState<IActions>(character.actions?.[0] ?? DEFAULT_ACTIONS);
+  const [trait, setTrait] = useState(character.traits?.[0] ?? DEFAULT_TRAIT);
 
   useEffect(() => {
     setName(character.name);
-    setClassification(character.classification);
+    setClassification(character.classification ?? DEFAULT_CLASSIFICATION);
     setStats(character.stats);
-    setCombat(character.combat);
-    setAction(character.actions[0]);
-    setTrait(character.traits[0]);
+    setCombat(character.combat ?? DEFAULT_COMBAT);
+    setAction(character.actions?.[0] ?? DEFAULT_ACTIONS);
+    setTrait(character.traits?.[0] ?? DEFAULT_TRAIT);
   }, [character]);
 
   const [global, setGlobal] = useState<boolean>(true);
@@ -62,8 +63,17 @@ export function CharacterDetailsPanel({
     character.name = name;
     character.classification = classification;
     character.stats = stats;
+    if (!character.combat) {
+      character.combat = DEFAULT_COMBAT;
+    }
     character.combat = combat;
+    if (!character.actions) {
+      character.actions = [DEFAULT_ACTIONS];
+    }
     character.actions[0] = action;
+    if (!character.traits) {
+      character.traits = [DEFAULT_TRAIT];
+    }
     character.traits[0] = trait;
     characterTempRef.current?.set(character._id, character);
   }, [name, classification, stats, combat, action, trait]);

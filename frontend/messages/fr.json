@@ -69,6 +69,7 @@
       "characterDelete": "Supprimer le personnage",
       "actionsAdd": "Ajouter une action",
       "actionsDelete": "Supprimer l'action",
+      "noActions": "Aucune action",
       "languagesAdd": "Ajouter une langue",
       "languagesDelete": "Supprimer la langue",
       "abilitiesAdd": "Ajouter une capacité",
@@ -334,7 +335,7 @@
       "step2": "Etape 2: Créer un groupe de joueur principal",
       "step3": "Etape 3: Créer vos groupes de PNJ",
       "step4": "Etape 4: Lancer vos initiatives",
-      "step5": "Etape 5: Let’s play !"
+      "step5": "Etape 5: Let's play !"
     },
     "form": {
       "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
@@ -366,7 +367,7 @@
   },
   "MobileRestraint": {
     "title": "Application non disponible sur mobile",
-    "subTitle": "Merci d’utiliser un écran plus large pour accéder à cette application."
+    "subTitle": "Merci d'utiliser un écran plus large pour accéder à cette application."
   },
   "HealthCheck": {
     "status": {
@@ -377,7 +378,7 @@
     }
   },
   "GroupSelector": {
-    "title": "Choisisser les deux groupes qui vont s’affronter",
+    "title": "Choisisser les deux groupes qui vont s'affronter",
     "versus": "VS"
   },
   "BattlePage": {

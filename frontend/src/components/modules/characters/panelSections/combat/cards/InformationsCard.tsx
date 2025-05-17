@@ -15,16 +15,23 @@ export default function InformationsCard({ combat, setCombat, isUpdating }: IInf
 
     const t = useTranslations("CharacterDetailsPanel");
 
-    const [challengeRating, setChallangeRating] = useState<number>(combat.challengeRating);
-    const [experiencePoints, setExperiencePoints] = useState<number>(combat.experiencePoints);
+    const [challengeRating, setChallangeRating] = useState<number>(combat?.challengeRating ?? 0);
+    const [experiencePoints, setExperiencePoints] = useState<number>(combat?.experiencePoints ?? 0);
 
     const onChange = () => {
-        setCombat({ ...combat, challengeRating, experiencePoints });
+        setCombat({
+            ...combat,
+            challengeRating: challengeRating ?? 0,
+            experiencePoints: experiencePoints ?? 0,
+            resistances: combat?.resistances ?? [],
+            immunities: combat?.immunities ?? [],
+            vulnerabilities: combat?.vulnerabilities ?? []
+        });
     }
 
     useEffect(() => {
-        setChallangeRating(combat.challengeRating);
-        setExperiencePoints(combat.experiencePoints);
+        setChallangeRating(combat?.challengeRating ?? 0);
+        setExperiencePoints(combat?.experiencePoints ?? 0);
     }, [combat]);
 
     return (
