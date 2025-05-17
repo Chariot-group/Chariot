@@ -9,19 +9,33 @@ import GroupDnDWrapper from "@/components/modules/groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useToast } from "@/hooks/useToast";
 import { MousePointerClick, PlusCircleIcon } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import Link from "next/link";
 
 interface Props {
   idCampaign: string; // ID de la campagne des groupes
   isUpdating: boolean; // Indique si la campagne est en cours de mise à jour
-  groupsRef: RefObject<Map<string, { idCampaign: string; type: "main" | "npc" | "archived"; }>>; // Liste des groupes
+  groupsRef: RefObject<
+    Map<string, { idCampaign: string; type: "main" | "npc" | "archived" }>
+  >; // Liste des groupes
   newGroupRef: RefObject<any[]>; // Liste des nouveaux groupes
   groupsLabelRef: RefObject<IGroup[]>; // Liste des groupes à ne pas afficher
   setUpdatedGroup: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
   updatedGroup: IGroup[]; // Liste des groupes à ne pas afficher
 }
-export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef, newGroupRef, groupsLabelRef, setUpdatedGroup, updatedGroup }: Props) {
+export default function GroupsCampaignsPanel({
+  idCampaign,
+  isUpdating,
+  groupsRef,
+  newGroupRef,
+  groupsLabelRef,
+  setUpdatedGroup,
+  updatedGroup,
+}: Props) {
   const t = useTranslations("GroupListPanel");
   const { error } = useToast();
 
@@ -59,10 +73,15 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
     if (newGroupRef.current.find((g) => g._id === group._id)) {
       newGroupRef.current = newGroupRef.current.map((g) => {
         if (g._id === group._id) {
-          const t = { ...g, campaigns: [{
-            idCampaign: idCampaign,
-            type: to,
-          }] };
+          const t = {
+            ...g,
+            campaigns: [
+              {
+                idCampaign: idCampaign,
+                type: to,
+              },
+            ],
+          };
           return t;
         }
         return g;
@@ -95,18 +114,17 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
       newGroupRef.current.push(current);
       setUpdatedGroup([...updatedGroup, current as unknown as IGroup]);
       setNpcGroups((prev) => [...prev, current as unknown as IGroup]);
-    } catch(err){
-        error(t("error"));
+    } catch (err) {
+      error(t("error"));
     }
-  }, [])
+  }, []);
 
   const [mainSearch, setMainSearch] = useState<string>("");
   const [npcSearch, setNpcSearch] = useState<string>("");
   const [archivedSearch, setArchivedSearch] = useState<string>("");
 
-
   const changeLabel = (label: string, group: IGroup) => {
-    if(groupsLabelRef.current.find((g) => g._id === group._id)){
+    if (groupsLabelRef.current.find((g) => g._id === group._id)) {
       groupsLabelRef.current = groupsLabelRef.current.map((g) => {
         if (g._id === group._id) {
           return { ...g, label };
@@ -126,30 +144,38 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
     setArchivedGroups((prev) =>
       prev.map((g) => (g._id === group._id ? { ...g, label } : g))
     );
-  }
+  };
 
   return (
     <div className="w-full h-full flex flex-col">
       <div className="flex flex-row gap-3 justify-start items-center">
-        <Link href={`/campaigns/${idCampaign}/groups`} className="text-foreground hover:underline underline-offset-2"><h2 className="flex gap-1 items-center"><MousePointerClick className="h-[2dvh]"/> {t("title.default")}</h2></Link>
-        {
-          isUpdating && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={createGroup} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{t("create")}</p>
-              </TooltipContent>
-            </Tooltip>
-            
-          )
-        }
+        <Link
+          href={`/campaigns/${idCampaign}/groups`}
+          className="text-foreground hover:underline underline-offset-2"
+        >
+          <h2 className="flex gap-1 items-center">
+            <MousePointerClick className="h-[2dvh]" /> {t("title.default")}
+          </h2>
+        </Link>
+        {isUpdating && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <PlusCircleIcon
+                className="text-primary hover:cursor-pointer"
+                onClick={createGroup}
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t("create")}</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
       </div>
       <div className="flex flex-row gap-4 mt-4 justify-between h-full">
         <GroupDnDWrapper onDragEnd={handleDragEnd}>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              displayMembersCount
               updatedGroup={updatedGroup}
               changeLabel={changeLabel}
               groups={mainGroups}
@@ -170,6 +196,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
           </div>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              displayMembersCount
               updatedGroup={updatedGroup}
               changeLabel={changeLabel}
               groups={npcGroups}
@@ -190,6 +217,7 @@ export default function GroupsCampaignsPanel({ idCampaign, isUpdating, groupsRef
           </div>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
             <GroupListPanel
+              displayMembersCount
               updatedGroup={updatedGroup}
               changeLabel={changeLabel}
               groups={archivedGroups}

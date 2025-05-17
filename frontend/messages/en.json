@@ -59,7 +59,8 @@
     "error": "Error loading groups"
   },
   "GroupListPanelItem": {
-    "members": "members"
+    "members": "members",
+    "member": "member"
   },
   "CharacterDetailsPanel": {
     "navigation": {

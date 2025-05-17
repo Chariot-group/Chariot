@@ -110,7 +110,8 @@ const GroupListPanelItem = ({
           </TooltipTrigger>
           <TooltipContent>
             <p>
-              {group.characters.length} {t("members")}
+              {group.characters.length}{" "}
+              {group.characters.length === 1 ? t("member") : t("members")}
             </p>
           </TooltipContent>
         </Tooltip>

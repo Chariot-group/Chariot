@@ -59,7 +59,8 @@
     "error": "Error al cargar los grupos"
   },
   "GroupListPanelItem": {
-    "members": "Miembros"
+    "members": "Miembros",
+    "member": "Miembro"
   },
   "CharacterDetailsPanel": {
     "navigation": {
