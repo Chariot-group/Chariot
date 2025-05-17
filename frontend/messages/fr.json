@@ -36,7 +36,7 @@
   },
   "CharacterListPanel": {
     "addCharacter": "Ajouter un personnage",
-    "title": "Liste des personnages",
+    "title": "Vos personnages",
     "search": "Rechercher un personnage",
     "create": "Ajouter un personnage",
     "noCharacters": "Aucun personnage trouvé",
@@ -59,194 +59,27 @@
     "error": "Erreur lors du chargement des groupes"
   },
   "CharacterDetailsPanel": {
-    "navigation": {
-      "global": "Général",
-      "combat": "Combat",
-      "actions": "Actions",
-      "traits": "Traits"
+    "npc": "PNJ",
+    "player": "Joueur",
+    "profile": {
+      "race": "Race",
+      "subrace": "Sous-race",
+      "type": "Type",
+      "subtype": "Sous-type"
     },
-    "actions": {
-      "characterDelete": "Supprimer le personnage",
-      "actionsAdd": "Ajouter une action",
-      "actionsDelete": "Supprimer l'action",
-      "noActions": "Aucune action",
-      "languagesAdd": "Ajouter une langue",
-      "languagesDelete": "Supprimer la langue",
-      "abilitiesAdd": "Ajouter une capacité",
-      "abilitiesDelete": "Supprimer la capacité",
-      "modal": {
-        "title": "Supprimer le personnage",
-        "description": "Êtes-vous sûr de vouloir supprimer ce personnage ?",
-        "confirm": "Oui, supprimer"
-      }
+    "progression": {
+      "level": "Niveau",
+      "experience": "Expérience"
     },
-    "categories": {
-      "global": {
-        "classification": "Classification",
-        "informations": "Informations",
-        "moving": "Déplacement",
-        "skills": "Compétences",
-        "senses": "Senses"
-      },
-      "combat": {
-        "stats": "Statistiques"
-      },
-      "traits": {
-        "languages": "Langues",
-        "noLanguage": "Aucune langue",
-        "abilities": "Capacités",
-        "noAbilities": "Aucune capacité"
-      }
-    },
-    "labels": {
-      "name": "Nom",
-      "classification": {
-        "type": "Type",
-        "alignment": "Alignement",
-        "subType": "Sous-type",
-        "size": "Taille"
-      },
-      "stats": {
-        "maxHP": "PV max",
-        "currentHP": "PV actuel",
-        "tempHP": "PV temporaires",
-        "hitDice": "Dés de vie",
-        "armorClass": "Classe d'armure",
-        "speed": {
-          "walk": "Marche",
-          "fly": "Vol",
-          "swim": "Natation",
-          "climb": "Escalade",
-          "burrow": "Creuser"
-        },
-        "abilityScores": {
-          "strength": "Force",
-          "dexterity": "Dextérité",
-          "constitution": "Constitution",
-          "intelligence": "Intelligence",
-          "wisdom": "Sagesse",
-          "charisma": "Charisme"
-        },
-        "skills": {
-          "athletics": "Athlétisme",
-          "acrobatics": "Acrobaties",
-          "sleightOfHand": "Tour de passe-passe",
-          "stealth": "Discrétion",
-          "arcana": "Arcanes",
-          "history": "Histoire",
-          "investigation": "Investigation",
-          "nature": "Nature",
-          "religion": "Religion",
-          "animalHandling": "Dressage d'animaux",
-          "insight": "Perspicacité",
-          "medicine": "Médecine",
-          "perception": "Perception",
-          "survival": "Survie",
-          "deception": "Duperie",
-          "intimidation": "Intimidation",
-          "performance": "Performance",
-          "persuasion": "Persuasion"
-        },
-        "senses": {
-          "nightVision": "Vision nocturne",
-          "passivePerception": "Perception passive"
-        }
-      },
-      "combat": {
-        "challengeRating": "Niveau de défi",
-        "experiencePoints": "Points d'expérience",
-        "resistances": "Résistances",
-        "immunities": "Immunités",
-        "vulnerabilities": "Vulnérabilités"
-      },
-      "traits": {
-        "languages": "Langues",
-        "abilities": {
-          "name": "Nom",
-          "description": "Description"
-        }
-      },
-      "actions": {
-        "name": "Nom",
-        "type": "Type",
-        "attackBonus": "Bonus d'attaque",
-        "damage": {
-          "dice": "Dé",
-          "type": "Type"
-        },
-        "range": "Portée"
-      }
-    },
-    "placeholders": {
-      "name": "Goblin",
-      "classification": {
-        "type": "Humanoid",
-        "alignment": "Neutre - Mauvais",
-        "subType": "goblinoid",
-        "size": "Small"
-      },
-      "stats": {
-        "maxHP": "7",
-        "currentHP": "3",
-        "tempHP": "5",
-        "hitDice": "2d6",
-        "armorClass": "15",
-        "speed": {
-          "walk": "30",
-          "fly": "0",
-          "swim": "0",
-          "climb": "0",
-          "burrow": "0"
-        },
-        "abilityScores": "Score d'aptitude",
-        "savingThrows": "Jet de sauvegarde",
-        "skills": {
-          "athletics": "6",
-          "acrobatics": "0",
-          "sleightOfHand": "0",
-          "stealth": "0",
-          "arcana": "0",
-          "history": "0",
-          "investigation": "0",
-          "nature": "0",
-          "religion": "0",
-          "animalHandling": "0",
-          "insight": "0",
-          "medicine": "0",
-          "perception": "0",
-          "survival": "0",
-          "deception": "0",
-          "intimidation": "0",
-          "performance": "0",
-          "persuasion": "0"
-        },
-        "senses": {
-          "nightVision": "60",
-          "passivePerception": "9"
-        }
-      },
-      "combat": {
-        "challengeRating": "0.25",
-        "experiencePoints": "50"
-      },
-      "traits": {
-        "languages": "Commun, Goblin",
-        "abilities": {
-          "name": "L'échappée belle",
-          "description": "Lorsque le gobelin est touché par une attaque, il peut utiliser sa réaction pour se déplacer de 10 pieds dans une direction de son choix."
-        }
-      },
-      "actions": {
-        "name": "Scimitar",
-        "type": "Melée",
-        "attackBonus": "Bonus d'attaque",
-        "damage": {
-          "dice": "1d6",
-          "type": "Slashing"
-        },
-        "range": "5"
-      }
+    "appearance": {
+      "age": "Age",
+      "height": "Taille",
+      "weight": "Poids",
+      "eyes": "Yeux",
+      "hair": "Cheveux",
+      "skin": "Peau"
     }
+    
   },
   "Global": {
     "cancel": "Annuler"

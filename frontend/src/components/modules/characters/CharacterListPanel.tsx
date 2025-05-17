@@ -12,6 +12,9 @@ import { Plus, PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { NPCCard, PlayerCard } from "./CharacterCard";
+import IPlayer from "@/models/player/IPlayer";
+import INpc from "@/models/npc/INpc";
 
 interface ICharacterListPanelProps {
   offset?: number;
@@ -97,47 +100,49 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
 
   return (
     <div className="w-full h-full flex flex-col">
-        <CardHeader className="flex-none h-auto items-center gap-3">
-          <CardTitle className="text-foreground font-bold">
-            <div className="flex items-center gap-2">
-              <p>{t("title")}</p>
-              {
-                isUpdating && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(group._id)} />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{t("addCharacter")}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )
-              }
-            </div>
-            </CardTitle>
+      <CardHeader className="relative flex flex-row h-auto items-center">
+        <CardTitle className="text-foreground font-bold">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl text-foreground">{t("title")}</span>
+            {
+              isUpdating && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(group._id)} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t("addCharacter")}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )
+            }
+          </div>
+        </CardTitle>
+        <div className="absolute left-1/2 transform -translate-x-1/2 w-[30dvh]">
           <SearchInput
             value={search}
             onChange={setSearch}
             placeholder={t("search")}
           />
-        </CardHeader>
-        <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
-            <div className="flex flex-col gap-3">
-              {loading && <Loading />}
-              {characters.length > 0  &&
-                characters.map((character) => (
-                  <Card key={character._id} className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${characterSelected?._id === character._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"}`} onClick={() => setCharacterSelected(character)}>
-                    <span className="text-foreground font-bold">{character.name}</span>
-                  </Card>
-                ))
-              }
-              {characters.length === 0 && !loading && (
-                <div className="row-start-2 col-span-3 flex items-top justify-center">
-                  <p className="text-gray-500">{t("noCharacters")}</p>
-                </div>
-              )}
+        </div>
+      </CardHeader>
+      <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
+        <div className="grid grid-cols-4 gap-4 p-4 items-start">
+          {loading && <Loading />}
+          {characters.length > 0  &&
+            characters.map((character) => character.kind === 'player' ? (
+              <PlayerCard player={character as IPlayer} key={character._id}></PlayerCard>
+            ) : (
+              <NPCCard npc={character as INpc} key={character._id}></NPCCard>
+            ))
+          }
+          {characters.length === 0 && !loading && (
+            <div className="row-start-2 col-span-3 flex items-top justify-center">
+              <p className="text-gray-500">{t("noCharacters")}</p>
             </div>
-          </CardContent>
+          )}
+        </div>
+      </CardContent>
     </div>
   );
 };

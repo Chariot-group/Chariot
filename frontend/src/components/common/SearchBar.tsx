@@ -14,12 +14,12 @@ const SearchInput = ({
   placeholder,
   reverse = false,
 }: Props) => (
-  <div className="relative">
+  <div className="relative w-full">
     <Input
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className={`pr-10 border-ring shadow-md ${
+      className={`pr-10 w-full border-ring shadow-md ${
         reverse ? "bg-background" : "bg-card"
       }`}
     />

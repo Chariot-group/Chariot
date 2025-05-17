@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { CharacterDetailsPanel } from "./panelSections/CharacterDetailsPanel";
 import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {
@@ -38,9 +37,7 @@ const CharacterDetailsModal = ({
           isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
       >
-        <CharacterDetailsPanel
-          character={character}
-        />
+        
       </div>
     </div>
   );

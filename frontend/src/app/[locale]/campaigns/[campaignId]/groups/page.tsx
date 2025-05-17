@@ -3,7 +3,6 @@
 import { Header } from "@/components/common/Header";
 import Loading from "@/components/common/Loading";
 import CharacterListPanel from "@/components/modules/characters/CharacterListPanel";
-import { CharacterDetailsPanel } from "@/components/modules/characters/panelSections/CharacterDetailsPanel";
 import GroupDetailsPanel from "@/components/modules/groups/GroupDetailsPanel";
 import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { Button } from "@/components/ui/button";
@@ -221,97 +220,7 @@ export default function CampaignGroupsPage() {
     }, [isUpdating, groupSelected]);
 
     const addCharacter = (idGroup: string) => {
-        const newCharacter: Partial<ICharacter> = {
-            "name": "Goblin",
-            "classification": {
-                "type": "humanoid",
-                "subtype": "goblinoid",
-                "alignment": "neutral evil",
-                "size": "Small"
-            },
-            "stats": {
-                "maxHitPoints": 7,
-                "currentHitPoints": 3,
-                "tempHitPoints": 5,
-                "hitDice": "2d6",
-                "armorClass": 15,
-                "speed": {
-                    "walk": 30,
-                },
-                "abilityScores": {
-                    "strength": 8,
-                    "dexterity": 14,
-                    "constitution": 10,
-                    "intelligence": 10,
-                    "wisdom": 8,
-                    "charisma": 8
-                },
-                "savingThrows": {
-                    "dexterity": 4,
-                    "constitution": 2,
-                    "intelligence": 2,
-                    "wisdom": 1,
-                    "charisma": 1,
-                    "strength": 0
-                },
-                "skills": {
-                    "stealth": 6,
-                    "perception": 1,
-                    "deception": 1,
-                    "arcana": 2,
-                    "athletics": 0,
-                    "history": 2,
-                    "insight": 1,
-                    "intimidation": 1,
-                    "investigation": 2,
-                    "medicine": 1,
-                    "nature": 2,
-                    "performance": 1,
-                    "persuasion": 1,
-                    "religion": 2,
-                    "sleightHand": 6,
-                    "survival": 1,
-                    "animalHandling": 1,
-                    "acrobatics": 4
-                },
-                "senses": {
-                    "darkvision": 60,
-                    "passivePerception": 9
-                },
-            },
-            "combat": {
-                "challengeRating": 0.25,
-                "experiencePoints": 50,
-                "resistances": [],
-                "immunities": [],
-                "vulnerabilities": []
-            },
-            "traits": [
-                {
-                    "languages": [
-                        "Common",
-                        "Goblin"
-                    ],
-                    "abilities": [
-                        {
-                            "name": "Nimble Escape",
-                            "description": "The goblin can take the Disengage or Hide action as a bonus action on each of its turns."
-                        }
-                    ]
-                }
-            ],
-            "actions": [
-                {
-                    "standard": [],
-                    "legendary": [],
-                    "lair": []
-                }
-            ],
-            "groups": [
-                idGroup
-            ]
-        };
-        createCharacter(newCharacter);
+        //createCharacter(newCharacter);
     }
 
     useBeforeUnload(isUpdating, t("form.unsave"));
@@ -340,12 +249,8 @@ export default function CampaignGroupsPage() {
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>
                             </div>
-                            <div className="w-full h-[6vh] flex flex-row justify-between items-center pr-5 pl-5">
-                                <span className="text-2xl text-foreground">{t("yourCharacters")}</span>
-                            </div>
                             <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
-                                <Card className="w-[20%] ">
-                                    <CharacterListPanel 
+                                <CharacterListPanel 
                                         newCharacters={newCharacterRef}
                                         removeCharacters={removedCharacterRef}
                                         isUpdating={isUpdating}
@@ -353,12 +258,7 @@ export default function CampaignGroupsPage() {
                                         characterSelected={characterSelected}
                                         setCharacterSelected={setCharacterSelected}
                                         addCharacter={addCharacter} />
-                                </Card>
-                                {
-                                    characterSelected && (
-                                        <CharacterDetailsPanel onDelete={deleteCharacter} character={characterSelected} isUpdating={isUpdating} characterTempRef={characterTempRef} />
-                                    )
-                                }
+                                
                             </div>
                         </div>
                     )
