@@ -9,7 +9,7 @@ export default interface ICharacter {
     kind: 'npc' | 'player'; // OK
     affinities: IAffinities // OK
     abilities: IAbility[];  // OK
-    spellcasting: ISpellcasting[];
+    spellcasting: ISpellcasting[]; // OK
     groups: IGroup[] | string[];
     deletedAt?: Date;
 }

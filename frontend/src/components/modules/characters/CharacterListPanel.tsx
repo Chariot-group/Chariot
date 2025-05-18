@@ -136,7 +136,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
         </div>
       </CardHeader>
       <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
-        <div className="grid grid-cols-4 gap-4 p-4 items-start">
+        <div className="grid grid-cols-4 gap-3 items-start">
           {loading && <Loading />}
           {characters.length > 0  &&
             characters.map((character) => character.kind === 'player' ? (

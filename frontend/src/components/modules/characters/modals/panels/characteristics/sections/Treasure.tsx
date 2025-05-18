@@ -27,7 +27,7 @@ export default function Treasure({ treasure }: Props) {
                 <Champs color="card" id={"pp"} type={"text"} label={"Pièce de platine"} placeholder={"Pièce de platine"} value={pp} setValue={setPp}></Champs>
             </div>
             <div className="flex flex-col h-full gap-2 w-3/4">
-                <Label htmlFor={"notes"} className="text-foreground">Notes</Label>
+                <Label htmlFor={"notes"} className="text-foreground font-bold">Notes</Label>
                 <Textarea id={"notes"} placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} className="rounded-xl w-full h-full resize-none bg-card border-ring" />
             </div>
         </Card>

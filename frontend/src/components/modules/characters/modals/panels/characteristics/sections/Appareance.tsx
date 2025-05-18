@@ -49,7 +49,7 @@ export default function Appearance({ appearance, stats }: Props) {
                     </Select>
                 </Label>
             </div>
-            <div className="flex flex-col w-full gap-1.5 h-1/3">
+            <div className="flex flex-col w-full gap-1.5 mt-1 h-1/3">
                 <Label htmlFor={"description"} className="text-foreground font-bold">Description</Label>
                 <Textarea id={"description"} placeholder="Description physique" value={description} onChange={(e) => setDescription(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
             </div>

@@ -18,31 +18,31 @@ export default function Background({ background }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-row gap-2 bg-background h-2/3">
-            <div className="flex flex-col gap-1 w-full h-full">
+            <div className="flex flex-col gap-2 w-full h-full">
                 <div className="flex flex-col w-full gap-1.5 h-1/3">
-                    <Label htmlFor={"personalityTraits"} className="text-foreground">Trait personnel</Label>
+                    <Label htmlFor={"personalityTraits"} className="text-foreground font-bold">Trait personnel</Label>
                     <Textarea id={"personalityTraits"} placeholder="Trait personnel" value={personalityTraits} onChange={(e) => setPersonalityTraits(e.target.value)} className="rounded-xl h-full resize-none bg-card border-ring" />
                 </div>
                 <div className="flex flex-col w-full gap-1.5 h-1/3">
-                    <Label htmlFor={"ideals"} className="text-foreground">Idéaux</Label>
+                    <Label htmlFor={"ideals"} className="text-foreground font-bold">Idéaux</Label>
                     <Textarea id={"ideals"} placeholder="Idéaux" value={ideals} onChange={(e) => setIdeals(e.target.value)} className="rounded-xl h-full resize-none bg-card border-ring" />
                 </div>
                 <div className="flex flex-col w-full gap-1.5 h-1/3">
-                    <Label htmlFor={"bonds"} className="text-foreground">Limites</Label>
+                    <Label htmlFor={"bonds"} className="text-foreground font-bold">Limites</Label>
                     <Textarea id={"bonds"} placeholder="Limites" value={bonds} onChange={(e) => setBonds(e.target.value)} className="rounded-xl h-full resize-none bg-card border-ring" />
                 </div>
             </div>
-            <div className="flex flex-col gap-1 w-full h-full">
+            <div className="flex flex-col gap-2 w-full h-full">
                 <div className="flex flex-col w-full gap-1.5 h-1/3">
-                    <Label htmlFor={"flaws"} className="text-foreground">Défauts</Label>
+                    <Label htmlFor={"flaws"} className="text-foreground font-bold">Défauts</Label>
                     <Textarea id={"flaws"} placeholder="Défauts" value={flaws} onChange={(e) => setFlaws(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
                 </div>
                 <div className="flex flex-col w-full gap-1.5 h-1/3">
-                    <Label htmlFor={"alliesAndOrgs"} className="text-foreground">Alliés et orgs</Label>
+                    <Label htmlFor={"alliesAndOrgs"} className="text-foreground font-bold">Alliés et orgs</Label>
                     <Textarea id={"alliesAndOrgs"} placeholder="Alliés et orgs" value={alliesAndOrgs} onChange={(e) => setAlliesAndOrgs(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
                 </div>
                 <div className="flex flex-col w-full gap-1.5 h-1/3">
-                    <Label htmlFor={"backstory"} className="text-foreground">Histoire</Label>
+                    <Label htmlFor={"backstory"} className="text-foreground font-bold">Histoire</Label>
                     <Textarea id={"backstory"} placeholder="Histoire" value={backstory} onChange={(e) => setBackstory(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
                 </div>
             </div>
