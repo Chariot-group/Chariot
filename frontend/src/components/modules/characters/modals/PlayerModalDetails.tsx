@@ -69,7 +69,7 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
 
     return (
         <Card className="h-full w-full p-4 flex flex-col gap-2">
-            <div className="flex flex-row justify-between gap-3 h-1/7">
+            <div className="flex flex-row justify-between gap-3 h-[10%]">
                 <div className="flex flex-row items-center gap-2">
                     <Champs label="Nom" value={name} id={"name"} type={"text"} placeholder={"Nom"} setValue={setName} />
                     <Badge >{t(player.kind)}</Badge>
@@ -82,55 +82,54 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
-            <div className="flex flex-row gap-3 h-full h-6/7">
-                <div className="flex flex-row gap-3 w-1/3 h-full">
-                    <div className="flex flex-col gap-3 w-1/2 h-full">
-                        {/* Stats */}
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background h-1/6">
+            <div className="flex flex-row gap-3 h-full h-[90%] overflow-auto">
+                <div className="flex flex-col gap-3 w-1/6 h-full">
+                    {/* Stats */}
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Force" value={strengthST} id={"strengthST"} type={"number"} placeholder={"Force"} setValue={setStrengthST} />
                             <Champs color="card" label="Jet de sauvegarde" value={strengthAS} id={"strengthAS"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setStrengthAS} />
-                        </Card>
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background h-1/6">
+                    </Card>
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Dextérité" value={dexterityAS} id={"dexterityAS"} type={"number"} placeholder={"Dextérité"} setValue={setDexterityAS} />
                             <Champs color="card" label="Jet de sauvegarde" value={dexterityST} id={"dexterityST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setDexterityST} />
-                        </Card>
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background h-1/6">
+                    </Card>
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Constitution" value={constitutionAS} id={"constitutionAS"} type={"number"} placeholder={"Constitution"} setValue={setConstitutionAS} />
                             <Champs color="card" label="Jet de sauvegarde" value={constitutionST} id={"constitutionST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setConstitutionST} />
-                        </Card>
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background h-1/6">
+                    </Card>
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Intelligence" value={intelligenceAS} id={"intelligenceAS"} type={"number"} placeholder={"Intelligence"} setValue={setIntelligenceAS} />
                             <Champs color="card" label="Jet de sauvegarde" value={intelligenceST} id={"intelligenceST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setIntelligenceST} />
-                        </Card>
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background h-1/6">
+                    </Card>
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Sagesse" value={wisdomAS} id={"wisdomAS"} type={"number"} placeholder={"Sagesse"} setValue={setWisdomAS} />
                             <Champs color="card" label="Jet de sauvegarde" value={wisdomST} id={"wisdomST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setWisdomST} />
-                        </Card>
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background h-1/6">
+                    </Card>
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Charisme" value={charismaAS} id={"charismaAS"} type={"number"} placeholder={"Force"} setValue={setCharismaAS} />
                             <Champs color="card" label="Jet de sauvegarde" value={charismaST} id={"charismaST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setCharismaST} />
-                        </Card>
-                    </div>
-                    <div className="flex flex-col gap-3 w-1/2 h-full">
-                        {/* PV */}
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background">
+                    </Card>
+                </div>
+                <div className="flex flex-col gap-3 w-1/6 h-full">
+                    {/* PV */}
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="PV maximum" value={maxHitPoints} id={"maxHP"} type={"number"} placeholder={"PV maximum"} setValue={setMaxHitPoints} />
                             <Champs color="card" label="PV" value={currentHitPoints} id={"hp"} type={"number"} placeholder={"PV"} setValue={setCurrentHitPoints} />
                             <Champs color="card" label="PV temporaire" value={tempHitPoints} id={"tempHP"} type={"number"} placeholder={"PV temporaire"} setValue={setTempHitPoints} />
                             <Champs color="card" label="Class d'armure" value={armorClass} id={"armorClass"} type={"number"} placeholder={"Class d'armure"} setValue={setArmorClass} />
-                        </Card>
+                    </Card>
 
-                        {/* Profile + Progression */}
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background">
+                    {/* Profile + Progression */}
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Niveau" value={level} id={"level"} type={"number"} placeholder={"Niveau"} setValue={setLevel} />
                             <Champs color="card" label="Expérience" value={experience} id={"experience"} type={"number"} placeholder={"Expérience"} setValue={setExperience} />
                             <Champs color="card" id={"race"} type={"text"} label={"Race"} placeholder={"Race"} value={race} setValue={setRace}></Champs>
                             <Champs color="card" id={"subrace"} type={"text"} label={"Sous-race"} placeholder={"Sous-race"} value={subrace} setValue={setSubrace}></Champs>
                             <Champs color="card" id={"alignment"} type={"text"} label={"Alignement"} placeholder={"Alignement"} value={alignment} setValue={setAlignment}></Champs>
-                        </Card>
+                    </Card>
                             
-                        {/* Appareance */}
-                        <Card className="bg-card p-4 flex flex-col gap-2 bg-background">
+                    {/* Appareance */}
+                    <Card className="bg-card p-4 flex flex-col bg-background">
                             <Champs color="card" label="Yeux" value={eyes} id={"eyes"} type={"text"} placeholder={"Yeux"} setValue={setEyes} />
                             <Champs color="card" label="Cheveux" value={hair} id={"hair"} type={"text"} placeholder={"Cheveux"} setValue={setHair} />
                             <Champs color="card" label="Peau" value={skin} id={"skin"} type={"text"} placeholder={"Peau"} setValue={setSkin} />
@@ -156,29 +155,28 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
                                     </Select>
                                 </Label>
                             </div>
-                        </Card>
-                    </div>
+                    </Card>
                 </div>
-                <div className="flex flex-col gap-3 w-2/3 h-full">
+                <div className="flex flex-col gap-3 w-4/6 h-full">
                     <Card className="bg-card p-4 flex flex-row gap-2 bg-background h-2/3">
-                        <div className="flex flex-col gap-3 w-full h-full">
+                        <div className="flex flex-col gap-1 w-full h-full">
                             <div className="flex flex-col w-full gap-1.5 h-1/3">
                                 <Label htmlFor={"personalityTraits"} className="text-foreground">Trait personnel</Label>
                                 <Textarea id={"personalityTraits"} placeholder="Trait personnel" value={personalityTraits} onChange={(e) => setPersonalityTraits(e.target.value)} className="rounded-xl h-full resize-none bg-card border-ring" />
                             </div>
                             <div className="flex flex-col w-full gap-1.5 h-1/3">
-                                <Label htmlFor={"ideals"} className="text-foreground">Idéal</Label>
-                                <Textarea id={"ideals"} placeholder="Idéal" value={ideals} onChange={(e) => setIdeals(e.target.value)} className="rounded-xl h-full resize-none bg-card border-ring" />
+                                <Label htmlFor={"ideals"} className="text-foreground">Idéaux</Label>
+                                <Textarea id={"ideals"} placeholder="Idéaux" value={ideals} onChange={(e) => setIdeals(e.target.value)} className="rounded-xl h-full resize-none bg-card border-ring" />
                             </div>
                             <div className="flex flex-col w-full gap-1.5 h-1/3">
                                 <Label htmlFor={"bonds"} className="text-foreground">Limites</Label>
                                 <Textarea id={"bonds"} placeholder="Limites" value={bonds} onChange={(e) => setBonds(e.target.value)} className="rounded-xl h-full resize-none bg-card border-ring" />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-3 w-full h-full">
+                        <div className="flex flex-col gap-1 w-full h-full">
                             <div className="flex flex-col w-full gap-1.5 h-1/3">
                                 <Label htmlFor={"flaws"} className="text-foreground">Défauts</Label>
-                                <Textarea id={"flaws"} placeholder="Idéal" value={flaws} onChange={(e) => setFlaws(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
+                                <Textarea id={"flaws"} placeholder="Défauts" value={flaws} onChange={(e) => setFlaws(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
                             </div>
                             <div className="flex flex-col w-full gap-1.5 h-1/3">
                                 <Label htmlFor={"alliesAndOrgs"} className="text-foreground">Alliés et orgs</Label>
@@ -191,15 +189,15 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
                         </div>
                     </Card>
                     
-                    <Card className="bg-card p-4 flex flex-row gap-2 bg-background h-1/3">
-                        <div className="flex flex-col gap-2 w-1/4 justify-center">
+                    <Card className="bg-card p-4 flex flex-row gap-2 bg-background">
+                        <div className="flex flex-col w-1/4 justify-center">
                             <Champs color="card" label="Pièce de cuivre" value={cp} id={"cp"} type={"number"} placeholder={"Pièce de cuivre"} setValue={setCp} />
                             <Champs color="card" label="Pièce d'argent" value={sp} id={"sp"} type={"number"} placeholder={"Pièce d'argent"} setValue={setSp} />
                             <Champs color="card" label="Pièce d'electrum" value={ep} id={"ep"} type={"number"} placeholder={"Pièce d'electrum"} setValue={setEp} />
                             <Champs color="card" id={"gp"} type={"text"} label={"Pièce d'or"} placeholder={"Pièce d'or"} value={gp} setValue={setGp}></Champs>
                             <Champs color="card" id={"pp"} type={"text"} label={"Pièce de platine"} placeholder={"Pièce de platine"} value={pp} setValue={setPp}></Champs>
                         </div>
-                        <div className="flex flex-col gap-2 w-3/4">
+                        <div className="flex flex-col h-full gap-2 w-3/4">
                             <Label htmlFor={"notes"} className="text-foreground">Notes</Label>
                             <Textarea id={"notes"} placeholder="Notes" value={notes} onChange={(e) => setNotes(e.target.value)} className="rounded-xl w-full h-full resize-none bg-card border-ring" />
                         </div>

@@ -32,7 +32,7 @@ const CharacterModal = ({ isOpen, onClose, character }: Props) => {
         onClick={onClose}
       ></div>
       <div
-        className={`w-3/4 h-3/4 ${
+        className={`h-[90vh] w-[95%] 2xl:w-[80%] 2xl:h-[80vh] ${
           isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
       >
