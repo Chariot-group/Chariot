@@ -1,14 +1,19 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import ICharacter from "@/models/characters/ICharacter";
 import INpc from "@/models/npc/INpc";
 import IPlayer from "@/models/player/IPlayer";
+import { PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface PlayerCardProps {
     player: IPlayer;
     onClick: () => void;
+    isUpdating: boolean;
+    removeCharacter: (character: ICharacter) => void;
 }
-export function PlayerCard( { player, onClick }: PlayerCardProps ) {
+export function PlayerCard( { player, onClick, isUpdating, removeCharacter }: PlayerCardProps ) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -17,6 +22,18 @@ export function PlayerCard( { player, onClick }: PlayerCardProps ) {
             <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
                 <h2 className="text-lg font-bold">{player.name}</h2>
                 <Badge>{t(player.kind)}</Badge>
+                {
+                    isUpdating && (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <TrashIcon className="text-primary hover:cursor-pointer" onClick={(e) => {e.stopPropagation(); removeCharacter(player);}} />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Supprimer le joueur</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    )
+                }
             </CardHeader>
             <CardContent className="p-4 pt-2 flex flex-col gap-2">
                 <div className="grid grid-cols-2">

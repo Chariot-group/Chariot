@@ -5,8 +5,7 @@ import Loading from "@/components/common/Loading";
 import CharacterListPanel from "@/components/modules/characters/CharacterListPanel";
 import GroupDetailsPanel from "@/components/modules/groups/GroupDetailsPanel";
 import GroupListPanel from "@/components/modules/groups/GroupListPanel";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { DEFAULT_PLAYER } from "@/constants/CharacterConstants";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
@@ -220,7 +219,8 @@ export default function CampaignGroupsPage() {
     }, [isUpdating, groupSelected]);
 
     const addCharacter = (idGroup: string) => {
-        //createCharacter(newCharacter);
+        const newCharacter = DEFAULT_PLAYER;
+        createCharacter({...newCharacter, groups: [idGroup]});
     }
 
     useBeforeUnload(isUpdating, t("form.unsave"));
@@ -251,13 +251,14 @@ export default function CampaignGroupsPage() {
                             </div>
                             <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
                                 <CharacterListPanel 
-                                        newCharacters={newCharacterRef}
-                                        removeCharacters={removedCharacterRef}
-                                        isUpdating={isUpdating}
-                                        group={groupSelected}
-                                        characterSelected={characterSelected}
-                                        setCharacterSelected={setCharacterSelected}
-                                        addCharacter={addCharacter} />
+                                    newCharacters={newCharacterRef}
+                                    removeCharacters={removedCharacterRef}
+                                    isUpdating={isUpdating}
+                                    group={groupSelected}
+                                    characterSelected={characterSelected}
+                                    setCharacterSelected={setCharacterSelected}
+                                    addCharacter={addCharacter} 
+                                    deleteCharacter={deleteCharacter} />
                                 
                             </div>
                         </div>

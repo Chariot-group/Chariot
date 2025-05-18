@@ -27,8 +27,9 @@ interface ICharacterListPanelProps {
   removeCharacters: RefObject<string[]>;
   newCharacters: RefObject<Partial<ICharacter>[]>;
   addCharacter: (groupId: string) => void;
+  deleteCharacter: (character: ICharacter) => void;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter, deleteCharacter }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -140,7 +141,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
           {loading && <Loading />}
           {characters.length > 0  &&
             characters.map((character) => character.kind === 'player' ? (
-              <PlayerCard player={character as IPlayer} key={character._id} onClick={() => selectCharacter(character)}></PlayerCard>
+              <PlayerCard  player={character as IPlayer} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></PlayerCard>
             ) : (
               <NPCCard npc={character as INpc} key={character._id} onClick={() => selectCharacter(character)}></NPCCard>
             ))
