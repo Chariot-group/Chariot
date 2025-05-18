@@ -12,10 +12,6 @@ export default function Classes({ player }: Props) {
 
     const [classes, setClasses] = useState(player.class);
 
-    useEffect(() => {
-        console.log("Classes", classes);
-    }, []);
-
     const addClass = () => {
         const newClass = {
             name: "",
@@ -80,7 +76,7 @@ export default function Classes({ player }: Props) {
                     <Card key={index} className="bg-card p-4 flex justify-between flex-row gap-2 bg-background">
                         <div className="flex flex-col gap-2">
                             <Champs color="card" label="Classe" value={classe.name} id={`class-${index}`} type={"text"} placeholder={"Classe"} setValue={(value) => updateNameClass(index, value)} />
-                            <Champs color="card" label="Sous-classe" value={classe.subclass} id={`subclass-${index}`} type={"text"} placeholder={"Sous-classe"} setValue={(value) => updateSubclassClass(index, value)} />
+                            <Champs width="w-full" color="card" label="Sous-classe" value={classe.subclass} id={`subclass-${index}`} type={"text"} placeholder={"Sous-classe"} setValue={(value) => updateSubclassClass(index, value)} />
                             <Champs color="card" label="Niveau" value={classe.level} id={`level-${index}`} type={"number"} placeholder={"Niveau"} setValue={(value) => updateLevelClass(index, value)} />
                             <Champs color="card" label="Dé de vie" value={classe.hitDie} id={`hitDie-${index}`} type={"number"} placeholder={"Dé de vie"} setValue={(value) => updateHitDieClass(index, value)} />
                         </div>

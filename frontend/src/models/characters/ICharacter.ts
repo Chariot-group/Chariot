@@ -7,8 +7,8 @@ export default interface ICharacter {
     _id: string;
     name: string;   // OK
     kind: 'npc' | 'player'; // OK
-    affinities: IAffinities
-    abilities: IAbility[];
+    affinities: IAffinities // OK
+    abilities: IAbility[];  // OK
     spellcasting: ISpellcasting[];
     groups: IGroup[] | string[];
     deletedAt?: Date;

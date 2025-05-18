@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Characteristic from "./panels/characteristics/Characteristic";
 import Stats from "./panels/stats/Stats";
+import Plus from "./panels/plus/Plus";
 
 interface Props {
     player: IPlayer;
@@ -17,7 +18,7 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
-    const [panel, setPanel] = useState<"characteristics" | "stats" | "spells">("characteristics");
+    const [panel, setPanel] = useState<"characteristics" | "stats" | "spells" | "plus">("characteristics");
 
     const [name, setName] = useState<string>(player.name);
 
@@ -33,12 +34,14 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
                     <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "characteristics" && 'underline'}`} onClick={() => setPanel("characteristics")}>Charactéristiques</span>
                     <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "stats" && 'underline'}`} onClick={() => setPanel("stats")}>Statistique</span>
                     <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && 'underline'}`} onClick={() => setPanel("spells")}>Sorts</span>
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "plus" && 'underline'}`} onClick={() => setPanel("plus")}>Plus</span>
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
             {panel === "characteristics" && <Characteristic player={player} />}
             {panel === "stats" && <Stats player={player} />}
             {panel === "spells" && <div>Spells</div>}
+            {panel === "plus" && <Plus player={player} />}
         </Card>
     );
 }
@@ -53,8 +56,9 @@ interface IChampsProps {
     onChange?: () => void;
     color?: string;
     isActive?: boolean;
+    width?: string;
 }
-export function Champs({ id, type, label, placeholder, value, setValue, color = "background", onChange, isActive = true }: IChampsProps) {
+export function Champs({ id, type, label, placeholder, value, setValue, color = "background", onChange, isActive = true, width }: IChampsProps) {
 
     const [pending, setPending] = useState(false);
 
@@ -71,9 +75,9 @@ export function Champs({ id, type, label, placeholder, value, setValue, color = 
     }, [value]);
 
     return (
-        <div className="flex flex-row items-center">
-            <Label htmlFor={id} className="text-foreground flex flex-row gap-1 items-center"><span className="font-bold w-auto">{label}:</span>
-                <Input id={id} type={type} value={value ?? ""} onChange={handleChange} placeholder={placeholder} className={`${type === 'number' ? 'w-10' : 'w-[10vh]'} p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } readOnly={!isActive} />
+        <div className="flex flex-row items-center w-full">
+            <Label htmlFor={id} className="text-foreground flex flex-row gap-1 items-center w-full"><span className="font-bold w-auto">{label}:</span>
+                <Input id={id} type={type} value={value ?? ""} onChange={handleChange} placeholder={placeholder} className={`${type === 'number' ? 'w-10' : 'w-[10vh]'} ${width} p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } readOnly={!isActive} />
             </Label>
         </div>
     );
