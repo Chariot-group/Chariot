@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Characteristic from "./panels/characteristics/Characteristic";
 import Stats from "./panels/stats/Stats";
 import Plus from "./panels/plus/Plus";
+import Spells from "./panels/spells/Spells";
 
 interface Props {
     player: IPlayer;
@@ -40,7 +41,7 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
             </div>
             {panel === "characteristics" && <Characteristic player={player} />}
             {panel === "stats" && <Stats player={player} />}
-            {panel === "spells" && <div>Spells</div>}
+            {panel === "spells" && <Spells player={player} />}
             {panel === "plus" && <Plus player={player} />}
         </Card>
     );
