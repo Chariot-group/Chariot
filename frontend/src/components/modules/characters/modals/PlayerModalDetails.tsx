@@ -7,6 +7,7 @@ import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Characteristic from "./panels/characteristics/Characteristic";
+import Stats from "./panels/stats/Stats";
 
 interface Props {
     player: IPlayer;
@@ -29,14 +30,14 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
                 </div>
                 
                 <div className="flex flex-row items-center gap-3">
-                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "characteristics" && 'underline'}`} onClick={() => setPanel("characteristics")}>Caractéristiques</span>
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "characteristics" && 'underline'}`} onClick={() => setPanel("characteristics")}>Charactéristiques</span>
                     <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "stats" && 'underline'}`} onClick={() => setPanel("stats")}>Statistique</span>
                     <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && 'underline'}`} onClick={() => setPanel("spells")}>Sorts</span>
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
             {panel === "characteristics" && <Characteristic player={player} />}
-            {panel === "stats" && <div>Stats</div>}
+            {panel === "stats" && <Stats player={player} />}
             {panel === "spells" && <div>Spells</div>}
         </Card>
     );

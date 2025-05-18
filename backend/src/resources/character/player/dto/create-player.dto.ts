@@ -28,7 +28,7 @@ export class CreatePlayerDto extends CreateCharacterDto {
   @IsArray()
   @IsOptional()
   @Type(() => ClassDto)
-  classes: ClassDto[];
+  class: ClassDto[];
 
   @ValidateNested()
   @IsOptional()

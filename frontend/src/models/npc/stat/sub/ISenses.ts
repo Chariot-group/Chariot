@@ -1,4 +1,3 @@
 export default interface ISenses {
-    name: string;
-    value: number;
+    [key: string]: number;
 }

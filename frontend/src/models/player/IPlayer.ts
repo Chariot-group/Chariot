@@ -8,12 +8,12 @@ import IStats from "@/models/player/stats/IStats";
 import ICharacter from "@/models/characters/ICharacter";
 
 export default interface IPlayer extends ICharacter {
-    inspiration: boolean;
+    inspiration: boolean;   // OK
     progression: IProgression;  // OK
-    classes: IClass[];
+    class: IClass[];    // OK
     profile: IProfile;  // OK
-    appearance: IAppearance;    // OK - sauf description
+    appearance: IAppearance;    //  OK
     background: IBackground;    //  OK
     treasure: ITreasure;    // OK
-    stats: IStats;
+    stats: IStats;  // OK
 }

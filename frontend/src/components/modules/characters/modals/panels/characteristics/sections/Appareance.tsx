@@ -6,6 +6,7 @@ import { SIZES } from "@/constants/CharacterConstants";
 import { useState } from "react";
 import IAppearance from "@/models/player/appearance/IAppearance";
 import IStats from "@/models/player/stats/IStats";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
     appearance: IAppearance;
@@ -19,6 +20,7 @@ export default function Appearance({ appearance, stats }: Props) {
     const [height, setHeight] = useState<string | undefined>(appearance.height);
     const [weight, setWeight] = useState<string | undefined>(appearance.weight);
     const [age, setAge] = useState<number | undefined>(appearance.age);
+    const [description, setDescription] = useState<string | undefined>(appearance.description);
     const [size, setSize] = useState<string>(stats.size);
 
     return (
@@ -46,6 +48,10 @@ export default function Appearance({ appearance, stats }: Props) {
                         </SelectContent>
                     </Select>
                 </Label>
+            </div>
+            <div className="flex flex-col w-full gap-1.5 h-1/3">
+                <Label htmlFor={"description"} className="text-foreground font-bold">Description</Label>
+                <Textarea id={"description"} placeholder="Description physique" value={description} onChange={(e) => setDescription(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
             </div>
         </Card>
     )
