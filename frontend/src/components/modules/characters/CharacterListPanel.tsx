@@ -15,6 +15,8 @@ import React, { RefObject, useCallback, useEffect, useRef, useState } from "reac
 import { NPCCard, PlayerCard } from "./CharacterCard";
 import IPlayer from "@/models/player/IPlayer";
 import INpc from "@/models/npc/INpc";
+import CharacterModal from "./CharacterModal";
+import { set } from "react-hook-form";
 
 interface ICharacterListPanelProps {
   offset?: number;
@@ -98,8 +100,15 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
     fetchCharacters(search, 1, true);
   }, [currentLocale, search, group]);
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const selectCharacter = (character: ICharacter) => {
+    setCharacterSelected(character);
+    setModalIsOpen(true);
+  }
+
   return (
     <div className="w-full h-full flex flex-col">
+      {characterSelected && <CharacterModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} character={characterSelected}/>}
       <CardHeader className="relative flex flex-row h-auto items-center">
         <CardTitle className="text-foreground font-bold">
           <div className="flex items-center gap-2">
@@ -131,13 +140,13 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
           {loading && <Loading />}
           {characters.length > 0  &&
             characters.map((character) => character.kind === 'player' ? (
-              <PlayerCard player={character as IPlayer} key={character._id}></PlayerCard>
+              <PlayerCard player={character as IPlayer} key={character._id} onClick={() => selectCharacter(character)}></PlayerCard>
             ) : (
-              <NPCCard npc={character as INpc} key={character._id}></NPCCard>
+              <NPCCard npc={character as INpc} key={character._id} onClick={() => selectCharacter(character)}></NPCCard>
             ))
           }
           {characters.length === 0 && !loading && (
-            <div className="row-start-2 col-span-3 flex items-top justify-center">
+            <div className="row-start-2 col-span-4 flex items-top justify-center">
               <p className="text-gray-500">{t("noCharacters")}</p>
             </div>
           )}

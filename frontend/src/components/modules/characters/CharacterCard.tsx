@@ -6,13 +6,14 @@ import { useTranslations } from "next-intl";
 
 interface PlayerCardProps {
     player: IPlayer;
+    onClick: () => void;
 }
-export function PlayerCard( { player }: PlayerCardProps ) {
+export function PlayerCard( { player, onClick }: PlayerCardProps ) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
     return (
-        <Card>
+        <Card onClick={onClick} className="border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer">
             <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
                 <h2 className="text-lg font-bold">{player.name}</h2>
                 <Badge>{t(player.kind)}</Badge>
@@ -22,6 +23,8 @@ export function PlayerCard( { player }: PlayerCardProps ) {
                     {player.profile.race && <p className="text-sm"><span className="font-bold">{t("profile.race")}: </span>{player.profile.race}</p>}
                     {player.profile.subrace && <p className="text-sm"><span className="font-bold">{t("profile.subrace")}: </span>{player.profile.subrace}</p>}
                 </div>
+                {player.profile.alignment && <p className="text-sm"><span className="font-bold">{t("profile.alignment")}: </span>{player.profile.alignment}</p>}
+
                 <div className="border-t border-ring"></div>
                 <div className="grid grid-cols-2">
                     {player.progression.level && <p className="text-sm"><span className="font-bold">{t("progression.level")}: </span>{player.progression.level}</p>}
@@ -43,13 +46,14 @@ export function PlayerCard( { player }: PlayerCardProps ) {
 
 interface NPCCardProps {
     npc: INpc;
+    onClick: () => void;
 }
-export function NPCCard( { npc }: NPCCardProps ) {
+export function NPCCard( { npc, onClick }: NPCCardProps ) {
 
-     const t = useTranslations("CharacterDetailsPanel");
+    const t = useTranslations("CharacterDetailsPanel");
 
     return (
-        <Card className="h-auto">
+        <Card onClick={onClick} className="border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer">
             <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
                 <h2 className="text-lg font-bold">{npc.name}</h2>
                 <Badge >{t(npc.kind)}</Badge>
@@ -59,6 +63,7 @@ export function NPCCard( { npc }: NPCCardProps ) {
                     {npc.profile && npc.profile.type && <p className="text-sm"><span className="font-bold">{t("profile.type")}: </span>{npc.profile?.type}</p>}
                     {npc.profile && npc.profile.subtype && <p className="text-sm"><span className="font-bold">{t("profile.subtype")}: </span>{npc.profile?.subtype}</p>}
                 </div>
+                {npc.profile && npc.profile.alignment && <p className="text-sm"><span className="font-bold">{t("profile.alignment")}: </span>{npc.profile?.alignment}</p>}
             </CardContent>
         </Card>
     );

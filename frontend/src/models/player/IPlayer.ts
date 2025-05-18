@@ -9,11 +9,11 @@ import ICharacter from "@/models/characters/ICharacter";
 
 export default interface IPlayer extends ICharacter {
     inspiration: boolean;
-    progression: IProgression;
+    progression: IProgression;  // OK
     classes: IClass[];
-    profile: IProfile;
-    appearance: IAppearance;
-    background: IBackground;
-    treasure: ITreasure;
+    profile: IProfile;  // OK
+    appearance: IAppearance;    // OK - sauf description
+    background: IBackground;    //  OK
+    treasure: ITreasure;    // OK
     stats: IStats;
 }

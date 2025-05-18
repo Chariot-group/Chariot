@@ -65,7 +65,8 @@
       "race": "Race",
       "subrace": "Sous-race",
       "type": "Type",
-      "subtype": "Sous-type"
+      "subtype": "Sous-type",
+      "alignment": "Alignement"
     },
     "progression": {
       "level": "Niveau",
