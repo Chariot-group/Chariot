@@ -7,6 +7,7 @@ import { PlusCircleIcon, Trash, TrashIcon } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import ISpell from "@/models/characters/spellcasting/ISpell";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
     selectedSpellcasting: ISpellcasting;
@@ -198,6 +199,8 @@ export default function SpellCasting({ selectedSpellcasting }: Props) {
                     </div>
                 </Card>
             </div>
+            <div className="flex flex-col border border-ring h-full">
+            </div>
             <div className="flex flex-col gap-3 w-3/4 h-full">
                 <div className="flex flex-row gap-3 w-full">
                     <h1 className="text-foreground text-lg font-bold">Sorts</h1>
@@ -210,7 +213,7 @@ export default function SpellCasting({ selectedSpellcasting }: Props) {
                         </TooltipContent>
                     </Tooltip>
                 </div>
-                <div className="grid grid-cols-3 gap-4 p-4 items-start">
+                <div className="grid grid-cols-3 gap-4 items-start">
                     {spells.length <= 0 && 
                         <div className="row-start-2 col-span-4 flex items-top justify-center">
                             <p className="text-gray-500">Aucun sort trouvé</p>
@@ -234,6 +237,10 @@ export default function SpellCasting({ selectedSpellcasting }: Props) {
                                 <Champs color="card" id={"castingTime"+index} type={"text"} label={"Temps d'incantation"} placeholder={"Temps d'incantation"} value={spell.castingTime} setValue={(value) => updateCastingTimeSpell(index, value)}></Champs>
                                 <Champs color="card" id={"range"+index} type={"text"} label={"Portée"} placeholder={"Portée"} value={spell.range} setValue={(value) => updateRangeSpell(index, value)}></Champs>
                                 <Champs color="card" id={"components"+index} type={"text"} label={"Composants"} placeholder={"Composants"} value={spell.components.join(", ")} setValue={(value) => updateComponentsSpell(index, value.split(", "))}></Champs>
+                                <div className="flex flex-col w-full gap-1.5 mt-1 h-1/3">
+                                    <Label htmlFor={"description"} className="text-foreground font-bold">Description:</Label>
+                                    <Textarea id={"description"} placeholder="Description" value={spell.description} onChange={(e) => updateDescriptionSpell(index, e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
+                                </div>
                             </div>
                         </Card>
                     ))}
