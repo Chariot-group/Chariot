@@ -26,8 +26,8 @@ export default function abilityScores({ stats }: Props) {
         <div className="flex flex-col gap-3 w-1/6 h-full">
             {/* Stats */}
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs color="card" label="Force" value={strengthST} id={"strengthST"} type={"number"} placeholder={"Force"} setValue={setStrengthST} />
-                <Champs color="card" label="Jet de sauvegarde" value={strengthAS} id={"strengthAS"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setStrengthAS} />
+                <Champs color="card" label="Force" value={strengthAS} id={"strengthAS"} type={"number"} placeholder={"Force"} setValue={setStrengthAS} />
+                <Champs color="card" label="Jet de sauvegarde" value={strengthST} id={"strengthST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={setStrengthST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
                 <Champs color="card" label="Dextérité" value={dexterityAS} id={"dexterityAS"} type={"number"} placeholder={"Dextérité"} setValue={setDexterityAS} />

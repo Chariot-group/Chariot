@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Champs } from "../../PlayerModalDetails";
+import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";

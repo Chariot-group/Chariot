@@ -6,13 +6,7 @@ import IPlayer from "@/models/player/IPlayer";
 import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import AbilityScores from "@/components/modules/characters/modals/panels/sections/AbilityScores";
-import Battle from "./panels/sections/Battle";
-import Profile from "./panels/sections/Profile";
-import Appearance from "./panels/sections/Appareance";
-import Background from "./panels/sections/Background";
-import Treasure from "./panels/sections/Treasure";
-import Characteristic from "./panels/Characteristic";
+import Characteristic from "./panels/characteristics/Characteristic";
 
 interface Props {
     player: IPlayer;

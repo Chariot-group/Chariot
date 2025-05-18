@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Champs } from "../../PlayerModalDetails";
+import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { SIZES } from "@/constants/CharacterConstants";

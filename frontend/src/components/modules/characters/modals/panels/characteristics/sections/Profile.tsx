@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Champs } from "../../PlayerModalDetails";
+import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
 import IProgression from "@/models/player/progression/IProgression";
 import IProfile from "@/models/player/profile/IProfile";
