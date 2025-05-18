@@ -10,12 +10,15 @@ import Characteristic from "./panels/characteristics/Characteristic";
 import Stats from "./panels/stats/Stats";
 import Plus from "./panels/plus/Plus";
 import Spells from "./panels/spells/Spells";
+import ICharacter from "@/models/characters/ICharacter";
+import { set } from "react-hook-form";
 
 interface Props {
     player: IPlayer;
     onClose: () => void;
+    updatePlayer: (player: ICharacter) => void;
 }
-export default function PlayerModalDetails( { player, onClose }: Props ) {
+export default function PlayerModalDetails( { player, onClose, updatePlayer }: Props ) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -23,11 +26,19 @@ export default function PlayerModalDetails( { player, onClose }: Props ) {
 
     const [name, setName] = useState<string>(player.name);
 
+    const changeName = (name: string) => {
+        setName(name);
+        updatePlayer({
+            ...player,
+            name: name
+        });
+    };
+
     return (
         <Card className="h-full w-full p-4 flex flex-col gap-2">
             <div className="flex flex-row justify-between gap-3 h-[10%]">
                 <div className="flex flex-row items-center gap-2">
-                    <Champs label="Nom" value={name} id={"name"} type={"text"} placeholder={"Nom"} setValue={setName} />
+                    <Champs label="Nom" value={name} id={"name"} type={"text"} placeholder={"Nom"} setValue={changeName} />
                     <Badge >{t(player.kind)}</Badge>
                 </div>
                 

@@ -11,7 +11,7 @@ import CharacterService from "@/services/CharacterService";
 import { Plus, PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import React, { RefObject, use, useCallback, useEffect, useRef, useState } from "react";
 import { NPCCard, PlayerCard } from "./CharacterCard";
 import IPlayer from "@/models/player/IPlayer";
 import INpc from "@/models/npc/INpc";
@@ -28,8 +28,10 @@ interface ICharacterListPanelProps {
   newCharacters: RefObject<Partial<ICharacter>[]>;
   addCharacter: (groupId: string) => void;
   deleteCharacter: (character: ICharacter) => void;
+  updateCharacter: (character: ICharacter) => void;
+  updateCharacters: RefObject<ICharacter[]>;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter, deleteCharacter }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter, deleteCharacter, updateCharacter, updateCharacters }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -99,17 +101,36 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
     }
     setCharacters([]);
     fetchCharacters(search, 1, true);
-  }, [currentLocale, search, group]);
+  }, [currentLocale, search, group._id]);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const selectCharacter = (character: ICharacter) => {
+    // Vérifie si le character est dans updateCharacters
+    if (updateCharacters.current?.some((c) => c._id === character._id)) {
+      setCharacterSelected(updateCharacters.current.find((c) => c._id === character._id) as ICharacter);
+      setModalIsOpen(true);
+      return;
+    }
     setCharacterSelected(character);
     setModalIsOpen(true);
   }
 
+  useEffect(() => {
+    if (updateCharacters.current && updateCharacters.current.length > 0) {
+      setCharacters((prev) => {
+        // Remplace les characters existants par ceux d'updateCharacters si même _id, sinon garde l'existant
+        const updated = prev.map((char) => {
+          const found = updateCharacters.current?.find((c) => c._id === char._id);
+          return found ? found : char;
+        });
+        return [...updated];
+      });
+    }
+  }, [group.characters]);
+
   return (
     <div className="w-full h-full flex flex-col">
-      {characterSelected && <CharacterModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} character={characterSelected}/>}
+      {characterSelected && <CharacterModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} character={characterSelected} updateCharacter={updateCharacter}/>}
       <CardHeader className="relative flex flex-row h-auto items-center">
         <CardTitle className="text-foreground font-bold">
           <div className="flex items-center gap-2">

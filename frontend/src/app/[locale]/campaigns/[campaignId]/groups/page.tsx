@@ -46,6 +46,7 @@ export default function CampaignGroupsPage() {
             setLoading(true);
             removedCharacterRef.current = [];
             newCharacterRef.current = [];
+            updateCharacterRef.current = [];
             await setGroupSelected(groupTempRef.current);
             setIsUpdating(false);
             setLoading(false);
@@ -78,8 +79,13 @@ export default function CampaignGroupsPage() {
                 const { _id, ...characterWithoutId } = character;
                 await CharacterService.createCharacter(characterWithoutId);
             });
+            updateCharacterRef.current.forEach(async (character) => {
+                console.log(character);
+                await CharacterService.updateCharacter(character._id, character);
+            });
             removedCharacterRef.current = [];
             newCharacterRef.current = [];
+            updateCharacterRef.current = [];
             characterTempRef.current.clear();
             setIsUpdating(false);
             success(t("toasts.save"));
@@ -120,6 +126,7 @@ export default function CampaignGroupsPage() {
     const [newCharacter, setNewCharacter] = useState<ICharacter | null>(null);
 
     let newCharacterRef = useRef<Partial<ICharacter>[]>([]);
+    let updateCharacterRef = useRef<ICharacter[]>([]);
     let removedCharacterRef = useRef<string[]>([]);
 
     const { campaignId } = useParams();
@@ -144,6 +151,35 @@ export default function CampaignGroupsPage() {
         },
         []
     );
+
+    const updateCharacter = useCallback(
+        async (updateCharacter: ICharacter) => {
+            try {
+                if (!updateCharacterRef.current.some((c) => c._id === updateCharacter._id)) {
+                    
+                    updateCharacterRef.current.push(updateCharacter);
+                }else{
+                    updateCharacterRef.current = updateCharacterRef.current.map((c) => {
+                        if (c._id === updateCharacter._id) {
+                            return updateCharacter;
+                        }
+                        return c;
+                    });
+                }
+                setGroupSelected((prev) => {
+                    if (!prev) return null;
+                    return {
+                        ...prev,
+                        characters: prev.characters.map((character) =>
+                            character === updateCharacter._id ? updateCharacter._id : character
+                        ),
+                    };
+                });
+            } catch (err) {
+                error(t("toasts.errorUpdateCharacter"));
+            }
+        }, []
+    );  
 
     const deleteCharacter = useCallback(
         async (deleteCharacter: Partial<ICharacter>) => {
@@ -258,7 +294,9 @@ export default function CampaignGroupsPage() {
                                     characterSelected={characterSelected}
                                     setCharacterSelected={setCharacterSelected}
                                     addCharacter={addCharacter} 
-                                    deleteCharacter={deleteCharacter} />
+                                    deleteCharacter={deleteCharacter}
+                                    updateCharacter={updateCharacter}
+                                    updateCharacters={updateCharacterRef} />
                                 
                             </div>
                         </div>
