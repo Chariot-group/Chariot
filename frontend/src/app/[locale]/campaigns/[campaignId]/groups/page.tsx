@@ -5,7 +5,7 @@ import Loading from "@/components/common/Loading";
 import CharacterListPanel from "@/components/modules/characters/CharacterListPanel";
 import GroupDetailsPanel from "@/components/modules/groups/GroupDetailsPanel";
 import GroupListPanel from "@/components/modules/groups/GroupListPanel";
-import { DEFAULT_PLAYER } from "@/constants/CharacterConstants";
+import { DEFAULT_NPC, DEFAULT_PLAYER } from "@/constants/CharacterConstants";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
@@ -17,7 +17,6 @@ import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { set } from "react-hook-form";
 
 export default function CampaignGroupsPage() {
 
@@ -75,11 +74,16 @@ export default function CampaignGroupsPage() {
                 });
                 await updateGroup(groupSelected);
                 removedCharacterRef.current.forEach(async (characterId) => {
-                    await CharacterService.deleteCharacter(characterId);
+                    // si characterId est un entier, on le supprime
+                    if (!characterId.match(/^\d+$/)) {
+                        await CharacterService.deleteCharacter(characterId);
+                    }
                 });
                 newCharacterRef.current.forEach(async (character) => {
                     const { _id, ...characterWithoutId } = character;
-                    await CharacterService.createCharacter(characterWithoutId);
+                    if (!_id?.match(/^\d+$/)) {
+                        await CharacterService.createCharacter(characterWithoutId);
+                    }
                 });
                 updateCharacterRef.current.forEach(async (character) => {
                     console.log(character);
@@ -140,7 +144,7 @@ export default function CampaignGroupsPage() {
     const createCharacter = useCallback(
         async (createCharacter: Partial<ICharacter>) => {
             try {
-                createCharacter._id = createCharacter.name;
+                //createCharacter._id = createCharacter.name;
                 newCharacterRef.current.push(createCharacter);
                 let character: ICharacter = createCharacter as ICharacter;
                 await setGroupSelected((prev) => {
@@ -162,11 +166,17 @@ export default function CampaignGroupsPage() {
     const updateCharacter = useCallback(
         async (updateCharacter: ICharacter) => {
             try {
-                if (!updateCharacterRef.current.some((c) => c._id === updateCharacter._id)) {
-                    
+                if (!updateCharacterRef.current.some((c) => c._id === updateCharacter._id) && !newCharacterRef.current.some((c) => c._id === updateCharacter._id)) {
                     updateCharacterRef.current.push(updateCharacter);
-                }else{
+                }else if(updateCharacterRef.current.some((c) => c._id === updateCharacter._id)){
                     updateCharacterRef.current = updateCharacterRef.current.map((c) => {
+                        if (c._id === updateCharacter._id) {
+                            return updateCharacter;
+                        }
+                        return c;
+                    });
+                }else if(newCharacterRef.current.some((c) => c._id === updateCharacter._id)){
+                    newCharacterRef.current = newCharacterRef.current.map((c) => {
                         if (c._id === updateCharacter._id) {
                             return updateCharacter;
                         }
@@ -261,9 +271,14 @@ export default function CampaignGroupsPage() {
         };
     }, [isUpdating, groupSelected]);
 
-    const addCharacter = (idGroup: string) => {
+    const addPlayer = (idGroup: string) => {
         const newCharacter = DEFAULT_PLAYER;
-        createCharacter({...newCharacter, groups: [idGroup]});
+        createCharacter({...newCharacter, groups: [idGroup], _id: newCharacterRef.current.length.toString()});
+    }
+
+    const addNpc = (idGroup: string) => {
+        const newCharacter = DEFAULT_NPC;
+        createCharacter({...newCharacter, groups: [idGroup], _id: newCharacterRef.current.length.toString()});
     }
 
     useBeforeUnload(isUpdating, t("form.unsave"));
@@ -300,7 +315,8 @@ export default function CampaignGroupsPage() {
                                     group={groupSelected}
                                     characterSelected={characterSelected}
                                     setCharacterSelected={setCharacterSelected}
-                                    addCharacter={addCharacter} 
+                                    addPlayer={addPlayer} 
+                                    addNpc={addNpc}
                                     deleteCharacter={deleteCharacter}
                                     updateCharacter={updateCharacter}
                                     updateCharacters={updateCharacterRef} />

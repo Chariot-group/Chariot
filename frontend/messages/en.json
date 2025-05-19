@@ -35,7 +35,8 @@
     }
   },
   "CharacterListPanel": {
-    "addCharacter": "Add character",
+    "addPlayer": "Add a player",
+    "addNpc": "Add an NPC",
     "title": "Character List",
     "search": "Search a character",
     "create": "Add a character",

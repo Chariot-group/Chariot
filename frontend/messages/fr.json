@@ -35,7 +35,8 @@
     }
   },
   "CharacterListPanel": {
-    "addCharacter": "Ajouter un personnage",
+    "addPlayer": "Ajouter un joueur",
+    "addNpc": "Ajouter un pnj",
     "title": "Vos personnages",
     "search": "Rechercher un personnage",
     "create": "Ajouter un personnage",

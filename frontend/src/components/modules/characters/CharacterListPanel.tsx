@@ -26,12 +26,13 @@ interface ICharacterListPanelProps {
   isUpdating: boolean;
   removeCharacters: RefObject<string[]>;
   newCharacters: RefObject<Partial<ICharacter>[]>;
-  addCharacter: (groupId: string) => void;
+  addPlayer: (groupId: string) => void;
+  addNpc: (groupId: string) => void;
   deleteCharacter: (character: ICharacter) => void;
   updateCharacter: (character: ICharacter) => void;
   updateCharacters: RefObject<ICharacter[]>;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter, deleteCharacter, updateCharacter, updateCharacters }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addPlayer, addNpc, deleteCharacter, updateCharacter, updateCharacters }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -111,11 +112,17 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
       setModalIsOpen(true);
       return;
     }
+    if(newCharacters.current?.some((c) => c._id === character._id)) {
+      setCharacterSelected(newCharacters.current.find((c) => c._id === character._id) as ICharacter);
+      setModalIsOpen(true);
+      return;
+    }
     setCharacterSelected(character);
     setModalIsOpen(true);
   }
 
   useEffect(() => {
+    console.log(newCharacters.current, removeCharacters.current, updateCharacters.current);
     if (updateCharacters.current && updateCharacters.current.length > 0) {
       setCharacters((prev) => {
         // Remplace les characters existants par ceux d'updateCharacters si même _id, sinon garde l'existant
@@ -124,6 +131,21 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
           return found ? found : char;
         });
         return [...updated];
+      });
+    }
+    if(newCharacters.current && newCharacters.current.length > 0) {
+      setCharacters((prev) => {
+        // Ajoute les characters de newCharacters
+        const filtered = prev.filter((char) => !newCharacters.current?.some((c) => c._id === char._id));
+        return [...filtered, ...newCharacters.current.map((character) => character as ICharacter)];
+      }
+      );
+    }
+    if(removeCharacters.current && removeCharacters.current.length > 0) {
+      setCharacters((prev) => {
+        // Enlève les characters de removeCharacters
+        const filtered = prev.filter((char) => !removeCharacters.current?.includes(char._id));
+        return [...filtered];
       });
     }
   }, [group.characters]);
@@ -139,10 +161,22 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
               isUpdating && (
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(group._id)} />
+                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addPlayer(group._id)} />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{t("addCharacter")}</p>
+                    <p>{t("addPlayer")}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )
+            }
+            {
+              isUpdating && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addNpc(group._id)} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t("addNpc")}</p>
                   </TooltipContent>
                 </Tooltip>
               )
