@@ -14,7 +14,7 @@ interface Props {
 export default function characteristic({ player, updatePlayer, isUpdate }: Props) {
     return (
         <div className="flex flex-row gap-3 h-full h-[90%] overflow-auto">
-            <AbilityScores stats={player.stats} />
+            <AbilityScores updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
             <div className="flex flex-col gap-3 w-1/6 h-full">
                 {/* PV */}
                 <Battle updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />

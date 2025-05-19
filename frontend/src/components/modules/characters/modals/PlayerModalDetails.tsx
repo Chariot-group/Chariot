@@ -51,7 +51,7 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer, isU
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
             {panel === "characteristics" && <Characteristic isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
-            {panel === "stats" && <Stats player={player} />}
+            {panel === "stats" && <Stats isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
             {panel === "spells" && <Spells player={player} />}
             {panel === "plus" && <Plus player={player} />}
         </Card>

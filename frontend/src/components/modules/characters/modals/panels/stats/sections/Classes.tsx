@@ -7,10 +7,20 @@ import { Champs } from "../../../PlayerModalDetails";
 
 interface Props {
     player: IPlayer;
+    isUpdate: boolean;
+    updatePlayer: (player: IPlayer) => void;
 }
-export default function Classes({ player }: Props) {
+export default function Classes({ player, isUpdate, updatePlayer }: Props) {
 
     const [classes, setClasses] = useState(player.class);
+
+    const changeClasses = (value: any[]) => {
+        setClasses(value);
+        updatePlayer({
+            ...player,
+            class: value
+        });
+    }
 
     const addClass = () => {
         const newClass = {
@@ -19,52 +29,51 @@ export default function Classes({ player }: Props) {
             level: 1,
             hitDie: 6
         }
-        setClasses([newClass, ...classes, ]);
+        changeClasses([newClass, ...classes, ]);
     }
 
     const updateNameClass = (index: number, name: string) => {
         const newClasses = [...classes];
         newClasses[index].name = name;
-        setClasses(newClasses);
+        changeClasses(newClasses);
     }
 
     const updateSubclassClass = (index: number, subclass: string) => {
         const newClasses = [...classes];
         newClasses[index].subclass = subclass;
-        setClasses(newClasses);
+        changeClasses(newClasses);
     }
     
     const updateLevelClass = (index: number, level: number) => {
         const newClasses = [...classes];
         newClasses[index].level = level;
-        setClasses(newClasses);
+        changeClasses(newClasses);
     }
 
     const updateHitDieClass = (index: number, hitDie: number) => {
         const newClasses = [...classes];
         newClasses[index].hitDie = hitDie;
-        setClasses(newClasses);
-        setClasses(newClasses);
+        changeClasses(newClasses);
     }
 
     const deleteClass = (index: number) => {
         const newClasses = [...classes];
         newClasses.splice(index, 1);
-        setClasses(newClasses);
+        changeClasses(newClasses);
     }
 
     return (
         <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-2">
                 <h1 className="text-foreground text-lg font-bold">Classes</h1>
-                <Tooltip>
+                {isUpdate && <Tooltip>
                     <TooltipTrigger asChild>
                         <PlusCircleIcon onClick={() => addClass()} className="text-primary cursor-pointer" />
                     </TooltipTrigger>
                     <TooltipContent>
                         <p>Ajouter une classe</p>
                     </TooltipContent>
-                </Tooltip>
+                </Tooltip>}
             </div>
             <div className="grid grid-cols-3 gap-4 p-4 items-start">
                 {classes.length <= 0 && 
@@ -75,20 +84,20 @@ export default function Classes({ player }: Props) {
                 {classes.length > 0 && classes.map((classe, index) => (
                     <Card key={index} className="bg-card p-4 flex flex-col gap-2 bg-background">
                         <div className="flex flex-row gap-2 justify-between">
-                            <Champs color="card" label="Classe" value={classe.name} id={`class-${index}`} type={"text"} placeholder={"Classe"} setValue={(value) => updateNameClass(index, value)} />
-                            <Tooltip>
+                            <Champs isActive={isUpdate} color="card" label="Classe" value={classe.name} id={`class-${index}`} type={"text"} placeholder={"Classe"} setValue={(value) => updateNameClass(index, value)} />
+                            {isUpdate && <Tooltip>
                                 <TooltipTrigger asChild>
                                     <TrashIcon onClick={() => deleteClass(index)} className="text-red-500 cursor-pointer" />
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>Supprimer la classe</p>
                                 </TooltipContent>
-                            </Tooltip>
+                            </Tooltip>}
                         </div>
                         <div className="flex flex-col w-full gap-2">
-                            <Champs width="w-auto" color="card" label="Sous-classe" value={classe.subclass} id={`subclass-${index}`} type={"text"} placeholder={"Sous-classe"} setValue={(value) => updateSubclassClass(index, value)} />
-                            <Champs color="card" label="Niveau" value={classe.level} id={`level-${index}`} type={"number"} placeholder={"Niveau"} setValue={(value) => updateLevelClass(index, value)} />
-                            <Champs color="card" label="Dé de vie" value={classe.hitDie} id={`hitDie-${index}`} type={"number"} placeholder={"Dé de vie"} setValue={(value) => updateHitDieClass(index, value)} />
+                            <Champs isActive={isUpdate} width="w-auto" color="card" label="Sous-classe" value={classe.subclass} id={`subclass-${index}`} type={"text"} placeholder={"Sous-classe"} setValue={(value) => updateSubclassClass(index, value)} />
+                            <Champs isActive={isUpdate} color="card" label="Niveau" value={classe.level} id={`level-${index}`} type={"number"} placeholder={"Niveau"} setValue={(value) => updateLevelClass(index, value)} />
+                            <Champs isActive={isUpdate} color="card" label="Dé de vie" value={classe.hitDie} id={`hitDie-${index}`} type={"number"} placeholder={"Dé de vie"} setValue={(value) => updateHitDieClass(index, value)} />
                         </div>
                     </Card>
                 ))}

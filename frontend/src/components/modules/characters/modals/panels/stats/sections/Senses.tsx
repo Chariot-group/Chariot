@@ -1,25 +1,39 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import IPlayer from "@/models/player/IPlayer";
 import IStats from "@/models/player/stats/IStats";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
-    stats: IStats;
+    player: IPlayer;
+    isUpdate: boolean;
+    updatePlayer: (player: IPlayer) => void;
 }
-export default function Senses({ stats }: Props) {
+export default function Senses({ player, isUpdate, updatePlayer }: Props) {
 
-    const [senses, setSenses] = useState<{ [key: string]: number }[]>(stats.senses);
+    const [senses, setSenses] = useState<{ [key: string]: number }[]>(player.stats.senses);
+
+    const changeSenses = (value: { [key: string]: number }[]) => {
+        setSenses(value);
+        updatePlayer({
+            ...player,
+            stats: {
+                ...player.stats,
+                senses: value
+            }
+        });
+    }
 
     const addSense = () => {
         const newSense = { "": 0 };
-        setSenses([...senses, newSense]);
+        changeSenses([...senses, newSense]);
     };
 
     const removeSense = (index: number) => {
         const newSenses = senses.filter((_, i) => i !== index);
-        setSenses(newSenses);
+        changeSenses(newSenses);
     };
 
     const updateKey = (index: number, key: string) => {
@@ -30,7 +44,7 @@ export default function Senses({ stats }: Props) {
         delete newSense[oldKey];
         newSense[key] = value;
         newSenses[index] = newSense;
-        setSenses(newSenses);
+        changeSenses(newSenses);
     };
 
     const updateValue = (index: number, value: number) => {
