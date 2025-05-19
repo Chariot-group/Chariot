@@ -11,12 +11,12 @@ export default interface IStatsBase {
     currentHitPoints: number;   // OK
     tempHitPoints: number;  // OK
     armorClass: number;  // OK
-    speed: ISpeed;  
+    speed: ISpeed;  // OK
     abilityScores: IAbilityScores;  // OK
-    darkvision: number;  
-    languages: string[];  
+    darkvision: number; // OK 
+    languages: string[];  // OK
     passivePerception: number;  
     savingThrows: ISavingThrows; // OK
-    skills: ISkills;  
-    senses: ISenses[];  
+    skills: ISkills;  // OK
+    senses: ISenses[];  // OK
 }

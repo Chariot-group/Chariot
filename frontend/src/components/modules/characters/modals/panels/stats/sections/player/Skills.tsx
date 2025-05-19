@@ -1,8 +1,8 @@
 import { Card } from "@/components/ui/card";
 import ISkills from "@/models/npc/stat/sub/ISkills"
 import { useState } from "react";
-import { Champs } from "../../../PlayerModalDetails";
 import IPlayer from "@/models/player/IPlayer";
+import { Champs } from "../../../../PlayerModalDetails";
 
 interface Props {
     player: IPlayer;

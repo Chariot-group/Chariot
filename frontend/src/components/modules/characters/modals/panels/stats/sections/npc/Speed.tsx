@@ -1,30 +1,29 @@
 import { Card } from "@/components/ui/card";
-import ISpeed from "@/models/npc/stat/sub/ISpeed";
 import { useState } from "react";
-import { Champs } from "../../../PlayerModalDetails";
-import IPlayer from "@/models/player/IPlayer";
+import INpc from "@/models/npc/INpc";
+import { Champs } from "../../../../PlayerModalDetails";
 
 interface Props {
-    player: IPlayer;
+    npc: INpc;
     isUpdate: boolean;
-    updatePlayer: (player: IPlayer) => void;
+    updateNpc: (npc: INpc) => void;
 }
-export default function Speed({ player, isUpdate, updatePlayer }: Props) {
+export default function Speed({ npc, isUpdate, updateNpc }: Props) {
 
-    const [walking, setWalking] = useState<number | undefined>(player.stats.speed.walk);
-    const [climbing, setClimbing] = useState<number | undefined>(player.stats.speed.climb);
-    const [flying, setFlying] = useState<number | undefined>(player.stats.speed.fly);
-    const [swimming, setSwimming] = useState<number | undefined>(player.stats.speed.swim);
-    const [burrowing, setBurrowing] = useState<number | undefined>(player.stats.speed.burrow);
+    const [walking, setWalking] = useState<number | undefined>(npc.stats.speed.walk);
+    const [climbing, setClimbing] = useState<number | undefined>(npc.stats.speed.climb);
+    const [flying, setFlying] = useState<number | undefined>(npc.stats.speed.fly);
+    const [swimming, setSwimming] = useState<number | undefined>(npc.stats.speed.swim);
+    const [burrowing, setBurrowing] = useState<number | undefined>(npc.stats.speed.burrow);
 
     const changeWalking = (value: number | undefined) => {
         setWalking(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 speed: {
-                    ...player.stats.speed,
+                    ...npc.stats.speed,
                     walk: value
                 }
             }
@@ -32,12 +31,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
     }
     const changeClimbing = (value: number | undefined) => {
         setClimbing(value);
-        updatePlayer({  
-            ...player,
+        updateNpc({  
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 speed: {
-                    ...player.stats.speed,
+                    ...npc.stats.speed,
                     climb: value
                 }
             }
@@ -45,12 +44,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
     }
     const changeFlying = (value: number | undefined) => {
         setFlying(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 speed: {
-                    ...player.stats.speed,
+                    ...npc.stats.speed,
                     fly: value
                 }
             }
@@ -58,12 +57,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
     }
     const changeSwimming = (value: number | undefined) => {
         setSwimming(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 speed: {
-                    ...player.stats.speed,
+                    ...npc.stats.speed,
                     swim: value
                 }
             }
@@ -71,12 +70,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
     }
     const changeBurrowing = (value: number | undefined) => {
         setBurrowing(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 speed: {
-                    ...player.stats.speed,
+                    ...npc.stats.speed,
                     burrow: value
                 }
             }

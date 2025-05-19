@@ -7,7 +7,7 @@ import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import Characteristic from "./panels/characteristics/PlayerCharacteristic";
-import Stats from "./panels/stats/Stats";
+import Stats from "./panels/stats/PlayerStats";
 import Plus from "./panels/plus/Plus";
 import Spells from "./panels/spells/Spells";
 import ICharacter from "@/models/characters/ICharacter";

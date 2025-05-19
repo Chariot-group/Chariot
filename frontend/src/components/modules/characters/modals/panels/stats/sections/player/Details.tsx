@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card";
 import IStats from "@/models/player/stats/IStats";
-import { Champs } from "../../../PlayerModalDetails";
 import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Champs } from "../../../../PlayerModalDetails";
 
 interface Props {
     player: IPlayer;
