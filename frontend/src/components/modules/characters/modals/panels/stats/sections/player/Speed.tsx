@@ -3,6 +3,7 @@ import ISpeed from "@/models/npc/stat/sub/ISpeed";
 import { useState } from "react";
 import { Champs } from "../../../../PlayerModalDetails";
 import IPlayer from "@/models/player/IPlayer";
+import { parse } from "path";
 
 interface Props {
     player: IPlayer;
@@ -17,7 +18,7 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
     const [swimming, setSwimming] = useState<number | undefined>(player.stats.speed.swim);
     const [burrowing, setBurrowing] = useState<number | undefined>(player.stats.speed.burrow);
 
-    const changeWalking = (value: number | undefined) => {
+    const changeWalking = (value: any | undefined) => {
         setWalking(value);
         updatePlayer({
             ...player,
@@ -25,12 +26,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 speed: {
                     ...player.stats.speed,
-                    walk: value
+                    walk: parseInt(value)
                 }
             }
         });
     }
-    const changeClimbing = (value: number | undefined) => {
+    const changeClimbing = (value: any | undefined) => {
         setClimbing(value);
         updatePlayer({  
             ...player,
@@ -38,12 +39,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 speed: {
                     ...player.stats.speed,
-                    climb: value
+                    climb: parseInt(value)
                 }
             }
         });
     }
-    const changeFlying = (value: number | undefined) => {
+    const changeFlying = (value: any | undefined) => {
         setFlying(value);
         updatePlayer({
             ...player,
@@ -51,12 +52,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 speed: {
                     ...player.stats.speed,
-                    fly: value
+                    fly: parseInt(value)
                 }
             }
         });
     }
-    const changeSwimming = (value: number | undefined) => {
+    const changeSwimming = (value: any | undefined) => {
         setSwimming(value);
         updatePlayer({
             ...player,
@@ -64,12 +65,12 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 speed: {
                     ...player.stats.speed,
-                    swim: value
+                    swim: parseInt(value)
                 }
             }
         });
     }
-    const changeBurrowing = (value: number | undefined) => {
+    const changeBurrowing = (value: any | undefined) => {
         setBurrowing(value);
         updatePlayer({
             ...player,
@@ -77,7 +78,7 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 speed: {
                     ...player.stats.speed,
-                    burrow: value
+                    burrow: parseInt(value)
                 }
             }
         });
@@ -85,11 +86,11 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-col bg-background">
-            <Champs isActive={isUpdate} color="card" label="Vitesse de marche" value={walking} id={"walk"} type={"number"} placeholder={"Vitesse de marche"} setValue={changeWalking} />
-            <Champs isActive={isUpdate} color="card" label="Vitesse d'escalade" value={climbing} id={"climb"} type={"number"} placeholder={"Vitesse d'escalade"} setValue={changeClimbing} />
-            <Champs isActive={isUpdate} color="card" label="Vitesse de vol" value={flying} id={"fly"} type={"number"} placeholder={"Vitesse de vol"} setValue={changeFlying} />
-            <Champs isActive={isUpdate} color="card" label="Vitesse de nage" value={swimming} id={"swim"} type={"number"} placeholder={"Vitesse de nage"} setValue={changeSwimming} />
-            <Champs isActive={isUpdate} color="card" label="Vitesse de fouille" value={burrowing} id={"burrow"} type={"number"} placeholder={"Vitesse de fouille"} setValue={changeBurrowing} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Vitesse de marche" value={walking} id={"walk"} type={"number"} placeholder={"Vitesse de marche"} setValue={changeWalking} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Vitesse d'escalade" value={climbing} id={"climb"} type={"number"} placeholder={"Vitesse d'escalade"} setValue={changeClimbing} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Vitesse de vol" value={flying} id={"fly"} type={"number"} placeholder={"Vitesse de vol"} setValue={changeFlying} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Vitesse de nage" value={swimming} id={"swim"} type={"number"} placeholder={"Vitesse de nage"} setValue={changeSwimming} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Vitesse de fouille" value={burrowing} id={"burrow"} type={"number"} placeholder={"Vitesse de fouille"} setValue={changeBurrowing} />
         </Card>
     )
 }

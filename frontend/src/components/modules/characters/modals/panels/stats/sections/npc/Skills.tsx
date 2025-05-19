@@ -29,7 +29,7 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
     const [performance, setPerformance] = useState<number>(npc.stats.skills.performance);
     const [persuasion, setPersuasion] = useState<number>(npc.stats.skills.persuasion);
 
-    const changeAthletics = (value: number) => {
+    const changeAthletics = (value: any) => {
         setAthletics(value);
         updateNpc({
             ...npc,
@@ -37,12 +37,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    athletics: value
+                    athletics: parseInt(value)
                 }
             }
         });
     }
-    const changeAcrobatics = (value: number) => {
+    const changeAcrobatics = (value: any) => {
         setAcrobatics(value);
         updateNpc({
             ...npc,
@@ -50,12 +50,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    acrobatics: value
+                    acrobatics: parseInt(value)
                 }
             }
         });
     }
-    const changeSleightHand = (value: number) => {
+    const changeSleightHand = (value: any) => {
         setSleightHand(value);
         updateNpc({
             ...npc,
@@ -63,12 +63,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    sleightHand: value
+                    sleightHand: parseInt(value)
                 }
             }
         });
     }
-    const changeStealth = (value: number) => {
+    const changeStealth = (value: any) => {
         setStealth(value);
         updateNpc({
             ...npc,
@@ -76,12 +76,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    stealth: value
+                    stealth: parseInt(value)
                 }
             }
         });
     }
-    const changeArcana = (value: number) => {
+    const changeArcana = (value: any) => {
         setArcana(value);
         updateNpc({
             ...npc,
@@ -89,12 +89,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    arcana: value
+                    arcana: parseInt(value)
                 }
             }
         });
     }
-    const changeHistory = (value: number) => {
+    const changeHistory = (value: any) => {
         setHistory(value);
         updateNpc({  
             ...npc,
@@ -102,12 +102,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    history: value
+                    history: parseInt(value)
                 }
             }
         });
     }
-    const changeInvestigation = (value: number) => {
+    const changeInvestigation = (value: any) => {
         setInvestigation(value);
         updateNpc({
             ...npc,
@@ -115,12 +115,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    investigation: value
+                    investigation: parseInt(value)
                 }
             }
         });
     }
-    const changeNature = (value: number) => {
+    const changeNature = (value: any) => {
         setNature(value);
         updateNpc({
             ...npc,
@@ -128,12 +128,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    nature: value
+                    nature: parseInt(value)
                 }
             }
         });
     }
-    const changeReligion = (value: number) => {
+    const changeReligion = (value: any) => {
         setReligion(value);
         updateNpc({  
             ...npc,
@@ -141,12 +141,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    religion: value
+                    religion: parseInt(value)
                 }
             }
         });
     }
-    const changeAnimalHandling = (value: number) => {
+    const changeAnimalHandling = (value: any) => {
         setAnimalHandling(value);
         updateNpc({
             ...npc,
@@ -154,12 +154,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    animalHandling: value
+                    animalHandling: parseInt(value)
                 }
             }
         });
     }
-    const changeInsight = (value: number) => {
+    const changeInsight = (value: any) => {
         setInsight(value);
         updateNpc({
             ...npc,
@@ -167,12 +167,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    insight: value
+                    insight: parseInt(value)
                 }
             }
         });
     }
-    const changeMedicine = (value: number) => {
+    const changeMedicine = (value: any) => {
         setMedicine(value);
         updateNpc({
             ...npc,
@@ -180,12 +180,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    medicine: value
+                    medicine: parseInt(value)
                 }
             }
         });
     }
-    const changePerception = (value: number) => {
+    const changePerception = (value: any) => {
         setPerception(value);
         updateNpc({
             ...npc,
@@ -193,12 +193,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    perception: value
+                    perception: parseInt(value)
                 }
             }
         });
     }
-    const changeSurvival = (value: number) => {
+    const changeSurvival = (value: any) => {
         setSurvival(value);
         updateNpc({
             ...npc,
@@ -206,12 +206,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    survival: value
+                    survival: parseInt(value)
                 }
             }
         });
     }
-    const changeDeception = (value: number) => {
+    const changeDeception = (value: any) => {
         setDeception(value);
         updateNpc({  
             ...npc,
@@ -219,12 +219,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    deception: value
+                    deception: parseInt(value)
                 }
             }
         });
     }
-    const changeIntimidation = (value: number) => {
+    const changeIntimidation = (value: any) => {
         setIntimidation(value);
         updateNpc({  
             ...npc,
@@ -232,12 +232,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    intimidation: value
+                    intimidation: parseInt(value)
                 }
             }
         });
     }
-    const changePerformance = (value: number) => {
+    const changePerformance = (value: any) => {
         setPerformance(value);
         updateNpc({
             ...npc,
@@ -245,12 +245,12 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    performance: value
+                    performance: parseInt(value)
                 }
             }
         });
     }
-    const changePersuasion = (value: number) => {
+    const changePersuasion = (value: any) => {
         setPersuasion(value);
         updateNpc({
             ...npc,
@@ -258,7 +258,7 @@ export default function Skills({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 skills: {
                     ...npc.stats.skills,
-                    persuasion: value
+                    persuasion: parseInt(value)
                 }
             }
         });

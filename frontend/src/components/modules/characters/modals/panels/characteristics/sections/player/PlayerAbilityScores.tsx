@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
+import { parse } from "path";
 
 interface Props {
     player: IPlayer;
@@ -24,7 +25,7 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
     const [wisdomAS, setWisdomAS] = useState<number>(player.stats.abilityScores.wisdom);
     const [charismaAS, setCharismaAS] = useState<number>(player.stats.abilityScores.charisma);
 
-    const changeStrengthST = (value: number) => {
+    const changeStrengthST = (value: any) => {
         setStrengthST(value);
         updatePlayer({
             ...player,
@@ -32,12 +33,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 savingThrows: {
                     ...player.stats.savingThrows,
-                    strength: value
+                    strength: parseInt(value)
                 }
             }
         });
     }
-    const changeDexterityST = (value: number) => {
+    const changeDexterityST = (value: any) => {
         setDexterityST(value);
         updatePlayer({  
             ...player,
@@ -45,12 +46,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 savingThrows: {
                     ...player.stats.savingThrows,
-                    dexterity: value
+                    dexterity: parseInt(value)
                 }
             }
         });
     }
-    const changeConstitutionST = (value: number) => {
+    const changeConstitutionST = (value: any) => {
         setConstitutionST(value);
         updatePlayer({
             ...player,
@@ -58,12 +59,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 savingThrows: {
                     ...player.stats.savingThrows,
-                    constitution: value
+                    constitution: parseInt(value)
                 }
             }
         });
     }
-    const changeIntelligenceST = (value: number) => {
+    const changeIntelligenceST = (value: any) => {
         setIntelligenceST(value);
         updatePlayer({
             ...player,
@@ -71,12 +72,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 savingThrows: {
                     ...player.stats.savingThrows,
-                    intelligence: value
+                    intelligence: parseInt(value)
                 }
             }
         });
     }
-    const changeWisdomST = (value: number) => {
+    const changeWisdomST = (value: any) => {
         setWisdomST(value);
         updatePlayer({
             ...player,
@@ -84,12 +85,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 savingThrows: {
                     ...player.stats.savingThrows,
-                    wisdom: value
+                    wisdom: parseInt(value)
                 }
             }
         });
     }
-    const changeCharismaST = (value: number) => {
+    const changeCharismaST = (value: any) => {
         setCharismaST(value);
         updatePlayer({
             ...player,
@@ -97,12 +98,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 savingThrows: {
                     ...player.stats.savingThrows,
-                    charisma: value
+                    charisma: parseInt(value)
                 }
             }
         });
     }
-    const changeStrengthAS = (value: number) => {
+    const changeStrengthAS = (value: any) => {
         setStrengthAS(value);
         updatePlayer({
             ...player,
@@ -110,12 +111,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 abilityScores: {
                     ...player.stats.abilityScores,
-                    strength: value
+                    strength: parseInt(value)
                 }
             }
         });
     }
-    const changeDexterityAS = (value: number) => {
+    const changeDexterityAS = (value: any) => {
         setDexterityAS(value);
         updatePlayer({
             ...player,
@@ -123,12 +124,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 abilityScores: {
                     ...player.stats.abilityScores,
-                    dexterity: value
+                    dexterity: parseInt(value)
                 }
             }
         });
     }
-    const changeConstitutionAS = (value: number) => {
+    const changeConstitutionAS = (value: any) => {
         setConstitutionAS(value);
         updatePlayer({
             ...player,
@@ -136,12 +137,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 abilityScores: {
                     ...player.stats.abilityScores,
-                    constitution: value
+                    constitution: parseInt(value)
                 }
             }
         });
     }
-    const changeIntelligenceAS = (value: number) => {
+    const changeIntelligenceAS = (value: any) => {
         setIntelligenceAS(value);
         updatePlayer({
             ...player,
@@ -149,12 +150,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 abilityScores: {
                     ...player.stats.abilityScores,
-                    intelligence: value
+                    intelligence: parseInt(value)
                 }
             }
         });
     }
-    const changeWisdomAS = (value: number) => {
+    const changeWisdomAS = (value: any) => {
         setWisdomAS(value);
         updatePlayer({
             ...player,
@@ -162,12 +163,12 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 abilityScores: {
                     ...player.stats.abilityScores,
-                    wisdom: value
+                    wisdom: parseInt(value)
                 }
             }
         });
     }
-    const changeCharismaAS = (value: number) => {
+    const changeCharismaAS = (value: any) => {
         setCharismaAS(value);
         updatePlayer({
             ...player,
@@ -175,7 +176,7 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
                 ...player.stats,
                 abilityScores: {
                     ...player.stats.abilityScores,
-                    charisma: value
+                    charisma: parseInt(value)
                 }
             }
         });
@@ -185,28 +186,28 @@ export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: 
         <div className="flex flex-col gap-3 w-1/6 h-full">
             {/* Stats */}
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Force" value={strengthAS} id={"strengthAS"} type={"number"} placeholder={"Force"} setValue={changeStrengthAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={strengthST} id={"strengthST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeStrengthST} />
+                <Champs isActive={isUpdate}  color="card" label="Force" value={strengthAS} id={"strengthAS"} type={"number"} placeholder={"Force"} setValue={changeStrengthAS} />
+                <Champs isActive={isUpdate}  color="card" label="Jet de sauvegarde" value={strengthST} id={"strengthST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeStrengthST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Dextérité" value={dexterityAS} id={"dexterityAS"} type={"number"} placeholder={"Dextérité"} setValue={changeDexterityAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={dexterityST} id={"dexterityST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeDexterityST} />
+                <Champs isActive={isUpdate}  color="card" label="Dextérité" value={dexterityAS} id={"dexterityAS"} type={"number"} placeholder={"Dextérité"} setValue={changeDexterityAS} />
+                <Champs isActive={isUpdate}  color="card" label="Jet de sauvegarde" value={dexterityST} id={"dexterityST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeDexterityST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Constitution" value={constitutionAS} id={"constitutionAS"} type={"number"} placeholder={"Constitution"} setValue={changeConstitutionAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={constitutionST} id={"constitutionST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeConstitutionST} />
+                <Champs isActive={isUpdate}  color="card" label="Constitution" value={constitutionAS} id={"constitutionAS"} type={"number"} placeholder={"Constitution"} setValue={changeConstitutionAS} />
+                <Champs isActive={isUpdate}  color="card" label="Jet de sauvegarde" value={constitutionST} id={"constitutionST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeConstitutionST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Intelligence" value={intelligenceAS} id={"intelligenceAS"} type={"number"} placeholder={"Intelligence"} setValue={changeIntelligenceAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={intelligenceST} id={"intelligenceST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeIntelligenceST} />
+                <Champs isActive={isUpdate}  color="card" label="Intelligence" value={intelligenceAS} id={"intelligenceAS"} type={"number"} placeholder={"Intelligence"} setValue={changeIntelligenceAS} />
+                <Champs isActive={isUpdate}  color="card" label="Jet de sauvegarde" value={intelligenceST} id={"intelligenceST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeIntelligenceST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Sagesse" value={wisdomAS} id={"wisdomAS"} type={"number"} placeholder={"Sagesse"} setValue={changeWisdomAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={wisdomST} id={"wisdomST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeWisdomST} />
+                <Champs isActive={isUpdate}  color="card" label="Sagesse" value={wisdomAS} id={"wisdomAS"} type={"number"} placeholder={"Sagesse"} setValue={changeWisdomAS} />
+                <Champs isActive={isUpdate}  color="card" label="Jet de sauvegarde" value={wisdomST} id={"wisdomST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeWisdomST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Charisme" value={charismaAS} id={"charismaAS"} type={"number"} placeholder={"Force"} setValue={changeCharismaAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={charismaST} id={"charismaST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeCharismaST} />
+                <Champs isActive={isUpdate}  color="card" label="Charisme" value={charismaAS} id={"charismaAS"} type={"number"} placeholder={"Force"} setValue={changeCharismaAS} />
+                <Champs isActive={isUpdate}  color="card" label="Jet de sauvegarde" value={charismaST} id={"charismaST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeCharismaST} />
             </Card>
         </div>
     );

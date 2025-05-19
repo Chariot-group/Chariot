@@ -4,6 +4,7 @@ import { useState } from "react";
 import IProgression from "@/models/player/progression/IProgression";
 import IProfile from "@/models/player/profile/IProfile";
 import IPlayer from "@/models/player/IPlayer";
+import { parse } from "path";
 
 interface Props {
     player: IPlayer;
@@ -18,17 +19,17 @@ export default function Profile({ player, isUpdate, updatePlayer }: Props) {
     const [subrace, setSubrace] = useState<string | undefined>(player.profile.subrace);
     const [alignment, setAlignment] = useState<string | undefined>(player.profile.alignment);
 
-    const changeLevel = (value: number) => {
+    const changeLevel = (value: any) => {
         setLevel(value);
         updatePlayer({
             ...player,
             progression: {
                 ...player.progression,
-                level: value
+                level: parseInt(value)
             }
         });
     }
-    const changeExperience = (value: number) => {
+    const changeExperience = (value: any) => {
         setExperience(value);
         updatePlayer({
             ...player,
@@ -71,8 +72,8 @@ export default function Profile({ player, isUpdate, updatePlayer }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-col bg-background">
-            <Champs isActive={isUpdate} color="card" label="Niveau" value={level} id={"level"} type={"number"} placeholder={"Niveau"} setValue={changeLevel} />
-            <Champs isActive={isUpdate} width="w-auto" color="card" label="Expérience" value={experience} id={"experience"} type={"number"} placeholder={"Expérience"} setValue={changeExperience} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Niveau" value={level} id={"level"} type={"number"} placeholder={"Niveau"} setValue={changeLevel} />
+            <Champs isActive={isUpdate} min={0} width="w-auto" color="card" label="Expérience" value={experience} id={"experience"} type={"number"} placeholder={"Expérience"} setValue={changeExperience} />
             <Champs isActive={isUpdate} color="card" id={"race"} type={"text"} label={"Race"} placeholder={"Race"} value={race} setValue={changeRace}></Champs>
             <Champs isActive={isUpdate} color="card" id={"subrace"} type={"text"} label={"Sous-race"} placeholder={"Sous-race"} value={subrace} setValue={changeSubrace}></Champs>
             <Champs isActive={isUpdate} color="card" id={"alignment"} type={"text"} label={"Alignement"} placeholder={"Alignement"} value={alignment} setValue={changeAlignment}></Champs>

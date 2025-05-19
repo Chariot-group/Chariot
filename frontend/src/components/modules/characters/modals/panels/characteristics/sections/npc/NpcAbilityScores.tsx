@@ -24,7 +24,7 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
     const [wisdomAS, setWisdomAS] = useState<number>(npc.stats.abilityScores.wisdom);
     const [charismaAS, setCharismaAS] = useState<number>(npc.stats.abilityScores.charisma);
 
-    const changeStrengthST = (value: number) => {
+    const changeStrengthST = (value: any) => {
         setStrengthST(value);
         updateNpc({
             ...npc,
@@ -32,12 +32,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 savingThrows: {
                     ...npc.stats.savingThrows,
-                    strength: value
+                    strength: parseInt(value)
                 }
             }
         });
     }
-    const changeDexterityST = (value: number) => {
+    const changeDexterityST = (value: any) => {
         setDexterityST(value);
         updateNpc({  
             ...npc,
@@ -45,12 +45,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 savingThrows: {
                     ...npc.stats.savingThrows,
-                    dexterity: value
+                    dexterity: parseInt(value)
                 }
             }
         });
     }
-    const changeConstitutionST = (value: number) => {
+    const changeConstitutionST = (value: any) => {
         setConstitutionST(value);
         updateNpc({
             ...npc,
@@ -63,7 +63,7 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
             }
         });
     }
-    const changeIntelligenceST = (value: number) => {
+    const changeIntelligenceST = (value: any) => {
         setIntelligenceST(value);
         updateNpc({
             ...npc,
@@ -71,12 +71,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 savingThrows: {
                     ...npc.stats.savingThrows,
-                    intelligence: value
+                    intelligence: parseInt(value)
                 }
             }
         });
     }
-    const changeWisdomST = (value: number) => {
+    const changeWisdomST = (value: any) => {
         setWisdomST(value);
         updateNpc({
             ...npc,
@@ -84,12 +84,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 savingThrows: {
                     ...npc.stats.savingThrows,
-                    wisdom: value
+                    wisdom: parseInt(value)
                 }
             }
         });
     }
-    const changeCharismaST = (value: number) => {
+    const changeCharismaST = (value: any) => {
         setCharismaST(value);
         updateNpc({
             ...npc,
@@ -97,12 +97,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 savingThrows: {
                     ...npc.stats.savingThrows,
-                    charisma: value
+                    charisma: parseInt(value)
                 }
             }
         });
     }
-    const changeStrengthAS = (value: number) => {
+    const changeStrengthAS = (value: any) => {
         setStrengthAS(value);
         updateNpc({
             ...npc,
@@ -110,12 +110,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 abilityScores: {
                     ...npc.stats.abilityScores,
-                    strength: value
+                    strength: parseInt(value)
                 }
             }
         });
     }
-    const changeDexterityAS = (value: number) => {
+    const changeDexterityAS = (value: any) => {
         setDexterityAS(value);
         updateNpc({
             ...npc,
@@ -123,12 +123,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 abilityScores: {
                     ...npc.stats.abilityScores,
-                    dexterity: value
+                    dexterity: parseInt(value)
                 }
             }
         });
     }
-    const changeConstitutionAS = (value: number) => {
+    const changeConstitutionAS = (value: any) => {
         setConstitutionAS(value);
         updateNpc({
             ...npc,
@@ -136,12 +136,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 abilityScores: {
                     ...npc.stats.abilityScores,
-                    constitution: value
+                    constitution: parseInt(value)
                 }
             }
         });
     }
-    const changeIntelligenceAS = (value: number) => {
+    const changeIntelligenceAS = (value: any) => {
         setIntelligenceAS(value);
         updateNpc({
             ...npc,
@@ -149,12 +149,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 abilityScores: {
                     ...npc.stats.abilityScores,
-                    intelligence: value
+                    intelligence: parseInt(value)
                 }
             }
         });
     }
-    const changeWisdomAS = (value: number) => {
+    const changeWisdomAS = (value: any) => {
         setWisdomAS(value);
         updateNpc({
             ...npc,
@@ -162,12 +162,12 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 abilityScores: {
                     ...npc.stats.abilityScores,
-                    wisdom: value
+                    wisdom: parseInt(value)
                 }
             }
         });
     }
-    const changeCharismaAS = (value: number) => {
+    const changeCharismaAS = (value: any) => {
         setCharismaAS(value);
         updateNpc({
             ...npc,
@@ -175,7 +175,7 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
                 ...npc.stats,
                 abilityScores: {
                     ...npc.stats.abilityScores,
-                    charisma: value
+                    charisma: parseInt(value)
                 }
             }
         });

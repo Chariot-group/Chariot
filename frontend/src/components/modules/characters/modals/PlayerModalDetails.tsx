@@ -69,8 +69,10 @@ interface IChampsProps {
     color?: string;
     isActive?: boolean;
     width?: string;
+    min?: number;
+    max?: number;
 }
-export function Champs({ id, type, label, placeholder, value, setValue, onChange, isActive, width }: IChampsProps) {
+export function Champs({ id, type, label, placeholder, value, setValue, onChange, isActive, width, min, max }: IChampsProps) {
 
     const [pending, setPending] = useState(false);
 
@@ -89,7 +91,7 @@ export function Champs({ id, type, label, placeholder, value, setValue, onChange
     return (
         <div className="flex flex-row items-center w-full">
             <Label htmlFor={id} className="text-foreground flex flex-row gap-1 items-center w-full"><span className="font-bold w-auto">{label}:</span>
-                <Input id={id} type={type} value={value ?? ""} onChange={handleChange} placeholder={placeholder} className={`${type === 'number' ? 'w-10' : 'w-[10vh]'} ${width} p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } readOnly={!isActive} />
+                <Input min={min} max={max} id={id} type={type} value={value ?? ""} onChange={handleChange} placeholder={placeholder} className={`${type === 'number' ? 'w-10' : 'w-[10vh]'} ${width} p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } readOnly={!isActive} />
             </Label>
         </div>
     );

@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import ITreasure from "@/models/player/treasure/ITreasure";
 import IPlayer from "@/models/player/IPlayer";
+import { parse } from "path";
 
 interface Props {
     player: IPlayer;
@@ -20,53 +21,53 @@ export default function Treasure({ player, isUpdate, updatePlayer }: Props) {
     const [pp, setPp] = useState<number>(player.treasure.pp);
     const [notes, setNotes] = useState<string | undefined>(player.treasure.notes);
 
-    const changeCp = (value: number) => {
+    const changeCp = (value: any) => {
         setCp(value);
         updatePlayer({
             ...player,
             treasure: {
                 ...player.treasure,
-                cp: value
+                cp: parseInt(value)
             }
         });
     }
-    const changeSp = (value: number) => {
+    const changeSp = (value: any) => {
         setSp(value);
         updatePlayer({
             ...player,
             treasure: {
                 ...player.treasure,
-                sp: value
+                sp: parseInt(value)
             }
         });
     }
-    const changeEp = (value: number) => {
+    const changeEp = (value: any) => {
         setEp(value);
         updatePlayer({
             ...player,
             treasure: {
                 ...player.treasure,
-                ep: value
+                ep: parseInt(value)
             }
         });
     }
-    const changeGp = (value: number) => {
+    const changeGp = (value: any) => {
         setGp(value);
         updatePlayer({
             ...player,
             treasure: {
                 ...player.treasure,
-                gp: value
+                gp: parseInt(value)
             }
         });
     }
-    const changePp = (value: number) => {
+    const changePp = (value: any) => {
         setPp(value);
         updatePlayer({
             ...player,
             treasure: {
                 ...player.treasure,
-                pp: value
+                pp: parseInt(value)
             }
         });
     }
@@ -84,11 +85,11 @@ export default function Treasure({ player, isUpdate, updatePlayer }: Props) {
     return (
         <Card className="bg-card p-4 flex flex-row gap-2 bg-background">
             <div className="flex flex-col w-1/4 justify-center">
-                <Champs isActive={isUpdate} color="card" label="Pièce de cuivre" value={cp} id={"cp"} type={"number"} placeholder={"Pièce de cuivre"} setValue={changeCp} />
-                <Champs isActive={isUpdate} color="card" label="Pièce d'argent" value={sp} id={"sp"} type={"number"} placeholder={"Pièce d'argent"} setValue={changeSp} />
-                <Champs isActive={isUpdate} color="card" label="Pièce d'electrum" value={ep} id={"ep"} type={"number"} placeholder={"Pièce d'electrum"} setValue={changeEp} />
-                <Champs isActive={isUpdate} color="card" id={"gp"} type={"number"} label={"Pièce d'or"} placeholder={"Pièce d'or"} value={gp} setValue={changeGp}></Champs>
-                <Champs isActive={isUpdate} color="card" id={"pp"} type={"number"} label={"Pièce de platine"} placeholder={"Pièce de platine"} value={pp} setValue={changePp}></Champs>
+                <Champs isActive={isUpdate} min={0} color="card" label="Pièce de cuivre" value={cp} id={"cp"} type={"number"} placeholder={"Pièce de cuivre"} setValue={changeCp} />
+                <Champs isActive={isUpdate} min={0} color="card" label="Pièce d'argent" value={sp} id={"sp"} type={"number"} placeholder={"Pièce d'argent"} setValue={changeSp} />
+                <Champs isActive={isUpdate} min={0} color="card" label="Pièce d'electrum" value={ep} id={"ep"} type={"number"} placeholder={"Pièce d'electrum"} setValue={changeEp} />
+                <Champs isActive={isUpdate} min={0} color="card" id={"gp"} type={"number"} label={"Pièce d'or"} placeholder={"Pièce d'or"} value={gp} setValue={changeGp}></Champs>
+                <Champs isActive={isUpdate} min={0} color="card" id={"pp"} type={"number"} label={"Pièce de platine"} placeholder={"Pièce de platine"} value={pp} setValue={changePp}></Champs>
             </div>
             <div className="flex flex-col h-full gap-2 w-3/4">
                 <Label htmlFor={"notes"} className="text-foreground font-bold">Notes</Label>

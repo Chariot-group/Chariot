@@ -10,6 +10,7 @@ import ISpell from "@/models/characters/spellcasting/ISpell";
 import { Textarea } from "@/components/ui/textarea";
 import IPlayer from "@/models/player/IPlayer";
 import { set } from "react-hook-form";
+import { parse } from "path";
 
 interface Props {
     selectedSpellcasting: ISpellcasting;
@@ -31,25 +32,25 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
             ability: value
         });
     }
-    const changeSaveDC = (value: number) => {
+    const changeSaveDC = (value: any) => {
         setSaveDC(value);
         changeSpellCasting({
             ...selectedSpellcasting,
-            saveDC: value
+            saveDC: parseInt(value)
         });
     }
-    const changeAttackBonus = (value: number) => {
+    const changeAttackBonus = (value: any) => {
         setAttackBonus(value);
         changeSpellCasting({
             ...selectedSpellcasting,
-            attackBonus: value
+            attackBonus: parseInt(value)
         });
     }
-    const changeTotalSlots = (value: number) => {
+    const changeTotalSlots = (value: any) => {
         setTotalSlots(value);
         changeSpellCasting({
             ...selectedSpellcasting,
-            totalSlots: value
+            totalSlots: parseInt(value)
         });
     }
 
@@ -91,11 +92,11 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
         delete newSpellSlotsByLevel[level];
         updateSpellSlots(newSpellSlotsByLevel);
     }
-    const updateUsedSlot = (level: number, used: number) => {
+    const updateUsedSlot = (level: number, used: any) => {
         const newSpellSlotsByLevel = { ...spellSlotsByLevel };
         newSpellSlotsByLevel[level] = {
             ...newSpellSlotsByLevel[level],
-            used: used
+            used: parseInt(used)
         }
 
         updateSpellSlots(newSpellSlotsByLevel);
@@ -152,11 +153,11 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
         }
         updateSpell(newSpells);
     }
-    const updateLevelSpell = (index: number, level: number) => {
+    const updateLevelSpell = (index: number, level: any) => {
         const newSpells = [...spells];
         newSpells[index] = {
             ...newSpells[index],
-            level: level
+            level: parseInt(level)
         }
         updateSpell(newSpells);
     }
@@ -199,8 +200,8 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
             <div className="flex flex-col gap-3 w-1/4 h-full">
                 <Card className={"bg-card p-4 flex flex-col bg-background"} >
                     <Champs isActive={isUpdate} color="card" id={"ability"} type={"text"} label={"Abilitée"} placeholder={"Abilitée"} value={ability} setValue={changeAbility}></Champs>
-                    <Champs isActive={isUpdate} color="card" id={"saveDC"} type={"number"} label={"Dé de sauvegarde"} placeholder={"Dé de sauvegarde"} value={saveDC} setValue={changeSaveDC}></Champs>
-                    <Champs isActive={isUpdate} color="card" id={"attackBonus"} type={"number"} label={"Attaque bonus"} placeholder={"Attaque bonus"} value={attackBonus} setValue={changeAttackBonus}></Champs>
+                    <Champs isActive={isUpdate} color="card" min={0} id={"saveDC"} type={"number"} label={"Dé de sauvegarde"} placeholder={"Dé de sauvegarde"} value={saveDC} setValue={changeSaveDC}></Champs>
+                    <Champs isActive={isUpdate} color="card" min={0} id={"attackBonus"} type={"number"} label={"Attaque bonus"} placeholder={"Attaque bonus"} value={attackBonus} setValue={changeAttackBonus}></Champs>
                     <p className="text-sm"><span className="font-bold">Nombre de slots: </span>{totalSlots}</p>
                 </Card>
 

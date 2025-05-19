@@ -5,6 +5,7 @@ import INpc from "@/models/npc/INpc";
 import { PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { Champs } from "../../../../PlayerModalDetails";
+import { parse } from "path";
 
 interface Props{
     npc: INpc;
@@ -53,10 +54,10 @@ export default function LegendaryActions({ npc, updateNpc, isUpdate }: Props) {
         newActions[index] = newAction;
         changeActions(newActions);
     };
-    const updateAttackBonusAction = (index: number, attackBonus: number) => {
+    const updateAttackBonusAction = (index: number, attackBonus: any) => {
         const newActions = [...legendaryActions];
         const newAction = { ...newActions[index] };
-        newAction.attackBonus = attackBonus;
+        newAction.attackBonus = parseInt(attackBonus);
         newActions[index] = newAction;
         changeActions(newActions);
     };
@@ -112,7 +113,7 @@ export default function LegendaryActions({ npc, updateNpc, isUpdate }: Props) {
                         </div>
                         <div className="flex flex-col">
                             <Champs label="Type" value={action.type} id={`type-${index}`} type={"text"} placeholder={"Type"} isActive={isUpdate} setValue={(value) => updateTypeAction(index, value)} />
-                            <Champs label="Bonus d'attaque" value={action.attackBonus} id={`attackBonus-${index}`} type={"number"} placeholder={"Bonus d'attaque"} isActive={isUpdate} setValue={(value) => updateAttackBonusAction(index, value)} />
+                            <Champs label="Bonus d'attaque" min={0} value={action.attackBonus} id={`attackBonus-${index}`} type={"number"} placeholder={"Bonus d'attaque"} isActive={isUpdate} setValue={(value) => updateAttackBonusAction(index, value)} />
                             <Champs label="Dégâts" value={action.damage.dice} id={`damageDice-${index}`} type={"text"} placeholder={"Dégâts"} isActive={isUpdate} setValue={(value) => updateDamageDiceAction(index, value)} />
                             <Champs label="Type de dégât" value={action.damage.type} id={`damageType-${index}`} type={"text"} placeholder={"Type de dégât"} isActive={isUpdate} setValue={(value) => updateDamageTypeAction(index, value)} />
                             <Champs label="Portée" value={action.range} id={`range-${index}`} type={"text"} placeholder={"Portée"} isActive={isUpdate} setValue={(value) => updateRangeAction(index, value)} />

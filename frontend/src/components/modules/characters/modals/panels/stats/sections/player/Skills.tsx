@@ -3,6 +3,7 @@ import ISkills from "@/models/npc/stat/sub/ISkills"
 import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
 import { Champs } from "../../../../PlayerModalDetails";
+import { parse } from "path";
 
 interface Props {
     player: IPlayer;
@@ -30,7 +31,7 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
     const [performance, setPerformance] = useState<number>(player.stats.skills.performance);
     const [persuasion, setPersuasion] = useState<number>(player.stats.skills.persuasion);
 
-    const changeAthletics = (value: number) => {
+    const changeAthletics = (value: any) => {
         setAthletics(value);
         updatePlayer({
             ...player,
@@ -38,12 +39,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    athletics: value
+                    athletics: parseInt(value)
                 }
             }
         });
     }
-    const changeAcrobatics = (value: number) => {
+    const changeAcrobatics = (value: any) => {
         setAcrobatics(value);
         updatePlayer({
             ...player,
@@ -51,12 +52,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    acrobatics: value
+                    acrobatics: parseInt(value)
                 }
             }
         });
     }
-    const changeSleightHand = (value: number) => {
+    const changeSleightHand = (value: any) => {
         setSleightHand(value);
         updatePlayer({
             ...player,
@@ -64,12 +65,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    sleightHand: value
+                    sleightHand: parseInt(value)
                 }
             }
         });
     }
-    const changeStealth = (value: number) => {
+    const changeStealth = (value: any) => {
         setStealth(value);
         updatePlayer({
             ...player,
@@ -77,12 +78,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    stealth: value
+                    stealth: parseInt(value)
                 }
             }
         });
     }
-    const changeArcana = (value: number) => {
+    const changeArcana = (value: any) => {
         setArcana(value);
         updatePlayer({
             ...player,
@@ -90,12 +91,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    arcana: value
+                    arcana: parseInt(value)
                 }
             }
         });
     }
-    const changeHistory = (value: number) => {
+    const changeHistory = (value: any) => {
         setHistory(value);
         updatePlayer({  
             ...player,
@@ -103,12 +104,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    history: value
+                    history: parseInt(value)
                 }
             }
         });
     }
-    const changeInvestigation = (value: number) => {
+    const changeInvestigation = (value: any) => {
         setInvestigation(value);
         updatePlayer({
             ...player,
@@ -116,12 +117,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    investigation: value
+                    investigation: parseInt(value)
                 }
             }
         });
     }
-    const changeNature = (value: number) => {
+    const changeNature = (value: any) => {
         setNature(value);
         updatePlayer({
             ...player,
@@ -129,12 +130,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    nature: value
+                    nature: parseInt(value)
                 }
             }
         });
     }
-    const changeReligion = (value: number) => {
+    const changeReligion = (value: any) => {
         setReligion(value);
         updatePlayer({  
             ...player,
@@ -142,12 +143,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    religion: value
+                    religion: parseInt(value)
                 }
             }
         });
     }
-    const changeAnimalHandling = (value: number) => {
+    const changeAnimalHandling = (value: any) => {
         setAnimalHandling(value);
         updatePlayer({
             ...player,
@@ -155,12 +156,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    animalHandling: value
+                    animalHandling: parseInt(value)
                 }
             }
         });
     }
-    const changeInsight = (value: number) => {
+    const changeInsight = (value: any) => {
         setInsight(value);
         updatePlayer({
             ...player,
@@ -168,12 +169,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    insight: value
+                    insight: parseInt(value)
                 }
             }
         });
     }
-    const changeMedicine = (value: number) => {
+    const changeMedicine = (value: any) => {
         setMedicine(value);
         updatePlayer({
             ...player,
@@ -181,12 +182,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    medicine: value
+                    medicine: parseInt(value)
                 }
             }
         });
     }
-    const changePerception = (value: number) => {
+    const changePerception = (value: any) => {
         setPerception(value);
         updatePlayer({
             ...player,
@@ -194,12 +195,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    perception: value
+                    perception: parseInt(value)
                 }
             }
         });
     }
-    const changeSurvival = (value: number) => {
+    const changeSurvival = (value: any) => {
         setSurvival(value);
         updatePlayer({
             ...player,
@@ -207,12 +208,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    survival: value
+                    survival: parseInt(value)
                 }
             }
         });
     }
-    const changeDeception = (value: number) => {
+    const changeDeception = (value: any) => {
         setDeception(value);
         updatePlayer({  
             ...player,
@@ -220,12 +221,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    deception: value
+                    deception: parseInt(value)
                 }
             }
         });
     }
-    const changeIntimidation = (value: number) => {
+    const changeIntimidation = (value: any) => {
         setIntimidation(value);
         updatePlayer({  
             ...player,
@@ -233,12 +234,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    intimidation: value
+                    intimidation: parseInt(value)
                 }
             }
         });
     }
-    const changePerformance = (value: number) => {
+    const changePerformance = (value: any) => {
         setPerformance(value);
         updatePlayer({
             ...player,
@@ -246,12 +247,12 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    performance: value
+                    performance: parseInt(value)
                 }
             }
         });
     }
-    const changePersuasion = (value: number) => {
+    const changePersuasion = (value: any) => {
         setPersuasion(value);
         updatePlayer({
             ...player,
@@ -259,7 +260,7 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
                 ...player.stats,
                 skills: {
                     ...player.stats.skills,
-                    persuasion: value
+                    persuasion: parseInt(value)
                 }
             }
         });

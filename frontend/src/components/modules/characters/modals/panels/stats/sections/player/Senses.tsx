@@ -4,6 +4,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import IPlayer from "@/models/player/IPlayer";
 import IStats from "@/models/player/stats/IStats";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
+import { parse } from "path";
 import { useState } from "react";
 
 interface Props {
@@ -47,11 +48,11 @@ export default function Senses({ player, isUpdate, updatePlayer }: Props) {
         changeSenses(newSenses);
     };
 
-    const updateValue = (index: number, value: number) => {
+    const updateValue = (index: number, value: any) => {
         const newSenses = [...senses];
         const newSense = { ...newSenses[index] };
         const key = Object.keys(newSense)[0];
-        newSense[key] = value;
+        newSense[key] = parseInt(value);
         newSenses[index] = newSense;
         setSenses(newSenses);
     };
@@ -81,7 +82,7 @@ export default function Senses({ player, isUpdate, updatePlayer }: Props) {
                                 <DotIcon className="text-foreground" />
                                 <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={Object.keys(sense) ?? ""} onChange={(e) => updateKey(index, e.target.value)} placeholder={"Sense"} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 <span> :</span>
-                                <Input readOnly={!isUpdate} id={index.toString()} type={"number"} value={Object.values(sense)[0] ?? 0} onChange={(e) => updateValue(index, parseInt(e.target.value))} placeholder={"Valeur"} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                <Input readOnly={!isUpdate} min={0} id={index.toString()} type={"number"} value={Object.values(sense)[0] ?? 0} onChange={(e) => updateValue(index, parseInt(e.target.value))} placeholder={"Valeur"} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 {isUpdate && <Tooltip>
                                     <TooltipTrigger asChild>
                                         <TrashIcon onClick={() => removeSense(index)} className="cursor-pointer text-primary" />

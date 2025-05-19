@@ -62,23 +62,23 @@ export default function Profile({ npc, isUpdate, updateNpc }: Props) {
             }
         });
     }
-    const changeChallengeRating = (value: number) => {
+    const changeChallengeRating = (value: any) => {
         setChallengeRating(value);
         updateNpc({
             ...npc,
             challenge: {
                 ...npc.challenge,
-                challengeRating: value
+                challengeRating: parseInt(value)
             }
         });
     }
-    const changeExperiencePoints = (value: number) => {
+    const changeExperiencePoints = (value: any) => {
         setExperiencePoints(value);
         updateNpc({
             ...npc,
             challenge: {
                 ...npc.challenge,
-                experiencePoints: value
+                experiencePoints: parseInt(value)
             }
         });
     }
@@ -106,8 +106,8 @@ export default function Profile({ npc, isUpdate, updateNpc }: Props) {
                     </Select>
                 </Label>
             </div>
-            <Champs label="Challenge" value={chanllengeRating} id={"challengeRating"} type={"number"} placeholder={"Challenge"} isActive={isUpdate} setValue={changeChallengeRating} />
-            <Champs label="XP" value={experiencePoints} id={"experiencePoints"} type={"number"} placeholder={"XP"} isActive={isUpdate} setValue={changeExperiencePoints} />
+            <Champs label="Challenge" min={0} value={chanllengeRating} id={"challengeRating"} type={"number"} placeholder={"Challenge"} isActive={isUpdate} setValue={changeChallengeRating} />
+            <Champs label="XP" min={0} value={experiencePoints} id={"experiencePoints"} type={"number"} placeholder={"XP"} isActive={isUpdate} setValue={changeExperiencePoints} />
         </Card>
     )
 

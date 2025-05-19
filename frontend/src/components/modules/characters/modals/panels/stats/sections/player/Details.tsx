@@ -4,6 +4,7 @@ import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Champs } from "../../../../PlayerModalDetails";
+import { parse } from "path";
 
 interface Props {
     player: IPlayer;
@@ -18,33 +19,33 @@ export default function Details({ player, isUpdate, updatePlayer }: Props) {
 
     const [inspiration, setInspiration] = useState<boolean>(player.inspiration);
 
-    const changeDarkvision = (value: number) => {
+    const changeDarkvision = (value: any) => {
         setDarkvision(value);
         updatePlayer({
             ...player,
             stats: {
                 ...player.stats,
-                darkvision: value
+                darkvision: parseInt(value)
             }
         });
     }
-    const changeProficiencyBonus = (value: number) => {
+    const changeProficiencyBonus = (value: any) => {
         setProficiencyBonus(value);
         updatePlayer({
             ...player,
             stats: {
                 ...player.stats,
-                proficiencyBonus: value
+                proficiencyBonus: parseInt(value)
             }
         });
     }
-    const changePassivePerception = (value: number) => {
+    const changePassivePerception = (value: any) => {
         setPassivePerception(value);
         updatePlayer({
             ...player,
             stats: {
                 ...player.stats,
-                passivePerception: value
+                passivePerception: parseInt(value)
             }
         });
     }
@@ -58,9 +59,9 @@ export default function Details({ player, isUpdate, updatePlayer }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-col bg-background">
-            <Champs isActive={isUpdate} color="card" label="Vision dans le noir" value={darkvision} id={"darkvision"} type={"number"} placeholder={"Vision dans le noir"} setValue={changeDarkvision} />
-            <Champs isActive={isUpdate} color="card" label="Bonus de compétence" value={proficiencyBonus} id={"proficiencyBonus"} type={"number"} placeholder={"Bonus de compétence"} setValue={changeProficiencyBonus} />
-            <Champs isActive={isUpdate} color="card" label="Perception passive" value={passivePerception} id={"passivePerception"} type={"number"} placeholder={"Perception passive"} setValue={changePassivePerception} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Vision dans le noir" value={darkvision} id={"darkvision"} type={"number"} placeholder={"Vision dans le noir"} setValue={changeDarkvision} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Bonus de compétence" value={proficiencyBonus} id={"proficiencyBonus"} type={"number"} placeholder={"Bonus de compétence"} setValue={changeProficiencyBonus} />
+            <Champs isActive={isUpdate} min={0} color="card" label="Perception passive" value={passivePerception} id={"passivePerception"} type={"number"} placeholder={"Perception passive"} setValue={changePassivePerception} />
             <div className="flex items-center space-x-2">
                 <label
                     htmlFor="inspiration"

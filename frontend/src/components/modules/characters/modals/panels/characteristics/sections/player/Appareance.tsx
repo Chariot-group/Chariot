@@ -8,6 +8,7 @@ import IAppearance from "@/models/player/appearance/IAppearance";
 import IStats from "@/models/player/stats/IStats";
 import { Textarea } from "@/components/ui/textarea";
 import IPlayer from "@/models/player/IPlayer";
+import { parse } from "path";
 
 interface Props {
     player: IPlayer;
@@ -75,13 +76,13 @@ export default function Appearance({ player, isUpdate, updatePlayer }: Props) {
             }
         });
     }
-    const changeAge = (value: number) => {
+    const changeAge = (value: any) => {
         setAge(value);
         updatePlayer({
             ...player,
             appearance: {
                 ...player.appearance,
-                age: value
+                age: parseInt(value)
             }
         });
     }
@@ -111,9 +112,9 @@ export default function Appearance({ player, isUpdate, updatePlayer }: Props) {
             <Champs isActive={isUpdate} color="card" label="Yeux" value={eyes} id={"eyes"} type={"text"} placeholder={"Yeux"} setValue={changeEyes} />
             <Champs isActive={isUpdate} color="card" label="Cheveux" value={hair} id={"hair"} type={"text"} placeholder={"Cheveux"} setValue={changeHair} />
             <Champs isActive={isUpdate} color="card" label="Peau" value={skin} id={"skin"} type={"text"} placeholder={"Peau"} setValue={changeSkin} />
-            <Champs isActive={isUpdate} color="card" id={"age"} type={"number"} label={"Age"} placeholder={"Age"} value={age} setValue={changeAge}></Champs>
-            <Champs isActive={isUpdate} color="card" id={"height"} type={"number"} label={"Taille"} placeholder={"Taille"} value={height} setValue={changeHeight}></Champs>
-            <Champs isActive={isUpdate} color="card" id={"weight"} type={"number"} label={"Poids"} placeholder={"Poids"} value={weight} setValue={changeWeight}></Champs>
+            <Champs isActive={isUpdate} min={0} color="card" id={"age"} type={"number"} label={"Age"} placeholder={"Age"} value={age} setValue={changeAge}></Champs>
+            <Champs isActive={isUpdate} min={0} color="card" id={"height"} type={"number"} label={"Taille"} placeholder={"Taille"} value={height} setValue={changeHeight}></Champs>
+            <Champs isActive={isUpdate} min={0} color="card" id={"weight"} type={"number"} label={"Poids"} placeholder={"Poids"} value={weight} setValue={changeWeight}></Champs>
             <div className="grid w-full max-w-sm items-center gap-1.5">
                 <Label className="text-foreground flex flex-row gap-1 items-center"><span className="font-bold">Taille:</span>
                     <Select onValueChange={changeSize} defaultValue={size}>
