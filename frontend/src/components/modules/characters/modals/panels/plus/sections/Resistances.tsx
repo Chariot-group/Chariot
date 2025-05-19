@@ -2,28 +2,42 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import IAffinities from "@/models/characters/affinities/IAffinities";
+import IPlayer from "@/models/player/IPlayer";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
-    affinities: IAffinities;
+    player: IPlayer;
+    isUpdate: boolean;
+    updatePlayer: (player: IPlayer) => void;
 }
-export default function Resistances({ affinities }: Props) {
+export default function Resistances({ player, isUpdate, updatePlayer }: Props) {
 
-    const [resistances, setResistances] = useState<string[]>(affinities.resistances);
+    const [resistances, setResistances] = useState<string[]>(player.affinities.resistances);
+
+    const changeResistances = (value: string[]) => {
+        setResistances(value);
+        updatePlayer({
+            ...player,
+            affinities: {
+                ...player.affinities,
+                resistances: value
+            }
+        });
+    }
 
     const addResistance = () => {
-        setResistances([...resistances, ""]);
+        changeResistances([...resistances, ""]);
     }
     const removeResistance = (index: number) => {
         const newResistances = [...resistances];
         newResistances.splice(index, 1);
-        setResistances(newResistances);
+        changeResistances(newResistances);
     }
     const updateResistance = (index: number, newResistance: string) => {
         const newResistances = [...resistances];
         newResistances[index] = newResistance;
-        setResistances(newResistances);
+        changeResistances(newResistances);
     }
 
     return (
@@ -32,14 +46,14 @@ export default function Resistances({ affinities }: Props) {
                 <div className="flex flex-col gap-3 w-full h-full">
                     <div className="flex flex-row justify-between items-center">
                         <h2 className="text-lg font-bold">Resistances</h2>
-                        <Tooltip>
+                        {isUpdate && <Tooltip>
                             <TooltipTrigger asChild>
                                 <PlusCircleIcon onClick={() => addResistance()} className="text-primary cursor-pointer" />
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>Ajouter une resistance</p>
                             </TooltipContent>
-                        </Tooltip>
+                        </Tooltip>}
                     </div>
                     {
                         resistances.length <= 0 && <span className="text-gray-500 text-sm">Aucune resistance trouvée</span>
@@ -48,8 +62,15 @@ export default function Resistances({ affinities }: Props) {
                         {resistances.map((resistance, index) => (
                             <li key={index} className="text-sm flex flex-row gap-2 items-center">                
                                 <DotIcon className="text-foreground" />
-                                <Input id={index.toString()} type={"text"} value={resistance ?? ""} onChange={(e) => updateResistance(index, e.target.value)} placeholder={"Nouvelle résistance"} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
-                                <TrashIcon onClick={() => removeResistance(index)} className="cursor-pointer text-primary" />
+                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={resistance ?? ""} onChange={(e) => updateResistance(index, e.target.value)} placeholder={"Nouvelle résistance"} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                {isUpdate && <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <TrashIcon onClick={() => removeResistance(index)} className="cursor-pointer text-primary" />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Supprimer la résistance</p>
+                                    </TooltipContent>
+                                </Tooltip>}
                             </li>
                         ))}
                     </ul>}

@@ -53,7 +53,7 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer, isU
             {panel === "characteristics" && <Characteristic isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
             {panel === "stats" && <Stats isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
             {panel === "spells" && <Spells isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
-            {panel === "plus" && <Plus player={player} />}
+            {panel === "plus" && <Plus isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
         </Card>
     );
 }

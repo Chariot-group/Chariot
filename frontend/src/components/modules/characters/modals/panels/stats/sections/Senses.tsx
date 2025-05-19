@@ -62,14 +62,14 @@ export default function Senses({ player, isUpdate, updatePlayer }: Props) {
                 <div className="flex flex-col gap-3 w-full h-full">
                     <div className="flex flex-row justify-between items-center">
                         <h2 className="text-lg font-bold">Senses</h2>
-                        <Tooltip>
+                        {isUpdate && <Tooltip>
                             <TooltipTrigger asChild>
                                 <PlusCircleIcon onClick={() => addSense()} className="text-primary cursor-pointer" />
                             </TooltipTrigger>
                             <TooltipContent>
                                 <p>Ajouter un sense</p>
                             </TooltipContent>
-                        </Tooltip>
+                        </Tooltip>}
                     </div>
                     {
                         senses.length <= 0 && <span className="text-gray-500 text-sm">Aucun sense trouvé</span>
@@ -79,10 +79,17 @@ export default function Senses({ player, isUpdate, updatePlayer }: Props) {
                         {senses.map((sense, index) => (
                             <li key={index} className="text-sm flex flex-row gap-2 items-center">                
                                 <DotIcon className="text-foreground" />
-                                <Input id={index.toString()} type={"text"} value={Object.keys(sense) ?? ""} onChange={(e) => updateKey(index, e.target.value)} placeholder={"Sense"} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={Object.keys(sense) ?? ""} onChange={(e) => updateKey(index, e.target.value)} placeholder={"Sense"} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 <span> :</span>
-                                <Input id={index.toString()} type={"number"} value={Object.values(sense)[0] ?? 0} onChange={(e) => updateValue(index, parseInt(e.target.value))} placeholder={"Valeur"} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
-                                <TrashIcon onClick={() => removeSense(index)} className="cursor-pointer text-primary" />
+                                <Input readOnly={!isUpdate} id={index.toString()} type={"number"} value={Object.values(sense)[0] ?? 0} onChange={(e) => updateValue(index, parseInt(e.target.value))} placeholder={"Valeur"} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                {isUpdate && <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <TrashIcon onClick={() => removeSense(index)} className="cursor-pointer text-primary" />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <p>Supprimer le sense</p>
+                                    </TooltipContent>
+                                </Tooltip>}
                             </li>
                         ))}
                     </ul>}
