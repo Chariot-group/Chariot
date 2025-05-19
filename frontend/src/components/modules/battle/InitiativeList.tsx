@@ -43,9 +43,9 @@ const InitiativeList = ({
     );
 
   return (
-    <Table>
+    <Table className="w-full border-y">
       <TableHeader>
-        <TableRow className="text-xl text-center">
+        <TableRow className="text-xl text-center hover:bg-transparent"> 
           <TableHead>{t("initiative")}</TableHead>
           <TableHead>{t("name")}</TableHead>
           <TableHead>{t("hitPoints")}</TableHead>

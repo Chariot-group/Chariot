@@ -6,17 +6,19 @@ import { IParticipant } from "@/models/participant/IParticipant";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, RefreshCcw, Swords } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 interface Props {
   groups: (IGroupWithRelations | null)[];
+  campaignId: string;
 }
 
-const InitiativeTracker = ({ groups }: Props) => {
+const InitiativeTracker = ({ groups, campaignId }: Props) => {
   const t = useTranslations("InitiativeTracker");
   const [participants, setParticipants] = useState<IParticipant[]>([]);
   const [currentParticipant, setCurrentParticipant] = useState<
     IParticipant | undefined
   >(undefined);
-  const [currentRound, setCurrentRound] = useState<number>(0);
+  const [currentRound, setCurrentRound] = useState<number>(1);
 
   useEffect(() => {
     if (groups.length !== 2) {
@@ -60,7 +62,7 @@ const InitiativeTracker = ({ groups }: Props) => {
     }));
     sortAndSetParticipants(resetParticipants);
     setCurrentParticipant(undefined);
-    setCurrentRound(0);
+    setCurrentRound(1);
   };
 
   const handleNext = () => {
@@ -113,7 +115,7 @@ const InitiativeTracker = ({ groups }: Props) => {
       if (
         currentParticipant.character._id ===
           validParticipants[0].character._id &&
-        currentRound > 0
+        currentRound > 1
       ) {
         setCurrentRound((prev) => prev - 1);
       }
@@ -129,44 +131,51 @@ const InitiativeTracker = ({ groups }: Props) => {
 
   return (
     <div className="p-5">
+      <div className="relative flex justify-between my-4">
+        <Link href={`/campaigns/${campaignId}/battle/select`}>
+          <Button variant="outline" onClick={handleReset}>
+            {t("backToSelection")}
+          </Button>
+        </Link>
+        <p className="text-3xl absolute left-[47%] text-center ">
+          {t("round")} : {currentRound}
+        </p>
+      </div>
+
       <InitiativeList
         participants={participants}
         setParticipants={sortAndSetParticipants}
         currentParticipant={currentParticipant}
       />
-      <div className="flex justify-between mt-5">
-        <p className="text-xl">
-          {t("round")} : {currentRound}
-        </p>
-        <div className=" flex flex-row gap-x-2">
-          <Button variant="outline" onClick={handleReset}>
-            {t("reset")} <RefreshCcw />
-          </Button>
-          {currentParticipant && (
-            <div className="flex flex-row gap-x-2">
-              {!(
-                currentRound === 0 &&
+      <div className="relative flex justify-between mt-5">
+        <Button variant="outline" onClick={handleReset}>
+          {t("reset")} <RefreshCcw />
+        </Button>
+        {currentParticipant && (
+          <div className="absolute left-[47%] flex flex-row justify-center gap-x-2">
+            <Button
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={
+                currentRound === 1 &&
                 currentParticipant.character._id ===
                   participants.find(
-                    (p) => p.character.stats.currentHitPoints > 0
+                    (p) => p.character.stats.currentHitPoints > 1
                   )?.character._id
-              ) && (
-                <Button onClick={handlePrevious}>
-                  {t("previous")} <ArrowLeft />
-                </Button>
-              )}
-
-              <Button onClick={handleNext}>
-                {t("next")} <ArrowRight />
-              </Button>
-            </div>
-          )}
-          {!currentParticipant && (
-            <Button onClick={handleBattleStart}>
-              {t("start")} <Swords />
+              }
+            >
+              {t("previous")} <ArrowLeft />
             </Button>
-          )}
-        </div>
+            <Button onClick={handleNext}>
+              {t("next")} <ArrowRight />
+            </Button>
+          </div>
+        )}
+        {!currentParticipant && (
+          <Button className="absolute left-[47%]" onClick={handleBattleStart}>
+            {t("start")} <Swords />
+          </Button>
+        )}
       </div>
     </div>
   );

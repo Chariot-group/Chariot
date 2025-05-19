@@ -65,6 +65,7 @@ export class CampaignController {
     @Query('sort') sort?: string,
     @Query('label') label?: string,
     @Query('type') type: 'all' | 'main' | 'npc' | 'archived' = 'all',
+    @Query('onlyWithMembers') onlyWithMembers?: boolean,
   ) {
     const userId = request.user.userId;
 
@@ -72,7 +73,7 @@ export class CampaignController {
     if (checkCampaginId.data) {
       return this.groupService.findAllByUser(
         userId,
-        { page, offset, sort, label },
+        { page, offset, sort, label, onlyWithMembers },
         id,
         type,
       );
