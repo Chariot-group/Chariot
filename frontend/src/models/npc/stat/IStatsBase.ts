@@ -1,7 +1,7 @@
 import { Size } from "@/constants/CharacterConstants";
 import IAbilityScores from "@/models/npc/stat/sub/IAbilityScores";
 import ISavingThrows from "@/models/npc/stat/sub/ISavingThrows";
-import ISenses from "@/models/npc/stat/sub/ISenses";
+import ISense from "@/models/npc/stat/sub/ISenses";
 import ISkills from "@/models/npc/stat/sub/ISkills";
 import ISpeed from "@/models/npc/stat/sub/ISpeed";
 
@@ -18,5 +18,5 @@ export default interface IStatsBase {
     passivePerception: number;  
     savingThrows: ISavingThrows;
     skills: ISkills;
-    senses: ISenses[];
+    senses: ISense[];
 }

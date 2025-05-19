@@ -8,6 +8,7 @@ import {
   SIZES,
   Size,
 } from '@/resources/character/core/constants/sizes.constant';
+import { Sense, SenseSchema } from '@/resources/character/core/schemas/stats/sub/sense';
 
 @Schema({ _id: false })
 export class Stats {
@@ -55,11 +56,8 @@ export class Stats {
   @Prop({ type: Skills, default: {} })
   skills: Skills;
 
-  @Prop({
-    type: [MongooseSchema.Types.Mixed], 
-    default: [],
-  })
-  senses: Record<string, number>;
+  @Prop({ type: [SenseSchema], default: [] })
+  senses: Sense[];
 }
 
 export const StatsSchema = SchemaFactory.createForClass(Stats);

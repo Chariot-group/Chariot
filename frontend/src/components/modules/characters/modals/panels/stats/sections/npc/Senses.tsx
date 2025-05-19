@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import INpc from "@/models/npc/INpc";
+import ISense from "@/models/npc/stat/sub/ISenses";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
@@ -15,9 +16,9 @@ export default function Senses({ npc, isUpdate, updateNpc }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
-    const [senses, setSenses] = useState<{ [key: string]: number }[]>(npc.stats.senses);
+    const [senses, setSenses] = useState<ISense[]>(npc.stats.senses);
 
-    const changeSenses = (value: { [key: string]: number }[]) => {
+    const changeSenses = (value: ISense[]) => {
         setSenses(value);
         updateNpc({
             ...npc,
@@ -29,7 +30,7 @@ export default function Senses({ npc, isUpdate, updateNpc }: Props) {
     }
 
     const addSense = () => {
-        const newSense = { "": 0 };
+        const newSense = { name: "", value: 0 };
         changeSenses([...senses, newSense]);
     };
 
@@ -38,13 +39,10 @@ export default function Senses({ npc, isUpdate, updateNpc }: Props) {
         changeSenses(newSenses);
     };
 
-    const updateKey = (index: number, key: string) => {
+    const updateName = (index: number, name: string) => {
         const newSenses = [...senses];
         const newSense = { ...newSenses[index] };
-        const oldKey = Object.keys(newSense)[0];
-        const value = newSense[oldKey];
-        delete newSense[oldKey];
-        newSense[key] = value;
+        newSense.name = name;
         newSenses[index] = newSense;
         changeSenses(newSenses);
     };
@@ -52,10 +50,9 @@ export default function Senses({ npc, isUpdate, updateNpc }: Props) {
     const updateValue = (index: number, value: any) => {
         const newSenses = [...senses];
         const newSense = { ...newSenses[index] };
-        const key = Object.keys(newSense)[0];
-        newSense[key] = parseInt(value);
+        newSense.value = parseInt(value);
         newSenses[index] = newSense;
-        setSenses(newSenses);
+        changeSenses(newSenses);
     };
 
     return (
@@ -79,13 +76,12 @@ export default function Senses({ npc, isUpdate, updateNpc }: Props) {
                     { senses.length > 0 && 
                     <ul className="list-disc">
                         {senses.map((sense, index) => {
-                            console.log(sense);
                             return (
                             <li key={index} className="text-sm flex flex-row gap-2 items-center">                
                                 <DotIcon className="text-foreground" />
-                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={Object.keys(sense)[0]} onChange={(e) => updateKey(index, e.target.value)} placeholder={t('senses.sensName')} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={sense.name} onChange={(e) => updateName(index, e.target.value)} placeholder={t('senses.sensName')} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 <span> :</span>
-                                <Input readOnly={!isUpdate} min={0} id={index.toString()} type={"number"} value={Object.values(sense)[0]} onChange={(e) => updateValue(index, parseInt(e.target.value))} placeholder={t('senses.value')} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                <Input readOnly={!isUpdate} min={0} id={index.toString()} type={"number"} value={sense.value} onChange={(e) => updateValue(index, e.target.value)} placeholder={t('senses.value')} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 {isUpdate && <Tooltip>
                                     <TooltipTrigger asChild>
                                         <TrashIcon onClick={() => removeSense(index)} className="cursor-pointer text-primary" />
