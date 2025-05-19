@@ -1,24 +1,23 @@
 import { Card } from "@/components/ui/card";
 import ISpellcasting, { ISpellSlotsByLevel } from "@/models/characters/spellcasting/ISpellcasting";
 import { useEffect, useState } from "react";
-import { Champs } from "../../../PlayerModalDetails";
+import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { PlusCircleIcon, Trash, TrashIcon } from "lucide-react";
+import { PlusCircleIcon, TrashIcon } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import ISpell from "@/models/characters/spellcasting/ISpell";
 import { Textarea } from "@/components/ui/textarea";
-import IPlayer from "@/models/player/IPlayer";
-import { set } from "react-hook-form";
-import { parse } from "path";
+import { useTranslations } from "next-intl";
 
 interface Props {
     selectedSpellcasting: ISpellcasting;
     isUpdate: boolean;
     changeSpellCasting: (spellcasting: ISpellcasting) => void;
-    spellCastingIndex: number;
 }
-export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpellCasting, spellCastingIndex }: Props) {
+export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpellCasting }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [ability, setAbility] = useState<string | undefined>(selectedSpellcasting.ability);
     const [saveDC, setSaveDC] = useState<number | undefined>(selectedSpellcasting.saveDC);
@@ -199,10 +198,10 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
         <div className="flex flex-row gap-3 w-full h-full">
             <div className="flex flex-col gap-3 w-1/4 h-full">
                 <Card className={"bg-card p-4 flex flex-col bg-background"} >
-                    <Champs isActive={isUpdate} color="card" id={"ability"} type={"text"} label={"Abilitée"} placeholder={"Abilitée"} value={ability} setValue={changeAbility}></Champs>
-                    <Champs isActive={isUpdate} color="card" min={0} id={"saveDC"} type={"number"} label={"Dé de sauvegarde"} placeholder={"Dé de sauvegarde"} value={saveDC} setValue={changeSaveDC}></Champs>
-                    <Champs isActive={isUpdate} color="card" min={0} id={"attackBonus"} type={"number"} label={"Attaque bonus"} placeholder={"Attaque bonus"} value={attackBonus} setValue={changeAttackBonus}></Champs>
-                    <p className="text-sm"><span className="font-bold">Nombre de slots: </span>{totalSlots}</p>
+                    <Champs isActive={isUpdate} color="card" id={"ability"} type={"text"} label={t('spellCasting.ability')} placeholder={t('spellCasting.ability')} value={ability} setValue={changeAbility}></Champs>
+                    <Champs isActive={isUpdate} color="card" min={0} id={"saveDC"} type={"number"} label={t('spellCasting.saveDice')} placeholder={t('spellCasting.saveDice')} value={saveDC} setValue={changeSaveDC}></Champs>
+                    <Champs isActive={isUpdate} color="card" min={0} id={"attackBonus"} type={"number"} label={t('spellCasting.attackBonus')} placeholder={t('spellCasting.attackBonus')} value={attackBonus} setValue={changeAttackBonus}></Champs>
+                    <p className="text-sm"><span className="font-bold">{t('spellCasting.totalSpellSlots')}: </span>{totalSlots}</p>
                 </Card>
 
                 <Card className={"bg-card p-4 gap-2 flex flex-col bg-background"} >
@@ -213,7 +212,7 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
                                 <PlusCircleIcon onClick={() => addSlot()} className="text-primary cursor-pointer" />
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>Ajouter un slots</p>
+                                <p>{t('actions.addSlot')}</p>
                             </TooltipContent>
                         </Tooltip>}
                     </div>
@@ -221,31 +220,31 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
                         {
                             loading || Object.keys(spellSlotsByLevel).length <= 0 && 
                             <div className="row-start-2 col-span-4 flex items-top justify-center">
-                                <p className="text-gray-500">Aucun slot trouvé</p>
+                                <p className="text-gray-500">{t('spellCasting.slots.noSlots')}</p>
                             </div>
                         }
                         {!loading && Object.keys(spellSlotsByLevel).map((level, index) => (
                             <Card key={index} className={"bg-card p-4 flex h-full flex-col bg-card"} >
                                 <div className="flex flex-row gap-3 justify-between items-center">
-                                    <p className="text-sm"><span className="font-bold">Niveau: </span>{level}</p>
+                                    <p className="text-sm"><span className="font-bold">{t('spellCasting.slots.level')}: </span>{level}</p>
                                     {isUpdate && <Tooltip>
                                         <TooltipTrigger asChild>
                                             <TrashIcon onClick={() => removeSpellSlot(level as any)} className="text-primary cursor-pointer" />
                                         </TooltipTrigger>
                                         <TooltipContent>
-                                            <p>Supprimé le slot</p>
+                                            <p>{t('actions.deleteSlot')}</p>
                                         </TooltipContent>
                                     </Tooltip>}
                                 </div>
                                 <div className="flex flex-row gap-3">
                                     <div className="flex flex-row items-center w-full">
-                                        <Label htmlFor={"total"+level} className="text-foreground flex flex-row gap-1 items-center w-full"><span className="font-bold w-auto">Total:</span>
-                                            <Input readOnly={!isUpdate} min={0} id={"total"+level} type={"number"} value={spellSlotsByLevel[level as any].total} onChange={(e) => updateTotalSlots(level as any, e.target.value as any)} placeholder={"Total"} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` }/>
+                                        <Label htmlFor={"total"+level} className="text-foreground flex flex-row gap-1 items-center w-full"><span className="font-bold w-auto">{t('spellCasting.slots.totalSlots')}:</span>
+                                            <Input readOnly={!isUpdate} min={0} id={"total"+level} type={"number"} value={spellSlotsByLevel[level as any].total} onChange={(e) => updateTotalSlots(level as any, e.target.value as any)} placeholder={t('spellCasting.slots.totalSlots')} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` }/>
                                         </Label>
                                     </div>
                                     <div className="flex flex-row items-center w-full">
-                                        <Label htmlFor={"used"+level} className="text-foreground flex flex-row gap-1 items-center w-full"><span className="font-bold w-auto">Utilisé:</span>
-                                            <Input readOnly={!isUpdate} max={spellSlotsByLevel[level as any].total} min={0} id={"used"+level} type={"number"} value={spellSlotsByLevel[level as any].used} onChange={(e) => updateUsedSlot(level as any, e.target.value as any)} placeholder={"Utilisé"} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` }/>
+                                        <Label htmlFor={"used"+level} className="text-foreground flex flex-row gap-1 items-center w-full"><span className="font-bold w-auto">{t('spellCasting.slots.usedSlots')}:</span>
+                                            <Input readOnly={!isUpdate} max={spellSlotsByLevel[level as any].total} min={0} id={"used"+level} type={"number"} value={spellSlotsByLevel[level as any].used} onChange={(e) => updateUsedSlot(level as any, e.target.value as any)} placeholder={t('spellCasting.slots.usedSlots')} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` }/>
                                         </Label>
                                     </div>
                                 </div>
@@ -258,43 +257,43 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
             </div>
             <div className="flex flex-col gap-3 w-3/4 h-full">
                 <div className="flex flex-row gap-3 w-full">
-                    <h1 className="text-foreground text-lg font-bold">Sorts</h1>
+                    <h1 className="text-foreground text-lg font-bold">{t('spellCasting.spells.title')}</h1>
                     {isUpdate && <Tooltip>
                         <TooltipTrigger asChild>
                             <PlusCircleIcon onClick={() => addSpell()} className="text-primary cursor-pointer" />
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>Ajouter un sort</p>
+                            <p>{t('actions.addSpell')}</p>
                         </TooltipContent>
                     </Tooltip>}
                 </div>
                 <div className="grid grid-cols-3 gap-4 items-start">
                     {loading || spells.length <= 0 && 
                         <div className="row-start-2 col-span-4 flex items-top justify-center">
-                            <p className="text-gray-500">Aucun sort trouvé</p>
+                            <p className="text-gray-500">{t('spellCasting.spells.noSpells')}</p>
                         </div>
                     }
                     {!loading && spells.map((spell, index) => (
                         <Card key={index} className={"bg-card p-4 flex flex-col bg-background"} >
                             <div className="flex flex-row gap-3 justify-between items-center">
-                                <Champs isActive={isUpdate} color="card" id={"name"+index} type={"text"} label={"Nom"} placeholder={"Nom"} value={spell.name} setValue={(value) => updateNameSpell(index, value)}></Champs>
+                                <Champs isActive={isUpdate} color="card" id={"name"+index} type={"text"} label={t('spellCasting.spells.name')} placeholder={t('spellCasting.spells.name')} value={spell.name} setValue={(value) => updateNameSpell(index, value)}></Champs>
                                 {isUpdate && <Tooltip>
                                     <TooltipTrigger asChild>
                                         <TrashIcon onClick={() => removeSpell(index)} className="text-primary cursor-pointer" />
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Supprimé le sort</p>
+                                        <p>{t('actions.deleteSpell')}</p>
                                     </TooltipContent>
                                 </Tooltip>}
                             </div>
                             <div className="flex flex-col">
-                                <Champs isActive={isUpdate} color="card" id={"level"+index} type={"number"} label={"Niveau"} placeholder={"Niveau"} value={spell.level} setValue={(value) => updateLevelSpell(index, value)}></Champs>
-                                <Champs isActive={isUpdate} color="card" id={"castingTime"+index} type={"text"} label={"Temps d'incantation"} placeholder={"Temps d'incantation"} value={spell.castingTime} setValue={(value) => updateCastingTimeSpell(index, value)}></Champs>
-                                <Champs isActive={isUpdate} color="card" id={"range"+index} type={"text"} label={"Portée"} placeholder={"Portée"} value={spell.range} setValue={(value) => updateRangeSpell(index, value)}></Champs>
-                                <Champs isActive={isUpdate} color="card" id={"components"+index} type={"text"} label={"Composants"} placeholder={"Composants"} value={spell.components.join(", ")} setValue={(value) => updateComponentsSpell(index, value.split(", "))}></Champs>
+                                <Champs isActive={isUpdate} color="card" id={"level"+index} type={"number"} label={t('spellCasting.spells.level')} placeholder={t('spellCasting.spells.level')} value={spell.level} setValue={(value) => updateLevelSpell(index, value)}></Champs>
+                                <Champs isActive={isUpdate} color="card" id={"castingTime"+index} type={"text"} label={t('spellCasting.spells.castingTime')} placeholder={t('spellCasting.spells.castingTime')} value={spell.castingTime} setValue={(value) => updateCastingTimeSpell(index, value)}></Champs>
+                                <Champs isActive={isUpdate} color="card" id={"range"+index} type={"text"} label={t('spellCasting.spells.range')} placeholder={t('spellCasting.spells.range')} value={spell.range} setValue={(value) => updateRangeSpell(index, value)}></Champs>
+                                <Champs isActive={isUpdate} color="card" id={"components"+index} type={"text"} label={t('spellCasting.spells.components')} placeholder={t('spellCasting.spells.components')} value={spell.components.join(", ")} setValue={(value) => updateComponentsSpell(index, value.split(", "))}></Champs>
                                 <div className="flex flex-col w-full gap-1.5 mt-1 h-1/3">
-                                    <Label htmlFor={"description"} className="text-foreground font-bold">Description:</Label>
-                                    <Textarea readOnly={!isUpdate} id={"description"+index} placeholder="Description" value={spell.description} onChange={(e) => updateDescriptionSpell(index, e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
+                                    <Label htmlFor={"description"} className="text-foreground font-bold">{t('spellCasting.spells.description')}:</Label>
+                                    <Textarea readOnly={!isUpdate} id={"description"+index} placeholder={t('spellCasting.spells.description')} value={spell.description} onChange={(e) => updateDescriptionSpell(index, e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
                                 </div>
                             </div>
                         </Card>

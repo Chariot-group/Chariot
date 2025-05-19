@@ -61,6 +61,158 @@
   "CharacterDetailsPanel": {
     "npc": "PNJ",
     "player": "Joueur",
+    "actions": {
+      "deletePlayer": "Supprimer le joueur",
+      "deleteNpc": "Supprimer le PNJ",
+      "addClass": "Ajouter une classe",
+      "deleteClass": "Supprimer la classe",
+      "addSens": "Ajouter un sens",
+      "deleteSens": "Supprimer le sens",
+      "addLanguage": "Ajouter une langue",
+      "deleteLanguage": "Supprimer la langue",
+      "addSpellCasting": "Ajouter un lancé de sort",
+      "deleteSpellCasting": "Supprimer le lancé de sort",
+      "addSlot": "Ajouter un slot",
+      "deleteSlot": "Supprimer le slot",
+      "addSpell": "Ajouter un sort",
+      "deleteSpell": "Supprimer le sort",
+      "addVulnerability": "Ajouter une vulnérabilité",
+      "deleteVulnerability": "Supprimer la vulnérabilité",
+      "addResistance": "Ajouter une résistance",
+      "deleteResistance": "Supprimer la résistance",
+      "addImmunity": "Ajouter une immunité",
+      "deleteImmunity": "Supprimer l'immunité",
+      "addAbility": "Ajouter une capacité",
+      "deleteAbility": "Supprimer la capacité",
+      "addAction": "Ajouter une action",
+      "deleteAction": "Supprimer l'action"
+    },
+    "action": {
+      "noActions": "Aucune action trouvée",
+      "name": "Nom",
+      "type": "Type",
+      "attackBonus": "Bonus d'attaque",
+      "damage": "Dégâts",
+      "damageType": "Type de dégât",
+      "range": "Portée",
+      "standard": "Standard",
+      "legendary": "Légendaire",
+      "lair": "Aérien"
+    },
+    "classes": {
+      "noClass": "Aucune classe trouvée",
+      "title": "Classes",
+      "className": "Classe",
+      "subClass": "Sous-classe",
+      "level": "Niveau",
+      "hitDice": "Dé de vie"
+
+    },
+    "speed": {
+      "walking": "Marche",
+      "flying": "Vol",
+      "climbing": "Escalade",
+      "swimming": "Natation",
+      "burrowing": "Creusage"
+    },
+    "skills": {
+      "athletics": "Athlétisme",
+      "acrobatics": "Acrobaties",
+      "stealth": "Discrétion",
+      "animalHandling": "Manipulation animale",
+      "arcana": "Arcanes",
+      "deception": "Tromperie",
+      "history": "Histoire",
+      "insight": "Perspicacité",
+      "intimidation": "Intimidation",
+      "investigation": "Investigation",
+      "medicine": "Médecine",
+      "nature": "Nature",
+      "perception": "Perception",
+      "performance": "Performance",
+      "persuasion": "Persuasion",
+      "religion": "Religion",
+      "sleightHand": "Tour de passe-passe",
+      "survival": "Survie"
+    },
+    "senses": {
+      "title": "Sens",
+      "noSens": "Aucun sens trouvé",
+      "sensName": "Sens",
+      "value": "Valeur"
+    },
+    "languages": {
+      "title": "Langues",
+      "noLanguage": "Aucune langue trouvée",
+      "languageName": "Langue"
+    },
+    "details": {
+      "darkvision": "Vision nocturne",
+      "attackBonus": "Bonus d'attaque",
+      "passivePerception": "Perception passive",
+      "inspiration": "Inspiration"
+    },
+    "spellCasting": {
+      "title": "Lancer de sorts",
+      "noSpellCasting": "Aucun lancé de sort trouvé",
+      "ability": "Capacité",
+      "saveDice": "Dé de sauvegarde",
+      "attackBonus": "Bonus d'attaque",
+      "countSpell": "Nombre de sorts",
+      "totalSpellSlots": "Nombre total de slots",
+      "slots": {
+        "noSlots": "Aucun slot trouvé",
+        "level": "Niveau",
+        "totalSlots": "Total",
+        "usedSlots": "Utilisés"
+      },
+      "spells": {
+        "title": "Sorts",
+        "noSpells": "Aucun sort trouvé",
+        "name": "Nom",
+        "level": "Niveau",
+        "castingTime": "Temps d'incantation",
+        "range": "Portée",
+        "components": "Composants",
+        "description": "Description"
+      }
+    },
+    "vulnerabilities": {
+      "title": "Vulnérabilités",
+      "noVulnerabilities": "Aucune vulnérabilité trouvée",
+      "name": "Vulnérabilité"
+    },
+    "resistances": {
+      "title": "Résistances",
+      "noResistances": "Aucune résistance trouvée",
+      "name": "Résistance"
+    },
+    "immunities": {
+      "title": "Immunités",
+      "noImmunities": "Aucune immunité trouvée",
+      "name": "Immunité"
+    },
+    "abilities": {
+      "noAbilities": "Aucune capacité trouvée",
+      "title": "Capacités",
+      "name": "Nom",
+      "description": "Description"
+    },
+    "treasure": {
+      "cp": "Pièces de cuivre",
+      "sp": "Pièces d'argent",
+      "ep": "Pièces d'électrum",
+      "gp": "Pièces d'or",
+      "pp": "Pièces de platine",
+      "notes": "Notes"
+    },
+    "panels": {
+      "characterisitcs": "Caractéristiques",
+      "stats": "Statistiques",
+      "spells": "Sorts",
+      "other": "Autres"
+    },
+    "name": "Nom",
     "profile": {
       "race": "Race",
       "subrace": "Sous-race",
@@ -68,9 +220,36 @@
       "subtype": "Sous-type",
       "alignment": "Alignement"
     },
+    "batlle": {
+      "armorClass": "Classe d'armure",
+      "maxPv": "Points de vie max",
+      "currentPv": "PV actuels",
+      "temporaryPv": "PV temporaires"
+    },
+    "abilityScores":{
+      "strength": "Force",
+      "dexterity": "Dextérité",
+      "constitution": "Constitution",
+      "intelligence": "Intelligence",
+      "wisdom": "Sagesse",
+      "charisma": "Charisme",
+      "save": "Jet de sauvegarde"
+    },
     "progression": {
       "level": "Niveau",
       "experience": "Expérience"
+    },
+    "background": {
+      "personalityTraits": "Traits de personnalité",
+      "ideals": "Idéaux",
+      "bonds": "Liens",
+      "flaws": "Défauts",
+      "backstory": "Historique",
+      "alliesAndOrgs": "Alliés et organisations"
+    },
+    "challenge": {
+      "challengeRating": "Niveau de défi",
+      "experiencePoints": "Xp"
     },
     "appearance": {
       "age": "Age",
@@ -78,7 +257,9 @@
       "weight": "Poids",
       "eyes": "Yeux",
       "hair": "Cheveux",
-      "skin": "Peau"
+      "skin": "Peau",
+      "description": "Description physique",
+      "size": "Taille"
     }
     
   },

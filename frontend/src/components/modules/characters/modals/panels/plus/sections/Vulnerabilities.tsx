@@ -1,10 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import IAffinities from "@/models/characters/affinities/IAffinities";
 import ICharacter from "@/models/characters/ICharacter";
-import IPlayer from "@/models/player/IPlayer";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface Props {
@@ -13,6 +12,8 @@ interface Props {
     updateCharacter: (character: ICharacter) => void;
 }
 export default function Vulnerabilities({ character, isUpdate, updateCharacter }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [vulnerabilities, setVulnerabilities] = useState<string[]>(character.affinities.vulnerabilities);
 
@@ -46,30 +47,30 @@ export default function Vulnerabilities({ character, isUpdate, updateCharacter }
             <div className="flex flex-row gap-3 w-full h-full">
                 <div className="flex flex-col gap-3 w-full h-full">
                     <div className="flex flex-row justify-between items-center">
-                        <h2 className="text-lg font-bold">Vulnérabilitées</h2>
+                        <h2 className="text-lg font-bold">{t('vulnerabilities.title')}</h2>
                         {isUpdate && <Tooltip>
                             <TooltipTrigger asChild>
                                 <PlusCircleIcon onClick={() => addVulnerabilite()} className="text-primary cursor-pointer" />
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>Ajouter une vulnérabilitée</p>
+                                <p>{t('actions.addVulnerability')}</p>
                             </TooltipContent>
                         </Tooltip>}
                     </div>
                     {
-                        vulnerabilities.length <= 0 && <span className="text-gray-500 text-sm">Aucune vulnérabilitée trouvée</span>
+                        vulnerabilities.length <= 0 && <span className="text-gray-500 text-sm">{t('vulnerabilities.noVulnerabilities')}</span>
                     }
                     { vulnerabilities.length > 0 && <ul className="list-disc">
                         {vulnerabilities.map((vulnerabilitie, index) => (
                             <li key={index} className="text-sm flex flex-row gap-2 items-center">                
                                 <DotIcon className="text-foreground" />
-                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={vulnerabilitie ?? ""} onChange={(e) => updateVulnerabilite(index, e.target.value)} placeholder={"Nouvelle vulnerabilitée"} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={vulnerabilitie ?? ""} onChange={(e) => updateVulnerabilite(index, e.target.value)} placeholder={t('vulnerabilities.name')} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 {isUpdate && <Tooltip>
                                     <TooltipTrigger asChild>
                                         {isUpdate && <TrashIcon onClick={() => removeVulnerabilite(index)} className="cursor-pointer text-primary" />}
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Supprimer la vulnérabilitée</p>
+                                        <p>{t('actions.deleteVulnerability')}</p>
                                     </TooltipContent>
                                 </Tooltip>}
                             </li>

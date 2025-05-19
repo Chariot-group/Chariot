@@ -1,11 +1,10 @@
-import IPlayer from "@/models/player/IPlayer";
 import INpc from "@/models/npc/INpc";
-import NpcAbilityScores from "./sections/npc/NpcAbilityScores";
-import NpcBattle from "./sections/npc/NpcBattle";
-import Profile from "./sections/npc/Profile";
-import StandardActions from "./sections/npc/StandardActions";
-import LegendaryActions from "./sections/npc/LegendaryActions";
-import LairActions from "./sections/npc/LairActions";
+import NpcAbilityScores from "@/components/modules/characters/modals/panels/characteristics/sections/npc/NpcAbilityScores";
+import NpcBattle from "@/components/modules/characters/modals/panels/characteristics/sections/npc/NpcBattle";
+import Profile from "@/components/modules/characters/modals/panels/characteristics/sections/npc/Profile";
+import StandardActions from "@/components/modules/characters/modals/panels/characteristics/sections/npc/StandardActions";
+import LegendaryActions from "@/components/modules/characters/modals/panels/characteristics/sections/npc/LegendaryActions";
+import LairActions from "@/components/modules/characters/modals/panels/characteristics/sections/npc/LairActions";
 
 interface Props {
     npc : INpc;
@@ -24,7 +23,7 @@ export default function NpcCharacteristic({ npc, updateNpc, isUpdate }: Props) {
             </div>
             <div className="h-full border border-ring">
             </div>
-            <div className="flex flex-col gap-3 w-5/6 h-full">
+            <div className="flex flex-col gap-3 w-4/6 h-full">
                 <h2 className="text-xl font-bold">Actions</h2>
                 <div className="flex flex-row gap-3 w-full h-full">
                     <div className="flex flex-col gap-3 w-1/3 h-full">

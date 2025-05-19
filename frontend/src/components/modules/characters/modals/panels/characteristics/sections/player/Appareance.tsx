@@ -4,11 +4,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Size, SIZES } from "@/constants/CharacterConstants";
 import { useState } from "react";
-import IAppearance from "@/models/player/appearance/IAppearance";
-import IStats from "@/models/player/stats/IStats";
 import { Textarea } from "@/components/ui/textarea";
 import IPlayer from "@/models/player/IPlayer";
-import { parse } from "path";
+import { useTranslations } from "next-intl";
 
 interface Props {
     player: IPlayer;
@@ -16,6 +14,8 @@ interface Props {
     updatePlayer: (player: IPlayer) => void;
 }
 export default function Appearance({ player, isUpdate, updatePlayer }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [eyes, setEyes] = useState<string | undefined>(player.appearance.eyes);
     const [hair, setHair] = useState<string | undefined>(player.appearance.hair);
@@ -109,17 +109,17 @@ export default function Appearance({ player, isUpdate, updatePlayer }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-col bg-background">
-            <Champs isActive={isUpdate} color="card" label="Yeux" value={eyes} id={"eyes"} type={"text"} placeholder={"Yeux"} setValue={changeEyes} />
-            <Champs isActive={isUpdate} color="card" label="Cheveux" value={hair} id={"hair"} type={"text"} placeholder={"Cheveux"} setValue={changeHair} />
-            <Champs isActive={isUpdate} color="card" label="Peau" value={skin} id={"skin"} type={"text"} placeholder={"Peau"} setValue={changeSkin} />
-            <Champs isActive={isUpdate} min={0} color="card" id={"age"} type={"number"} label={"Age"} placeholder={"Age"} value={age} setValue={changeAge}></Champs>
-            <Champs isActive={isUpdate} min={0} color="card" id={"height"} type={"number"} label={"Taille"} placeholder={"Taille"} value={height} setValue={changeHeight}></Champs>
-            <Champs isActive={isUpdate} min={0} color="card" id={"weight"} type={"number"} label={"Poids"} placeholder={"Poids"} value={weight} setValue={changeWeight}></Champs>
+            <Champs isActive={isUpdate} color="card" label={t('appearance.eyes')} value={eyes} id={"eyes"} type={"text"} placeholder={t('appearance.eyes')} setValue={changeEyes} />
+            <Champs isActive={isUpdate} color="card" label={t('appearance.hair')} value={hair} id={"hair"} type={"text"} placeholder={t('appearance.hair')} setValue={changeHair} />
+            <Champs isActive={isUpdate} color="card" label={t('appearance.skin')} value={skin} id={"skin"} type={"text"} placeholder={t('appearance.skin')} setValue={changeSkin} />
+            <Champs isActive={isUpdate} min={0} color="card" id={"age"} type={"number"} label={t('appearance.age')} placeholder={t('appearance.age')} value={age} setValue={changeAge}></Champs>
+            <Champs isActive={isUpdate} min={0} color="card" id={"height"} type={"number"} label={t('appearance.height')} placeholder={t('appearance.height')} value={height} setValue={changeHeight}></Champs>
+            <Champs isActive={isUpdate} min={0} color="card" id={"weight"} type={"number"} label={t('appearance.weight')} placeholder={t('appearance.weight')} value={weight} setValue={changeWeight}></Champs>
             <div className="grid w-full max-w-sm items-center gap-1.5">
-                <Label className="text-foreground flex flex-row gap-1 items-center"><span className="font-bold">Taille:</span>
+                <Label className="text-foreground flex flex-row gap-1 items-center"><span className="font-bold">{t('appearance.size')}:</span>
                     <Select onValueChange={changeSize} defaultValue={size}>
                         <SelectTrigger disabled={!isUpdate} className="p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0">
-                            <SelectValue placeholder="Taille" />
+                            <SelectValue placeholder={t('appearance.size')} />
                         </SelectTrigger>
                         <SelectContent className="border-ring">
                             {
@@ -134,8 +134,8 @@ export default function Appearance({ player, isUpdate, updatePlayer }: Props) {
                 </Label>
             </div>
             <div className="flex flex-col w-full gap-1.5 mt-1 h-1/3">
-                <Label htmlFor={"description"} className="text-foreground font-bold">Description</Label>
-                <Textarea readOnly={!isUpdate} id={"description"} placeholder="Description physique" value={description} onChange={(e) => changeDescription(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
+                <Label htmlFor={"description"} className="text-foreground font-bold">{t('appearance.description')}:</Label>
+                <Textarea readOnly={!isUpdate} id={"description"} placeholder={t('appearance.description')} value={description} onChange={(e) => changeDescription(e.target.value)} className="h-full rounded-xl resize-none bg-card border-ring" />
             </div>
         </Card>
     )

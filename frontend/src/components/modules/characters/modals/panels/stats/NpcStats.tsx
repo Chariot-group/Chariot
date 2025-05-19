@@ -1,9 +1,9 @@
 import INpc from "@/models/npc/INpc";
-import Speed from "./sections/npc/Speed";
-import Languages from "./sections/npc/Languages";
-import Skills from "./sections/npc/Skills";
-import Senses from "./sections/npc/Senses";
-import Details from "./sections/npc/Details";
+import Speed from "@/components/modules/characters/modals/panels/stats/sections/npc/Speed";
+import Languages from "@/components/modules/characters/modals/panels/stats/sections/npc/Languages";
+import Skills from "@/components/modules/characters/modals/panels/stats/sections/npc/Skills";
+import Senses from "@/components/modules/characters/modals/panels/stats/sections/npc/Senses";
+import Details from "@/components/modules/characters/modals/panels/stats/sections/npc/Details";
 
 interface Props {
     npc: INpc;

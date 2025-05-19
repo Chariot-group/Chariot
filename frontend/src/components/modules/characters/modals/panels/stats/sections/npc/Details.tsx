@@ -1,7 +1,8 @@
 import { Card } from "@/components/ui/card";
 import INpc from "@/models/npc/INpc";
 import { useState } from "react";
-import { Champs } from "../../../../PlayerModalDetails";
+import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
+import { useTranslations } from "next-intl";
 
 interface Props {
     npc: INpc;
@@ -9,6 +10,8 @@ interface Props {
     updateNpc: (npc: INpc) => void;
 }
 export default function Details({ npc, isUpdate, updateNpc }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [darkvision, setDarkvision] = useState<number>(npc.stats.darkvision);
     const [passivePerception, setPassivePerception] = useState<number>(npc.stats.passivePerception);
@@ -36,8 +39,8 @@ export default function Details({ npc, isUpdate, updateNpc }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-col bg-background">
-            <Champs label="Vision dans le noir" min={0} value={darkvision} id={"darkvision"} type={"number"} placeholder={"Vision dans le noir"} isActive={isUpdate} setValue={changeDarkvision} />
-            <Champs label="Perception passive" value={passivePerception} id={"passivePerception"} type={"number"} placeholder={"Perception passive"} isActive={isUpdate} setValue={changePassivePerception} />
+            <Champs isActive={isUpdate} min={0} color="card" label={t('details.darkvision')} value={darkvision} id={"darkvision"} type={"number"} placeholder={t('details.darkvision')} setValue={changeDarkvision} />
+            <Champs isActive={isUpdate} min={0} color="card" label={t('details.passivePerception')} value={passivePerception} id={"passivePerception"} type={"number"} placeholder={t('details.passivePerception')} setValue={changePassivePerception} />
         </Card>
     );
 

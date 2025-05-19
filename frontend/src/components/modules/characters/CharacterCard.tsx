@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import ICharacter from "@/models/characters/ICharacter";
 import INpc from "@/models/npc/INpc";
 import IPlayer from "@/models/player/IPlayer";
-import { PlusCircleIcon, TrashIcon } from "lucide-react";
+import { TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface PlayerCardProps {
@@ -34,7 +34,7 @@ export function PlayerCard( { player, onClick, isUpdating, removeCharacter, isUp
                                     <TrashIcon className="text-primary hover:cursor-pointer" onClick={(e) => {e.stopPropagation(); removeCharacter(player);}} />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Supprimer le joueur</p>
+                                    <p>{t('actions.deletePlayer')}</p>
                                 </TooltipContent>
                             </Tooltip>
                         )
@@ -94,7 +94,7 @@ export function NPCCard( { npc, onClick, isUpdated, isUpdating, removeCharacter 
                                     <TrashIcon className="text-primary hover:cursor-pointer" onClick={(e) => {e.stopPropagation(); removeCharacter(npc);}} />
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Supprimer le joueur</p>
+                                    <p>{t('actions.deleteNpc')}</p>
                                 </TooltipContent>
                             </Tooltip>
                         )

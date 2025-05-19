@@ -59,194 +59,209 @@
     "error": "Error loading groups"
   },
   "CharacterDetailsPanel": {
-    "navigation": {
-      "global": "General",
-      "combat": "Combat",
-      "actions": "Actions",
-      "traits": "Traits"
-    },
+    "npc": "NPC",
+    "player": "Player",
     "actions": {
-      "characterDelete": "Delete character",
-      "actionsAdd": "Add action",
-      "actionsDelete": "Delete action",
-      "languagesAdd": "Add language",
-      "languagesDelete": "Delete language",
-      "abilitiesAdd": "Add ability",
-      "abilitiesDelete": "Delete ability",
-      "modal": {
-        "title": "Delete character",
-        "description": "Are you sure you want to delete this character ?",
-        "confirm": "Yes, delete"
-      }
+      "deletePlayer": "Delete Player",
+      "deleteNpc": "Delete NPC",
+      "addClass": "Add Class",
+      "deleteClass": "Delete Class",
+      "addSens": "Add Sense",
+      "deleteSens": "Delete Sense",
+      "addLanguage": "Add Language",
+      "deleteLanguage": "Delete Language",
+      "addSpellCasting": "Add Spellcasting",
+      "deleteSpellCasting": "Delete Spellcasting",
+      "addSlot": "Add Slot",
+      "deleteSlot": "Delete Slot",
+      "addSpell": "Add Spell",
+      "deleteSpell": "Delete Spell",
+      "addVulnerability": "Add Vulnerability",
+      "deleteVulnerability": "Delete Vulnerability",
+      "addResistance": "Add Resistance",
+      "deleteResistance": "Delete Resistance",
+      "addImmunity": "Add Immunity",
+      "deleteImmunity": "Delete Immunity",
+      "addAbility": "Add Ability",
+      "deleteAbility": "Delete Ability",
+      "addAction": "Add Action",
+      "deleteAction": "Delete Action"
     },
-    "categories": {
-      "global": {
-        "classification": "Classification",
-        "informations": "Information",
-        "moving": "Movement",
-        "skills": "Skills",
-        "senses": "Senses"
-      },
-      "combat": {
-        "stats": "Stats"
-      },
-      "traits": {
-        "languages": "Languages",
-        "noLanguage": "No languages",
-        "abilities": "Abilities",
-        "noAbilities": "No abilities"
-      }
-    },
-    "labels": {
+    "action": {
+      "noActions": "No actions found",
       "name": "Name",
-      "classification": {
-        "type": "Type",
-        "alignment": "Alignment",
-        "subType": "Subtype",
-        "size": "Size"
+      "type": "Type",
+      "attackBonus": "Attack Bonus",
+      "damage": "Damage",
+      "damageType": "Damage Type",
+      "range": "Range",
+      "standard": "Standard",
+      "legendary": "Legendary",
+      "lair": "Lair"
+    },
+    "classes": {
+      "noClass": "No classes found",
+      "title": "Classes",
+      "className": "Class",
+      "subClass": "Subclass",
+      "level": "Level",
+      "hitDice": "Hit Dice"
+    },
+    "speed": {
+      "walking": "Walking",
+      "flying": "Flying",
+      "climbing": "Climbing",
+      "swimming": "Swimming",
+      "burrowing": "Burrowing"
+    },
+    "skills": {
+      "athletics": "Athletics",
+      "acrobatics": "Acrobatics",
+      "stealth": "Stealth",
+      "animalHandling": "Animal Handling",
+      "arcana": "Arcana",
+      "deception": "Deception",
+      "history": "History",
+      "insight": "Insight",
+      "intimidation": "Intimidation",
+      "investigation": "Investigation",
+      "medicine": "Medicine",
+      "nature": "Nature",
+      "perception": "Perception",
+      "performance": "Performance",
+      "persuasion": "Persuasion",
+      "religion": "Religion",
+      "sleightHand": "Sleight of Hand",
+      "survival": "Survival"
+    },
+    "senses": {
+      "title": "Senses",
+      "noSens": "No senses found",
+      "sensName": "Sense",
+      "value": "Value"
+    },
+    "languages": {
+      "title": "Languages",
+      "noLanguage": "No languages found",
+      "languageName": "Language"
+    },
+    "details": {
+      "darkvision": "Darkvision",
+      "attackBonus": "Attack Bonus",
+      "passivePerception": "Passive Perception",
+      "inspiration": "Inspiration"
+    },
+    "spellCasting": {
+      "title": "Spellcasting",
+      "noSpellCasting": "No spellcasting found",
+      "ability": "Ability",
+      "saveDice": "Saving Throw DC",
+      "attackBonus": "Attack Bonus",
+      "countSpell": "Number of Spells",
+      "totalSpellSlots": "Total Spell Slots",
+      "slots": {
+        "noSlots": "No slots found",
+        "level": "Level",
+        "totalSlots": "Total",
+        "usedSlots": "Used"
       },
-      "stats": {
-        "maxHP": "Max HP",
-        "currentHP": "Current HP",
-        "tempHP": "Temporary HP",
-        "hitDice": "Hit Dice",
-        "armorClass": "Armor Class",
-        "speed": {
-          "walk": "Walk",
-          "fly": "Fly",
-          "swim": "Swim",
-          "climb": "Climb",
-          "burrow": "Burrow"
-        },
-        "abilityScores": {
-          "strength": "Strength",
-          "dexterity": "Dexterity",
-          "constitution": "Constitution",
-          "intelligence": "Intelligence",
-          "wisdom": "Wisdom",
-          "charisma": "Charisma"
-        },
-        "skills": {
-          "athletics": "Athletics",
-          "acrobatics": "Acrobatics",
-          "sleightOfHand": "Sleight of Hand",
-          "stealth": "Stealth",
-          "arcana": "Arcana",
-          "history": "History",
-          "investigation": "Investigation",
-          "nature": "Nature",
-          "religion": "Religion",
-          "animalHandling": "Animal Handling",
-          "insight": "Insight",
-          "medicine": "Medicine",
-          "perception": "Perception",
-          "survival": "Survival",
-          "deception": "Deception",
-          "intimidation": "Intimidation",
-          "performance": "Performance",
-          "persuasion": "Persuasion"
-        },
-        "senses": {
-          "nightVision": "Darkvision",
-          "passivePerception": "Passive Perception"
-        }
-      },
-      "combat": {
-        "challengeRating": "Challenge Rating",
-        "experiencePoints": "Experience Points",
-        "resistances": "Resistances",
-        "immunities": "Immunities",
-        "vulnerabilities": "Vulnerabilities"
-      },
-      "traits": {
-        "languages": "Languages",
-        "abilities": {
-          "name": "Name",
-          "description": "Description"
-        }
-      },
-      "actions": {
+      "spells": {
+        "title": "Spells",
+        "noSpells": "No spells found",
         "name": "Name",
-        "type": "Type",
-        "attackBonus": "Attack Bonus",
-        "damage": {
-          "dice": "Dice",
-          "type": "Type"
-        },
-        "range": "Range"
+        "level": "Level",
+        "castingTime": "Casting Time",
+        "range": "Range",
+        "components": "Components",
+        "description": "Description"
       }
     },
-    "placeholders": {
-      "name": "Goblin",
-      "classification": {
-        "type": "Humanoid",
-        "alignment": "Neutral - Evil",
-        "subType": "goblinoid",
-        "size": "Small"
-      },
-      "stats": {
-        "maxHP": "7",
-        "currentHP": "3",
-        "tempHP": "5",
-        "hitDice": "2d6",
-        "armorClass": "15",
-        "speed": {
-          "walk": "30",
-          "fly": "0",
-          "swim": "0",
-          "climb": "0",
-          "burrow": "0"
-        },
-        "abilityScores": "Ability Score",
-        "savingThrows": "Saving Throw",
-        "skills": {
-          "athletics": "6",
-          "acrobatics": "0",
-          "sleightOfHand": "0",
-          "stealth": "0",
-          "arcana": "0",
-          "history": "0",
-          "investigation": "0",
-          "nature": "0",
-          "religion": "0",
-          "animalHandling": "0",
-          "insight": "0",
-          "medicine": "0",
-          "perception": "0",
-          "survival": "0",
-          "deception": "0",
-          "intimidation": "0",
-          "performance": "0",
-          "persuasion": "0"
-        },
-        "senses": {
-          "nightVision": "60",
-          "passivePerception": "9"
-        }
-      },
-      "combat": {
-        "challengeRating": "0.25",
-        "experiencePoints": "50"
-      },
-      "traits": {
-        "languages": "Common, Goblin",
-        "abilities": {
-          "name": "Nimble Escape",
-          "description": "When the goblin is hit by an attack, it can use its reaction to move 10 feet in a direction of its choice."
-        }
-      },
-      "actions": {
-        "name": "Scimitar",
-        "type": "Melee",
-        "attackBonus": "Attack Bonus",
-        "damage": {
-          "dice": "1d6",
-          "type": "Slashing"
-        },
-        "range": "5"
-      }
+    "vulnerabilities": {
+      "title": "Vulnerabilities",
+      "noVulnerabilities": "No vulnerabilities found",
+      "name": "Vulnerability"
+    },
+    "resistances": {
+      "title": "Resistances",
+      "noResistances": "No resistances found",
+      "name": "Resistance"
+    },
+    "immunities": {
+      "title": "Immunities",
+      "noImmunities": "No immunities found",
+      "name": "Immunity"
+    },
+    "abilities": {
+      "noAbilities": "No abilities found",
+      "title": "Abilities",
+      "name": "Name",
+      "description": "Description"
+    },
+    "treasure": {
+      "cp": "Copper Pieces",
+      "sp": "Silver Pieces",
+      "ep": "Electrum Pieces",
+      "gp": "Gold Pieces",
+      "pp": "Platinum Pieces",
+      "notes": "Notes"
+    },
+    "panels": {
+      "characterisitcs": "Characteristics",
+      "stats": "Stats",
+      "spells": "Spells",
+      "other": "Other"
+    },
+    "name": "Name",
+    "profile": {
+      "race": "Race",
+      "subrace": "Subrace",
+      "type": "Type",
+      "subtype": "Subtype",
+      "alignment": "Alignment"
+    },
+    "batlle": {
+      "armorClass": "Armor Class",
+      "maxPv": "Max Hit Points",
+      "currentPv": "Current HP",
+      "temporaryPv": "Temporary HP"
+    },
+    "abilityScores": {
+      "strength": "Strength",
+      "dexterity": "Dexterity",
+      "constitution": "Constitution",
+      "intelligence": "Intelligence",
+      "wisdom": "Wisdom",
+      "charisma": "Charisma",
+      "save": "Saving Throw"
+    },
+    "progression": {
+      "level": "Level",
+      "experience": "Experience"
+    },
+    "background": {
+      "personalityTraits": "Personality Traits",
+      "ideals": "Ideals",
+      "bonds": "Bonds",
+      "flaws": "Flaws",
+      "backstory": "Backstory",
+      "alliesAndOrgs": "Allies and Organizations"
+    },
+    "challenge": {
+      "challengeRating": "Challenge Rating",
+      "experiencePoints": "XP"
+    },
+    "appearance": {
+      "age": "Age",
+      "height": "Height",
+      "weight": "Weight",
+      "eyes": "Eyes",
+      "hair": "Hair",
+      "skin": "Skin",
+      "description": "Physical Description",
+      "size": "Size"
     }
   },
+
   "Global": {
     "cancel": "Cancel"
   },

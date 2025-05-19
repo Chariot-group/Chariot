@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
 import INpc from "@/models/npc/INpc";
+import { useTranslations } from "next-intl";
 
 interface Props {
     npc: INpc;
@@ -9,6 +10,8 @@ interface Props {
     updateNpc: (npc: INpc) => void;
 }
 export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [strengthST, setStrengthST] = useState<number>(npc.stats.savingThrows.strength);
     const [dexterityST, setDexterityST] = useState<number>(npc.stats.savingThrows.dexterity);
@@ -185,28 +188,28 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
         <div className="flex flex-col gap-3 w-1/6 h-full">
             {/* Stats */}
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Force" value={strengthAS} id={"strengthAS"} type={"number"} placeholder={"Force"} setValue={changeStrengthAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={strengthST} id={"strengthST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeStrengthST} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.strength')} value={strengthAS} id={"strengthAS"} type={"number"} placeholder={t('abilityScores.strength')} setValue={changeStrengthAS} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={strengthST} id={"strengthST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeStrengthST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Dextérité" value={dexterityAS} id={"dexterityAS"} type={"number"} placeholder={"Dextérité"} setValue={changeDexterityAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={dexterityST} id={"dexterityST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeDexterityST} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.dexterity')} value={dexterityAS} id={"dexterityAS"} type={"number"} placeholder={t('abilityScores.dexterity')} setValue={changeDexterityAS} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={dexterityST} id={"dexterityST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeDexterityST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Constitution" value={constitutionAS} id={"constitutionAS"} type={"number"} placeholder={"Constitution"} setValue={changeConstitutionAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={constitutionST} id={"constitutionST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeConstitutionST} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.constitution')} value={constitutionAS} id={"constitutionAS"} type={"number"} placeholder={t('abilityScores.constitution')} setValue={changeConstitutionAS} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={constitutionST} id={"constitutionST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeConstitutionST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Intelligence" value={intelligenceAS} id={"intelligenceAS"} type={"number"} placeholder={"Intelligence"} setValue={changeIntelligenceAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={intelligenceST} id={"intelligenceST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeIntelligenceST} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.intelligence')} value={intelligenceAS} id={"intelligenceAS"} type={"number"} placeholder={t('abilityScores.intelligence')} setValue={changeIntelligenceAS} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={intelligenceST} id={"intelligenceST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeIntelligenceST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Sagesse" value={wisdomAS} id={"wisdomAS"} type={"number"} placeholder={"Sagesse"} setValue={changeWisdomAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={wisdomST} id={"wisdomST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeWisdomST} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.wisdom')} value={wisdomAS} id={"wisdomAS"} type={"number"} placeholder={t('abilityScores.wisdom')} setValue={changeWisdomAS} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={wisdomST} id={"wisdomST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeWisdomST} />
             </Card>
             <Card className="bg-card p-4 flex flex-col bg-background">
-                <Champs isActive={isUpdate} color="card" label="Charisme" value={charismaAS} id={"charismaAS"} type={"number"} placeholder={"Force"} setValue={changeCharismaAS} />
-                <Champs isActive={isUpdate} color="card" label="Jet de sauvegarde" value={charismaST} id={"charismaST"} type={"number"} placeholder={"Jet de sauvegarde"} setValue={changeCharismaST} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.charisma')} value={charismaAS} id={"charismaAS"} type={"number"} placeholder={t('abilityScores.charisma')} setValue={changeCharismaAS} />
+                <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={charismaST} id={"charismaST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeCharismaST} />
             </Card>
         </div>
     );

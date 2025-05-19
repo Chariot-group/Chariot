@@ -6,6 +6,7 @@ import { PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import { Champs } from "../../../../PlayerModalDetails";
 import { parse } from "path";
+import { useTranslations } from "next-intl";
 
 interface Props{
     npc: INpc;
@@ -13,6 +14,8 @@ interface Props{
     isUpdate: boolean;
 }
 export default function StandardActions({ npc, updateNpc, isUpdate }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [standardActions, setStandardActions] = useState<IAction[]>(npc.actions.standard);
 
@@ -86,39 +89,38 @@ export default function StandardActions({ npc, updateNpc, isUpdate }: Props) {
     return (
         <div className="flex flex-col gap-3 w-full h-full">
             <div className="flex flex-row justify-between items-center">
-                <h2 className="text-lg font-bold">Standard</h2>
+                <h2 className="text-lg font-bold">{t('action.standard')}</h2>
                 {isUpdate && <Tooltip>
                     <TooltipTrigger asChild>
                         <PlusCircleIcon onClick={() => addStandardAction()} className="text-primary cursor-pointer" />
                     </TooltipTrigger>
                     <TooltipContent>
-                        <p>Ajouter une action standard</p>
+                        <p>{t('actions.addAction')}</p>
                     </TooltipContent>
                 </Tooltip>}
             </div>
             <div className="flex flex-col gap-3 w-full h-full overflow-auto">
-                {standardActions.length <= 0 && <span className="text-sm text-gray-500">Aucune action standard</span>}
+                {standardActions.length <= 0 && <span className="text-sm text-gray-500">{t('action.noActions')}</span>}
                 {standardActions.length > 0 && standardActions.map((action, index) => (
                     <Card key={index} className="bg-card p-4 flex flex-col bg-background">
                         <div className="flex flex-row justify-between items-center">
-                            <Champs label="Nom" value={action.name} id={`name-${index}`} type={"text"} placeholder={"Nom"} isActive={isUpdate} setValue={(value) => updateNameAction(index, value)} />
+                            <Champs label={t('action.name')} value={action.name} id={`name-${index}`} type={"text"} placeholder={t('action.name')} isActive={isUpdate} setValue={(value) => updateNameAction(index, value)} />
                             {isUpdate && <Tooltip>
                                 <TooltipTrigger asChild>
                                     <TrashIcon onClick={() => removeStandardAction(index)} className="text-primary cursor-pointer"/>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                    <p>Supprimer l'action</p>
+                                    <p>{t('actions.deleteAction')}</p>
                                 </TooltipContent>
                             </Tooltip>}
                         </div>
                         <div className="flex flex-col">
-                            <Champs label="Type" value={action.type} id={`type-${index}`} type={"text"} placeholder={"Type"} isActive={isUpdate} setValue={(value) => updateTypeAction(index, value)} />
-                            <Champs label="Bonus d'attaque" min={0} value={action.attackBonus} id={`attackBonus-${index}`} type={"number"} placeholder={"Bonus d'attaque"} isActive={isUpdate} setValue={(value) => updateAttackBonusAction(index, value)} />
-                            <Champs label="Dégâts" value={action.damage.dice} id={`damageDice-${index}`} type={"text"} placeholder={"Dégâts"} isActive={isUpdate} setValue={(value) => updateDamageDiceAction(index, value)} />
-                            <Champs label="Type de dégât" value={action.damage.type} id={`damageType-${index}`} type={"text"} placeholder={"Type de dégât"} isActive={isUpdate} setValue={(value) => updateDamageTypeAction(index, value)} />
-                            <Champs label="Portée" value={action.range} id={`range-${index}`} type={"text"} placeholder={"Portée"} isActive={isUpdate} setValue={(value) => updateRangeAction(index, value)} />
+                            <Champs label={t('action.type')} value={action.type} id={`type-${index}`} type={"text"} placeholder={t('action.type')} isActive={isUpdate} setValue={(value) => updateTypeAction(index, value)} />
+                            <Champs label={t('action.attackBonus')} min={0} value={action.attackBonus} id={`attackBonus-${index}`} type={"number"} placeholder={t('action.attackBonus')} isActive={isUpdate} setValue={(value) => updateAttackBonusAction(index, value)} />
+                            <Champs label={t('action.damage')} value={action.damage.dice} id={`damageDice-${index}`} type={"text"} placeholder={t('action.damage')} isActive={isUpdate} setValue={(value) => updateDamageDiceAction(index, value)} />
+                            <Champs label={t('action.damageType')} value={action.damage.type} id={`damageType-${index}`} type={"text"} placeholder={t('action.damageType')} isActive={isUpdate} setValue={(value) => updateDamageTypeAction(index, value)} />
+                            <Champs label={t('action.range')} value={action.range} id={`range-${index}`} type={"text"} placeholder={t('action.range')} isActive={isUpdate} setValue={(value) => updateRangeAction(index, value)} />
                         </div>
-                    
                     </Card>
                 ))}
             </div>

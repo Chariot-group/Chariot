@@ -6,10 +6,10 @@ import IPlayer from "@/models/player/IPlayer";
 import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import Characteristic from "./panels/characteristics/PlayerCharacteristic";
-import Stats from "./panels/stats/PlayerStats";
-import Plus from "./panels/plus/Plus";
-import Spells from "./panels/spells/Spells";
+import Characteristic from "@/components/modules/characters/modals/panels/characteristics/PlayerCharacteristic";
+import Stats from "@/components/modules/characters/modals/panels/stats/PlayerStats";
+import Plus from "@/components/modules/characters/modals/panels/plus/Plus";
+import Spells from "@/components/modules/characters/modals/panels/spells/Spells";
 import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {
@@ -45,15 +45,15 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer, isU
         <Card className="h-full w-full p-4 flex flex-col gap-2">
             <div className="flex flex-row justify-between gap-3 h-[10%]">
                 <div className="flex flex-row items-center gap-2">
-                    <Champs label="Nom" value={name} id={"name"} type={"text"} placeholder={"Nom"} isActive={isUpdate} setValue={changeName} />
+                    <Champs label={t('name')} value={name} id={"name"} type={"text"} placeholder={t('name')} isActive={isUpdate} setValue={changeName} />
                     <Badge >{t(player.kind)}</Badge>
                 </div>
                 
                 <div className="flex flex-row items-center gap-3">
-                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "characteristics" && 'underline'}`} onClick={() => setPanel("characteristics")}>Charactéristiques</span>
-                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "stats" && 'underline'}`} onClick={() => setPanel("stats")}>Statistique</span>
-                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && 'underline'}`} onClick={() => setPanel("spells")}>Sorts</span>
-                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "plus" && 'underline'}`} onClick={() => setPanel("plus")}>Plus</span>
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "characteristics" && 'underline'}`} onClick={() => setPanel("characteristics")}>{t('panels.characterisitcs')}</span>
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "stats" && 'underline'}`} onClick={() => setPanel("stats")}>{t('panels.stats')}</span>
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && 'underline'}`} onClick={() => setPanel("spells")}>{t('panels.spells')}</span>
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "plus" && 'underline'}`} onClick={() => setPanel("plus")}>{t('panels.other')}</span>
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>

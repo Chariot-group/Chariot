@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
 import INpc from "@/models/npc/INpc";
-import { parse } from "path";
+import { useTranslations } from "next-intl";
 
 interface Props {
     npc: INpc;
@@ -10,6 +10,8 @@ interface Props {
     updateNpc: (npc: INpc) => void;
 }
 export default function NpcBattle({ npc, isUpdate, updateNpc }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [maxHitPoints, setMaxHitPoints] = useState<number>(npc.stats.maxHitPoints);
     const [currentHitPoints, setCurrentHitPoints] = useState<number>(npc.stats.currentHitPoints);
@@ -62,10 +64,10 @@ export default function NpcBattle({ npc, isUpdate, updateNpc }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-col bg-background">
-            <Champs isActive={isUpdate} min={0} color="card" label="PV maximum" value={maxHitPoints} id={"maxHP"} type={"number"} placeholder={"PV maximum"} setValue={changeMaxHitPoints} />
-            <Champs isActive={isUpdate} min={0} max={maxHitPoints} color="card" label="PV" value={currentHitPoints} id={"hp"} type={"number"} placeholder={"PV"} setValue={changeCurrentHitPoints} />
-            <Champs isActive={isUpdate} min={0} max={maxHitPoints} color="card" label="PV temporaire" value={tempHitPoints} id={"tempHP"} type={"number"} placeholder={"PV temporaire"} setValue={changeTempHitPoints} />
-            <Champs isActive={isUpdate} min={0} color="card" label="Class d'armure" value={armorClass} id={"armorClass"} type={"number"} placeholder={"Class d'armure"} setValue={changeArmorClass} />
+            <Champs isActive={isUpdate} min={0} color="card" label={t('batlle.maxPv')} value={maxHitPoints} id={"maxHP"} type={"number"} placeholder={t('batlle.maxPv')} setValue={changeMaxHitPoints} />
+            <Champs isActive={isUpdate} min={0} max={maxHitPoints} color="card" label={t('batlle.currentPv')} value={currentHitPoints} id={"hp"} type={"number"} placeholder={t('batlle.currentPv')} setValue={changeCurrentHitPoints} />
+            <Champs isActive={isUpdate} min={0} max={maxHitPoints} color="card" label={t('batlle.temporaryPv')} value={tempHitPoints} id={"tempHP"} type={"number"} placeholder={t('batlle.temporaryPv')} setValue={changeTempHitPoints} />
+            <Champs isActive={isUpdate} min={0} color="card" label={t('batlle.armorClass')} value={armorClass} id={"armorClass"} type={"number"} placeholder={t('batlle.armorClass')} setValue={changeArmorClass} />
         </Card>
     )
 }

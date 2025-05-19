@@ -3,9 +3,8 @@ import { Champs } from "@/components/modules/characters/modals/PlayerModalDetail
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import ITreasure from "@/models/player/treasure/ITreasure";
 import IPlayer from "@/models/player/IPlayer";
-import { parse } from "path";
+import { useTranslations } from "next-intl";
 
 interface Props {
     player: IPlayer;
@@ -13,6 +12,8 @@ interface Props {
     updatePlayer: (player: IPlayer) => void;
 }
 export default function Treasure({ player, isUpdate, updatePlayer }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [cp, setCp] = useState<number>(player.treasure.cp);
     const [sp, setSp] = useState<number>(player.treasure.sp);
@@ -85,15 +86,15 @@ export default function Treasure({ player, isUpdate, updatePlayer }: Props) {
     return (
         <Card className="bg-card p-4 flex flex-row gap-2 bg-background">
             <div className="flex flex-col w-1/4 justify-center">
-                <Champs isActive={isUpdate} min={0} color="card" label="Pièce de cuivre" value={cp} id={"cp"} type={"number"} placeholder={"Pièce de cuivre"} setValue={changeCp} />
-                <Champs isActive={isUpdate} min={0} color="card" label="Pièce d'argent" value={sp} id={"sp"} type={"number"} placeholder={"Pièce d'argent"} setValue={changeSp} />
-                <Champs isActive={isUpdate} min={0} color="card" label="Pièce d'electrum" value={ep} id={"ep"} type={"number"} placeholder={"Pièce d'electrum"} setValue={changeEp} />
-                <Champs isActive={isUpdate} min={0} color="card" id={"gp"} type={"number"} label={"Pièce d'or"} placeholder={"Pièce d'or"} value={gp} setValue={changeGp}></Champs>
-                <Champs isActive={isUpdate} min={0} color="card" id={"pp"} type={"number"} label={"Pièce de platine"} placeholder={"Pièce de platine"} value={pp} setValue={changePp}></Champs>
+                <Champs width="w-1/3" isActive={isUpdate} min={0} color="card" label={t('treasure.cp')} value={cp} id={"cp"} type={"number"} placeholder={t('treasure.cp')} setValue={changeCp} />
+                <Champs width="w-1/3" isActive={isUpdate} min={0} color="card" label={t('treasure.sp')} value={sp} id={"sp"} type={"number"} placeholder={t('treasure.sp')} setValue={changeSp} />
+                <Champs width="w-1/3" isActive={isUpdate} min={0} color="card" label={t('treasure.ep')} value={ep} id={"ep"} type={"number"} placeholder={t('treasure.ep')} setValue={changeEp} />
+                <Champs width="w-1/3" isActive={isUpdate} min={0} color="card" id={"gp"} type={"number"} label={t('treasure.gp')} placeholder={t('treasure.gp')} value={gp} setValue={changeGp}></Champs>
+                <Champs width="w-1/3" isActive={isUpdate} min={0} color="card" id={"pp"} type={"number"} label={t('treasure.pp')} placeholder={t('treasure.pp')} value={pp} setValue={changePp}></Champs>
             </div>
             <div className="flex flex-col h-full gap-2 w-3/4">
-                <Label htmlFor={"notes"} className="text-foreground font-bold">Notes</Label>
-                <Textarea readOnly={!isUpdate} id={"notes"} placeholder="Notes" value={notes} onChange={(e) => changeNotes(e.target.value)} className="rounded-xl w-full h-full resize-none bg-card border-ring" />
+                <Label htmlFor={"notes"} className="text-foreground font-bold">{t('treasure.notes')}:</Label>
+                <Textarea readOnly={!isUpdate} id={"notes"} placeholder={t('treasure.notes')} value={notes} onChange={(e) => changeNotes(e.target.value)} className="rounded-xl w-full h-full resize-none bg-card border-ring" />
             </div>
         </Card>
     )

@@ -1,9 +1,7 @@
 import ISpellcasting from "@/models/characters/spellcasting/ISpellcasting";
-import IPlayer from "@/models/player/IPlayer"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SpellsCasting from "./sections/SpellsCasting";
 import SpellCasting from "./sections/SpellCasting";
-import { set } from "react-hook-form";
 import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {
@@ -42,7 +40,7 @@ export default function Spells({ character, isUpdate, updateCharacter }: Props) 
             <div className="flex flex-col border border-ring h-full">
             </div>
             <div className="flex flex-col gap-3 w-5/6 h-full">
-                {spellCastingSelected && <SpellCasting spellCastingIndex={spellCastingIndex} isUpdate={isUpdate} selectedSpellcasting={spellCastingSelected} changeSpellCasting={changeSpellCasting}/>}
+                {spellCastingSelected && <SpellCasting isUpdate={isUpdate} selectedSpellcasting={spellCastingSelected} changeSpellCasting={changeSpellCasting}/>}
             </div>
         </div>
     )

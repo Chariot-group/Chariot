@@ -1,10 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
-import IProgression from "@/models/player/progression/IProgression";
-import IProfile from "@/models/player/profile/IProfile";
 import IPlayer from "@/models/player/IPlayer";
-import { parse } from "path";
+import { useTranslations } from "next-intl";
 
 interface Props {
     player: IPlayer;
@@ -12,6 +10,8 @@ interface Props {
     updatePlayer: (player: IPlayer) => void;
 }
 export default function Profile({ player, isUpdate, updatePlayer }: Props) {
+
+    const t = useTranslations("CharacterDetailsPanel");
 
     const [level, setLevel] = useState<number>(player.progression.level);
     const [experience, setExperience] = useState<number>(player.progression.experience);
@@ -72,11 +72,11 @@ export default function Profile({ player, isUpdate, updatePlayer }: Props) {
 
     return (
         <Card className="bg-card p-4 flex flex-col bg-background">
-            <Champs isActive={isUpdate} min={0} color="card" label="Niveau" value={level} id={"level"} type={"number"} placeholder={"Niveau"} setValue={changeLevel} />
-            <Champs isActive={isUpdate} min={0} width="w-auto" color="card" label="Expérience" value={experience} id={"experience"} type={"number"} placeholder={"Expérience"} setValue={changeExperience} />
-            <Champs isActive={isUpdate} color="card" id={"race"} type={"text"} label={"Race"} placeholder={"Race"} value={race} setValue={changeRace}></Champs>
-            <Champs isActive={isUpdate} color="card" id={"subrace"} type={"text"} label={"Sous-race"} placeholder={"Sous-race"} value={subrace} setValue={changeSubrace}></Champs>
-            <Champs isActive={isUpdate} color="card" id={"alignment"} type={"text"} label={"Alignement"} placeholder={"Alignement"} value={alignment} setValue={changeAlignment}></Champs>
+            <Champs isActive={isUpdate} min={0} color="card" label={t('progression.level')} value={level} id={"level"} type={"number"} placeholder={t('progression.level')} setValue={changeLevel} />
+            <Champs isActive={isUpdate} min={0} width="w-auto" color="card" label={t('progression.experience')} value={experience} id={"experience"} type={"number"} placeholder={t('progression.experience')} setValue={changeExperience} />
+            <Champs isActive={isUpdate} color="card" id={"race"} type={"text"} label={t('profile.race')} placeholder={t('profile.race')} value={race} setValue={changeRace}></Champs>
+            <Champs isActive={isUpdate} color="card" id={"subrace"} type={"text"} label={t('profile.subrace')} placeholder={t('profile.subrace')} value={subrace} setValue={changeSubrace}></Champs>
+            <Champs isActive={isUpdate} color="card" id={"alignment"} type={"text"} label={t('profile.alignment')} placeholder={t('profile.alignment')} value={alignment} setValue={changeAlignment}></Champs>
         </Card>
     )
 }
