@@ -19,38 +19,5 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  backend:
-    build: ./backend
-    container_name: backend
-    restart: always
-    working_dir: /app
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
-    ports:
-      - "${API_PORT}:9000"
-    environment:
-      - PORT=${API_PORT}
-      - MONGO_URL=${MONGO_URL}
-    depends_on:
-      mongo:
-        condition: service_healthy
-
-  frontend:
-    build: ./frontend
-    container_name: frontend
-    restart: always
-    working_dir: /app
-    volumes:
-      - ./frontend:/app
-      - ./frontend/node_modules:/app/node_modules
-    ports:
-      - "${FRONT_PORT}:3000"
-    depends_on:
-      - backend
-    environment:
-      - BACKEND_URL=${BACKEND_URL}
-    command: ["npm", "run", "dev"]
-
 volumes:
   mongodb_data:
