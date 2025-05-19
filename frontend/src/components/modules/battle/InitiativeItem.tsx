@@ -39,9 +39,20 @@ const InitiativeItem = ({
 
   const onInitiativeBlur = () => {
     const parsed = Number(localInitiative);
-    if (!isNaN(parsed)) {
+    if (localInitiative === "") {
+      handleInitiativeChange({ ...participant, initiative: 0 });
+      setLocalInitiative("0");
+    } else if (!isNaN(parsed)) {
       handleInitiativeChange({ ...participant, initiative: parsed });
     }
+  };
+
+  const onInitiativeFocus = () => {
+    setLocalInitiative(
+      (participant.initiative ?? 0) === 0
+        ? ""
+        : (participant.initiative ?? 0).toString()
+    );
   };
 
   const onHPChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +91,7 @@ const InitiativeItem = ({
             value={localInitiative}
             onChange={onInitiativeChange}
             onBlur={onInitiativeBlur}
+            onFocus={onInitiativeFocus}
           />
           <Sword className="absolute left-12" />
         </div>

@@ -58,6 +58,10 @@
     "dropHere": "Déposez ici pour ajouter au groupe",
     "error": "Erreur lors du chargement des groupes"
   },
+  "GroupListPanelItem": {
+    "members": "membres",
+    "member": "membre"
+  },
   "CharacterDetailsPanel": {
     "npc": "PNJ",
     "player": "Joueur",
@@ -289,6 +293,7 @@
   "Header": {
     "home": "CHARIOT",
     "launchBattle": "Initier un combat",
+    "backToCampaign": "Retour aux campagnes",
     "signout": "Se déconnecter"
   },
   "GroupDetailsPanel": {
@@ -369,7 +374,8 @@
     "start": "Commencer",
     "next": "Suivant",
     "previous": "Précédent",
-    "round": "Tour"
+    "round": "Tour",
+    "backToSelection": "Retour à la sélection"
   },
   "InitiativeList": {
     "initiative": "Initiative",
@@ -395,11 +401,13 @@
     }
   },
   "GroupSelector": {
-    "title": "Choisisser les deux groupes qui vont s'affronter",
     "versus": "VS"
   },
+  "GroupSelectorPage": {
+    "title": "Choisisser les deux groupes qui vont s'affronter",
+    "battle": "Lancer le combat"
+  },
   "BattlePage": {
-    "battle": "Lancer le combat",
     "back": "Retour à la sélection"
   },
   "confirmEmail": {

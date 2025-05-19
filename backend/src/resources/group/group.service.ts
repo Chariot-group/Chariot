@@ -152,13 +152,25 @@ export class GroupService {
 
   async findAllByUser(
     userId: string,
-    query: { page?: number; offset?: number; label?: string; sort?: string },
+    query: {
+      page?: number;
+      offset?: number;
+      label?: string;
+      sort?: string;
+      onlyWithMembers?: boolean;
+    },
     campaignId?: string,
     type: 'all' | 'main' | 'npc' | 'archived' = 'all',
   ) {
     try {
-      const { label = '', page = 1, offset = 10, sort = 'updatedAt' } = query;
-
+      const {
+        label = '',
+        page = 1,
+        offset = 10,
+        sort = 'updatedAt',
+        onlyWithMembers = false,
+      } = query;
+      
       let sortCriteria: { [key: string]: SortOrder } = { updatedAt: 'asc' };
       if (query.sort) {
         query.sort.startsWith('-')
@@ -170,6 +182,7 @@ export class GroupService {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
         createdBy: new Types.ObjectId(userId),
+        ...(onlyWithMembers && { characters: { $ne: [] } }),
       };
 
       if (campaignId) {
