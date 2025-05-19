@@ -11,8 +11,9 @@ interface Props {
   onClose: () => void;
   character: ICharacter;
   updateCharacter: (character: ICharacter) => void;
+  isUpdating: boolean;
 }
-const CharacterModal = ({ isOpen, onClose, character, updateCharacter}: Props) => {
+const CharacterModal = ({ isOpen, onClose, character, updateCharacter, isUpdating}: Props) => {
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -38,7 +39,7 @@ const CharacterModal = ({ isOpen, onClose, character, updateCharacter}: Props) =
         }`}
       >
 
-        { character.kind === "player" && <PlayerModalDetails player={character as IPlayer} onClose={onClose} updatePlayer={updateCharacter} /> }
+        { character.kind === "player" && <PlayerModalDetails isUpdate={isUpdating} player={character as IPlayer} onClose={onClose} updatePlayer={updateCharacter} /> }
         { character.kind === "npc" && <NpcModalDetails npc={character as INpc} /> }
 
       </div>

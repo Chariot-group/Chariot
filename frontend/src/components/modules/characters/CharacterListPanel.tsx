@@ -130,7 +130,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
 
   return (
     <div className="w-full h-full flex flex-col">
-      {characterSelected && <CharacterModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} character={characterSelected} updateCharacter={updateCharacter}/>}
+      {characterSelected && <CharacterModal isUpdating={isUpdating} isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} character={characterSelected} updateCharacter={updateCharacter}/>}
       <CardHeader className="relative flex flex-row h-auto items-center">
         <CardTitle className="text-foreground font-bold">
           <div className="flex items-center gap-2">

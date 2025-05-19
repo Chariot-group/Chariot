@@ -8,27 +8,29 @@ import Treasure from "@/components/modules/characters/modals/panels/characterist
 
 interface Props {
     player : IPlayer;
+    updatePlayer: (player: IPlayer) => void;
+    isUpdate: boolean;
 }
-export default function characteristic({ player }: Props) {
+export default function characteristic({ player, updatePlayer, isUpdate }: Props) {
     return (
         <div className="flex flex-row gap-3 h-full h-[90%] overflow-auto">
             <AbilityScores stats={player.stats} />
             <div className="flex flex-col gap-3 w-1/6 h-full">
                 {/* PV */}
-                <Battle stats={player.stats} />
+                <Battle updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
         
                 {/* Profile + Progression */}
-                <Profile progression={player.progression} profile={player.profile} />
+                <Profile updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
                                     
                 {/* Appareance */}
-                <Appearance appearance={player.appearance} stats={player.stats} />
+                <Appearance updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
             </div>
             <div className="flex flex-col gap-3 w-4/6 h-full">
                 {/* Background */}
-                <Background background={player.background} />
+                <Background updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
                             
                 {/* Treasure */}
-                <Treasure treasure={player.treasure} />
+                <Treasure updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
             </div>
         </div>
     )

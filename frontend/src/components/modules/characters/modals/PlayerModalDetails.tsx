@@ -11,14 +11,14 @@ import Stats from "./panels/stats/Stats";
 import Plus from "./panels/plus/Plus";
 import Spells from "./panels/spells/Spells";
 import ICharacter from "@/models/characters/ICharacter";
-import { set } from "react-hook-form";
 
 interface Props {
     player: IPlayer;
     onClose: () => void;
     updatePlayer: (player: ICharacter) => void;
+    isUpdate: boolean;
 }
-export default function PlayerModalDetails( { player, onClose, updatePlayer }: Props ) {
+export default function PlayerModalDetails( { player, onClose, updatePlayer, isUpdate }: Props ) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -38,7 +38,7 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer }: P
         <Card className="h-full w-full p-4 flex flex-col gap-2">
             <div className="flex flex-row justify-between gap-3 h-[10%]">
                 <div className="flex flex-row items-center gap-2">
-                    <Champs label="Nom" value={name} id={"name"} type={"text"} placeholder={"Nom"} setValue={changeName} />
+                    <Champs label="Nom" value={name} id={"name"} type={"text"} placeholder={"Nom"} isActive={isUpdate} setValue={changeName} />
                     <Badge >{t(player.kind)}</Badge>
                 </div>
                 
@@ -50,7 +50,7 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer }: P
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
-            {panel === "characteristics" && <Characteristic player={player} />}
+            {panel === "characteristics" && <Characteristic isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
             {panel === "stats" && <Stats player={player} />}
             {panel === "spells" && <Spells player={player} />}
             {panel === "plus" && <Plus player={player} />}
@@ -70,7 +70,7 @@ interface IChampsProps {
     isActive?: boolean;
     width?: string;
 }
-export function Champs({ id, type, label, placeholder, value, setValue, color = "background", onChange, isActive = true, width }: IChampsProps) {
+export function Champs({ id, type, label, placeholder, value, setValue, onChange, isActive, width }: IChampsProps) {
 
     const [pending, setPending] = useState(false);
 
