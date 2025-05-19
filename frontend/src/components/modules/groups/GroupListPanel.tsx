@@ -28,8 +28,10 @@ interface Props {
   setSearch: (search: string) => void;
   disabledGroups?: IGroup[]; // Liste des groupes à ne pas afficher
   context?: boolean;
-  changeLabel: (label: string, group: IGroup) => void; // Fonction pour changer le label d'un groupe
-  updatedGroup: IGroup[]; // Liste des groupes à ne pas afficher
+  changeLabel?: (label: string, group: IGroup) => void; // Fonction pour changer le label d'un groupe
+  updatedGroup?: IGroup[]; // Liste des groupes à ne pas afficher
+  onlyWithMembers?: boolean; // Si vrai, n'affiche que les groupes avec des membres
+  displayMembersCount?: boolean; // Si vrai, affiche le nombre de membres du groupe
 }
 export default function GroupListPanel({
   groups,
@@ -47,7 +49,9 @@ export default function GroupListPanel({
   disabledGroups,
   context = false,
   changeLabel,
-  updatedGroup
+  updatedGroup,
+  onlyWithMembers = false,
+  displayMembersCount = false,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -76,6 +80,7 @@ export default function GroupListPanel({
             offset,
             label: encodeURIComponent(search),
             type,
+            onlyWithMembers,
           },
           idCampaign
         );
@@ -104,7 +109,9 @@ export default function GroupListPanel({
       } finally {
         setLoading(false);
       }
-    }, [loading, groupSelected?.deletedAt, idCampaign]);
+    },
+    [loading, groupSelected?.deletedAt, idCampaign]
+  );
 
   const createGroup = useCallback(async () => {
     try {
@@ -124,7 +131,7 @@ export default function GroupListPanel({
   }, []);
 
   useEffect(() => {
-    if(newGroup) {
+    if (newGroup) {
       setGroupSelected(newGroup);
       setNewGroup(null);
     }
@@ -156,7 +163,7 @@ export default function GroupListPanel({
       </CardHeader>
       <CardContent
         ref={cardRef}
-        className={`flex-1 h-auto overflow-auto scrollbar-hide ${
+        className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${
           isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
         }`}
       >
@@ -170,6 +177,7 @@ export default function GroupListPanel({
           {groups.length > 0 &&
             groups.map((group) => (
               <GroupListPanelItem
+                displayMembersCount={displayMembersCount}
                 changeLabel={changeLabel}
                 idCampaign={idCampaign}
                 key={group._id}

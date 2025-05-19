@@ -40,14 +40,16 @@ export class GroupController {
     @Query('offset', ParseNullableIntPipe) offset?: number,
     @Query('label') label?: string,
     @Query('sort') sort?: string,
+    @Query('onlyWithMembers') onlyWithMembers?: boolean,
   ) {
     const userId = request.user.userId;
-
+    console.log('query', onlyWithMembers);
     return this.groupService.findAllByUser(userId, {
       page,
       offset,
       label,
       sort,
+      onlyWithMembers,
     });
   }
 
