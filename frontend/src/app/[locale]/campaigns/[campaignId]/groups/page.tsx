@@ -143,7 +143,6 @@ export default function CampaignGroupsPage() {
     const createCharacter = useCallback(
         async (createCharacter: Partial<ICharacter>) => {
             try {
-                //createCharacter._id = createCharacter.name;
                 newCharacterRef.current.push(createCharacter);
                 let character: ICharacter = createCharacter as ICharacter;
                 await setGroupSelected((prev) => {
