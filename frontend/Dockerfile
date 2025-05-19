@@ -5,7 +5,7 @@ FROM node:20
 WORKDIR /app
 
 # Copier les fichiers package.json et package-lock.json pour installer les dépendances
-COPY package*.json ./
+COPY . .
 
 # Installer les dépendances, y compris ts-node
 RUN npm install
