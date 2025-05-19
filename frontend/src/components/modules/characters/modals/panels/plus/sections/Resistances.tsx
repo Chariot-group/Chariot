@@ -2,25 +2,26 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import IAffinities from "@/models/characters/affinities/IAffinities";
+import ICharacter from "@/models/characters/ICharacter";
 import IPlayer from "@/models/player/IPlayer";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
-    player: IPlayer;
+    character: ICharacter;
     isUpdate: boolean;
-    updatePlayer: (player: IPlayer) => void;
+    updateCharacter: (player: ICharacter) => void;
 }
-export default function Resistances({ player, isUpdate, updatePlayer }: Props) {
+export default function Resistances({ character, isUpdate, updateCharacter }: Props) {
 
-    const [resistances, setResistances] = useState<string[]>(player.affinities.resistances);
+    const [resistances, setResistances] = useState<string[]>(character.affinities.resistances);
 
     const changeResistances = (value: string[]) => {
         setResistances(value);
-        updatePlayer({
-            ...player,
+        updateCharacter({
+            ...character,
             affinities: {
-                ...player.affinities,
+                ...character.affinities,
                 resistances: value
             }
         });

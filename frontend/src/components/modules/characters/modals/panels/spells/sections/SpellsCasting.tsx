@@ -54,7 +54,8 @@ export default function SpellsCasting({ isUpdate, setSelectedSpellcasting, selec
                 </Tooltip>}
             </div>
             <div className="flex flex-col gap-3 h-full overflow-auto">
-                {spellcasting.map((spell, index) => (
+                {spellcasting.length <= 0 && <span className="text-gray-500 text-sm">Aucun lancé de sort trouvé</span>}
+                {spellcasting.length > 0 && spellcasting.map((spell, index) => (
                     <Card key={index} onClick={() => {setSelectedSpellcasting(spell); setSpellCastingIndex(index)}} className={`border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-card p-4 flex justify-between flex-col gap-2 bg-background ${selectedSpellcasting === spell && "shadow-[inset_0_0_0_1px_hsl(var(--ring))]"}`} >
                         <div className="flex flex-row justify-between items-center gap-2">
                             <p className="text-sm"><span className="font-bold">Abilitée: </span>{spell.ability}</p>

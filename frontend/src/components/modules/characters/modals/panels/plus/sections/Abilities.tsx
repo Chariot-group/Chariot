@@ -6,20 +6,21 @@ import { use, useEffect, useState } from "react";
 import { Champs } from "../../../PlayerModalDetails";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {
-    player: IPlayer;
+    character: ICharacter;
     isUpdate: boolean;
-    updatePlayer: (player: IPlayer) => void;
+    updateCharacter: (character: ICharacter) => void;
 }
-export default function Abilities({ player, isUpdate, updatePlayer }: Props) {
+export default function Abilities({ character, isUpdate, updateCharacter }: Props) {
 
-    const [abilities, setAbilities] = useState(player.abilities);
+    const [abilities, setAbilities] = useState(character.abilities);
 
     const updateAbilities = (newAbilities: any) => {
         setAbilities(newAbilities);
-        updatePlayer({
-            ...player,
+        updateCharacter({
+            ...character,
             abilities: newAbilities
         });
     }

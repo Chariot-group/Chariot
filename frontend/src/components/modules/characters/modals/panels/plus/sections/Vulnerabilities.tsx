@@ -2,25 +2,26 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import IAffinities from "@/models/characters/affinities/IAffinities";
+import ICharacter from "@/models/characters/ICharacter";
 import IPlayer from "@/models/player/IPlayer";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
 
 interface Props {
-    player: IPlayer;
+    character: ICharacter;
     isUpdate: boolean;
-    updatePlayer: (player: IPlayer) => void;
+    updateCharacter: (character: ICharacter) => void;
 }
-export default function Vulnerabilities({ player, isUpdate, updatePlayer }: Props) {
+export default function Vulnerabilities({ character, isUpdate, updateCharacter }: Props) {
 
-    const [vulnerabilities, setVulnerabilities] = useState<string[]>(player.affinities.vulnerabilities);
+    const [vulnerabilities, setVulnerabilities] = useState<string[]>(character.affinities.vulnerabilities);
 
     const changeVulnerabilities = (value: string[]) => {
         setVulnerabilities(value);
-        updatePlayer({
-            ...player,
+        updateCharacter({
+            ...character,
             affinities: {
-                ...player.affinities,
+                ...character.affinities,
                 vulnerabilities: value
             }
         });

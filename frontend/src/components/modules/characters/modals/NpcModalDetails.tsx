@@ -1,10 +1,53 @@
 import INpc from "@/models/npc/INpc";
+import { Champs } from "./PlayerModalDetails";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import ICharacter from "@/models/characters/ICharacter";
+import { XIcon } from "lucide-react";
+import Spells from "./panels/spells/Spells";
+import Plus from "./panels/plus/Plus";
 
 interface Props {
     npc: INpc;
+    onClose: () => void;
+    updateNpc: (player: ICharacter) => void;
+    isUpdate: boolean;
 }
-export default function NpcModalDetails( { npc }: Props ) {
+export default function NpcModalDetails( { npc, onClose, updateNpc, isUpdate }: Props ) {
+
+    const t = useTranslations("CharacterDetailsPanel");
+    
+    const [panel, setPanel] = useState<"characteristics" | "stats" | "spells" | "plus">("characteristics");
+    
+    const [name, setName] = useState<string>(npc.name);
+    
+    const changeName = (name: string) => {
+        setName(name);
+        updateNpc({
+            ...npc,
+            name: name
+        });
+    };
+
     return (
-        <div>{npc.name} - npc</div>
+        <Card className="h-full w-full p-4 flex flex-col gap-2">
+            <div className="flex flex-row justify-between gap-3 h-[10%]">
+                <div className="flex flex-row items-center gap-2">
+                    <Champs label="Nom" value={name} id={"name"} type={"text"} placeholder={"Nom"} isActive={isUpdate} setValue={changeName} />
+                    <Badge >{t(npc.kind)}</Badge>
+                </div>
+                
+                <div className="flex flex-row items-center gap-3">
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && 'underline'}`} onClick={() => setPanel("spells")}>Sorts</span>
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "plus" && 'underline'}`} onClick={() => setPanel("plus")}>Plus</span>
+                </div>
+                <XIcon onClick={onClose} className="cursor-pointer" />
+            </div>
+            
+            {panel === "spells" && <Spells isUpdate={isUpdate} updateCharacter={updateNpc} character={npc} />}
+            {panel === "plus" && <Plus isUpdate={isUpdate} updateCharacter={updateNpc} character={npc} />}
+        </Card>
     );
 }

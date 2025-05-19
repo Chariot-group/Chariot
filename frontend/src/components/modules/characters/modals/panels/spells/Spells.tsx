@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import SpellsCasting from "./sections/SpellsCasting";
 import SpellCasting from "./sections/SpellCasting";
 import { set } from "react-hook-form";
+import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {
-    player: IPlayer;
+    character: ICharacter;
     isUpdate: boolean;
-    updatePlayer: (player: IPlayer) => void;
+    updateCharacter: (player: ICharacter) => void;
 }
-export default function Spells({ player, isUpdate, updatePlayer }: Props) {
+export default function Spells({ character, isUpdate, updateCharacter }: Props) {
 
-    const [spellCastingSelected, setSpellCastingSelected] = useState<ISpellcasting>(player.spellcasting[0]);
+    const [spellCastingSelected, setSpellCastingSelected] = useState<ISpellcasting>(character.spellcasting[0] || null);
     const [spellCastingIndex, setSpellCastingIndex] = useState<number>(0);
 
     const changeSpellCasting = (value: ISpellcasting) => {
@@ -22,13 +23,13 @@ export default function Spells({ player, isUpdate, updatePlayer }: Props) {
         changeSpellcastings(newSpellcasting);
     }
 
-    const [spellcasting, setSpellcastings] = useState<ISpellcasting[]>(player.spellcasting);
+    const [spellcasting, setSpellcastings] = useState<ISpellcasting[]>(character.spellcasting);
     
     const changeSpellcastings = (value: ISpellcasting[]) => {
         setSpellcastings(value);
         setSpellCastingSelected(value[spellCastingIndex]);
-        updatePlayer({
-            ...player,
+        updateCharacter({
+            ...character,
             spellcasting: value
         });
     }
@@ -41,7 +42,7 @@ export default function Spells({ player, isUpdate, updatePlayer }: Props) {
             <div className="flex flex-col border border-ring h-full">
             </div>
             <div className="flex flex-col gap-3 w-5/6 h-full">
-                <SpellCasting spellCastingIndex={spellCastingIndex} isUpdate={isUpdate} selectedSpellcasting={spellCastingSelected} changeSpellCasting={changeSpellCasting}/>
+                {spellCastingSelected && <SpellCasting spellCastingIndex={spellCastingIndex} isUpdate={isUpdate} selectedSpellcasting={spellCastingSelected} changeSpellCasting={changeSpellCasting}/>}
             </div>
         </div>
     )
