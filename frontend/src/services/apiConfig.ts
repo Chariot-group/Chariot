@@ -1,7 +1,7 @@
 import { APIContentType } from "@/constants/APIContentType";
 import axios from "axios";
 
-const url = process.env.NEXT_PUBLIC_API_URL;
+const url = process.env.FRONT_PORT;
 
 const apiClient = (contentType: string) => {
   if (!url) {
