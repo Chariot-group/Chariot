@@ -78,12 +78,14 @@ export default function Senses({ npc, isUpdate, updateNpc }: Props) {
                     }
                     { senses.length > 0 && 
                     <ul className="list-disc">
-                        {senses.map((sense, index) => (
+                        {senses.map((sense, index) => {
+                            console.log(sense);
+                            return (
                             <li key={index} className="text-sm flex flex-row gap-2 items-center">                
                                 <DotIcon className="text-foreground" />
-                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={Object.keys(sense) ?? ""} onChange={(e) => updateKey(index, e.target.value)} placeholder={t('senses.sensName')} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                <Input readOnly={!isUpdate} id={index.toString()} type={"text"} value={Object.keys(sense)[0]} onChange={(e) => updateKey(index, e.target.value)} placeholder={t('senses.sensName')} className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 <span> :</span>
-                                <Input readOnly={!isUpdate} min={0} id={index.toString()} type={"number"} value={Object.values(sense)[0] ?? 0} onChange={(e) => updateValue(index, parseInt(e.target.value))} placeholder={t('senses.value')} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
+                                <Input readOnly={!isUpdate} min={0} id={index.toString()} type={"number"} value={Object.values(sense)[0]} onChange={(e) => updateValue(index, parseInt(e.target.value))} placeholder={t('senses.value')} className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0` } />
                                 {isUpdate && <Tooltip>
                                     <TooltipTrigger asChild>
                                         <TrashIcon onClick={() => removeSense(index)} className="cursor-pointer text-primary" />
@@ -93,7 +95,7 @@ export default function Senses({ npc, isUpdate, updateNpc }: Props) {
                                     </TooltipContent>
                                 </Tooltip>}
                             </li>
-                        ))}
+                        )})}
                     </ul>}
                 </div>
             </div>
