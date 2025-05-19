@@ -1,27 +1,26 @@
 import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
-import IStats from "@/models/player/stats/IStats";
 import { useState } from "react";
-import IPlayer from "@/models/player/IPlayer";
+import INpc from "@/models/npc/INpc";
 
 interface Props {
-    player: IPlayer;
+    npc: INpc;
     isUpdate: boolean;
-    updatePlayer: (player: IPlayer) => void;
+    updateNpc: (npc: INpc) => void;
 }
-export default function Battle({ player, isUpdate, updatePlayer }: Props) {
+export default function NpcBattle({ npc, isUpdate, updateNpc }: Props) {
 
-    const [maxHitPoints, setMaxHitPoints] = useState<number>(player.stats.maxHitPoints);
-    const [currentHitPoints, setCurrentHitPoints] = useState<number>(player.stats.currentHitPoints);
-    const [tempHitPoints, setTempHitPoints] = useState<number>(player.stats.tempHitPoints);
-    const [armorClass, setArmorClass] = useState<number>(player.stats.armorClass);
+    const [maxHitPoints, setMaxHitPoints] = useState<number>(npc.stats.maxHitPoints);
+    const [currentHitPoints, setCurrentHitPoints] = useState<number>(npc.stats.currentHitPoints);
+    const [tempHitPoints, setTempHitPoints] = useState<number>(npc.stats.tempHitPoints);
+    const [armorClass, setArmorClass] = useState<number>(npc.stats.armorClass);
 
     const changeMaxHitPoints = (value: number) => {
         setMaxHitPoints(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 maxHitPoints: value
             }
         });
@@ -29,10 +28,10 @@ export default function Battle({ player, isUpdate, updatePlayer }: Props) {
 
     const changeCurrentHitPoints = (value: number) => {
         setCurrentHitPoints(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 currentHitPoints: value
             }
         });
@@ -40,10 +39,10 @@ export default function Battle({ player, isUpdate, updatePlayer }: Props) {
 
     const changeTempHitPoints = (value: number) => {
         setTempHitPoints(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 tempHitPoints: value
             }
         });
@@ -51,10 +50,10 @@ export default function Battle({ player, isUpdate, updatePlayer }: Props) {
 
     const changeArmorClass = (value: number) => {
         setArmorClass(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 armorClass: value
             }
         });

@@ -40,7 +40,7 @@ const CharacterModal = ({ isOpen, onClose, character, updateCharacter, isUpdatin
       >
 
         { character.kind === "player" && <PlayerModalDetails isUpdate={isUpdating} player={character as IPlayer} onClose={onClose} updatePlayer={updateCharacter} /> }
-        { character.kind === "npc" && <NpcModalDetails npc={character as INpc} /> }
+        { character.kind === "npc" && <NpcModalDetails npc={character as INpc} onClose={onClose} updateNpc={updateCharacter} isUpdate={isUpdating} /> }
 
       </div>
     </div>

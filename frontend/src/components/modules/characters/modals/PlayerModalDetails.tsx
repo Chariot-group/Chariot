@@ -6,7 +6,7 @@ import IPlayer from "@/models/player/IPlayer";
 import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import Characteristic from "./panels/characteristics/Characteristic";
+import Characteristic from "./panels/characteristics/PlayerCharacteristic";
 import Stats from "./panels/stats/Stats";
 import Plus from "./panels/plus/Plus";
 import Spells from "./panels/spells/Spells";

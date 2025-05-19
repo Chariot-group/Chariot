@@ -8,6 +8,7 @@ import ICharacter from "@/models/characters/ICharacter";
 import { XIcon } from "lucide-react";
 import Spells from "./panels/spells/Spells";
 import Plus from "./panels/plus/Plus";
+import NpcCharacteristic from "./panels/characteristics/NpcCharacteristic";
 
 interface Props {
     npc: INpc;
@@ -40,12 +41,13 @@ export default function NpcModalDetails( { npc, onClose, updateNpc, isUpdate }: 
                 </div>
                 
                 <div className="flex flex-row items-center gap-3">
+                    <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "characteristics" && 'underline'}`} onClick={() => setPanel("characteristics")}>Charactéristique</span>
                     <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && 'underline'}`} onClick={() => setPanel("spells")}>Sorts</span>
                     <span className={`hover:underline underline-offset-2 cursor-pointer ${panel === "plus" && 'underline'}`} onClick={() => setPanel("plus")}>Plus</span>
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
-            
+            {panel === "characteristics" && <NpcCharacteristic isUpdate={isUpdate} updateNpc={updateNpc} npc={npc} />}
             {panel === "spells" && <Spells isUpdate={isUpdate} updateCharacter={updateNpc} character={npc} />}
             {panel === "plus" && <Plus isUpdate={isUpdate} updateCharacter={updateNpc} character={npc} />}
         </Card>

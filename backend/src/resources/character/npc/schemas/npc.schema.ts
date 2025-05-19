@@ -9,8 +9,8 @@ export type NPCDocument = NPC & Document;
 
 @Schema()
 export class NPC extends Character {
-  @Prop({ type: [Actions], default: [] })
-  actions: Actions[];
+  @Prop({ type: Actions, default: {} })
+  actions: Actions;
 
   @Prop({ type: [Challenge], default: [] })
   challenge: Challenge[];

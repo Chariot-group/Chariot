@@ -1,17 +1,17 @@
 import IPlayer from "@/models/player/IPlayer";
-import AbilityScores from "@/components/modules/characters/modals/panels/characteristics/sections/AbilityScores";
-import Appearance from "@/components/modules/characters/modals/panels/characteristics/sections/Appareance";
-import Background from "@/components/modules/characters/modals/panels/characteristics/sections/Background";
-import Battle from "@/components/modules/characters/modals/panels/characteristics/sections/Battle";
-import Profile from "@/components/modules/characters/modals/panels/characteristics/sections/Profile";
-import Treasure from "@/components/modules/characters/modals/panels/characteristics/sections/Treasure";
+import AbilityScores from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerAbilityScores";
+import Appearance from "@/components/modules/characters/modals/panels/characteristics/sections/player/Appareance";
+import Background from "@/components/modules/characters/modals/panels/characteristics/sections/player/Background";
+import Battle from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerBattle";
+import Profile from "@/components/modules/characters/modals/panels/characteristics/sections/player/Profile";
+import Treasure from "@/components/modules/characters/modals/panels/characteristics/sections/player/Treasure";
 
 interface Props {
     player : IPlayer;
     updatePlayer: (player: IPlayer) => void;
     isUpdate: boolean;
 }
-export default function characteristic({ player, updatePlayer, isUpdate }: Props) {
+export default function PlayerCharacteristic({ player, updatePlayer, isUpdate }: Props) {
     return (
         <div className="flex flex-row gap-3 h-full h-[90%] overflow-auto">
             <AbilityScores updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />

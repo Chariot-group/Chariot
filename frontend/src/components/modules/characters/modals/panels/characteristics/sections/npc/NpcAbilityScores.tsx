@@ -1,37 +1,37 @@
 import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
-import IPlayer from "@/models/player/IPlayer";
+import INpc from "@/models/npc/INpc";
 
 interface Props {
-    player: IPlayer;
+    npc: INpc;
     isUpdate: boolean;
-    updatePlayer: (player: IPlayer) => void;
+    updateNpc: (npc: INpc) => void;
 }
-export default function abilityScores({ player, isUpdate, updatePlayer }: Props) {
+export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
 
-    const [strengthST, setStrengthST] = useState<number>(player.stats.savingThrows.strength);
-    const [dexterityST, setDexterityST] = useState<number>(player.stats.savingThrows.dexterity);
-    const [constitutionST, setConstitutionST] = useState<number>(player.stats.savingThrows.constitution);
-    const [intelligenceST, setIntelligenceST] = useState<number>(player.stats.savingThrows.intelligence);
-    const [wisdomST, setWisdomST] = useState<number>(player.stats.savingThrows.wisdom);
-    const [charismaST, setCharismaST] = useState<number>(player.stats.savingThrows.charisma);
+    const [strengthST, setStrengthST] = useState<number>(npc.stats.savingThrows.strength);
+    const [dexterityST, setDexterityST] = useState<number>(npc.stats.savingThrows.dexterity);
+    const [constitutionST, setConstitutionST] = useState<number>(npc.stats.savingThrows.constitution);
+    const [intelligenceST, setIntelligenceST] = useState<number>(npc.stats.savingThrows.intelligence);
+    const [wisdomST, setWisdomST] = useState<number>(npc.stats.savingThrows.wisdom);
+    const [charismaST, setCharismaST] = useState<number>(npc.stats.savingThrows.charisma);
     
-    const [strengthAS, setStrengthAS] = useState<number>(player.stats.abilityScores.strength);
-    const [dexterityAS, setDexterityAS] = useState<number>(player.stats.abilityScores.dexterity);
-    const [constitutionAS, setConstitutionAS] = useState<number>(player.stats.abilityScores.constitution);
-    const [intelligenceAS, setIntelligenceAS] = useState<number>(player.stats.abilityScores.intelligence);
-    const [wisdomAS, setWisdomAS] = useState<number>(player.stats.abilityScores.wisdom);
-    const [charismaAS, setCharismaAS] = useState<number>(player.stats.abilityScores.charisma);
+    const [strengthAS, setStrengthAS] = useState<number>(npc.stats.abilityScores.strength);
+    const [dexterityAS, setDexterityAS] = useState<number>(npc.stats.abilityScores.dexterity);
+    const [constitutionAS, setConstitutionAS] = useState<number>(npc.stats.abilityScores.constitution);
+    const [intelligenceAS, setIntelligenceAS] = useState<number>(npc.stats.abilityScores.intelligence);
+    const [wisdomAS, setWisdomAS] = useState<number>(npc.stats.abilityScores.wisdom);
+    const [charismaAS, setCharismaAS] = useState<number>(npc.stats.abilityScores.charisma);
 
     const changeStrengthST = (value: number) => {
         setStrengthST(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 savingThrows: {
-                    ...player.stats.savingThrows,
+                    ...npc.stats.savingThrows,
                     strength: value
                 }
             }
@@ -39,12 +39,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeDexterityST = (value: number) => {
         setDexterityST(value);
-        updatePlayer({  
-            ...player,
+        updateNpc({  
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 savingThrows: {
-                    ...player.stats.savingThrows,
+                    ...npc.stats.savingThrows,
                     dexterity: value
                 }
             }
@@ -52,12 +52,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeConstitutionST = (value: number) => {
         setConstitutionST(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 savingThrows: {
-                    ...player.stats.savingThrows,
+                    ...npc.stats.savingThrows,
                     constitution: value
                 }
             }
@@ -65,12 +65,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeIntelligenceST = (value: number) => {
         setIntelligenceST(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 savingThrows: {
-                    ...player.stats.savingThrows,
+                    ...npc.stats.savingThrows,
                     intelligence: value
                 }
             }
@@ -78,12 +78,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeWisdomST = (value: number) => {
         setWisdomST(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 savingThrows: {
-                    ...player.stats.savingThrows,
+                    ...npc.stats.savingThrows,
                     wisdom: value
                 }
             }
@@ -91,12 +91,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeCharismaST = (value: number) => {
         setCharismaST(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 savingThrows: {
-                    ...player.stats.savingThrows,
+                    ...npc.stats.savingThrows,
                     charisma: value
                 }
             }
@@ -104,12 +104,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeStrengthAS = (value: number) => {
         setStrengthAS(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 abilityScores: {
-                    ...player.stats.abilityScores,
+                    ...npc.stats.abilityScores,
                     strength: value
                 }
             }
@@ -117,12 +117,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeDexterityAS = (value: number) => {
         setDexterityAS(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 abilityScores: {
-                    ...player.stats.abilityScores,
+                    ...npc.stats.abilityScores,
                     dexterity: value
                 }
             }
@@ -130,12 +130,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeConstitutionAS = (value: number) => {
         setConstitutionAS(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 abilityScores: {
-                    ...player.stats.abilityScores,
+                    ...npc.stats.abilityScores,
                     constitution: value
                 }
             }
@@ -143,12 +143,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeIntelligenceAS = (value: number) => {
         setIntelligenceAS(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 abilityScores: {
-                    ...player.stats.abilityScores,
+                    ...npc.stats.abilityScores,
                     intelligence: value
                 }
             }
@@ -156,12 +156,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeWisdomAS = (value: number) => {
         setWisdomAS(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 abilityScores: {
-                    ...player.stats.abilityScores,
+                    ...npc.stats.abilityScores,
                     wisdom: value
                 }
             }
@@ -169,12 +169,12 @@ export default function abilityScores({ player, isUpdate, updatePlayer }: Props)
     }
     const changeCharismaAS = (value: number) => {
         setCharismaAS(value);
-        updatePlayer({
-            ...player,
+        updateNpc({
+            ...npc,
             stats: {
-                ...player.stats,
+                ...npc.stats,
                 abilityScores: {
-                    ...player.stats.abilityScores,
+                    ...npc.stats.abilityScores,
                     charisma: value
                 }
             }
