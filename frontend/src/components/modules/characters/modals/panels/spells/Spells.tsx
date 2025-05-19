@@ -17,7 +17,6 @@ export default function Spells({ character, isUpdate, updateCharacter }: Props) 
     const changeSpellCasting = (value: ISpellcasting) => {
         const newSpellcasting: ISpellcasting[] = [...spellcasting];
         newSpellcasting[spellCastingIndex] = value;
-        console.log("spellCastingIndex", spellCastingIndex, newSpellcasting);
         changeSpellcastings(newSpellcasting);
     }
 

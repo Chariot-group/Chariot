@@ -166,7 +166,6 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
             ...newSpells[index],
             description: description
         }
-        console.log("description", description, newSpells, index);
         updateSpell(newSpells);
     }
     const updateCastingTimeSpell = (index: number, castingTime: string) => {

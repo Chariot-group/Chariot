@@ -122,7 +122,6 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   }
 
   useEffect(() => {
-    console.log(newCharacters.current, removeCharacters.current, updateCharacters.current);
     if (updateCharacters.current && updateCharacters.current.length > 0) {
       setCharacters((prev) => {
         // Remplace les characters existants par ceux d'updateCharacters si même _id, sinon garde l'existant

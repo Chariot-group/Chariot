@@ -43,7 +43,6 @@ export class GroupController {
     @Query('onlyWithMembers') onlyWithMembers?: boolean,
   ) {
     const userId = request.user.userId;
-    console.log('query', onlyWithMembers);
     return this.groupService.findAllByUser(userId, {
       page,
       offset,

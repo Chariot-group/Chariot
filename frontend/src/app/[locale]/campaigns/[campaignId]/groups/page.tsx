@@ -86,7 +86,6 @@ export default function CampaignGroupsPage() {
                     }
                 });
                 updateCharacterRef.current.forEach(async (character) => {
-                    console.log(character);
                     await CharacterService.updateCharacter(character._id, character);
                 });
                 removedCharacterRef.current = [];
