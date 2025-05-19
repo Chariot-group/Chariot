@@ -5,11 +5,11 @@ import IAbility from "@/models/characters/abilities/IAbility";
 
 export default interface ICharacter {
     _id: string;
-    name: string;   // OK
-    kind: 'npc' | 'player'; // OK
-    affinities: IAffinities // OK
-    abilities: IAbility[];  // OK
-    spellcasting: ISpellcasting[]; // OK
+    name: string;
+    kind: 'npc' | 'player';
+    affinities: IAffinities;
+    abilities: IAbility[];
+    spellcasting: ISpellcasting[];
     groups: IGroup[] | string[];
     deletedAt?: Date;
 }

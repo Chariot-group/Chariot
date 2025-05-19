@@ -6,17 +6,17 @@ import ISkills from "@/models/npc/stat/sub/ISkills";
 import ISpeed from "@/models/npc/stat/sub/ISpeed";
 
 export default interface IStatsBase {
-    size: Size; // OK
-    maxHitPoints: number;   // OK
-    currentHitPoints: number;   // OK
-    tempHitPoints: number;  // OK
-    armorClass: number;  // OK
-    speed: ISpeed;  // OK
-    abilityScores: IAbilityScores;  // OK
-    darkvision: number; // OK 
-    languages: string[];  // OK
+    size: Size;
+    maxHitPoints: number;
+    currentHitPoints: number;
+    tempHitPoints: number;
+    armorClass: number;
+    speed: ISpeed;
+    abilityScores: IAbilityScores;
+    darkvision: number;
+    languages: string[];
     passivePerception: number;  
-    savingThrows: ISavingThrows; // OK
-    skills: ISkills;  // OK
-    senses: ISenses[];  // OK
+    savingThrows: ISavingThrows;
+    skills: ISkills;
+    senses: ISenses[];
 }
