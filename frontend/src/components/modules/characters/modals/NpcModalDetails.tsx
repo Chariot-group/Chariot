@@ -3,7 +3,7 @@ import { Champs } from "./PlayerModalDetails";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ICharacter from "@/models/characters/ICharacter";
 import { XIcon } from "lucide-react";
 import Spells from "./panels/spells/Spells";
@@ -14,7 +14,7 @@ import NpcStats from "./panels/stats/NpcStats";
 interface Props {
     npc: INpc;
     onClose: () => void;
-    updateNpc: (player: ICharacter) => void;
+    updateNpc: (npc: ICharacter) => void;
     isUpdate: boolean;
 }
 export default function NpcModalDetails( { npc, onClose, updateNpc, isUpdate }: Props ) {
@@ -24,6 +24,13 @@ export default function NpcModalDetails( { npc, onClose, updateNpc, isUpdate }: 
     const [panel, setPanel] = useState<"characteristics" | "stats" | "spells" | "plus">("characteristics");
     
     const [name, setName] = useState<string>(npc.name);
+
+    const [npcCurrent, setNpcCurrent] = useState<INpc>(npc);
+
+    const update = (npc: ICharacter) => {
+        updateNpc(npc);
+        setNpcCurrent(npc as INpc);
+    }
     
     const changeName = (name: string) => {
         setName(name);
@@ -49,10 +56,10 @@ export default function NpcModalDetails( { npc, onClose, updateNpc, isUpdate }: 
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
-            {panel === "characteristics" && <NpcCharacteristic isUpdate={isUpdate} updateNpc={updateNpc} npc={npc} />}
-            {panel === "stats" && <NpcStats isUpdate={isUpdate} updateNpc={updateNpc} npc={npc} />}
-            {panel === "spells" && <Spells isUpdate={isUpdate} updateCharacter={updateNpc} character={npc} />}
-            {panel === "plus" && <Plus isUpdate={isUpdate} updateCharacter={updateNpc} character={npc} />}
+            {panel === "characteristics" && <NpcCharacteristic isUpdate={isUpdate} updateNpc={update} npc={npcCurrent} />}
+            {panel === "stats" && <NpcStats isUpdate={isUpdate} updateNpc={update} npc={npcCurrent} />}
+            {panel === "spells" && <Spells isUpdate={isUpdate} updateCharacter={update} character={npcCurrent} />}
+            {panel === "plus" && <Plus isUpdate={isUpdate} updateCharacter={update} character={npcCurrent} />}
         </Card>
     );
 }

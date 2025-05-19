@@ -26,6 +26,13 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer, isU
 
     const [name, setName] = useState<string>(player.name);
 
+    const [playerCurrent, setPlayerCurrent] = useState<IPlayer>(player);
+    
+    const update = (player: ICharacter) => {
+        updatePlayer(player);
+        setPlayerCurrent(player as IPlayer);
+    }
+
     const changeName = (name: string) => {
         setName(name);
         updatePlayer({
@@ -50,10 +57,10 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer, isU
                 </div>
                 <XIcon onClick={onClose} className="cursor-pointer" />
             </div>
-            {panel === "characteristics" && <Characteristic isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
-            {panel === "stats" && <Stats isUpdate={isUpdate} updatePlayer={updatePlayer} player={player} />}
-            {panel === "spells" && <Spells isUpdate={isUpdate} updateCharacter={updatePlayer} character={player} />}
-            {panel === "plus" && <Plus isUpdate={isUpdate} updateCharacter={updatePlayer} character={player} />}
+            {panel === "characteristics" && <Characteristic isUpdate={isUpdate} updatePlayer={update} player={playerCurrent} />}
+            {panel === "stats" && <Stats isUpdate={isUpdate} updatePlayer={update} player={playerCurrent} />}
+            {panel === "spells" && <Spells isUpdate={isUpdate} updateCharacter={update} character={playerCurrent} />}
+            {panel === "plus" && <Plus isUpdate={isUpdate} updateCharacter={update} character={playerCurrent} />}
         </Card>
     );
 }
