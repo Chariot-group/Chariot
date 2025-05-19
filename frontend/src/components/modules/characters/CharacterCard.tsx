@@ -12,28 +12,34 @@ interface PlayerCardProps {
     onClick: () => void;
     isUpdating: boolean;
     removeCharacter: (character: ICharacter) => void;
+    isUpdated: boolean;
 }
-export function PlayerCard( { player, onClick, isUpdating, removeCharacter }: PlayerCardProps ) {
+export function PlayerCard( { player, onClick, isUpdating, removeCharacter, isUpdated }: PlayerCardProps ) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
     return (
         <Card onClick={onClick} className="border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer">
             <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
-                <h2 className="text-lg font-bold">{player.name}</h2>
-                <Badge>{t(player.kind)}</Badge>
-                {
-                    isUpdating && (
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <TrashIcon className="text-primary hover:cursor-pointer" onClick={(e) => {e.stopPropagation(); removeCharacter(player);}} />
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                <p>Supprimer le joueur</p>
-                            </TooltipContent>
-                        </Tooltip>
-                    )
-                }
+                <div className="flex flex-row gap-2">
+                    <h2 className="text-lg font-bold">{player.name}</h2>
+                    {isUpdated && <span className="rounded-full bg-secondary size-2 m-1" ></span>}
+                </div>
+                <div className="flex flex-row gap-2">
+                    <Badge>{t(player.kind)}</Badge>
+                    {
+                        isUpdating && (
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <TrashIcon className="text-primary hover:cursor-pointer" onClick={(e) => {e.stopPropagation(); removeCharacter(player);}} />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Supprimer le joueur</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        )
+                    }
+                </div>
             </CardHeader>
             <CardContent className="p-4 pt-2 flex flex-col gap-2">
                 <div className="grid grid-cols-2">
@@ -64,16 +70,36 @@ export function PlayerCard( { player, onClick, isUpdating, removeCharacter }: Pl
 interface NPCCardProps {
     npc: INpc;
     onClick: () => void;
+    isUpdating: boolean;
+    removeCharacter: (character: ICharacter) => void;
+    isUpdated: boolean;
 }
-export function NPCCard( { npc, onClick }: NPCCardProps ) {
+export function NPCCard( { npc, onClick, isUpdated, isUpdating, removeCharacter }: NPCCardProps ) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
     return (
         <Card onClick={onClick} className="border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer">
             <CardHeader className="p-4 pb-2 flex flex-row items-center justify-between">
-                <h2 className="text-lg font-bold">{npc.name}</h2>
-                <Badge >{t(npc.kind)}</Badge>
+                <div className="flex flex-row gap-2">
+                    <h2 className="text-lg font-bold">{npc.name}</h2>
+                    {isUpdated && <span className="rounded-full bg-secondary size-2 m-1" ></span>}
+                </div>
+                <div className="flex flex-row gap-2">
+                    <Badge >{t(npc.kind)}</Badge>
+                    {
+                        isUpdating && (
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <TrashIcon className="text-primary hover:cursor-pointer" onClick={(e) => {e.stopPropagation(); removeCharacter(npc);}} />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p>Supprimer le joueur</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        )
+                    }
+                </div>
             </CardHeader>
             <CardContent className="p-4 pt-2 flex flex-col gap-2">
                 <div className="grid grid-cols-2">

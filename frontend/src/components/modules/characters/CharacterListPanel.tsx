@@ -162,9 +162,9 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
           {loading && <Loading />}
           {characters.length > 0  &&
             characters.map((character) => character.kind === 'player' ? (
-              <PlayerCard  player={character as IPlayer} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></PlayerCard>
+              <PlayerCard isUpdated={updateCharacters.current?.some((c) => c._id === character._id)} player={character as IPlayer} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></PlayerCard>
             ) : (
-              <NPCCard npc={character as INpc} key={character._id} onClick={() => selectCharacter(character)}></NPCCard>
+              <NPCCard isUpdated={updateCharacters.current?.some((c) => c._id === character._id)} npc={character as INpc} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></NPCCard>
             ))
           }
           {characters.length === 0 && !loading && (
