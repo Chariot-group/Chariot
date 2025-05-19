@@ -170,7 +170,7 @@ export class GroupService {
         sort = 'updatedAt',
         onlyWithMembers = false,
       } = query;
-      
+
       let sortCriteria: { [key: string]: SortOrder } = { updatedAt: 'asc' };
       if (query.sort) {
         query.sort.startsWith('-')
