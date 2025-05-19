@@ -58,6 +58,10 @@
     "dropHere": "Drop here to add in the group",
     "error": "Error loading groups"
   },
+  "GroupListPanelItem": {
+    "members": "members",
+    "member": "member"
+  },
   "CharacterDetailsPanel": {
     "navigation": {
       "global": "General",
@@ -273,6 +277,7 @@
   "Header": {
     "home": "CHARIOT",
     "launchBattle": "Launch a battle",
+    "backToCampaign": "Back to campaign",
     "signout": "Sign out"
   },
   "GroupDetailsPanel": {
@@ -352,7 +357,8 @@
     "start": "Start",
     "next": "Next",
     "previous": "Previous",
-    "round": "Round"
+    "round": "Round",
+    "backToSelection": "Back to selection"
   },
   "InitiativeList": {
     "initiative": "Initiative",
@@ -378,11 +384,13 @@
     }
   },
   "GroupSelector": {
-    "title": "Choose the two groups that will face off",
     "versus": "VS"
   },
+  "GroupSelectorPage": {
+    "title": "Choose the two groups that will face off",
+    "battle": "Start battle"
+  },
   "BattlePage": {
-    "battle": "Start battle",
     "back": "Back to selection"
   },
   "confirmEmail": {
