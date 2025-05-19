@@ -21,10 +21,8 @@ services:
       retries: 5
   backend:
     build: ./backend
-    env_file:
-      - ./backend/.env
     container_name: backend
-    dockerfile: Dockerfile
+    dockerfile: ./backend/Dockerfile
     restart: always
     working_dir: /app
     volumes:
@@ -42,7 +40,7 @@ services:
   frontend:
     build: ./frontend
     container_name: frontend
-    dockerfile: Dockerfile
+    dockerfile: ./frontend/Dockerfile
     restart: always
     working_dir: /app
     volumes:
