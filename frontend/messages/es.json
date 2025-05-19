@@ -7,13 +7,13 @@
     "locale": "{locale, select, fr {🇫🇷 Francés} en {🇬🇧 Inglés} es {🇪🇸 Español} other {🏴‍☠️ Desconocido}}"
   },
   "CampaignListPanel": {
-    "title": "Tus campañas",
+    "title": "Sus campañas",
     "search": "Buscar una campaña",
     "createTooltip": "Añadir campaña",
     "noCampaigns": "No se encontraron campañas",
     "error": "Error al cargar las campañas",
     "create": "Añadir campaña",
-    "created": "Campaña creada con éxito"
+    "created": "Campaña creada"
   },
   "LoginPage": {
     "title": "Bienvenido a Chariot!",
@@ -31,14 +31,14 @@
       "internal": "Ocurrió un error al intentar iniciar sesión"
     },
     "success": {
-      "login": "¡ Inicio de sesión exitoso !"
+      "login": "¡ Sesión abierta !"
     }
   },
   "CharacterListPanel": {
-    "addCharacter": "Agregar personaje",
+    "addCharacter": "Añadir personaje",
     "title": "Lista de personajes",
     "search": "Buscar un personaje",
-    "create": "Agregar un personaje",
+    "create": "Añadir un personaje",
     "noCharacters": "No se encontraron personajes",
     "error": "Error al cargar los personajes"
   },
@@ -46,16 +46,16 @@
     "title": {
       "main": "Principales",
       "npc": "PNJ",
-      "default": "Tus grupos",
+      "default": "Sus grupos",
       "archived": "Archivados"
     },
     "newGroup": {
       "label": "Nuevo grupo"
     },
     "search": "Buscar un grupo",
-    "create": "Agregar un grupo",
+    "create": "Añadir un grupo",
     "noGroups": "No se encontraron grupos",
-    "dropHere": "Suelta aquí para agregar al grupo",
+    "dropHere": "Suelta aquí para añadir al grupo",
     "error": "Error al cargar los grupos"
   },
   "CharacterDetailsPanel": {
@@ -64,27 +64,27 @@
     "actions": {
       "deletePlayer": "Eliminar jugador",
       "deleteNpc": "Eliminar PNJ",
-      "addClass": "Agregar clase",
+      "addClass": "Añadir clase",
       "deleteClass": "Eliminar clase",
-      "addSens": "Agregar sentido",
+      "addSens": "Añadir sentido",
       "deleteSens": "Eliminar sentido",
-      "addLanguage": "Agregar idioma",
+      "addLanguage": "Añadir idioma",
       "deleteLanguage": "Eliminar idioma",
-      "addSpellCasting": "Agregar lanzamiento de conjuros",
+      "addSpellCasting": "Añadir lanzamiento de conjuros",
       "deleteSpellCasting": "Eliminar lanzamiento de conjuros",
-      "addSlot": "Agregar espacio",
+      "addSlot": "Añadir espacio",
       "deleteSlot": "Eliminar espacio",
-      "addSpell": "Agregar conjuro",
+      "addSpell": "Añadir conjuro",
       "deleteSpell": "Eliminar conjuro",
-      "addVulnerability": "Agregar vulnerabilidad",
+      "addVulnerability": "Añadir vulnerabilidad",
       "deleteVulnerability": "Eliminar vulnerabilidad",
-      "addResistance": "Agregar resistencia",
+      "addResistance": "Añadir resistencia",
       "deleteResistance": "Eliminar resistencia",
-      "addImmunity": "Agregar inmunidad",
+      "addImmunity": "Añadir inmunidad",
       "deleteImmunity": "Eliminar inmunidad",
-      "addAbility": "Agregar habilidad",
+      "addAbility": "Añadir habilidad",
       "deleteAbility": "Eliminar habilidad",
-      "addAction": "Agregar acción",
+      "addAction": "Añadir acción",
       "deleteAction": "Eliminar acción"
     },
     "action": {
@@ -286,7 +286,8 @@
   },
   "Header": {
     "home": "CHARIOT",
-    "launchBattle": "Iniciar un combate"
+    "launchBattle": "Iniciar un combate",
+    "signout": "Cerrar sesión"
   },
   "GroupDetailsPanel": {
     "error": "Error al actualizar el grupo",
@@ -314,18 +315,18 @@
     }
   },
   "GroupPage": {
-    "yourCharacters": "Tus personajes",
+    "yourCharacters": "Sus personajes",
     "form": {
       "unsave": "Tienes cambios sin guardar. ¿Continuar?"
     },
     "toasts": {
       "cancel": "Grupo no guardado",
-      "save": "Grupo guardado con éxito",
+      "save": "Grupo guardado",
       "errorGroup": "Error al guardar el grupo",
       "errorCreateCharacter": "Error al crear el personaje",
       "errorDeleteCharacter": "Error al eliminar el personaje",
       "errorDeleteGroup": "Error al eliminar el grupo",
-      "groupDeleted": "Grupo eliminado con éxito",
+      "groupDeleted": "Grupo eliminado",
       "errorFindCampaign": "Error al encontrar la campaña"
     }
   },
@@ -355,9 +356,9 @@
     },
     "toasts": {
       "cancel": "Campaña no guardada",
-      "save": "Campaña guardada con éxito",
+      "save": "Campaña guardada",
       "errorDetetingCampaign": "Error al eliminar la campaña",
-      "deletedCampaign": "Campaña eliminada con éxito"
+      "deletedCampaign": "Campaña eliminada"
     }
   },
   "InitiativeTracker": {
@@ -376,7 +377,7 @@
     "actions": "Acción(es)"
   },
   "InitiativeItem": {
-    "detail": "Detalle"
+    "detail": "Detalles"
   },
   "MobileRestraint": {
     "title": "Pantalla pequeña",
@@ -391,7 +392,7 @@
     }
   },
   "GroupSelector": {
-    "title": "Elige los dos grupos que se enfrentarán",
+    "title": "Elige a los dos grupos que se enfrentarán",
     "versus": "VS"
   },
   "BattlePage": {

@@ -11,7 +11,7 @@ import CharacterService from "@/services/CharacterService";
 import { Plus, PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import React, { RefObject, use, useCallback, useEffect, useRef, useState } from "react";
+import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { NPCCard, PlayerCard } from "./CharacterCard";
 import IPlayer from "@/models/player/IPlayer";
 import INpc from "@/models/npc/INpc";

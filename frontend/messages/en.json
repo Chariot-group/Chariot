@@ -287,7 +287,8 @@
   },
   "Header": {
     "home": "CHARIOT",
-    "launchBattle": "Launch a battle"
+    "launchBattle": "Launch a battle",
+    "signout": "Sign out"
   },
   "GroupDetailsPanel": {
     "error": "Error updating the group",

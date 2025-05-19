@@ -17,6 +17,7 @@ import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { set } from "react-hook-form";
 
 export default function CampaignGroupsPage() {
 
@@ -56,39 +57,43 @@ export default function CampaignGroupsPage() {
 
     const saveAction = async () => {
         if (groupSelected) {
-            //Enlever les personnages supprimés de characterTempRef
-            characterTempRef.current.forEach((character, key) => {
-                if (removedCharacterRef.current.includes(character._id ?? "")) {
-                    characterTempRef.current.delete(key);
-                }
-            });
-            //Enlever les personnages ajoutés de characterTempRef
-            newCharacterRef.current.forEach((character) => {
-                if (characterTempRef.current.has(character._id ?? "")) {
-                    characterTempRef.current.delete(character._id ?? "");
-                }
-            });
-            characterTempRef.current.forEach(async (character, key) => {
-                await CharacterService.updateCharacter(key, character);
-            });
-            await updateGroup(groupSelected);
-            removedCharacterRef.current.forEach(async (characterId) => {
-                await CharacterService.deleteCharacter(characterId);
-            });
-            newCharacterRef.current.forEach(async (character) => {
-                const { _id, ...characterWithoutId } = character;
-                await CharacterService.createCharacter(characterWithoutId);
-            });
-            updateCharacterRef.current.forEach(async (character) => {
-                console.log(character);
-                await CharacterService.updateCharacter(character._id, character);
-            });
-            removedCharacterRef.current = [];
-            newCharacterRef.current = [];
-            updateCharacterRef.current = [];
-            characterTempRef.current.clear();
-            setIsUpdating(false);
-            success(t("toasts.save"));
+            try {
+                //Enlever les personnages supprimés de characterTempRef
+                characterTempRef.current.forEach((character, key) => {
+                    if (removedCharacterRef.current.includes(character._id ?? "")) {
+                        characterTempRef.current.delete(key);
+                    }
+                });
+                //Enlever les personnages ajoutés de characterTempRef
+                newCharacterRef.current.forEach((character) => {
+                    if (characterTempRef.current.has(character._id ?? "")) {
+                        characterTempRef.current.delete(character._id ?? "");
+                    }
+                });
+                characterTempRef.current.forEach(async (character, key) => {
+                    await CharacterService.updateCharacter(key, character);
+                });
+                await updateGroup(groupSelected);
+                removedCharacterRef.current.forEach(async (characterId) => {
+                    await CharacterService.deleteCharacter(characterId);
+                });
+                newCharacterRef.current.forEach(async (character) => {
+                    const { _id, ...characterWithoutId } = character;
+                    await CharacterService.createCharacter(characterWithoutId);
+                });
+                updateCharacterRef.current.forEach(async (character) => {
+                    console.log(character);
+                    await CharacterService.updateCharacter(character._id, character);
+                });
+                removedCharacterRef.current = [];
+                newCharacterRef.current = [];
+                updateCharacterRef.current = [];
+                characterTempRef.current.clear();
+                setIsUpdating(false);
+                success(t("toasts.save"));
+            }catch (err) {
+                setIsUpdating(false);
+            }
         }
     }
 
@@ -112,6 +117,7 @@ export default function CampaignGroupsPage() {
                     });
                 });
             } catch (err) {
+                setIsUpdating(false);
                 error(t("toasts.errorGroup"));
             }
         },
@@ -146,6 +152,7 @@ export default function CampaignGroupsPage() {
                 });
                 await setNewCharacter(character);
             } catch (err) {
+                setIsUpdating(false);
                 error(t("toasts.errorCreateCharacter"));
             }
         },

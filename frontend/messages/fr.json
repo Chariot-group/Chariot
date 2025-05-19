@@ -288,7 +288,8 @@
   },
   "Header": {
     "home": "CHARIOT",
-    "launchBattle": "Initier un combat"
+    "launchBattle": "Initier un combat",
+    "signout": "Se déconnecter"
   },
   "GroupDetailsPanel": {
     "error": "Erreur lors de la mise à jour du groupe",
@@ -359,7 +360,8 @@
       "cancel": "Modification annulée",
       "save": "Campagne sauvegardée avec succès",
       "errorDetetingCampaign": "Erreur lors de la suppression de la campagne",
-      "deletedCampaign": "Campagne supprimée avec succès"
+      "deletedCampaign": "Campagne supprimée avec succès",
+      "errorUpdatingCampaign": "Erreur lors de la mise à jour de la campagne"
     }
   },
   "InitiativeTracker": {
@@ -378,7 +380,7 @@
     "actions": "Action(s)"
   },
   "InitiativeItem": {
-    "detail": "Détail"
+    "detail": "Détails"
   },
   "MobileRestraint": {
     "title": "Application non disponible sur mobile",
