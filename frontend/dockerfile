@@ -5,13 +5,13 @@ FROM node:20
 WORKDIR /app
 
 # Copier les fichiers package.json et package-lock.json pour installer les dépendances
-COPY package*.json ./
+# COPY package*.json ./
+COPY . .
 
 # Installer les dépendances, y compris ts-node
 RUN npm install
 
 # Copier tout le code source
-COPY . .
 
 # Exposer le port pour l'application Next.js
 EXPOSE ${FRONT_PORT}
