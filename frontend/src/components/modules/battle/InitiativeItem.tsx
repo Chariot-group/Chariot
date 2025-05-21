@@ -7,7 +7,7 @@ import { Heart, Shield, Sword } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import CharacterDetailsModal from "@/components/modules/characters/CharacterDetailsModal";
 import { useTranslations } from "next-intl";
-import CharacterService from "@/services/characterService";
+import CharacterService from "@/services/CharacterService"; 
 
 interface Props {
   participant: IParticipant;
