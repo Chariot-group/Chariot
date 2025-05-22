@@ -47,13 +47,9 @@ services:
         condition: service_healthy
 
   frontend:
-    # POUR LES  TESTS TANT QUE LA PROD EST PAS OK
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-    # build:
-    #   context: ./frontend
-    #   dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.prod
     container_name: frontend
     restart: always
     working_dir: /app
@@ -64,9 +60,7 @@ services:
     environment:
       - BACKEND_URL=${BACKEND_URL}
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-      # POUR LES  TESTS TANT QUE LA PROD EST PAS OK
-      - NODE_ENV=development
-      # - NODE_ENV=${NODE_ENV}
+      - NODE_ENV=${NODE_ENV}
     command: ["npm", "run", "dev"]
 
 volumes:
