@@ -4,8 +4,7 @@ import IAction from "@/models/npc/actions/IAction";
 import INpc from "@/models/npc/INpc";
 import { PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
-import { Champs } from "../../../../PlayerModalDetails";
-import { parse } from "path";
+import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useTranslations } from "next-intl";
 
 interface Props{
@@ -102,7 +101,7 @@ export default function StandardActions({ npc, updateNpc, isUpdate }: Props) {
             <div className="flex flex-col gap-3 w-full h-full overflow-auto">
                 {standardActions.length <= 0 && <span className="text-sm text-gray-500">{t('action.noActions')}</span>}
                 {standardActions.length > 0 && standardActions.map((action, index) => (
-                    <Card key={index} className="bg-card p-4 flex flex-col bg-background">
+                    <Card key={index} className="p-4 flex flex-col bg-background">
                         <div className="flex flex-row justify-between items-center">
                             <Champs label={t('action.name')} value={action.name} id={`name-${index}`} type={"text"} placeholder={t('action.name')} isActive={isUpdate} setValue={(value) => updateNameAction(index, value)} />
                             {isUpdate && <Tooltip>

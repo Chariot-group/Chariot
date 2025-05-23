@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updateNpc: (npc: INpc) => void;
 }
-export default function NpcBattle({ npc, isUpdate, updateNpc }: Props) {
+export default function Fighting({ npc, isUpdate, updateNpc }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -63,7 +63,7 @@ export default function NpcBattle({ npc, isUpdate, updateNpc }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs isActive={isUpdate} min={0} color="card" label={t('batlle.maxPv')} value={maxHitPoints} id={"maxHP"} type={"number"} placeholder={t('batlle.maxPv')} setValue={changeMaxHitPoints} />
             <Champs isActive={isUpdate} min={0} max={maxHitPoints} color="card" label={t('batlle.currentPv')} value={currentHitPoints} id={"hp"} type={"number"} placeholder={t('batlle.currentPv')} setValue={changeCurrentHitPoints} />
             <Champs isActive={isUpdate} min={0} max={maxHitPoints} color="card" label={t('batlle.temporaryPv')} value={tempHitPoints} id={"tempHP"} type={"number"} placeholder={t('batlle.temporaryPv')} setValue={changeTempHitPoints} />

@@ -86,7 +86,7 @@ export default function Speed({ npc, isUpdate, updateNpc }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs width="w-auto" isActive={isUpdate} min={0} color="card" label={t('speed.walking')} value={walking} id={"walk"} type={"number"} placeholder={t('speed.walking')} setValue={changeWalking} />
             <Champs width="w-auto" isActive={isUpdate} min={0} color="card" label={t('speed.climbing')} value={climbing} id={"climb"} type={"number"} placeholder={t('speed.climbing')} setValue={changeClimbing} />
             <Champs width="w-auto" isActive={isUpdate} min={0} color="card" label={t('speed.flying')} value={flying} id={"fly"} type={"number"} placeholder={t('speed.flying')} setValue={changeFlying} />

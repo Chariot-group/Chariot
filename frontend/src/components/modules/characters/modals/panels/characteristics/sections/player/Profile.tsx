@@ -71,7 +71,7 @@ export default function Profile({ player, isUpdate, updatePlayer }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs isActive={isUpdate} min={0} color="card" label={t('progression.level')} value={level} id={"level"} type={"number"} placeholder={t('progression.level')} setValue={changeLevel} />
             <Champs isActive={isUpdate} min={0} width="w-auto" color="card" label={t('progression.experience')} value={experience} id={"experience"} type={"number"} placeholder={t('progression.experience')} setValue={changeExperience} />
             <Champs isActive={isUpdate} color="card" id={"race"} type={"text"} label={t('profile.race')} placeholder={t('profile.race')} value={race} setValue={changeRace}></Champs>

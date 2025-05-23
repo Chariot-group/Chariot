@@ -108,7 +108,7 @@ export default function Appearance({ player, isUpdate, updatePlayer }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs isActive={isUpdate} color="card" label={t('appearance.eyes')} value={eyes} id={"eyes"} type={"text"} placeholder={t('appearance.eyes')} setValue={changeEyes} />
             <Champs isActive={isUpdate} color="card" label={t('appearance.hair')} value={hair} id={"hair"} type={"text"} placeholder={t('appearance.hair')} setValue={changeHair} />
             <Champs isActive={isUpdate} color="card" label={t('appearance.skin')} value={skin} id={"skin"} type={"text"} placeholder={t('appearance.skin')} setValue={changeSkin} />

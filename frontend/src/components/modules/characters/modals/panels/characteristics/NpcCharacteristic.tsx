@@ -13,7 +13,7 @@ interface Props {
 }
 export default function NpcCharacteristic({ npc, updateNpc, isUpdate }: Props) {
     return (
-        <div className="flex flex-row gap-3 h-full h-[90%] overflow-auto">
+        <div className="flex flex-row gap-3 h-[90%] overflow-auto">
             <NpcAbilityScores npc={npc} isUpdate={isUpdate} updateNpc={updateNpc} />
             <div className="flex flex-col gap-3 w-1/6 h-full">
                 {/* PV */}

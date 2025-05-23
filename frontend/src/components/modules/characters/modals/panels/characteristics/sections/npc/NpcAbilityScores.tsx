@@ -187,27 +187,27 @@ export default function NpcAbilityScores({ npc, isUpdate, updateNpc }: Props) {
     return (
         <div className="flex flex-col gap-3 w-1/6 h-full">
             {/* Stats */}
-            <Card className="bg-card p-4 flex flex-col bg-background">
+            <Card className="p-4 flex flex-col bg-background">
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.strength')} value={strengthAS} id={"strengthAS"} type={"number"} placeholder={t('abilityScores.strength')} setValue={changeStrengthAS} />
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={strengthST} id={"strengthST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeStrengthST} />
             </Card>
-            <Card className="bg-card p-4 flex flex-col bg-background">
+            <Card className="p-4 flex flex-col bg-background">
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.dexterity')} value={dexterityAS} id={"dexterityAS"} type={"number"} placeholder={t('abilityScores.dexterity')} setValue={changeDexterityAS} />
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={dexterityST} id={"dexterityST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeDexterityST} />
             </Card>
-            <Card className="bg-card p-4 flex flex-col bg-background">
+            <Card className="p-4 flex flex-col bg-background">
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.constitution')} value={constitutionAS} id={"constitutionAS"} type={"number"} placeholder={t('abilityScores.constitution')} setValue={changeConstitutionAS} />
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={constitutionST} id={"constitutionST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeConstitutionST} />
             </Card>
-            <Card className="bg-card p-4 flex flex-col bg-background">
+            <Card className="p-4 flex flex-col bg-background">
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.intelligence')} value={intelligenceAS} id={"intelligenceAS"} type={"number"} placeholder={t('abilityScores.intelligence')} setValue={changeIntelligenceAS} />
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={intelligenceST} id={"intelligenceST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeIntelligenceST} />
             </Card>
-            <Card className="bg-card p-4 flex flex-col bg-background">
+            <Card className="p-4 flex flex-col bg-background">
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.wisdom')} value={wisdomAS} id={"wisdomAS"} type={"number"} placeholder={t('abilityScores.wisdom')} setValue={changeWisdomAS} />
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={wisdomST} id={"wisdomST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeWisdomST} />
             </Card>
-            <Card className="bg-card p-4 flex flex-col bg-background">
+            <Card className="p-4 flex flex-col bg-background">
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.charisma')} value={charismaAS} id={"charismaAS"} type={"number"} placeholder={t('abilityScores.charisma')} setValue={changeCharismaAS} />
                 <Champs isActive={isUpdate}  color="card" label={t('abilityScores.save')} value={charismaST} id={"charismaST"} type={"number"} placeholder={t('abilityScores.save')} setValue={changeCharismaST} />
             </Card>

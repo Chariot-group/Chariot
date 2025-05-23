@@ -43,7 +43,7 @@ export default function Immunities({ character, isUpdate, updateCharacter }: Pro
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <div className="flex flex-row gap-3 w-full h-full">
                 <div className="flex flex-col gap-3 w-full h-full">
                     <div className="flex flex-row justify-between items-center">

@@ -1,12 +1,11 @@
 import ICharacter from "@/models/characters/ICharacter";
 import IActions from "@/models/npc/actions/IActions";
-import IChanllenge from "@/models/npc/chanllenge/IChanllenge";
+import IChallenge from "@/models/npc/challenge/IChallenge";
 import IProfile from "@/models/npc/profile/IProfile";
 import IStatsBase from "@/models/npc/stat/IStatsBase";
 
-export default interface INpc extends ICharacter {
+export default interface INpc extends ICharacter<IStatsBase> {
     actions: IActions;
-    challenge: IChanllenge;
-    stats: IStatsBase;
+    challenge: IChallenge;
     profile?: IProfile;
 }

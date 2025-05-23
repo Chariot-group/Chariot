@@ -1,4 +1,4 @@
-import ISpell from "./ISpell";
+import ISpell from "@/models/characters/spellcasting/ISpell";
 
 export default interface ISpellcasting {
     ability?: string;

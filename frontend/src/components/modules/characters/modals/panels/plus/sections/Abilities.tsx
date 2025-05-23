@@ -67,7 +67,7 @@ export default function Abilities({ character, isUpdate, updateCharacter }: Prop
                 </div>
                 }
                 {abilities.length > 0 && abilities.map((ability, index) => (
-                    <Card key={index} className="bg-card p-4 flex justify-between flex-col gap-2 bg-background">
+                    <Card key={index} className="p-4 flex justify-between flex-col gap-2 bg-background">
                         <div className="flex flex-row items-center gap-2 w-full">
                             <Champs isActive={isUpdate} width="w-full" color="card" label={t('abilities.name')} value={ability.name} id={`class-${index}`} type={"text"} placeholder={t('abilities.name')} setValue={(value) => updateNameAbility(index, value)} />
                             {isUpdate && <Tooltip>

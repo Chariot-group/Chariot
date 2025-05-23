@@ -12,7 +12,7 @@ interface Props {
     changeSpellcasting: (spellcasting: ISpellcasting[]) => void;
     spellcasting: ISpellcasting[];
 }
-export default function SpellsCasting({ isUpdate, setSelectedSpellcasting, selectedSpellcasting, setSpellCastingIndex, changeSpellcasting, spellcasting }: Props) {
+export default function SpellCastings({ isUpdate, setSelectedSpellcasting, selectedSpellcasting, setSpellCastingIndex, changeSpellcasting, spellcasting }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -56,7 +56,7 @@ export default function SpellsCasting({ isUpdate, setSelectedSpellcasting, selec
             <div className="flex flex-col gap-3 h-full overflow-auto">
                 {spellcasting.length <= 0 && <span className="text-gray-500 text-sm">{t('spellCasting.noSpellCasting')}</span>}
                 {spellcasting.length > 0 && spellcasting.map((spell, index) => (
-                    <Card key={index} onClick={() => {setSelectedSpellcasting(spell); setSpellCastingIndex(index)}} className={`border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-card p-4 flex justify-between flex-col gap-2 bg-background ${selectedSpellcasting === spell && "shadow-[inset_0_0_0_1px_hsl(var(--ring))]"}`} >
+                    <Card key={index} onClick={() => {setSelectedSpellcasting(spell); setSpellCastingIndex(index)}} className={`border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer p-4 flex justify-between flex-col gap-2 bg-background ${selectedSpellcasting === spell && "shadow-[inset_0_0_0_1px_hsl(var(--ring))]"}`} >
                         <div className="flex flex-row justify-between items-center gap-2">
                             <p className="text-sm"><span className="font-bold">{t('spellCasting.ability')}: </span>{spell.ability}</p>
                             {isUpdate && <Tooltip>

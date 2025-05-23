@@ -7,7 +7,7 @@ import ITreasure from "@/models/player/treasure/ITreasure";
 import IStats from "@/models/player/stats/IStats";
 import ICharacter from "@/models/characters/ICharacter";
 
-export default interface IPlayer extends ICharacter {
+export default interface IPlayer extends ICharacter<IStats> {
     inspiration: boolean;
     progression: IProgression;
     class: IClass[];
@@ -15,5 +15,4 @@ export default interface IPlayer extends ICharacter {
     appearance: IAppearance;
     background: IBackground;
     treasure: ITreasure;
-    stats: IStats;
 }

@@ -10,10 +10,10 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   character: ICharacter;
-  updateCharacter: (character: ICharacter) => void;
+  updateCharacter?: (character: ICharacter) => void;
   isUpdating: boolean;
 }
-const CharacterModal = ({ isOpen, onClose, character, updateCharacter, isUpdating}: Props) => {
+const CharacterModal = ({ isOpen, onClose, character, updateCharacter = () => {}, isUpdating}: Props) => {
 
   const [isVisible, setIsVisible] = useState<boolean>(false);
 

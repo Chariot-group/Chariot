@@ -22,7 +22,7 @@ export default function Profile({ npc, isUpdate, updateNpc }: Props) {
 
     const [size, setSize] = useState<string>(npc.stats.size);
 
-    const [chanllengeRating, setChallengeRating] = useState<number | undefined>(npc.challenge?.challengeRating);
+    const [challengeRating, setChallengeRating] = useState<number | undefined>(npc.challenge?.challengeRating);
     const [experiencePoints, setExperiencePoints] = useState<number | undefined>(npc.challenge?.experiencePoints);
 
     const changeSize = (value: Size) => {
@@ -87,7 +87,7 @@ export default function Profile({ npc, isUpdate, updateNpc }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs label={t('profile.type')} value={type} id={"type"} type={"text"} placeholder={t('profile.type')} isActive={isUpdate} setValue={changeType} />
             <Champs label={t('profile.subtype')} value={subType} id={"subtype"} type={"text"} placeholder={t('profile.subtype')} isActive={isUpdate} setValue={changeSubType} />
             <Champs label={t('profile.alignment')} value={alignment} id={"alignment"} type={"text"} placeholder={t('profile.alignment')} isActive={isUpdate} setValue={changeAlignment} />
@@ -109,7 +109,7 @@ export default function Profile({ npc, isUpdate, updateNpc }: Props) {
                     </Select>
                 </Label>
             </div>
-            <Champs label={t('challenge.challengeRating')} min={0} value={chanllengeRating} id={"challengeRating"} type={"number"} placeholder={t('challenge.challengeRating')} isActive={isUpdate} setValue={changeChallengeRating} />
+            <Champs label={t('challenge.challengeRating')} min={0} value={challengeRating} id={"challengeRating"} type={"number"} placeholder={t('challenge.challengeRating')} isActive={isUpdate} setValue={changeChallengeRating} />
             <Champs label={t('challenge.experiencePoints')} min={0} value={experiencePoints} id={"experiencePoints"} type={"number"} placeholder={t('challenge.experiencePoints')} isActive={isUpdate} setValue={changeExperiencePoints} />
         </Card>
     )

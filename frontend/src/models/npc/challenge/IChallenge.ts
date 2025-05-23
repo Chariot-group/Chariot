@@ -1,4 +1,4 @@
-export default interface IChanllenge {
+export default interface IChallenge {
     challengeRating?: number;
     experiencePoints?: number;
 }

@@ -101,7 +101,7 @@ export default function LegendaryActions({ npc, updateNpc, isUpdate }: Props) {
             <div className="flex flex-col gap-3 w-full h-full overflow-auto">
                 {legendaryActions.length <= 0 && <span className="text-sm text-gray-500">{t('action.noActions')}</span>}
                 {legendaryActions.length > 0 && legendaryActions.map((action, index) => (
-                    <Card key={index} className="bg-card p-4 flex flex-col bg-background">
+                    <Card key={index} className="p-4 flex flex-col bg-background">
                         <div className="flex flex-row justify-between items-center">
                             <Champs label={t('action.name')} value={action.name} id={`name-${index}`} type={"text"} placeholder={t('action.name')} isActive={isUpdate} setValue={(value) => updateNameAction(index, value)} />
                             {isUpdate && <Tooltip>

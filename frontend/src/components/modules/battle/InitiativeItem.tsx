@@ -128,8 +128,7 @@ const InitiativeItem = ({
         <CharacterModal
           isOpen={showDetails}
           onClose={() => setShowDetails(false)}
-          character={participant.character}
-        />
+          character={participant.character} isUpdating={false} />
       </TableCell>
     </TableRow>
   );

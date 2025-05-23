@@ -8,15 +8,13 @@ import { useToast } from "@/hooks/useToast";
 import ICharacter from "@/models/characters/ICharacter";
 import { IGroup } from "@/models/groups/IGroup";
 import CharacterService from "@/services/CharacterService";
-import { Plus, PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
 import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
-import { NPCCard, PlayerCard } from "./CharacterCard";
+import { NPCCard, PlayerCard } from "@/components/modules/characters/CharacterCard";
 import IPlayer from "@/models/player/IPlayer";
 import INpc from "@/models/npc/INpc";
 import CharacterModal from "./CharacterModal";
-import { set } from "react-hook-form";
 
 interface ICharacterListPanelProps {
   offset?: number;

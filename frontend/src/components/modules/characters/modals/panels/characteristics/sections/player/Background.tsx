@@ -83,7 +83,7 @@ export default function Background({ player, isUpdate, updatePlayer }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-row gap-2 bg-background h-2/3">
+        <Card className="p-4 flex flex-row gap-2 bg-background h-2/3">
             <div className="flex flex-col gap-2 w-full h-full">
                 <div className="flex flex-col w-full gap-1.5 h-1/3">
                     <Label htmlFor={"personalityTraits"} className="text-foreground font-bold">{t('background.personalityTraits')}:</Label>

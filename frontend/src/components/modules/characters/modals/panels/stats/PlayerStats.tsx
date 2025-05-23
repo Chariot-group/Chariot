@@ -13,7 +13,7 @@ interface Props {
 }
 export default function PlayerStats({ player, isUpdate, updatePlayer }: Props) {
     return (
-        <div className="flex flex-row gap-3 h-full h-[90%] overflow-auto">
+        <div className="flex flex-row gap-3 h-[90%] overflow-auto">
             <div className="flex flex-col gap-3 w-1/6 h-full">
                 <Details updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
                 <Speed updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />

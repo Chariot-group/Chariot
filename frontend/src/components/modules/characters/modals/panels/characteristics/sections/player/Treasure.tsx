@@ -84,7 +84,7 @@ export default function Treasure({ player, isUpdate, updatePlayer }: Props) {
     }
     
     return (
-        <Card className="bg-card p-4 flex flex-row gap-2 bg-background">
+        <Card className="p-4 flex flex-row gap-2 bg-background">
             <div className="flex flex-col w-1/4 justify-center">
                 <Champs width="w-1/3" isActive={isUpdate} min={0} color="card" label={t('treasure.cp')} value={cp} id={"cp"} type={"number"} placeholder={t('treasure.cp')} setValue={changeCp} />
                 <Champs width="w-1/3" isActive={isUpdate} min={0} color="card" label={t('treasure.sp')} value={sp} id={"sp"} type={"number"} placeholder={t('treasure.sp')} setValue={changeSp} />

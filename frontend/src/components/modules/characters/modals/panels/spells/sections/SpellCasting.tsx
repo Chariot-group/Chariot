@@ -196,14 +196,14 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
     return (
         <div className="flex flex-row gap-3 w-full h-full">
             <div className="flex flex-col gap-3 w-1/4 h-full">
-                <Card className={"bg-card p-4 flex flex-col bg-background"} >
+                <Card className={"p-4 flex flex-col bg-background"} >
                     <Champs isActive={isUpdate} color="card" id={"ability"} type={"text"} label={t('spellCasting.ability')} placeholder={t('spellCasting.ability')} value={ability} setValue={changeAbility}></Champs>
                     <Champs isActive={isUpdate} color="card" min={0} id={"saveDC"} type={"number"} label={t('spellCasting.saveDice')} placeholder={t('spellCasting.saveDice')} value={saveDC} setValue={changeSaveDC}></Champs>
                     <Champs isActive={isUpdate} color="card" min={0} id={"attackBonus"} type={"number"} label={t('spellCasting.attackBonus')} placeholder={t('spellCasting.attackBonus')} value={attackBonus} setValue={changeAttackBonus}></Champs>
                     <p className="text-sm"><span className="font-bold">{t('spellCasting.totalSpellSlots')}: </span>{totalSlots}</p>
                 </Card>
 
-                <Card className={"bg-card p-4 gap-2 flex flex-col bg-background"} >
+                <Card className={"p-4 gap-2 flex flex-col bg-background"} >
                     <div className="flex flex-row gap-3 justify-between">
                         <h1>Slots</h1>
                         {isUpdate && <Tooltip>
@@ -223,7 +223,7 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
                             </div>
                         }
                         {!loading && Object.keys(spellSlotsByLevel).map((level, index) => (
-                            <Card key={index} className={"bg-card p-4 flex h-full flex-col bg-card"} >
+                            <Card key={index} className={"p-4 flex h-full flex-col bg-card"} >
                                 <div className="flex flex-row gap-3 justify-between items-center">
                                     <p className="text-sm"><span className="font-bold">{t('spellCasting.slots.level')}: </span>{level}</p>
                                     {isUpdate && <Tooltip>
@@ -273,7 +273,7 @@ export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpe
                         </div>
                     }
                     {!loading && spells.map((spell, index) => (
-                        <Card key={index} className={"bg-card p-4 flex flex-col bg-background"} >
+                        <Card key={index} className={"p-4 flex flex-col bg-background"} >
                             <div className="flex flex-row gap-3 justify-between items-center">
                                 <Champs isActive={isUpdate} color="card" id={"name"+index} type={"text"} label={t('spellCasting.spells.name')} placeholder={t('spellCasting.spells.name')} value={spell.name} setValue={(value) => updateNameSpell(index, value)}></Champs>
                                 {isUpdate && <Tooltip>

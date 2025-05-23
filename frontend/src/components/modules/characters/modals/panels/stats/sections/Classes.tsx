@@ -85,7 +85,7 @@ export default function Classes({ player, isUpdate, updatePlayer }: Props) {
                 </div>
                 }
                 {classes.length > 0 && classes.map((classe, index) => (
-                    <Card key={index} className="bg-card p-4 flex flex-col gap-2 bg-background">
+                    <Card key={index} className="p-4 flex flex-col gap-2 bg-background">
                         <div className="flex flex-row gap-2 justify-between">
                             <Champs isActive={isUpdate} color="card" label={t('classes.className')} value={classe.name} id={`class-${index}`} type={"text"} placeholder={t('classes.className')} setValue={(value) => updateNameClass(index, value)} />
                             {isUpdate && <Tooltip>
