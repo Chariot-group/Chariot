@@ -3,7 +3,7 @@ import { Champs } from "@/components/modules/characters/modals/PlayerModalDetail
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ICharacter from "@/models/characters/ICharacter";
 import { XIcon } from "lucide-react";
 import Spells from "@/components/modules/characters/modals/panels/spells/Spells";
@@ -39,6 +39,20 @@ export default function NpcModalDetails( { npc, onClose, updateNpc, isUpdate }: 
             name: name
         });
     };
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+                return;
+            }
+        };
+    
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [onClose]);
 
     return (
         <Card className="h-full w-full p-4 flex flex-col gap-2">

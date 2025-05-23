@@ -41,6 +41,20 @@ export default function PlayerModalDetails( { player, onClose, updatePlayer, isU
         });
     };
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                onClose();
+                return;
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [onClose]);
+
     return (
         <Card className="h-full w-full p-4 flex flex-col gap-2">
             <div className="flex flex-row justify-between gap-3 h-[10%]">
