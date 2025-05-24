@@ -1,9 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
-  Body,
-  Patch,
   Param,
   Delete,
   Query,
@@ -11,25 +8,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { CharacterService } from '@/resources/character/character.service';
-import { CreateCharacterDto } from '@/resources/character/dto/create-character.dto';
-import { UpdateCharacterDto } from '@/resources/character/dto/update-character.dto';
-import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';
 import { IsCreator } from '@/common/decorators/is-creator.decorator';
 import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
+import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';
 @UseGuards(IsCreatorGuard)
 @Controller('characters')
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
-
-  @Post()
-  createCharacter(
-    @Req() request,
-    @Body() createCharacterDto: CreateCharacterDto,
-  ) {
-    const userId = request.user.userId;
-
-    return this.characterService.create(createCharacterDto, userId);
-  }
 
   @Get()
   findAll(
@@ -52,15 +37,6 @@ export class CharacterController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.characterService.findOne(id);
-  }
-
-  @IsCreator(CharacterService)
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateCharacterDto: UpdateCharacterDto,
-  ) {
-    return this.characterService.update(id, updateCharacterDto);
   }
 
   @IsCreator(CharacterService)

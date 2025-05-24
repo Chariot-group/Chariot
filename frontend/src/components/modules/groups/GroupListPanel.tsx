@@ -121,7 +121,14 @@ export default function GroupListPanel({
         campaigns: [{ idCampaign: idCampaign, type: "npc" }],
       });
       setNewGroup(response.data);
-      fetchGroups(search, 1, true);
+      setGroups((prev) => {
+        //Fix un bug surement dû au seeder.
+        return [
+          response.data,
+          ...prev
+        ];
+      });
+      setGroupSelected(response.data);
       setSearch("");
     } catch (err) {
       error(t("error"));

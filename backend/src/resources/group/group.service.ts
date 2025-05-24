@@ -14,13 +14,13 @@ import { CreateGroupDto } from '@/resources/group/dto/create-group.dto';
 import { UpdateGroupDto } from '@/resources/group/dto/update-group.dto';
 import { Model, Types } from 'mongoose';
 import {
-  Character,
-  CharacterDocument,
-} from '@/resources/character/schemas/character.schema';
-import {
   Campaign,
   CampaignDocument,
 } from '@/resources/campaign/schemas/campaign.schema';
+import {
+  Character,
+  CharacterDocument,
+} from '@/resources/character/core/schemas/character.schema';
 
 @Injectable()
 export class GroupService {
@@ -157,7 +157,7 @@ export class GroupService {
       offset?: number;
       label?: string;
       sort?: string;
-      onlyWithMembers?: boolean;
+      onlyWithMembers?: any;
     },
     campaignId?: string,
     type: 'all' | 'main' | 'npc' | 'archived' = 'all',
@@ -170,7 +170,7 @@ export class GroupService {
         sort = 'updatedAt',
         onlyWithMembers = false,
       } = query;
-      
+
       let sortCriteria: { [key: string]: SortOrder } = { updatedAt: 'asc' };
       if (query.sort) {
         query.sort.startsWith('-')
@@ -182,8 +182,11 @@ export class GroupService {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
         createdBy: new Types.ObjectId(userId),
-        ...(onlyWithMembers && { characters: { $ne: [] } }),
       };
+
+      if( onlyWithMembers == 'true' ) {
+        filters.characters = { $ne: [] };
+      }
 
       if (campaignId) {
         const campaign = await this.campaignModel.findById(campaignId).lean();

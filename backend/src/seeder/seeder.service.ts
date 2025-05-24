@@ -4,15 +4,18 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
 import {
-  Character,
-  CharacterDocument,
-} from '@/resources/character/schemas/character.schema';
+  Campaign,
+  CampaignDocument,
+} from '@/resources/campaign/schemas/campaign.schema';
 import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
 import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import 'reflect-metadata';
 import * as bcrypt from 'bcrypt';
+import {
+  Character,
+  CharacterDocument,
+} from '@/resources/character/core/schemas/character.schema';
 
 @Injectable()
 export class SeederService {
@@ -25,7 +28,7 @@ export class SeederService {
   ) {}
 
   getRandomObjects() {
-    const filePath = path.join(__dirname, 'runner', 'characters.json');
+    const filePath = path.join(__dirname, 'runner', 'characters-new.json');
     const jsonData = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 
     const shuffled = [...jsonData].sort(() => 0.5 - Math.random());
