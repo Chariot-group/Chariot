@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updatePlayer: (player: IPlayer) => void;
 }
-export default function PlayerAbilityScores({ player, isUpdate, updatePlayer }: Props) {
+export default function PlayerAbilityScoresSection({ player, isUpdate, updatePlayer }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

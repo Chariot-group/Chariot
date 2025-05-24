@@ -11,7 +11,7 @@ interface Props {
     isUpdate: boolean;
     updatePlayer: (player: IPlayer) => void;
 }
-export default function Treasure({ player, isUpdate, updatePlayer }: Props) {
+export default function PlayerTreasureSection({ player, isUpdate, updatePlayer }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

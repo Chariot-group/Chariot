@@ -10,7 +10,7 @@ interface Props {
     isUpdate: boolean;
     updatePlayer: (player: IPlayer) => void;
 }
-export default function Background({ player, isUpdate, updatePlayer }: Props) {
+export default function PlayerBackgroundSection({ player, isUpdate, updatePlayer }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

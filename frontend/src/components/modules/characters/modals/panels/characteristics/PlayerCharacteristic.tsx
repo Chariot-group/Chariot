@@ -1,10 +1,10 @@
 import IPlayer from "@/models/player/IPlayer";
-import AbilityScores from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerAbilityScores";
-import Appearance from "@/components/modules/characters/modals/panels/characteristics/sections/player/Appareance";
-import Background from "@/components/modules/characters/modals/panels/characteristics/sections/player/Background";
+import AbilityScores from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerAbilityScoresSection";
+import Appearance from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerAppearanceSection";
+import Background from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerBackgroundSection";
 import Battle from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerFightingSection";
-import Profile from "@/components/modules/characters/modals/panels/characteristics/sections/player/Profile";
-import Treasure from "@/components/modules/characters/modals/panels/characteristics/sections/player/Treasure";
+import Profile from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerProfileSection";
+import Treasure from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerTreasureSection";
 
 interface Props {
     player : IPlayer;
