@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import Characteristic from "@/components/modules/characters/modals/panels/characteristics/PlayerCharacteristicSection";
 import Stats from "@/components/modules/characters/modals/panels/stats/PlayerStats";
 import Plus from "@/components/modules/characters/modals/panels/plus/PlusSection";
-import Spells from "@/components/modules/characters/modals/panels/spells/Spells";
+import Spells from "@/components/modules/characters/modals/panels/spells/SpellsSection";
 import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {

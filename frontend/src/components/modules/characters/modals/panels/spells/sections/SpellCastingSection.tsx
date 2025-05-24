@@ -15,7 +15,7 @@ interface Props {
     isUpdate: boolean;
     changeSpellCasting: (spellcasting: ISpellcasting) => void;
 }
-export default function SpellCasting({ selectedSpellcasting, isUpdate, changeSpellCasting }: Props) {
+export default function SpellCastingSection({ selectedSpellcasting, isUpdate, changeSpellCasting }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

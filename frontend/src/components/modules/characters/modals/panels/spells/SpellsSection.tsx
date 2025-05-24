@@ -1,7 +1,7 @@
 import ISpellcasting from "@/models/characters/spellcasting/ISpellcasting";
 import { useState } from "react";
-import SpellsCasting from "@/components/modules/characters/modals/panels/spells/sections/SpellCastings";
-import SpellCasting from "@/components/modules/characters/modals/panels/spells/sections/SpellCasting";
+import SpellsCasting from "@/components/modules/characters/modals/panels/spells/sections/SpellCastingsSection";
+import SpellCasting from "@/components/modules/characters/modals/panels/spells/sections/SpellCastingSection";
 import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updateCharacter: (player: ICharacter) => void;
 }
-export default function Spells({ character, isUpdate, updateCharacter }: Props) {
+export default function SpellsSection({ character, isUpdate, updateCharacter }: Props) {
 
     const [spellCastingSelected, setSpellCastingSelected] = useState<ISpellcasting>(character.spellcasting[0] || null);
     const [spellCastingIndex, setSpellCastingIndex] = useState<number>(0);

@@ -12,7 +12,7 @@ interface Props {
     changeSpellcasting: (spellcasting: ISpellcasting[]) => void;
     spellcasting: ISpellcasting[];
 }
-export default function SpellCastings({ isUpdate, setSelectedSpellcasting, selectedSpellcasting, setSpellCastingIndex, changeSpellcasting, spellcasting }: Props) {
+export default function SpellCastingsSection({ isUpdate, setSelectedSpellcasting, selectedSpellcasting, setSpellCastingIndex, changeSpellcasting, spellcasting }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

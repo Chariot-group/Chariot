@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import ICharacter from "@/models/characters/ICharacter";
 import { XIcon } from "lucide-react";
-import Spells from "@/components/modules/characters/modals/panels/spells/Spells";
+import Spells from "@/components/modules/characters/modals/panels/spells/SpellsSection";
 import Plus from "@/components/modules/characters/modals/panels/plus/PlusSection";
 import NpcCharacteristic from "@/components/modules/characters/modals/panels/characteristics/NpcCharacteristicSection";
 import NpcStats from "@/components/modules/characters/modals/panels/stats/NpcStats";
