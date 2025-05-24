@@ -442,7 +442,8 @@
       },
       "senses": [
         {
-          "truesight": 120
+          "name": "truesight",
+          "value": 120
         }
       ],
       "languages": ["Common", "Draconic", "Elvish", "any four other languages"],
@@ -1569,9 +1570,12 @@
         "investigation": 9,
         "insight": 5
       },
-      "senses": {
-        "darkvision": 60
-      },
+      "senses": [
+        {
+          "name": "darkvision",
+          "value": 60
+        }
+      ],
       "languages": ["Common", "Elvish", "Deep Speech", "Infernal"],
       "passivePerception": 11
     },

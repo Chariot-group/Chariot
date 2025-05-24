@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Schema as MongooseSchema, Types } from 'mongoose';
 import { Speed } from '@/resources/character/core/schemas/stats/sub/speed.schema';
 import { AbilityScores } from '@/resources/character/core/schemas/stats/sub/abilityScores.schema';
 import { SavingThrows } from '@/resources/character/core/schemas/stats/sub/savingThrows.schema';
@@ -7,6 +8,7 @@ import {
   SIZES,
   Size,
 } from '@/resources/character/core/constants/sizes.constant';
+import { Sense, SenseSchema } from '@/resources/character/core/schemas/stats/sub/sense';
 
 @Schema({ _id: false })
 export class Stats {
@@ -54,8 +56,8 @@ export class Stats {
   @Prop({ type: Skills, default: {} })
   skills: Skills;
 
-  @Prop({ type: [{ name: String, value: Number }], default: [] })
-  senses: { name: string; value: number }[];
+  @Prop({ type: [SenseSchema], default: [] })
+  senses: Sense[];
 }
 
 export const StatsSchema = SchemaFactory.createForClass(Stats);

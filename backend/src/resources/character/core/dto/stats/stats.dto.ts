@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsNumber,
   IsOptional,
   IsString,
@@ -10,6 +11,7 @@ import { Type } from 'class-transformer';
 import { SavingThrowsDto } from '@/resources/character/core/dto/stats/sub/savingThrows.dto';
 import { SpeedDto } from '@/resources/character/core/dto/stats/sub/speed.dto';
 import { SkillDto } from '@/resources/character/core/dto/stats/sub/skill.dto';
+import { SenseDto } from '@/resources/character/core/dto/stats/sub/sense';
 
 export class StatsDto {
   @IsOptional()
@@ -65,7 +67,8 @@ export class StatsDto {
   skills?: SkillDto;
 
   @IsOptional()
+  @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => Object)
-  senses: { name: string; value: number }[];
+  @Type(() => SenseDto)
+  senses: SenseDto[];
 }

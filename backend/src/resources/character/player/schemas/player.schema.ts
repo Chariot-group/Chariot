@@ -20,7 +20,7 @@ export class Player extends Character {
   progression: Progression;
 
   @Prop({ type: [Class], default: [] })
-  classes: Class[];
+  class: Class[];
 
   @Prop({ type: PlayerProfile, default: {} })
   profile: PlayerProfile;
