@@ -8,7 +8,7 @@ import ICharacter from "@/models/characters/ICharacter";
 import { XIcon } from "lucide-react";
 import Spells from "@/components/modules/characters/modals/panels/spells/Spells";
 import Plus from "@/components/modules/characters/modals/panels/plus/Plus";
-import NpcCharacteristic from "@/components/modules/characters/modals/panels/characteristics/NpcCharacteristic";
+import NpcCharacteristic from "@/components/modules/characters/modals/panels/characteristics/NpcCharacteristicSection";
 import NpcStats from "@/components/modules/characters/modals/panels/stats/NpcStats";
 
 interface Props {

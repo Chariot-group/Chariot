@@ -11,7 +11,7 @@ interface Props {
     updateNpc: (npc: INpc) => void;
     isUpdate: boolean;
 }
-export default function NpcCharacteristic({ npc, updateNpc, isUpdate }: Props) {
+export default function NpcCharacteristicSection({ npc, updateNpc, isUpdate }: Props) {
     return (
         <div className="flex flex-row gap-3 h-[90%] overflow-auto">
             <NpcAbilityScores npc={npc} isUpdate={isUpdate} updateNpc={updateNpc} />

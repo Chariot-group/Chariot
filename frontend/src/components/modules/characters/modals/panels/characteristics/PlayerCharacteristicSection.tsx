@@ -11,7 +11,7 @@ interface Props {
     updatePlayer: (player: IPlayer) => void;
     isUpdate: boolean;
 }
-export default function PlayerCharacteristic({ player, updatePlayer, isUpdate }: Props) {
+export default function PlayerCharacteristicSection({ player, updatePlayer, isUpdate }: Props) {
     return (
         <div className="flex flex-row gap-3 h-[90%] overflow-auto">
             <AbilityScores updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
