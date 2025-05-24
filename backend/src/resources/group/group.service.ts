@@ -157,7 +157,7 @@ export class GroupService {
       offset?: number;
       label?: string;
       sort?: string;
-      onlyWithMembers?: boolean;
+      onlyWithMembers?: any;
     },
     campaignId?: string,
     type: 'all' | 'main' | 'npc' | 'archived' = 'all',
@@ -182,8 +182,11 @@ export class GroupService {
         label: { $regex: `${decodeURIComponent(label)}`, $options: 'i' },
         deletedAt: { $eq: null },
         createdBy: new Types.ObjectId(userId),
-        ...(onlyWithMembers && { characters: { $ne: [] } }),
       };
+
+      if( onlyWithMembers == 'true' ) {
+        filters.characters = { $ne: [] };
+      }
 
       if (campaignId) {
         const campaign = await this.campaignModel.findById(campaignId).lean();
