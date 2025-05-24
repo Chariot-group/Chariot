@@ -12,23 +12,23 @@ interface Props{
     updateNpc: (npc: INpc) => void;
     isUpdate: boolean;
 }
-export default function StandardActions({ npc, updateNpc, isUpdate }: Props) {
+export default function NpcLegendaryActionsSection({ npc, updateNpc, isUpdate }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
-    const [standardActions, setStandardActions] = useState<IAction[]>(npc.actions.standard);
+    const [legendaryActions, setLegendaryActions] = useState<IAction[]>(npc.actions.legendary);
 
-    const changeStandardActions = (value: IAction[]) => {
-        setStandardActions(value);
+    const changeActions = (value: IAction[]) => {
+        setLegendaryActions(value);
         updateNpc({
             ...npc,
             actions: {
                 ...npc.actions,
-                standard: value
+                legendary: value
             }
         });
     }
-    const addStandardAction = () => {
+    const addAction = () => {
         const newAction: IAction = {
             name: "",
             type: "",
@@ -36,62 +36,62 @@ export default function StandardActions({ npc, updateNpc, isUpdate }: Props) {
             damage: {},
             range: ""
         };
-        changeStandardActions([...standardActions, newAction]);
+        changeActions([...legendaryActions, newAction]);
     };
-    const removeStandardAction = (index: number) => {
-        const newActions = standardActions.filter((_, i) => i !== index);
-        changeStandardActions(newActions);
+    const removeAction = (index: number) => {
+        const newActions = legendaryActions.filter((_, i) => i !== index);
+        changeActions(newActions);
     };
     const updateNameAction = (index: number, name: string) => {
-        const newActions = [...standardActions];
+        const newActions = [...legendaryActions];
         const newAction = { ...newActions[index] };
         newAction.name = name;
         newActions[index] = newAction;
-        changeStandardActions(newActions);
+        changeActions(newActions);
     };
     const updateTypeAction = (index: number, type: string) => {
-        const newActions = [...standardActions];
+        const newActions = [...legendaryActions];
         const newAction = { ...newActions[index] };
         newAction.type = type;
         newActions[index] = newAction;
-        changeStandardActions(newActions);
+        changeActions(newActions);
     };
     const updateAttackBonusAction = (index: number, attackBonus: any) => {
-        const newActions = [...standardActions];
+        const newActions = [...legendaryActions];
         const newAction = { ...newActions[index] };
         newAction.attackBonus = parseInt(attackBonus);
         newActions[index] = newAction;
-        changeStandardActions(newActions);
+        changeActions(newActions);
     };
     const updateDamageDiceAction = (index: number, dice: string) => {
-        const newActions = [...standardActions];
+        const newActions = [...legendaryActions];
         const newAction = { ...newActions[index] };
         newAction.damage.dice = dice;
         newActions[index] = newAction;
-        changeStandardActions(newActions);
+        changeActions(newActions);
     };
     const updateDamageTypeAction = (index: number, type: string) => {
-        const newActions = [...standardActions];
+        const newActions = [...legendaryActions];
         const newAction = { ...newActions[index] };
         newAction.damage.type = type;
         newActions[index] = newAction;
-        changeStandardActions(newActions);
+        changeActions(newActions);
     };
     const updateRangeAction = (index: number, range: string) => {
-        const newActions = [...standardActions];
+        const newActions = [...legendaryActions];
         const newAction = { ...newActions[index] };
         newAction.range = range;
         newActions[index] = newAction;
-        changeStandardActions(newActions);
+        changeActions(newActions);
     };
 
     return (
         <div className="flex flex-col gap-3 w-full h-full">
             <div className="flex flex-row justify-between items-center">
-                <h2 className="text-lg font-bold">{t('action.standard')}</h2>
+                <h2 className="text-lg font-bold">{t('action.legendary')}</h2>
                 {isUpdate && <Tooltip>
                     <TooltipTrigger asChild>
-                        <PlusCircleIcon onClick={() => addStandardAction()} className="text-primary cursor-pointer" />
+                        <PlusCircleIcon onClick={() => addAction()} className="text-primary cursor-pointer" />
                     </TooltipTrigger>
                     <TooltipContent>
                         <p>{t('actions.addAction')}</p>
@@ -99,14 +99,14 @@ export default function StandardActions({ npc, updateNpc, isUpdate }: Props) {
                 </Tooltip>}
             </div>
             <div className="flex flex-col gap-3 w-full h-full overflow-auto">
-                {standardActions.length <= 0 && <span className="text-sm text-gray-500">{t('action.noActions')}</span>}
-                {standardActions.length > 0 && standardActions.map((action, index) => (
+                {legendaryActions.length <= 0 && <span className="text-sm text-gray-500">{t('action.noActions')}</span>}
+                {legendaryActions.length > 0 && legendaryActions.map((action, index) => (
                     <Card key={index} className="p-4 flex flex-col bg-background">
                         <div className="flex flex-row justify-between items-center">
                             <Champs label={t('action.name')} value={action.name} id={`name-${index}`} type={"text"} placeholder={t('action.name')} isActive={isUpdate} setValue={(value) => updateNameAction(index, value)} />
                             {isUpdate && <Tooltip>
                                 <TooltipTrigger asChild>
-                                    <TrashIcon onClick={() => removeStandardAction(index)} className="text-primary cursor-pointer"/>
+                                    <TrashIcon onClick={() => removeAction(index)} className="text-primary cursor-pointer"/>
                                 </TooltipTrigger>
                                 <TooltipContent>
                                     <p>{t('actions.deleteAction')}</p>

@@ -4,7 +4,8 @@ import IAction from "@/models/npc/actions/IAction";
 import INpc from "@/models/npc/INpc";
 import { PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useState } from "react";
-import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
+import { Champs } from "../../../../PlayerModalDetails";
+import { parse } from "path";
 import { useTranslations } from "next-intl";
 
 interface Props{
@@ -12,19 +13,19 @@ interface Props{
     updateNpc: (npc: INpc) => void;
     isUpdate: boolean;
 }
-export default function LegendaryActions({ npc, updateNpc, isUpdate }: Props) {
+export default function NpcLairActionsSection({ npc, updateNpc, isUpdate }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
-    const [legendaryActions, setLegendaryActions] = useState<IAction[]>(npc.actions.legendary);
+    const [lairActions, setLairActions] = useState<IAction[]>(npc.actions.lair);
 
     const changeActions = (value: IAction[]) => {
-        setLegendaryActions(value);
+        setLairActions(value);
         updateNpc({
             ...npc,
             actions: {
                 ...npc.actions,
-                legendary: value
+                lair: value
             }
         });
     }
@@ -36,49 +37,49 @@ export default function LegendaryActions({ npc, updateNpc, isUpdate }: Props) {
             damage: {},
             range: ""
         };
-        changeActions([...legendaryActions, newAction]);
+        changeActions([...lairActions, newAction]);
     };
     const removeAction = (index: number) => {
-        const newActions = legendaryActions.filter((_, i) => i !== index);
+        const newActions = lairActions.filter((_, i) => i !== index);
         changeActions(newActions);
     };
     const updateNameAction = (index: number, name: string) => {
-        const newActions = [...legendaryActions];
+        const newActions = [...lairActions];
         const newAction = { ...newActions[index] };
         newAction.name = name;
         newActions[index] = newAction;
         changeActions(newActions);
     };
     const updateTypeAction = (index: number, type: string) => {
-        const newActions = [...legendaryActions];
+        const newActions = [...lairActions];
         const newAction = { ...newActions[index] };
         newAction.type = type;
         newActions[index] = newAction;
         changeActions(newActions);
     };
     const updateAttackBonusAction = (index: number, attackBonus: any) => {
-        const newActions = [...legendaryActions];
+        const newActions = [...lairActions];
         const newAction = { ...newActions[index] };
         newAction.attackBonus = parseInt(attackBonus);
         newActions[index] = newAction;
         changeActions(newActions);
     };
     const updateDamageDiceAction = (index: number, dice: string) => {
-        const newActions = [...legendaryActions];
+        const newActions = [...lairActions];
         const newAction = { ...newActions[index] };
         newAction.damage.dice = dice;
         newActions[index] = newAction;
         changeActions(newActions);
     };
     const updateDamageTypeAction = (index: number, type: string) => {
-        const newActions = [...legendaryActions];
+        const newActions = [...lairActions];
         const newAction = { ...newActions[index] };
         newAction.damage.type = type;
         newActions[index] = newAction;
         changeActions(newActions);
     };
     const updateRangeAction = (index: number, range: string) => {
-        const newActions = [...legendaryActions];
+        const newActions = [...lairActions];
         const newAction = { ...newActions[index] };
         newAction.range = range;
         newActions[index] = newAction;
@@ -88,7 +89,7 @@ export default function LegendaryActions({ npc, updateNpc, isUpdate }: Props) {
     return (
         <div className="flex flex-col gap-3 w-full h-full">
             <div className="flex flex-row justify-between items-center">
-                <h2 className="text-lg font-bold">{t('action.legendary')}</h2>
+                <h2 className="text-lg font-bold">{t('action.lair')}</h2>
                 {isUpdate && <Tooltip>
                     <TooltipTrigger asChild>
                         <PlusCircleIcon onClick={() => addAction()} className="text-primary cursor-pointer" />
@@ -99,8 +100,8 @@ export default function LegendaryActions({ npc, updateNpc, isUpdate }: Props) {
                 </Tooltip>}
             </div>
             <div className="flex flex-col gap-3 w-full h-full overflow-auto">
-                {legendaryActions.length <= 0 && <span className="text-sm text-gray-500">{t('action.noActions')}</span>}
-                {legendaryActions.length > 0 && legendaryActions.map((action, index) => (
+                {lairActions.length <= 0 && <span className="text-sm text-gray-500">{t('action.noActions')}</span>}
+                {lairActions.length > 0 && lairActions.map((action, index) => (
                     <Card key={index} className="p-4 flex flex-col bg-background">
                         <div className="flex flex-row justify-between items-center">
                             <Champs label={t('action.name')} value={action.name} id={`name-${index}`} type={"text"} placeholder={t('action.name')} isActive={isUpdate} setValue={(value) => updateNameAction(index, value)} />
