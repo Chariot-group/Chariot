@@ -13,7 +13,7 @@ interface Props {
     isUpdate: boolean;
     updateCharacter: (character: ICharacter) => void;
 }
-export default function Abilities({ character, isUpdate, updateCharacter }: Props) {
+export default function PlusAbilitiesSection({ character, isUpdate, updateCharacter }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

@@ -11,7 +11,7 @@ interface Props {
     isUpdate: boolean;
     updateCharacter: (player: ICharacter) => void;
 }
-export default function Resistances({ character, isUpdate, updateCharacter }: Props) {
+export default function PlusResistancesSection({ character, isUpdate, updateCharacter }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

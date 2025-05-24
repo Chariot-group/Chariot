@@ -11,7 +11,7 @@ interface Props {
     isUpdate: boolean;
     updateCharacter: (character: ICharacter) => void;
 }
-export default function Immunities({ character, isUpdate, updateCharacter }: Props) {
+export default function PlusImmunitiesSection({ character, isUpdate, updateCharacter }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

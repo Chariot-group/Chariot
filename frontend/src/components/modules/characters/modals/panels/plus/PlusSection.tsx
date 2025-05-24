@@ -1,7 +1,7 @@
-import Resistances from "@/components/modules/characters/modals/panels/plus/sections/Resistances";
-import Immunities from "@/components/modules/characters/modals/panels/plus/sections/Immunities";
-import Vulnerabilities from "@/components/modules/characters/modals/panels/plus/sections/Vulnerabilities";
-import Abilities from "@/components/modules/characters/modals/panels/plus/sections/Abilities";
+import Resistances from "@/components/modules/characters/modals/panels/plus/sections/PlusResistancesSection";
+import Immunities from "@/components/modules/characters/modals/panels/plus/sections/PlusImmunitiesSection";
+import Vulnerabilities from "@/components/modules/characters/modals/panels/plus/sections/PlusVulnerabilitiesSection";
+import Abilities from "@/components/modules/characters/modals/panels/plus/sections/PlusAbilitiesSection";
 import ICharacter from "@/models/characters/ICharacter";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updateCharacter: (character: ICharacter) => void;
 }  
-export default function Plus({ character, isUpdate, updateCharacter }: Props) {
+export default function PlusSection({ character, isUpdate, updateCharacter }: Props) {
     return (
         <div className="flex flex-row gap-3 h-[90%] overflow-auto">
             <div className="flex flex-col gap-3 w-1/6 h-full">
