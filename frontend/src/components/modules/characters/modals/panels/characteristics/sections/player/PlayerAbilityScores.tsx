@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
-import { parse } from "path";
 import { useTranslations } from "next-intl";
 
 interface Props {

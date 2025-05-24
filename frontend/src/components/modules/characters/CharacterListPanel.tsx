@@ -14,7 +14,7 @@ import React, { RefObject, useCallback, useEffect, useRef, useState } from "reac
 import { NPCCard, PlayerCard } from "@/components/modules/characters/CharacterCard";
 import IPlayer from "@/models/player/IPlayer";
 import INpc from "@/models/npc/INpc";
-import CharacterModal from "./CharacterModal";
+import CharacterModal from "@/components/modules/characters/CharacterModal";
 
 interface ICharacterListPanelProps {
   offset?: number;
