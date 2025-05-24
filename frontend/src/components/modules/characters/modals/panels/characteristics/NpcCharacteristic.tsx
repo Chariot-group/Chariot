@@ -1,6 +1,6 @@
 import INpc from "@/models/npc/INpc";
 import NpcAbilityScores from "@/components/modules/characters/modals/panels/characteristics/sections/npc/NpcAbilityScores";
-import NpcBattle from "@/components/modules/characters/modals/panels/characteristics/sections/npc/Fighting";
+import NpcBattle from "@/components/modules/characters/modals/panels/characteristics/sections/npc/NpcFightingSection";
 import Profile from "@/components/modules/characters/modals/panels/characteristics/sections/npc/Profile";
 import StandardActions from "@/components/modules/characters/modals/panels/characteristics/sections/npc/StandardActions";
 import LegendaryActions from "@/components/modules/characters/modals/panels/characteristics/sections/npc/LegendaryActions";

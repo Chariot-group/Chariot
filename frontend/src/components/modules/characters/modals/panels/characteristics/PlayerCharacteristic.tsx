@@ -2,7 +2,7 @@ import IPlayer from "@/models/player/IPlayer";
 import AbilityScores from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerAbilityScores";
 import Appearance from "@/components/modules/characters/modals/panels/characteristics/sections/player/Appareance";
 import Background from "@/components/modules/characters/modals/panels/characteristics/sections/player/Background";
-import Battle from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerBattle";
+import Battle from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerFightingSection";
 import Profile from "@/components/modules/characters/modals/panels/characteristics/sections/player/Profile";
 import Treasure from "@/components/modules/characters/modals/panels/characteristics/sections/player/Treasure";
 

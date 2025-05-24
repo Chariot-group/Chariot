@@ -1,29 +1,29 @@
 import { Card } from "@/components/ui/card";
 import { Champs } from "@/components/modules/characters/modals/PlayerModalDetails";
 import { useState } from "react";
-import INpc from "@/models/npc/INpc";
+import IPlayer from "@/models/player/IPlayer";
 import { useTranslations } from "next-intl";
 
 interface Props {
-    npc: INpc;
+    player: IPlayer;
     isUpdate: boolean;
-    updateNpc: (npc: INpc) => void;
+    updatePlayer: (player: IPlayer) => void;
 }
-export default function Fighting({ npc, isUpdate, updateNpc }: Props) {
+export default function PlayerFightingSection({ player, isUpdate, updatePlayer }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
-    const [maxHitPoints, setMaxHitPoints] = useState<number>(npc.stats.maxHitPoints);
-    const [currentHitPoints, setCurrentHitPoints] = useState<number>(npc.stats.currentHitPoints);
-    const [tempHitPoints, setTempHitPoints] = useState<number>(npc.stats.tempHitPoints);
-    const [armorClass, setArmorClass] = useState<number>(npc.stats.armorClass);
+    const [maxHitPoints, setMaxHitPoints] = useState<number>(player.stats.maxHitPoints);
+    const [currentHitPoints, setCurrentHitPoints] = useState<number>(player.stats.currentHitPoints);
+    const [tempHitPoints, setTempHitPoints] = useState<number>(player.stats.tempHitPoints);
+    const [armorClass, setArmorClass] = useState<number>(player.stats.armorClass);
 
     const changeMaxHitPoints = (value: any) => {
         setMaxHitPoints(value);
-        updateNpc({
-            ...npc,
+        updatePlayer({
+            ...player,
             stats: {
-                ...npc.stats,
+                ...player.stats,
                 maxHitPoints: parseInt(value)
             }
         });
@@ -31,10 +31,10 @@ export default function Fighting({ npc, isUpdate, updateNpc }: Props) {
 
     const changeCurrentHitPoints = (value: any) => {
         setCurrentHitPoints(value);
-        updateNpc({
-            ...npc,
+        updatePlayer({
+            ...player,
             stats: {
-                ...npc.stats,
+                ...player.stats,
                 currentHitPoints: parseInt(value)
             }
         });
@@ -42,10 +42,10 @@ export default function Fighting({ npc, isUpdate, updateNpc }: Props) {
 
     const changeTempHitPoints = (value: any) => {
         setTempHitPoints(value);
-        updateNpc({
-            ...npc,
+        updatePlayer({
+            ...player,
             stats: {
-                ...npc.stats,
+                ...player.stats,
                 tempHitPoints: parseInt(value)
             }
         });
@@ -53,10 +53,10 @@ export default function Fighting({ npc, isUpdate, updateNpc }: Props) {
 
     const changeArmorClass = (value: any) => {
         setArmorClass(value);
-        updateNpc({
-            ...npc,
+        updatePlayer({
+            ...player,
             stats: {
-                ...npc.stats,
+                ...player.stats,
                 armorClass: parseInt(value)
             }
         });
