@@ -1,10 +1,10 @@
 import IPlayer from "@/models/player/IPlayer";
-import Details from "@/components/modules/characters/modals/panels/stats/sections/player/Details";
-import Speed from "@/components/modules/characters/modals/panels/stats/sections/player/Speed";
-import Languages from "@/components/modules/characters/modals/panels/stats/sections/player/Languages";
-import Senses from "@/components/modules/characters/modals/panels/stats/sections/player/Senses";
-import Classes from "@/components/modules/characters/modals/panels/stats/sections/Classes";
-import Skills from "@/components/modules/characters/modals/panels/stats/sections/player/Skills";
+import Details from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerDetailsSection";
+import Speed from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerSpeedSection";
+import Languages from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerLanguagesSection";
+import Senses from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerSensesSection";
+import Classes from "@/components/modules/characters/modals/panels/stats/sections/CharacterClassesSection";
+import Skills from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerSkillsSection";
 
 interface Props {
     player: IPlayer;

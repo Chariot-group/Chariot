@@ -10,7 +10,7 @@ interface Props {
     isUpdate: boolean;
     updateNpc: (npc: INpc) => void;
 }
-export default function PlayerStats({ npc, isUpdate, updateNpc }: Props) {
+export default function NpcStats({ npc, isUpdate, updateNpc }: Props) {
     return (
         <div className="flex flex-row gap-3 h-[90%] overflow-auto">
             <div className="flex flex-col gap-3 w-1/6 h-full">

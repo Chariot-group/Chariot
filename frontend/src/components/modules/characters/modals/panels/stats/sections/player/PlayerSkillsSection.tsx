@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updatePlayer: (player: IPlayer) => void;
 }
-export default function Skills({ player, isUpdate, updatePlayer }: Props) {
+export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -268,7 +268,7 @@ export default function Skills({ player, isUpdate, updatePlayer }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs isActive={isUpdate} color="card" label={t('skills.athletics')} value={athletics} id={"athletics"} type={"number"} placeholder={t('skills.athletics')} setValue={changeAthletics} />
             <Champs isActive={isUpdate} color="card" label={t('skills.acrobatics')} value={acrobatics} id={"acrobatics"} type={"number"} placeholder={t('skills.acrobatics')} setValue={changeAcrobatics} />
             <Champs isActive={isUpdate} color="card" label={t('skills.stealth')} value={stealth} id={"stealth"} type={"number"} placeholder={t('skills.stealth')} setValue={changeStealth} />

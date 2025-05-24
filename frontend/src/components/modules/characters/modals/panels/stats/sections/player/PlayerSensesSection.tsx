@@ -12,7 +12,7 @@ interface Props {
     isUpdate: boolean;
     updatePlayer: (player: IPlayer) => void;
 }
-export default function Senses({ player, isUpdate, updatePlayer }: Props) {
+export default function PlayerSensesSection({ player, isUpdate, updatePlayer }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

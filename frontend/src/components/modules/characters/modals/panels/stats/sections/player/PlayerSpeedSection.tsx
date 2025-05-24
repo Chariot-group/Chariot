@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updatePlayer: (player: IPlayer) => void;
 }
-export default function Speed({ player, isUpdate, updatePlayer }: Props) {
+export default function PlayerSpeedSection({ player, isUpdate, updatePlayer }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -86,7 +86,7 @@ export default function Speed({ player, isUpdate, updatePlayer }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs width="w-auto" isActive={isUpdate} min={0} color="card" label={t('speed.walking')} value={walking} id={"walk"} type={"number"} placeholder={t('speed.walking')} setValue={changeWalking} />
             <Champs width="w-auto" isActive={isUpdate} min={0} color="card" label={t('speed.climbing')} value={climbing} id={"climb"} type={"number"} placeholder={t('speed.climbing')} setValue={changeClimbing} />
             <Champs width="w-auto" isActive={isUpdate} min={0} color="card" label={t('speed.flying')} value={flying} id={"fly"} type={"number"} placeholder={t('speed.flying')} setValue={changeFlying} />
