@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updateNpc: (npc: INpc) => void;
 }
-export default function Details({ npc, isUpdate, updateNpc }: Props) {
+export default function NpcDetailsSection({ npc, isUpdate, updateNpc }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
@@ -38,7 +38,7 @@ export default function Details({ npc, isUpdate, updateNpc }: Props) {
     }
 
     return (
-        <Card className="bg-card p-4 flex flex-col bg-background">
+        <Card className="p-4 flex flex-col bg-background">
             <Champs isActive={isUpdate} min={0} color="card" label={t('details.darkvision')} value={darkvision} id={"darkvision"} type={"number"} placeholder={t('details.darkvision')} setValue={changeDarkvision} />
             <Champs isActive={isUpdate} min={0} color="card" label={t('details.passivePerception')} value={passivePerception} id={"passivePerception"} type={"number"} placeholder={t('details.passivePerception')} setValue={changePassivePerception} />
         </Card>

@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updateNpc: (npc: INpc) => void;
 }
-export default function Skills({ npc, isUpdate, updateNpc }: Props) {
+export default function NpcSkillsSection({ npc, isUpdate, updateNpc }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 

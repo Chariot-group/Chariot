@@ -15,7 +15,7 @@ interface Props {
   isUpdate: boolean;
   updateNpc: (npc: INpc) => void;
 }
-export default function Languages({ npc, isUpdate, updateNpc }: Props) {
+export default function NpcLanguagesSection({ npc, isUpdate, updateNpc }: Props) {
   const t = useTranslations("CharacterDetailsPanel");
 
   const [languages, setLanguages] = useState<string[]>(npc.stats.languages);

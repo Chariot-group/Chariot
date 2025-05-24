@@ -16,7 +16,7 @@ interface Props {
   isUpdate: boolean;
   updateNpc: (npc: INpc) => void;
 }
-export default function Senses({ npc, isUpdate, updateNpc }: Props) {
+export default function NpcSensesSection({ npc, isUpdate, updateNpc }: Props) {
   const t = useTranslations("CharacterDetailsPanel");
 
   const [senses, setSenses] = useState<ISense[]>(npc.stats.senses);

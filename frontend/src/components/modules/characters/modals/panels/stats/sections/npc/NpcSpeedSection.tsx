@@ -9,7 +9,7 @@ interface Props {
     isUpdate: boolean;
     updateNpc: (npc: INpc) => void;
 }
-export default function Speed({ npc, isUpdate, updateNpc }: Props) {
+export default function NpcSpeedSection({ npc, isUpdate, updateNpc }: Props) {
 
     const t = useTranslations("CharacterDetailsPanel");
 
