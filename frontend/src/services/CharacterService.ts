@@ -28,7 +28,7 @@ const CharacterService = {
 
   async updateCharacter(id: string, data: any) {
     try {
-      const response = await apiClient(APIContentType.JSON).patch(`/characters/${id}`, data);
+      const response = await apiClient(APIContentType.JSON).patch(`/characters/${data.kind}s/${id}`, data);
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");
@@ -43,7 +43,7 @@ const CharacterService = {
 
   async createCharacter(data: any) {
     try {
-      const response = await apiClient(APIContentType.JSON).post(`/characters`, data);
+      const response = await apiClient(APIContentType.JSON).post(`/characters/${data.kind}s`, data);
 
       if (!response || !response.data || response === undefined) {
         throw new Error("Invalid API response");

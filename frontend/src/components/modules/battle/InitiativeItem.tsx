@@ -5,9 +5,9 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { IParticipant } from "@/models/participant/IParticipant";
 import { Heart, Shield, Sword } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import CharacterDetailsModal from "@/components/modules/characters/CharacterDetailsModal";
+import CharacterModal from "@/components/modules/characters/CharacterModal";
 import { useTranslations } from "next-intl";
-import CharacterService from "@/services/CharacterService"; 
+import CharacterService from "@/services/CharacterService";
 
 interface Props {
   participant: IParticipant;
@@ -125,10 +125,11 @@ const InitiativeItem = ({
         >
           {t("detail")}
         </Button>
-        <CharacterDetailsModal
+        <CharacterModal
           isOpen={showDetails}
           onClose={() => setShowDetails(false)}
           character={participant.character}
+          isUpdating={false}
         />
       </TableCell>
     </TableRow>

@@ -4,7 +4,6 @@ import { AppService } from '@/app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from '@/resources/user/user.module';
-import { CharacterModule } from '@/resources/character/character.module';
 import { GroupModule } from '@/resources/group/group.module';
 import { CampaignModule } from '@/resources/campaign/campaign.module';
 import { SeederModule } from '@/seeder/seeder.module';
@@ -14,7 +13,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { join } from 'path';
 import { MaillingService } from '@/mailling/mailling.service';
 import { MaillingModule } from '@/mailling/mailling.module';
-
+import { CharacterModule } from '@/resources/character/character.module';
 
 @Module({
   imports: [
