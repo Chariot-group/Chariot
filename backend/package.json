@@ -22,7 +22,6 @@
     "seed:clean": "ts-node -r tsconfig-paths/register src/seeder/runner/seeder.ts --clean"
   },
   "dependencies": {
-    "@nestjs-modules/mailer": "^2.0.2",
     "@nestjs/common": "^11.0.13",
     "@nestjs/config": "^4.0.0",
     "@nestjs/core": "^11.0.13",

@@ -8,7 +8,6 @@ import { useToast } from "@/hooks/useToast"
 import authService from "@/services/authService"
 import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { setCookie } from "nookies";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -63,11 +62,11 @@ export default function LoginPage() {
                 error(t("errors.invalidCredentials"));
                 return;
             }else{
+                const secure = location.protocol === 'https:' ? 'Secure;' : '';
+                document.cookie = `accessToken=${response.access_token}; max-age=${24 * 60 * 60}; path=/; SameSite=Lax; ${secure}`;
+
+
                 success(t("success.login"));
-                setCookie(null, "accessToken", response.access_token, {
-                    maxAge: 24 * 60 * 60, // 30 days
-                    path: "/",
-                });
                 router.push("/");
             }
         } catch (err) {
