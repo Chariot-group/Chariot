@@ -26,6 +26,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     const request = context.switchToHttp().getRequest();
     const token = request.cookies?.accessToken;
 
+    console.log('JWT Auth Guard - Token:', token);
+    console.log('JWT Auth Guard - Request:', request);
     if (token) {
       request.headers.authorization = `Bearer ${token}`;
     }
