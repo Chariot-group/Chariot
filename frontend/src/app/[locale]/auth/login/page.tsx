@@ -8,7 +8,6 @@ import { useToast } from "@/hooks/useToast"
 import authService from "@/services/authService"
 import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { setCookie } from "nookies";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
