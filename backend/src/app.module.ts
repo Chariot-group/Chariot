@@ -4,17 +4,14 @@ import { AppService } from '@/app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from '@/resources/user/user.module';
-import { CharacterModule } from '@/resources/character/character.module';
 import { GroupModule } from '@/resources/group/group.module';
 import { CampaignModule } from '@/resources/campaign/campaign.module';
 import { SeederModule } from '@/seeder/seeder.module';
 import { AuthModule } from '@/resources/auth/auth.module';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { join } from 'path';
 import { MaillingService } from '@/mailling/mailling.service';
 import { MaillingModule } from '@/mailling/mailling.module';
-
+import { CharacterModule } from '@/resources/character/character.module';
 
 @Module({
   imports: [
@@ -28,27 +25,6 @@ import { MaillingModule } from '@/mailling/mailling.module';
     CampaignModule,
     SeederModule,
     AuthModule,
-    MailerModule.forRoot({
-      transport: {
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT),
-        secure: process.env.SMTP_SECURE,
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-      },
-      defaults: {
-        from: `"No Reply" <${process.env.RECEIVER_EMAIL}>`,
-      },
-      template: {
-        dir: join(process.cwd(), 'src/mailling/templates'),
-        adapter: new HandlebarsAdapter(),
-        options: {
-          strict: true,
-        },
-      },
-    }),
     MaillingModule,
   ],
   controllers: [AppController],

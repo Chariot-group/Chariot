@@ -3,11 +3,9 @@
 import { Header } from "@/components/common/Header";
 import Loading from "@/components/common/Loading";
 import CharacterListPanel from "@/components/modules/characters/CharacterListPanel";
-import { CharacterDetailsPanel } from "@/components/modules/characters/panelSections/CharacterDetailsPanel";
 import GroupDetailsPanel from "@/components/modules/groups/GroupDetailsPanel";
 import GroupListPanel from "@/components/modules/groups/GroupListPanel";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { DEFAULT_NPC, DEFAULT_PLAYER } from "@/constants/CharacterConstants";
 import useBeforeUnload from "@/hooks/useBeforeUnload";
 import { useToast } from "@/hooks/useToast";
 import { ICampaign } from "@/models/campaigns/ICampaign";
@@ -19,7 +17,6 @@ import GroupService from "@/services/groupService";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { set } from "react-hook-form";
 
 export default function CampaignGroupsPage() {
 
@@ -49,6 +46,7 @@ export default function CampaignGroupsPage() {
             setLoading(true);
             removedCharacterRef.current = [];
             newCharacterRef.current = [];
+            updateCharacterRef.current = [];
             await setGroupSelected(groupTempRef.current);
             setIsUpdating(false);
             setLoading(false);
@@ -76,14 +74,23 @@ export default function CampaignGroupsPage() {
                 });
                 await updateGroup(groupSelected);
                 removedCharacterRef.current.forEach(async (characterId) => {
-                    await CharacterService.deleteCharacter(characterId);
+                    // si characterId est un entier, on le supprime
+                    if (!characterId.match(/^\d+$/)) {
+                        await CharacterService.deleteCharacter(characterId);
+                    }
                 });
                 newCharacterRef.current.forEach(async (character) => {
                     const { _id, ...characterWithoutId } = character;
-                    await CharacterService.createCharacter(characterWithoutId);
+                    if (!_id?.match(/^\d+$/)) {
+                        await CharacterService.createCharacter(characterWithoutId);
+                    }
+                });
+                updateCharacterRef.current.forEach(async (character) => {
+                    await CharacterService.updateCharacter(character._id, character);
                 });
                 removedCharacterRef.current = [];
                 newCharacterRef.current = [];
+                updateCharacterRef.current = [];
                 characterTempRef.current.clear();
                 setIsUpdating(false);
                 success(t("toasts.save"));
@@ -128,6 +135,7 @@ export default function CampaignGroupsPage() {
     const [newCharacter, setNewCharacter] = useState<ICharacter | null>(null);
 
     let newCharacterRef = useRef<Partial<ICharacter>[]>([]);
+    let updateCharacterRef = useRef<ICharacter[]>([]);
     let removedCharacterRef = useRef<string[]>([]);
 
     const { campaignId } = useParams();
@@ -135,7 +143,6 @@ export default function CampaignGroupsPage() {
     const createCharacter = useCallback(
         async (createCharacter: Partial<ICharacter>) => {
             try {
-                createCharacter._id = createCharacter.name;
                 newCharacterRef.current.push(createCharacter);
                 let character: ICharacter = createCharacter as ICharacter;
                 await setGroupSelected((prev) => {
@@ -153,6 +160,41 @@ export default function CampaignGroupsPage() {
         },
         []
     );
+
+    const updateCharacter = useCallback(
+        async (updateCharacter: ICharacter) => {
+            try {
+                if (!updateCharacterRef.current.some((c) => c._id === updateCharacter._id) && !newCharacterRef.current.some((c) => c._id === updateCharacter._id)) {
+                    updateCharacterRef.current.push(updateCharacter);
+                }else if(updateCharacterRef.current.some((c) => c._id === updateCharacter._id)){
+                    updateCharacterRef.current = updateCharacterRef.current.map((c) => {
+                        if (c._id === updateCharacter._id) {
+                            return updateCharacter;
+                        }
+                        return c;
+                    });
+                }else if(newCharacterRef.current.some((c) => c._id === updateCharacter._id)){
+                    newCharacterRef.current = newCharacterRef.current.map((c) => {
+                        if (c._id === updateCharacter._id) {
+                            return updateCharacter;
+                        }
+                        return c;
+                    });
+                }
+                setGroupSelected((prev) => {
+                    if (!prev) return null;
+                    return {
+                        ...prev,
+                        characters: prev.characters.map((character) =>
+                            character === updateCharacter._id ? updateCharacter._id : character
+                        ),
+                    };
+                });
+            } catch (err) {
+                error(t("toasts.errorUpdateCharacter"));
+            }
+        }, []
+    );  
 
     const deleteCharacter = useCallback(
         async (deleteCharacter: Partial<ICharacter>) => {
@@ -227,98 +269,14 @@ export default function CampaignGroupsPage() {
         };
     }, [isUpdating, groupSelected]);
 
-    const addCharacter = (idGroup: string) => {
-        const newCharacter: Partial<ICharacter> = {
-            "name": "Goblin",
-            "classification": {
-                "type": "humanoid",
-                "subtype": "goblinoid",
-                "alignment": "neutral evil",
-                "size": "Small"
-            },
-            "stats": {
-                "maxHitPoints": 7,
-                "currentHitPoints": 3,
-                "tempHitPoints": 5,
-                "hitDice": "2d6",
-                "armorClass": 15,
-                "speed": {
-                    "walk": 30,
-                },
-                "abilityScores": {
-                    "strength": 8,
-                    "dexterity": 14,
-                    "constitution": 10,
-                    "intelligence": 10,
-                    "wisdom": 8,
-                    "charisma": 8
-                },
-                "savingThrows": {
-                    "dexterity": 4,
-                    "constitution": 2,
-                    "intelligence": 2,
-                    "wisdom": 1,
-                    "charisma": 1,
-                    "strength": 0
-                },
-                "skills": {
-                    "stealth": 6,
-                    "perception": 1,
-                    "deception": 1,
-                    "arcana": 2,
-                    "athletics": 0,
-                    "history": 2,
-                    "insight": 1,
-                    "intimidation": 1,
-                    "investigation": 2,
-                    "medicine": 1,
-                    "nature": 2,
-                    "performance": 1,
-                    "persuasion": 1,
-                    "religion": 2,
-                    "sleightHand": 6,
-                    "survival": 1,
-                    "animalHandling": 1,
-                    "acrobatics": 4
-                },
-                "senses": {
-                    "darkvision": 60,
-                    "passivePerception": 9
-                },
-            },
-            "combat": {
-                "challengeRating": 0.25,
-                "experiencePoints": 50,
-                "resistances": [],
-                "immunities": [],
-                "vulnerabilities": []
-            },
-            "traits": [
-                {
-                    "languages": [
-                        "Common",
-                        "Goblin"
-                    ],
-                    "abilities": [
-                        {
-                            "name": "Nimble Escape",
-                            "description": "The goblin can take the Disengage or Hide action as a bonus action on each of its turns."
-                        }
-                    ]
-                }
-            ],
-            "actions": [
-                {
-                    "standard": [],
-                    "legendary": [],
-                    "lair": []
-                }
-            ],
-            "groups": [
-                idGroup
-            ]
-        };
-        createCharacter(newCharacter);
+    const addPlayer = (idGroup: string) => {
+        const newCharacter = DEFAULT_PLAYER;
+        createCharacter({...newCharacter, groups: [idGroup], _id: newCharacterRef.current.length.toString()});
+    }
+
+    const addNpc = (idGroup: string) => {
+        const newCharacter = DEFAULT_NPC;
+        createCharacter({...newCharacter, groups: [idGroup], _id: newCharacterRef.current.length.toString()});
     }
 
     useBeforeUnload(isUpdating, t("form.unsave"));
@@ -347,25 +305,20 @@ export default function CampaignGroupsPage() {
                             <div className="w-full justify-center flex flex-row">
                                 <div className="w-[90%] border border-ring"></div>
                             </div>
-                            <div className="w-full h-[6vh] flex flex-row justify-between items-center pr-5 pl-5">
-                                <span className="text-2xl text-foreground">{t("yourCharacters")}</span>
-                            </div>
                             <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
-                                <Card className="w-[20%] ">
-                                    <CharacterListPanel 
-                                        newCharacters={newCharacterRef}
-                                        removeCharacters={removedCharacterRef}
-                                        isUpdating={isUpdating}
-                                        group={groupSelected}
-                                        characterSelected={characterSelected}
-                                        setCharacterSelected={setCharacterSelected}
-                                        addCharacter={addCharacter} />
-                                </Card>
-                                {
-                                    characterSelected && (
-                                        <CharacterDetailsPanel onDelete={deleteCharacter} character={characterSelected} isUpdating={isUpdating} characterTempRef={characterTempRef} />
-                                    )
-                                }
+                                <CharacterListPanel 
+                                    newCharacters={newCharacterRef}
+                                    removeCharacters={removedCharacterRef}
+                                    isUpdating={isUpdating}
+                                    group={groupSelected}
+                                    characterSelected={characterSelected}
+                                    setCharacterSelected={setCharacterSelected}
+                                    addPlayer={addPlayer} 
+                                    addNpc={addNpc}
+                                    deleteCharacter={deleteCharacter}
+                                    updateCharacter={updateCharacter}
+                                    updateCharacters={updateCharacterRef} />
+                                
                             </div>
                         </div>
                     )

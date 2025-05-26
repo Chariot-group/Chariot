@@ -11,6 +11,10 @@ import CharacterService from "@/services/CharacterService";
 import { PlusCircleIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import React, { RefObject, useCallback, useEffect, useRef, useState } from "react";
+import { NPCCard, PlayerCard } from "@/components/modules/characters/CharacterCard";
+import IPlayer from "@/models/player/IPlayer";
+import INpc from "@/models/npc/INpc";
+import CharacterModal from "@/components/modules/characters/CharacterModal";
 
 interface ICharacterListPanelProps {
   offset?: number;
@@ -20,9 +24,13 @@ interface ICharacterListPanelProps {
   isUpdating: boolean;
   removeCharacters: RefObject<string[]>;
   newCharacters: RefObject<Partial<ICharacter>[]>;
-  addCharacter: (groupId: string) => void;
+  addPlayer: (groupId: string) => void;
+  addNpc: (groupId: string) => void;
+  deleteCharacter: (character: ICharacter) => void;
+  updateCharacter: (character: ICharacter) => void;
+  updateCharacters: RefObject<ICharacter[]>;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addCharacter }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addPlayer, addNpc, deleteCharacter, updateCharacter, updateCharacters }: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -92,51 +100,111 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
     }
     setCharacters([]);
     fetchCharacters(search, 1, true);
-  }, [currentLocale, search, group]);
+  }, [currentLocale, search, group._id]);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const selectCharacter = (character: ICharacter) => {
+    // Vérifie si le character est dans updateCharacters
+    if (updateCharacters.current?.some((c) => c._id === character._id)) {
+      setCharacterSelected(updateCharacters.current.find((c) => c._id === character._id) as ICharacter);
+      setModalIsOpen(true);
+      return;
+    }
+    if(newCharacters.current?.some((c) => c._id === character._id)) {
+      setCharacterSelected(newCharacters.current.find((c) => c._id === character._id) as ICharacter);
+      setModalIsOpen(true);
+      return;
+    }
+    setCharacterSelected(character);
+    setModalIsOpen(true);
+  }
+
+  useEffect(() => {
+    if (updateCharacters.current && updateCharacters.current.length > 0) {
+      setCharacters((prev) => {
+        // Remplace les characters existants par ceux d'updateCharacters si même _id, sinon garde l'existant
+        const updated = prev.map((char) => {
+          const found = updateCharacters.current?.find((c) => c._id === char._id);
+          return found ? found : char;
+        });
+        return [...updated];
+      });
+    }
+    if(newCharacters.current && newCharacters.current.length > 0) {
+      setCharacters((prev) => {
+        // Ajoute les characters de newCharacters
+        const filtered = prev.filter((char) => !newCharacters.current?.some((c) => c._id === char._id));
+        return [...filtered, ...newCharacters.current.map((character) => character as ICharacter)];
+      }
+      );
+    }
+    if(removeCharacters.current && removeCharacters.current.length > 0) {
+      setCharacters((prev) => {
+        // Enlève les characters de removeCharacters
+        const filtered = prev.filter((char) => !removeCharacters.current?.includes(char._id));
+        return [...filtered];
+      });
+    }
+  }, [group.characters]);
 
   return (
     <div className="w-full h-full flex flex-col">
-        <CardHeader className="flex-none h-auto items-center gap-3">
-          <CardTitle className="text-foreground font-bold">
-            <div className="flex items-center gap-2">
-              <p>{t("title")}</p>
-              {
-                isUpdating && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addCharacter(group._id)} />
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>{t("addCharacter")}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                )
-              }
-            </div>
-            </CardTitle>
+      {characterSelected && <CharacterModal isUpdating={isUpdating} isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} character={characterSelected} updateCharacter={updateCharacter}/>}
+      <CardHeader className="relative flex flex-row h-auto items-center">
+        <CardTitle className="text-foreground font-bold">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl text-foreground">{t("title")}</span>
+            {
+              isUpdating && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addPlayer(group._id)} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t("addPlayer")}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )
+            }
+            {
+              isUpdating && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addNpc(group._id)} />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t("addNpc")}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )
+            }
+          </div>
+        </CardTitle>
+        <div className="absolute left-1/2 transform -translate-x-1/2 w-[30dvh]">
           <SearchInput
             value={search}
             onChange={setSearch}
             placeholder={t("search")}
           />
-        </CardHeader>
-        <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
-            <div className="flex flex-col gap-3">
-              {loading && <Loading />}
-              {characters.length > 0  &&
-                characters.map((character) => (
-                  <Card key={character._id} className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${characterSelected?._id === character._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"}`} onClick={() => setCharacterSelected(character)}>
-                    <span className="text-foreground font-bold">{character.name}</span>
-                  </Card>
-                ))
-              }
-              {characters.length === 0 && !loading && (
-                <div className="row-start-2 col-span-3 flex items-top justify-center">
-                  <p className="text-gray-500">{t("noCharacters")}</p>
-                </div>
-              )}
+        </div>
+      </CardHeader>
+      <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
+        <div className="grid grid-cols-4 gap-3 items-start">
+          {loading && <Loading />}
+          {characters.length > 0  &&
+            characters.map((character) => character.kind === 'player' ? (
+              <PlayerCard isUpdated={updateCharacters.current?.some((c) => c._id === character._id)} player={character as IPlayer} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></PlayerCard>
+            ) : (
+              <NPCCard isUpdated={updateCharacters.current?.some((c) => c._id === character._id)} npc={character as INpc} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></NPCCard>
+            ))
+          }
+          {characters.length === 0 && !loading && (
+            <div className="row-start-2 col-span-4 flex items-top justify-center">
+              <p className="text-gray-500">{t("noCharacters")}</p>
             </div>
-          </CardContent>
+          )}
+        </div>
+      </CardContent>
     </div>
   );
 };

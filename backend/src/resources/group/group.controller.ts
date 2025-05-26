@@ -14,9 +14,9 @@ import { GroupService } from '@/resources/group/group.service';
 import { CreateGroupDto } from '@/resources/group/dto/create-group.dto';
 import { UpdateGroupDto } from '@/resources/group/dto/update-group.dto';
 import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';
-import { CharacterService } from '@/resources/character/character.service';
 import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
 import { IsCreator } from '@/common/decorators/is-creator.decorator';
+import { CharacterService } from '@/resources/character/character.service';
 
 @UseGuards(IsCreatorGuard)
 @Controller('groups')
@@ -43,7 +43,6 @@ export class GroupController {
     @Query('onlyWithMembers') onlyWithMembers?: boolean,
   ) {
     const userId = request.user.userId;
-    console.log('query', onlyWithMembers);
     return this.groupService.findAllByUser(userId, {
       page,
       offset,
