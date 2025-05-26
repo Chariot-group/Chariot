@@ -32,6 +32,7 @@ export function Header({ campaign, battle }: HeaderProps) {
     async (id: string) => {
       try {
         let response = await AuthService.profile(id);
+        console.log(response);
         if (!response.data) {
           logout();
           return;
