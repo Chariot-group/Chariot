@@ -16,7 +16,7 @@ export class MaillingService {
             let transporter: nodemailer.Transporter = nodemailer.createTransport({
                 host: process.env.SMTP_HOST,
                 port: Number(process.env.SMTP_PORT),
-                secure: Boolean(process.env.SMTP_SECURE), // true pour port 465, false pour 587
+                secure: Boolean(process.env.SMTP_SECURE),
                 auth: {
                     user: process.env.SMTP_USER,
                     pass: process.env.SMTP_PASS,
