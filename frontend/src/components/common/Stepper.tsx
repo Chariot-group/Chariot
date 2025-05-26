@@ -15,7 +15,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
         const isActive = stepNumber === currentStep;
 
         return (
-          <>
+          <React.Fragment key={index}>
             <div className="relative flex flex-col justify-center">
               <div
                 className={cn(
@@ -44,7 +44,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
                 )}
               />
             )}
-          </>
+          </React.Fragment>
         );
       })}
     </div>
