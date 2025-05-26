@@ -21,7 +21,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setIsLoading(true);
     const hasToken = document.cookie.includes("accessToken");
-    console.log("hasToken:", hasToken);
 
     if (!hasToken && !pathname.includes("/auth/")) {
       setTimeout(() => {

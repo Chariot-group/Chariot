@@ -70,9 +70,7 @@ export default function LoginPage() {
         }; path=/; SameSite=Lax; ${secure}`;
 
         success(t("success.login"));
-        console.log("TOKEN", response.access_token);
-        console.log("RES", response);
-        // router.push("/");
+        router.push("/");
       }
     } catch (err) {
       error(t("errors.internal"));
