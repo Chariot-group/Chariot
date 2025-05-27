@@ -1,44 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Code OTP</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f6f6f6;
-      padding: 20px;
-    }
-    .container {
-      background-color: white;
-      border-radius: 8px;
-      padding: 20px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .otp {
-      font-size: 24px;
-      font-weight: bold;
-      color: #333;
-      text-align: center;
-      margin: 20px 0;
-    }
-    .footer {
-      font-size: 12px;
-      color: #999;
-      text-align: center;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>Votre code OTP</h2>
-    <p>Bonjour {{username}},</p>
-    <p>Voici votre code de vérification :</p>
-    <div class="otp">{{otp}}</div>
-    <div class="footer">Si vous n'êtes pas à l'origine de cette demande, ignorez cette email.</div>
-  </div>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Code OTP</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f6f6f6;
+        padding: 20px;
+      }
+      .container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        max-width: 400px;
+        margin: auto;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .otp {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .footer {
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Votre code OTP</h2>
+      <p>Bonjour {{username}},</p>
+      <p>Voici votre code de vérification :</p>
+      <div class="otp">{{otp}}</div>
+      <div class="footer">
+        Si vous n'êtes pas à l'origine de cette demande, ignorez cette email.
+      </div>
+    </div>
+  </body>
 </html>

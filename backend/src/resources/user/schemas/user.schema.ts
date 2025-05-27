@@ -13,7 +13,7 @@ export class User {
   @Prop({ required: true })
   email: string;
 
-  @Prop({default: null, maxlength: 6})
+  @Prop({ default: null, maxlength: 6 })
   otp?: string;
 
   @Prop({ required: true })
