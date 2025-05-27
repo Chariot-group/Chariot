@@ -101,17 +101,22 @@ const GroupListPanelItem = ({
               <span className="cursor-pointer text-foreground font-bold">
                 {group.label}
               </span>
-              {displayMembersCount && group.characters.length > 0 && (
+              {displayMembersCount && (
                 <span className="text-muted-foreground ml-2">
-                  ({group.characters.length})
+                  {group.characters
+                    ? `(${group.characters.length})`
+                    : `(0)`}
                 </span>
               )}
             </div>
           </TooltipTrigger>
           <TooltipContent>
             <p>
-              {group.characters.length}{" "}
-              {group.characters.length === 1 ? t("member") : t("members")}
+              {group.characters
+                ? `${group.characters.length} ${t(
+                    group.characters.length === 1 ? "member" : "members"
+                  )}`
+                : `0 ${t("members")}`}
             </p>
           </TooltipContent>
         </Tooltip>
