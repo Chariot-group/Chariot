@@ -45,6 +45,7 @@ services:
       - RECEIVER_EMAIL=${RECEIVER_EMAIL}
       - SMTP_PASS=${SMTP_PASS}
       - NODE_ENV=${NODE_ENV}
+      - DEFAULT_PASSWORD=${DEFAULT_PASSWORD}
     depends_on:
       mongo:
         condition: service_healthy
