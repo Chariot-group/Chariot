@@ -101,7 +101,7 @@ export const DEFAULT_PLAYER: IPlayer = {
 
 export const DEFAULT_NPC: INpc = {
     _id: "",
-    name: "",
+    name: "Cultist",
     kind: "npc",
     affinities: {
         resistances: [],
