@@ -15,13 +15,11 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
-  if (process.env.ENV === 'dev') {
-    app.enableCors({
-      origin: `${process.env.FRONTEND_URL}`,
-      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-      credentials: true,
-    });
-  }
+  app.enableCors({
+    origin: `${process.env.FRONTEND_URL}`,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
