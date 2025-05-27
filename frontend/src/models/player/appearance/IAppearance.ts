@@ -1,7 +1,7 @@
 export default interface IAppearance {
     age?: number;
-    height?: string;
-    weight?: string;
+    height?: number;
+    weight?: number;
     eyes?: string;
     skin?: string;
     hair?: string;
