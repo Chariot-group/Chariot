@@ -1,0 +1,460 @@
+{
+  "HomePage": {
+    "title": "Bienvenue sur Chariot!",
+    "about": "L'outil ultime pour le JDR."
+  },
+  "LocaleSwitcher": {
+    "locale": "{locale, select, fr {🇫🇷 Français} en {🇬🇧 Anglais} es {🇪🇸 Espagnol} other {🏴‍☠️ Inconnue}}"
+  },
+  "CampaignListPanel": {
+    "title": "Vos campagnes",
+    "search": "Rechercher une campagne",
+    "createTooltip": "Ajouter une campagne",
+    "noCampaigns": "Aucune campagne trouvée",
+    "error": "Erreur lors du chargement des campagnes",
+    "create": "Ajouter une campagne",
+    "created": "Campagne créée avec succès"
+  },
+  "LoginPage": {
+    "title": "Bienvenue sur Chariot!",
+    "login": "Se connecter",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": {
+      "text": "Vous n'avez pas de compte ?",
+      "link": "Profitez de l'accès gratuit !"
+    },
+    "errors": {
+      "invalidEmail": "L'email est invalide",
+      "invalidCredentials": "Email ou mot de passe invalide",
+      "internal": "Une erreur c'est produite quand nous avons essayé de vous connecter"
+    },
+    "success": {
+      "login": "Connexion réussie !"
+    }
+  },
+  "CharacterListPanel": {
+    "addPlayer": "Ajouter un joueur",
+    "addNpc": "Ajouter un pnj",
+    "title": "Vos personnages",
+    "search": "Rechercher un personnage",
+    "create": "Ajouter un personnage",
+    "noCharacters": "Aucun personnage trouvé",
+    "error": "Erreur lors du chargement des personnages"
+  },
+  "GroupListPanel": {
+    "title": {
+      "main": "Principaux",
+      "npc": "PNJ",
+      "default": "Vos groupes",
+      "archived": "Archivés"
+    },
+    "newGroup": {
+      "label": "Nouveau groupe"
+    },
+    "search": "Rechercher un groupe",
+    "create": "Ajouter un groupe",
+    "noGroups": "Aucun groupe trouvé",
+    "dropHere": "Déposez ici pour ajouter au groupe",
+    "error": "Erreur lors du chargement des groupes"
+  },
+  "GroupListPanelItem": {
+    "members": "membres",
+    "member": "membre"
+  },
+  "CharacterDetailsPanel": {
+    "npc": "PNJ",
+    "player": "Joueur",
+    "actions": {
+      "deletePlayer": "Supprimer le joueur",
+      "deleteNpc": "Supprimer le PNJ",
+      "addClass": "Ajouter une classe",
+      "deleteClass": "Supprimer la classe",
+      "addSens": "Ajouter un sens",
+      "deleteSens": "Supprimer le sens",
+      "addLanguage": "Ajouter une langue",
+      "deleteLanguage": "Supprimer la langue",
+      "addSpellCasting": "Ajouter un lancé de sort",
+      "deleteSpellCasting": "Supprimer le lancé de sort",
+      "addSlot": "Ajouter un slot",
+      "deleteSlot": "Supprimer le slot",
+      "addSpell": "Ajouter un sort",
+      "deleteSpell": "Supprimer le sort",
+      "addVulnerability": "Ajouter une vulnérabilité",
+      "deleteVulnerability": "Supprimer la vulnérabilité",
+      "addResistance": "Ajouter une résistance",
+      "deleteResistance": "Supprimer la résistance",
+      "addImmunity": "Ajouter une immunité",
+      "deleteImmunity": "Supprimer l'immunité",
+      "addAbility": "Ajouter une capacité",
+      "deleteAbility": "Supprimer la capacité",
+      "addAction": "Ajouter une action",
+      "deleteAction": "Supprimer l'action"
+    },
+    "action": {
+      "noActions": "Aucune action trouvée",
+      "name": "Nom",
+      "type": "Type",
+      "attackBonus": "Bonus d'attaque",
+      "damage": "Dégâts",
+      "damageType": "Type de dégât",
+      "range": "Portée",
+      "standard": "Standard",
+      "legendary": "Légendaire",
+      "lair": "Aérien"
+    },
+    "classes": {
+      "noClass": "Aucune classe trouvée",
+      "title": "Classes",
+      "className": "Classe",
+      "subClass": "Sous-classe",
+      "level": "Niveau",
+      "hitDice": "Dé de vie"
+
+    },
+    "speed": {
+      "walking": "Marche",
+      "flying": "Vol",
+      "climbing": "Escalade",
+      "swimming": "Natation",
+      "burrowing": "Creusage"
+    },
+    "skills": {
+      "athletics": "Athlétisme",
+      "acrobatics": "Acrobaties",
+      "stealth": "Discrétion",
+      "animalHandling": "Manipulation animale",
+      "arcana": "Arcanes",
+      "deception": "Tromperie",
+      "history": "Histoire",
+      "insight": "Perspicacité",
+      "intimidation": "Intimidation",
+      "investigation": "Investigation",
+      "medicine": "Médecine",
+      "nature": "Nature",
+      "perception": "Perception",
+      "performance": "Performance",
+      "persuasion": "Persuasion",
+      "religion": "Religion",
+      "sleightHand": "Tour de passe-passe",
+      "survival": "Survie"
+    },
+    "senses": {
+      "title": "Sens",
+      "noSens": "Aucun sens trouvé",
+      "sensName": "Sens",
+      "value": "Valeur"
+    },
+    "languages": {
+      "title": "Langues",
+      "noLanguage": "Aucune langue trouvée",
+      "languageName": "Langue"
+    },
+    "details": {
+      "darkvision": "Vision nocturne",
+      "attackBonus": "Bonus d'attaque",
+      "passivePerception": "Perception passive",
+      "inspiration": "Inspiration"
+    },
+    "spellCasting": {
+      "title": "Lancer de sorts",
+      "noSpellCasting": "Aucun lancé de sort trouvé",
+      "ability": "Capacité",
+      "saveDice": "Dé de sauvegarde",
+      "attackBonus": "Bonus d'attaque",
+      "countSpell": "Nombre de sorts",
+      "totalSpellSlots": "Nombre total de slots",
+      "slots": {
+        "noSlots": "Aucun slot trouvé",
+        "level": "Niveau",
+        "totalSlots": "Total",
+        "usedSlots": "Utilisés"
+      },
+      "spells": {
+        "title": "Sorts",
+        "noSpells": "Aucun sort trouvé",
+        "name": "Nom",
+        "level": "Niveau",
+        "castingTime": "Temps d'incantation",
+        "range": "Portée",
+        "components": "Composants",
+        "description": "Description"
+      }
+    },
+    "vulnerabilities": {
+      "title": "Vulnérabilités",
+      "noVulnerabilities": "Aucune vulnérabilité trouvée",
+      "name": "Vulnérabilité"
+    },
+    "resistances": {
+      "title": "Résistances",
+      "noResistances": "Aucune résistance trouvée",
+      "name": "Résistance"
+    },
+    "immunities": {
+      "title": "Immunités",
+      "noImmunities": "Aucune immunité trouvée",
+      "name": "Immunité"
+    },
+    "abilities": {
+      "noAbilities": "Aucune capacité trouvée",
+      "title": "Capacités",
+      "name": "Nom",
+      "description": "Description"
+    },
+    "treasure": {
+      "cp": "Pièces de cuivre",
+      "sp": "Pièces d'argent",
+      "ep": "Pièces d'électrum",
+      "gp": "Pièces d'or",
+      "pp": "Pièces de platine",
+      "notes": "Notes"
+    },
+    "panels": {
+      "characterisitcs": "Caractéristiques",
+      "stats": "Statistiques",
+      "spells": "Sorts",
+      "other": "Autres"
+    },
+    "name": "Nom",
+    "profile": {
+      "race": "Race",
+      "subrace": "Sous-race",
+      "type": "Type",
+      "subtype": "Sous-type",
+      "alignment": "Alignement"
+    },
+    "batlle": {
+      "armorClass": "Classe d'armure",
+      "maxPv": "Points de vie max",
+      "currentPv": "PV actuels",
+      "temporaryPv": "PV temporaires"
+    },
+    "abilityScores":{
+      "strength": "Force",
+      "dexterity": "Dextérité",
+      "constitution": "Constitution",
+      "intelligence": "Intelligence",
+      "wisdom": "Sagesse",
+      "charisma": "Charisme",
+      "save": "Jet de sauvegarde"
+    },
+    "progression": {
+      "level": "Niveau",
+      "experience": "Expérience"
+    },
+    "background": {
+      "personalityTraits": "Traits de personnalité",
+      "ideals": "Idéaux",
+      "bonds": "Liens",
+      "flaws": "Défauts",
+      "backstory": "Historique",
+      "alliesAndOrgs": "Alliés et organisations"
+    },
+    "challenge": {
+      "challengeRating": "Niveau de défi",
+      "experiencePoints": "Xp"
+    },
+    "appearance": {
+      "age": "Age",
+      "height": "Taille",
+      "weight": "Poids",
+      "eyes": "Yeux",
+      "hair": "Cheveux",
+      "skin": "Peau",
+      "description": "Description physique",
+      "size": "Taille"
+    }
+    
+  },
+  "Global": {
+    "cancel": "Annuler"
+  },
+  "CampaignDetails": {
+    "errors": "Erreur lors de la mise à jour de la campagne",
+    "labels": {
+      "description": "Description"
+    },
+    "placeholders": {
+      "description": "Une campagne épique dans un monde fantastique où les héros se battent contre des forces obscures."
+    },
+    "actions": {
+      "delete": "Supprimer la campagne",
+      "update": "Modifier la campagne",
+      "cancel": "Annuler",
+      "save": "Sauvegarder"
+    },
+    "modal": {
+      "title": "Supprimer la campagne",
+      "description": "Êtes-vous sûr de vouloir supprimer cette campagne ?",
+      "confirm": "Oui, supprimer"
+    }
+  },
+  "Header": {
+    "home": "CHARIOT",
+    "launchBattle": "Initier un combat",
+    "backToCampaign": "Retour aux campagnes",
+    "signout": "Se déconnecter"
+  },
+  "GroupDetailsPanel": {
+    "error": "Erreur lors de la mise à jour du groupe",
+    "actions": {
+      "groupDelete": "Supprimer le groupe",
+      "update": "Modifier le groupe",
+      "backCampaign": "Retour à la campagne",
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "modal": {
+        "title": "Supprimer le group",
+        "description": "Êtes-vous sûr de vouloir supprimer ce groupe ?",
+        "confirm": "Oui, supprimer"
+      }
+    },
+    "labels": {
+      "name": "Nom du groupe",
+      "type": "Type",
+      "description": "Description"
+    },
+    "placeholders": {
+      "name": "Nom du groupe",
+      "type": "Groupe principal",
+      "description": "Description du groupe"
+    }
+  },
+  "GroupPage": {
+    "yourCharacters": "Vos personnages",
+    "form": {
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    },
+    "toasts": {
+      "cancel": "Modification annulée",
+      "save": "Groupe modifié avec succès",
+      "errorGroup": "Erreur lors de la sauvegarde du groupe",
+      "errorCreateCharacter": "Erreur lors de la création du personnage",
+      "errorDeleteCharacter": "Erreur lors de la suppression du personnage",
+      "errorDeleteGroup": "Erreur lors de la suppression du groupe",
+      "groupDeleted": "Groupe supprimé avec succès",
+      "errorFindCampaign": "Erreur lors de la recherche de la campagne"
+    }
+  },
+  "CampaignModal": {
+    "title": "Créer une campagne",
+    "subTitles": {
+      "info": "Pour créer une campagne, nous avons besoin du nom de celle-ci.",
+      "warning": "Attention ! Vous ne pourrez pas la modifier par la suite."
+    },
+    "placeholder": "Nom de la campagne",
+    "actions": {
+      "create": "Créer une campagne",
+      "cancel": "Annuler"
+    },
+    "emptyName": "Le nom de la campagne ne peut pas être vide"
+  },
+  "CampaignPage": {
+    "tutorial": {
+      "step1": "Etape 1: Créer une campagne",
+      "step2": "Etape 2: Créer un groupe de joueur principal",
+      "step3": "Etape 3: Créer vos groupes de PNJ",
+      "step4": "Etape 4: Lancer vos initiatives",
+      "step5": "Etape 5: Let's play !"
+    },
+    "form": {
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+    },
+    "toasts": {
+      "cancel": "Modification annulée",
+      "save": "Campagne sauvegardée avec succès",
+      "errorDetetingCampaign": "Erreur lors de la suppression de la campagne",
+      "deletedCampaign": "Campagne supprimée avec succès",
+      "errorUpdatingCampaign": "Erreur lors de la mise à jour de la campagne"
+    }
+  },
+  "InitiativeTracker": {
+    "reset": "Réinitialiser",
+    "start": "Commencer",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "round": "Tour",
+    "backToSelection": "Retour à la sélection"
+  },
+  "InitiativeList": {
+    "initiative": "Initiative",
+    "name": "Nom",
+    "hitPoints": "PV",
+    "armorClass": "CA",
+    "group": "Groupe",
+    "actions": "Action(s)"
+  },
+  "InitiativeItem": {
+    "detail": "Détails"
+  },
+  "MobileRestraint": {
+    "title": "Application non disponible sur mobile",
+    "subTitle": "Merci d'utiliser un écran plus large pour accéder à cette application."
+  },
+  "HealthCheck": {
+    "status": {
+      "label": "Status de l'API",
+      "ok": "Ok",
+      "error": "Erreur",
+      "loading": "Chargement..."
+    }
+  },
+  "GroupSelector": {
+    "versus": "VS"
+  },
+  "GroupSelectorPage": {
+    "title": "Choisisser les deux groupes qui vont s'affronter",
+    "battle": "Lancer le combat"
+  },
+  "BattlePage": {
+    "back": "Retour à la sélection"
+  },
+  "confirmEmail": {
+    "title": "Réinitialiser votre mot de passe",
+    "description": "Renseignez votre addresse email. Si un compte existe avec cette adresse, vous recevrez un email contenant un code pour réinitialiser votre mot de passe.",
+    "label": "Email",
+    "placeholder": "Entrez votre email",
+    "send": "Envoyer le code",
+    "toasts": {
+      "sendingEmail": "Un email a été envoyé ! Vérifier vos spams.",
+      "invalidEmail": "L'email est invalide",
+      "emailNotFound": "Aucun compte trouvé avec cet email",
+      "internal": "Une erreur c'est produite quand nous avons essayé de vous envoyer l'email"
+    },
+    "cancel": "Annuler"
+  },
+  "forgetPassword": {
+    "wrongEmail": "Vous vous êtes trompé d'email ?",
+    "step": {
+      "step1": "Renseignez votre email",
+      "step2": "Vérifier votre code",
+      "step3": "Changer votre mot de passe"
+    }
+  },
+  "confirmOTP": {
+    "title": "Réinitialiser votre mot de passe",
+    "description": "Renseignez le code reçu par email.",
+    "label": "OPT",
+    "placeholder": "Entrez votre code",
+    "send": "Vérifier le code",
+    "cancel": "Annuler"
+  },
+  "changePassword": {
+    "title": "Réinitialiser votre mot de passe",
+    "description": "Il est temps de changer votre mot de passe !",
+    "password": "Mot de passe",
+    "placeholderPassword": "Entrez votre nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "placeholderConfirmPassword": "Confirmez votre mot de passe",
+    "send": "Changer le mot de passe",
+    "toasts": {
+      "passwordChanged": "Mot de passe changé !",
+      "invalidOTP": "Le code est invalide",
+      "passwordsNotMatching": "Les mots de passe ne correspondent pas",
+      "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
+    },
+    "cancel": "Annuler"
+  }
+}
