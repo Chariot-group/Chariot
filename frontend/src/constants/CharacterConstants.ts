@@ -14,7 +14,7 @@ export type Size = (typeof SIZES)[number];
 
 export const DEFAULT_PLAYER: IPlayer = {
     _id: "",
-    name: "",
+    name: "Roger",
     kind: "player",
     affinities: {
         resistances: [],
@@ -30,9 +30,15 @@ export const DEFAULT_PLAYER: IPlayer = {
         experience: 0,
     },
     class: [],
-    profile: {},
-    appearance: {},
-    background: {},
+    profile: {
+        race: ""
+    },
+    appearance: {
+        height: 0,
+    },
+    background: {
+        ideals: ""
+    },
     treasure: {
         cp: 0,
         sp: 0,
@@ -47,7 +53,9 @@ export const DEFAULT_PLAYER: IPlayer = {
         currentHitPoints: 10,
         tempHitPoints: 0,
         armorClass: 10,
-        speed: {},
+        speed: {
+            walk: 30
+        },
         abilityScores: {
             strength: 0,
             dexterity: 0,
@@ -93,7 +101,7 @@ export const DEFAULT_PLAYER: IPlayer = {
 
 export const DEFAULT_NPC: INpc = {
     _id: "",
-    name: "",
+    name: "Cultist",
     kind: "npc",
     affinities: {
         resistances: [],
@@ -108,14 +116,18 @@ export const DEFAULT_NPC: INpc = {
         legendary: [],
         lair: []
     },
-    challenge: {},
+    challenge: {
+        challengeRating: 0,
+    },
     stats: {
         size: SIZES[0],
         maxHitPoints: 10,
         currentHitPoints: 10,
         tempHitPoints: 0,
         armorClass: 10,
-        speed: {},
+        speed: {
+            walk: 30
+        },
         abilityScores: {
             strength: 0,
             dexterity: 0,
@@ -157,5 +169,7 @@ export const DEFAULT_NPC: INpc = {
         },
         senses: [],
     },
-    profile: {}
+    profile: {
+        type: ""
+    }
   }

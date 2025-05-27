@@ -57,6 +57,7 @@ export default function CampaignGroupsPage() {
     const saveAction = async () => {
         if (groupSelected) {
             try {
+                setLoading(true);
                 //Enlever les personnages supprimés de characterTempRef
                 characterTempRef.current.forEach((character, key) => {
                     if (removedCharacterRef.current.includes(character._id ?? "")) {
@@ -81,7 +82,7 @@ export default function CampaignGroupsPage() {
                 });
                 newCharacterRef.current.forEach(async (character) => {
                     const { _id, ...characterWithoutId } = character;
-                    if (!_id?.match(/^\d+$/)) {
+                    if (!Number.isNaN(_id)) {
                         await CharacterService.createCharacter(characterWithoutId);
                     }
                 });
@@ -94,6 +95,7 @@ export default function CampaignGroupsPage() {
                 characterTempRef.current.clear();
                 setIsUpdating(false);
                 success(t("toasts.save"));
+                setLoading(false);
             }catch (err) {
                 setIsUpdating(false);
             }
