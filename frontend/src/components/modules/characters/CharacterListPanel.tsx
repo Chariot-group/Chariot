@@ -134,7 +134,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
       setCharacters((prev) => {
         // Ajoute les characters de newCharacters
         const filtered = prev.filter((char) => !newCharacters.current?.some((c) => c._id === char._id));
-        return [...filtered, ...newCharacters.current.map((character) => character as ICharacter)];
+        return [...newCharacters.current.map((character) => character as ICharacter), ...filtered];
       }
       );
     }
