@@ -17,17 +17,10 @@ interface Props {
   updateNpc: (npc: ICharacter) => void;
   isUpdate: boolean;
 }
-export default function NpcModalDetails({
-  npc,
-  onClose,
-  updateNpc,
-  isUpdate,
-}: Props) {
+export default function NpcModalDetails({ npc, onClose, updateNpc, isUpdate }: Props) {
   const t = useTranslations("CharacterDetailsPanel");
 
-  const [panel, setPanel] = useState<
-    "characteristics" | "stats" | "spells" | "plus"
-  >("characteristics");
+  const [panel, setPanel] = useState<"characteristics" | "stats" | "spells" | "plus">("characteristics");
 
   const [name, setName] = useState<string>(npc.name);
 
@@ -81,36 +74,29 @@ export default function NpcModalDetails({
             className={`hover:underline underline-offset-2 cursor-pointer ${
               panel === "characteristics" && "underline"
             }`}
-            onClick={() => setPanel("characteristics")}
-          >
+            onClick={() => setPanel("characteristics")}>
             {t("panels.characterisitcs")}
           </span>
           <span
-            className={`hover:underline underline-offset-2 cursor-pointer ${
-              panel === "stats" && "underline"
-            }`}
-            onClick={() => setPanel("stats")}
-          >
+            className={`hover:underline underline-offset-2 cursor-pointer ${panel === "stats" && "underline"}`}
+            onClick={() => setPanel("stats")}>
             {t("panels.stats")}
           </span>
           <span
-            className={`hover:underline underline-offset-2 cursor-pointer ${
-              panel === "spells" && "underline"
-            }`}
-            onClick={() => setPanel("spells")}
-          >
+            className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && "underline"}`}
+            onClick={() => setPanel("spells")}>
             {t("panels.spells")}
           </span>
           <span
-            className={`hover:underline underline-offset-2 cursor-pointer ${
-              panel === "plus" && "underline"
-            }`}
-            onClick={() => setPanel("plus")}
-          >
+            className={`hover:underline underline-offset-2 cursor-pointer ${panel === "plus" && "underline"}`}
+            onClick={() => setPanel("plus")}>
             {t("panels.other")}
           </span>
         </div>
-        <XIcon onClick={onClose} className="cursor-pointer" />
+        <XIcon
+          onClick={onClose}
+          className="cursor-pointer"
+        />
       </div>
       {panel === "characteristics" && (
         <NpcCharacteristic
@@ -120,7 +106,11 @@ export default function NpcModalDetails({
         />
       )}
       {panel === "stats" && (
-        <NpcStats isUpdate={isUpdate} updateNpc={update} npc={npcCurrent} />
+        <NpcStats
+          isUpdate={isUpdate}
+          updateNpc={update}
+          npc={npcCurrent}
+        />
       )}
       {panel === "spells" && (
         <Spells

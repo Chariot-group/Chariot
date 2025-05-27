@@ -9,19 +9,13 @@ import GroupDnDWrapper from "@/components/modules/groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useToast } from "@/hooks/useToast";
 import { MousePointerClick, PlusCircleIcon } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import Link from "next/link";
 
 interface Props {
   idCampaign: string; // ID de la campagne des groupes
   isUpdating: boolean; // Indique si la campagne est en cours de mise à jour
-  groupsRef: RefObject<
-    Map<string, { idCampaign: string; type: "main" | "npc" | "archived" }>
-  >; // Liste des groupes
+  groupsRef: RefObject<Map<string, { idCampaign: string; type: "main" | "npc" | "archived" }>>; // Liste des groupes
   newGroupRef: RefObject<any[]>; // Liste des nouveaux groupes
   groupsLabelRef: RefObject<IGroup[]>; // Liste des groupes à ne pas afficher
   setUpdatedGroup: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
@@ -45,8 +39,7 @@ export default function GroupsCampaignsPanel({
 
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
-    if (!over || !["main", "npc", "archived"].includes(over.id as string))
-      return;
+    if (!over || !["main", "npc", "archived"].includes(over.id as string)) return;
 
     const group: IGroup = active.data.current?.group;
     const from = active.data.current?.from;
@@ -54,14 +47,11 @@ export default function GroupsCampaignsPanel({
 
     if (from === to) return;
 
-    const updatedCampaigns = group.campaigns.map(
-      (campaign: ICampaign | string) => {
-        const campaignId =
-          typeof campaign === "string" ? campaign : campaign._id;
-        if (campaignId !== idCampaign) return campaign;
-        return { idCampaign: campaignId, type: to };
-      }
-    );
+    const updatedCampaigns = group.campaigns.map((campaign: ICampaign | string) => {
+      const campaignId = typeof campaign === "string" ? campaign : campaign._id;
+      if (campaignId !== idCampaign) return campaign;
+      return { idCampaign: campaignId, type: to };
+    });
 
     groupsRef.current.set(group._id, {
       idCampaign: idCampaign,
@@ -95,8 +85,7 @@ export default function GroupsCampaignsPanel({
     };
 
     Object.entries(groupSetters).forEach(([key, setter]) => {
-      if (from === key)
-        setter((prev) => prev.filter((g) => g._id !== group._id));
+      if (from === key) setter((prev) => prev.filter((g) => g._id !== group._id));
     });
 
     setUpdatedGroup([...updatedGroup, group]);
@@ -135,15 +124,9 @@ export default function GroupsCampaignsPanel({
     } else {
       groupsLabelRef.current.push({ ...group, label });
     }
-    setMainGroups((prev) =>
-      prev.map((g) => (g._id === group._id ? { ...g, label } : g))
-    );
-    setNpcGroups((prev) =>
-      prev.map((g) => (g._id === group._id ? { ...g, label } : g))
-    );
-    setArchivedGroups((prev) =>
-      prev.map((g) => (g._id === group._id ? { ...g, label } : g))
-    );
+    setMainGroups((prev) => prev.map((g) => (g._id === group._id ? { ...g, label } : g)));
+    setNpcGroups((prev) => prev.map((g) => (g._id === group._id ? { ...g, label } : g)));
+    setArchivedGroups((prev) => prev.map((g) => (g._id === group._id ? { ...g, label } : g)));
   };
 
   return (
@@ -151,8 +134,7 @@ export default function GroupsCampaignsPanel({
       <div className="flex flex-row gap-3 justify-start items-center">
         <Link
           href={`/campaigns/${idCampaign}/groups`}
-          className="text-foreground hover:underline underline-offset-2"
-        >
+          className="text-foreground hover:underline underline-offset-2">
           <h2 className="flex gap-1 items-center">
             <MousePointerClick className="h-[2dvh]" /> {t("title.default")}
           </h2>

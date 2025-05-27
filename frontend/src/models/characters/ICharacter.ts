@@ -5,13 +5,13 @@ import IAbility from "@/models/characters/abilities/IAbility";
 import IStatsBase from "@/models/npc/stat/IStatsBase";
 
 export default interface ICharacter<TStats extends IStatsBase = IStatsBase> {
-    _id: string;
-    name: string;
-    kind: 'npc' | 'player';
-    affinities: IAffinities;
-    abilities: IAbility[];
-    spellcasting: ISpellcasting[];
-    groups: IGroup[] | string[];
-    stats: TStats;
-    deletedAt?: Date;
+  _id: string;
+  name: string;
+  kind: "npc" | "player";
+  affinities: IAffinities;
+  abilities: IAbility[];
+  spellcasting: ISpellcasting[];
+  groups: IGroup[] | string[];
+  stats: TStats;
+  deletedAt?: Date;
 }

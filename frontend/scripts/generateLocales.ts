@@ -27,9 +27,7 @@ locales.forEach((locale) => {
   const content = JSON.parse(fs.readFileSync(filePath, "utf8"));
 
   if (!content.LocaleSwitcher || !content.LocaleSwitcher.locale) {
-    console.warn(
-      `⚠️ ${locale}.json n'a pas de LocaleSwitcher.locale, il sera ignoré.`
-    );
+    console.warn(`⚠️ ${locale}.json n'a pas de LocaleSwitcher.locale, il sera ignoré.`);
     return;
   }
 

@@ -42,11 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       </div>
     );
   }
-  return (
-    <AuthContext.Provider value={{ isLoading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ isLoading }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
