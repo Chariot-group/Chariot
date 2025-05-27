@@ -7,4 +7,4 @@
     "react-hooks/rules-of-hooks": "error",
     "prefer-const": "warn"
   }
-} 
+}

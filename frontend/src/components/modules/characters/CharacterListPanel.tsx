@@ -30,7 +30,20 @@ interface ICharacterListPanelProps {
   updateCharacter: (character: ICharacter) => void;
   updateCharacters: RefObject<ICharacter[]>;
 }
-const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelected, group, isUpdating, removeCharacters, newCharacters, addPlayer, addNpc, deleteCharacter, updateCharacter, updateCharacters }: ICharacterListPanelProps) => {
+const CharacterListPanel = ({
+  offset = 8,
+  characterSelected,
+  setCharacterSelected,
+  group,
+  isUpdating,
+  removeCharacters,
+  newCharacters,
+  addPlayer,
+  addNpc,
+  deleteCharacter,
+  updateCharacter,
+  updateCharacters,
+}: ICharacterListPanelProps) => {
   const currentLocale = useLocale();
   const t = useTranslations("CharacterListPanel");
 
@@ -54,11 +67,14 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
       setLoading(true);
 
       try {
-        const response = await CharacterService.getAllCharacters({
-          page: nextPage,
-          offset,
-          name: encodeURIComponent(search),
-        }, group._id);
+        const response = await CharacterService.getAllCharacters(
+          {
+            page: nextPage,
+            offset,
+            name: encodeURIComponent(search),
+          },
+          group._id,
+        );
         if (reset) {
           setCharacters(response.data);
           setCharacterSelected(response.data[0]);
@@ -75,7 +91,7 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
         setLoading(false);
       }
     },
-    [loading, group._id, group.characters]
+    [loading, group._id, group.characters],
   );
 
   useInfiniteScroll(containerRef, fetchCharacters, page, loading, search);
@@ -88,12 +104,16 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
   }, []);
 
   useEffect(() => {
-    if(isUpdating) {
+    if (isUpdating) {
       const updateCharacters = characters.filter((character) => !removeCharacters.current?.includes(character._id));
       //newCharacters en premiere position et seulement si il n'y a pas de doublon
-      const newCharactersFiltered = newCharacters.current.filter((character) => !updateCharacters.some((c) => c._id === character._id));
+      const newCharactersFiltered = newCharacters.current.filter(
+        (character) => !updateCharacters.some((c) => c._id === character._id),
+      );
       updateCharacters.unshift(...newCharactersFiltered.map((character) => character as ICharacter));
-      let filtered = updateCharacters.filter((character) => character.name.toLowerCase().includes(search.toLowerCase()));
+      let filtered = updateCharacters.filter((character) =>
+        character.name.toLowerCase().includes(search.toLowerCase()),
+      );
       setCharacters(filtered);
       setCharacterSelected(filtered[0]);
       return;
@@ -110,14 +130,14 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
       setModalIsOpen(true);
       return;
     }
-    if(newCharacters.current?.some((c) => c._id === character._id)) {
+    if (newCharacters.current?.some((c) => c._id === character._id)) {
       setCharacterSelected(newCharacters.current.find((c) => c._id === character._id) as ICharacter);
       setModalIsOpen(true);
       return;
     }
     setCharacterSelected(character);
     setModalIsOpen(true);
-  }
+  };
 
   useEffect(() => {
     if (updateCharacters.current && updateCharacters.current.length > 0) {
@@ -130,15 +150,14 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
         return [...updated];
       });
     }
-    if(newCharacters.current && newCharacters.current.length > 0) {
+    if (newCharacters.current && newCharacters.current.length > 0) {
       setCharacters((prev) => {
         // Ajoute les characters de newCharacters
         const filtered = prev.filter((char) => !newCharacters.current?.some((c) => c._id === char._id));
         return [...newCharacters.current.map((character) => character as ICharacter), ...filtered];
-      }
-      );
+      });
     }
-    if(removeCharacters.current && removeCharacters.current.length > 0) {
+    if (removeCharacters.current && removeCharacters.current.length > 0) {
       setCharacters((prev) => {
         // Enlève les characters de removeCharacters
         const filtered = prev.filter((char) => !removeCharacters.current?.includes(char._id));
@@ -149,35 +168,45 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
 
   return (
     <div className="w-full h-full flex flex-col">
-      {characterSelected && <CharacterModal isUpdating={isUpdating} isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} character={characterSelected} updateCharacter={updateCharacter}/>}
+      {characterSelected && (
+        <CharacterModal
+          isUpdating={isUpdating}
+          isOpen={modalIsOpen}
+          onClose={() => setModalIsOpen(false)}
+          character={characterSelected}
+          updateCharacter={updateCharacter}
+        />
+      )}
       <CardHeader className="relative flex flex-row h-auto items-center">
         <CardTitle className="text-foreground font-bold">
           <div className="flex items-center gap-2">
             <span className="text-2xl text-foreground">{t("title")}</span>
-            {
-              isUpdating && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addPlayer(group._id)} />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{t("addPlayer")}</p>
-                  </TooltipContent>
-                </Tooltip>
-              )
-            }
-            {
-              isUpdating && (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <PlusCircleIcon className="text-primary hover:cursor-pointer" onClick={() => addNpc(group._id)} />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{t("addNpc")}</p>
-                  </TooltipContent>
-                </Tooltip>
-              )
-            }
+            {isUpdating && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <PlusCircleIcon
+                    className="text-primary hover:cursor-pointer"
+                    onClick={() => addPlayer(group._id)}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("addPlayer")}</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+            {isUpdating && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <PlusCircleIcon
+                    className="text-primary hover:cursor-pointer"
+                    onClick={() => addNpc(group._id)}
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("addNpc")}</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
           </div>
         </CardTitle>
         <div className="absolute left-1/2 transform -translate-x-1/2 w-[30dvh]">
@@ -188,16 +217,31 @@ const CharacterListPanel = ({ offset = 8, characterSelected, setCharacterSelecte
           />
         </div>
       </CardHeader>
-      <CardContent ref={containerRef} className="flex-1 h-auto overflow-auto scrollbar-hide">
+      <CardContent
+        ref={containerRef}
+        className="flex-1 h-auto overflow-auto scrollbar-hide">
         <div className="grid grid-cols-4 gap-3 items-start">
           {loading && <Loading />}
-          {characters.length > 0  &&
-            characters.map((character) => character.kind === 'player' ? (
-              <PlayerCard isUpdated={updateCharacters.current?.some((c) => c._id === character._id)} player={character as IPlayer} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></PlayerCard>
-            ) : (
-              <NPCCard isUpdated={updateCharacters.current?.some((c) => c._id === character._id)} npc={character as INpc} key={character._id} onClick={() => selectCharacter(character)} isUpdating={isUpdating} removeCharacter={deleteCharacter}></NPCCard>
-            ))
-          }
+          {characters.length > 0 &&
+            characters.map((character) =>
+              character.kind === "player" ? (
+                <PlayerCard
+                  isUpdated={updateCharacters.current?.some((c) => c._id === character._id)}
+                  player={character as IPlayer}
+                  key={character._id}
+                  onClick={() => selectCharacter(character)}
+                  isUpdating={isUpdating}
+                  removeCharacter={deleteCharacter}></PlayerCard>
+              ) : (
+                <NPCCard
+                  isUpdated={updateCharacters.current?.some((c) => c._id === character._id)}
+                  npc={character as INpc}
+                  key={character._id}
+                  onClick={() => selectCharacter(character)}
+                  isUpdating={isUpdating}
+                  removeCharacter={deleteCharacter}></NPCCard>
+              ),
+            )}
           {characters.length === 0 && !loading && (
             <div className="row-start-2 col-span-4 flex items-top justify-center">
               <p className="text-gray-500">{t("noCharacters")}</p>

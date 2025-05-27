@@ -82,7 +82,7 @@ export default function GroupListPanel({
             type,
             onlyWithMembers,
           },
-          idCampaign
+          idCampaign,
         );
         if (reset) {
           setGroups(response.data || []);
@@ -95,10 +95,7 @@ export default function GroupListPanel({
             return [
               ...prev,
               ...response.data.filter(
-                (newGroup: { _id: string }) =>
-                  !prev.some(
-                    (existingGroup) => existingGroup._id === newGroup._id
-                  )
+                (newGroup: { _id: string }) => !prev.some((existingGroup) => existingGroup._id === newGroup._id),
               ),
             ];
           });
@@ -110,7 +107,7 @@ export default function GroupListPanel({
         setLoading(false);
       }
     },
-    [loading, groupSelected?.deletedAt, idCampaign]
+    [loading, groupSelected?.deletedAt, idCampaign],
   );
 
   const createGroup = useCallback(async () => {
@@ -123,10 +120,7 @@ export default function GroupListPanel({
       setNewGroup(response.data);
       setGroups((prev) => {
         //Fix un bug surement dû au seeder.
-        return [
-          response.data,
-          ...prev
-        ];
+        return [response.data, ...prev];
       });
       setGroupSelected(response.data);
       setSearch("");
@@ -172,9 +166,10 @@ export default function GroupListPanel({
         ref={cardRef}
         className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${
           isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
-        }`}
-      >
-        <div className="flex flex-col gap-3" ref={setNodeRef}>
+        }`}>
+        <div
+          className="flex flex-col gap-3"
+          ref={setNodeRef}>
           {addable && (
             <Button onClick={() => createGroup()}>
               <span className="text-background font-bold">{t("create")}</span>

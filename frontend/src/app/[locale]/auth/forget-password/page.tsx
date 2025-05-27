@@ -27,12 +27,25 @@ export default function ForgotPasswordPage() {
       </div>
       <Card className="w-[40%] shadow-md relative">
         <LocaleSwitcher className="absolute right-0 border-none shadow-none m-1 bg-card" />
-        {step === 1 && <ConfirmEmail setStep={setStep} setUserId={setUserId} />}
+        {step === 1 && (
+          <ConfirmEmail
+            setStep={setStep}
+            setUserId={setUserId}
+          />
+        )}
         {step === 2 && (
-          <ConfirmOTP setStep={setStep} setOTP={setOTP} otp={otp} />
+          <ConfirmOTP
+            setStep={setStep}
+            setOTP={setOTP}
+            otp={otp}
+          />
         )}
         {step === 3 && (
-          <ChangePassword otp={otp} userId={userId} setStep={setStep} />
+          <ChangePassword
+            otp={otp}
+            userId={userId}
+            setStep={setStep}
+          />
         )}
       </Card>
       {step === 2 && (
@@ -41,8 +54,7 @@ export default function ForgotPasswordPage() {
             <Button
               variant={"link"}
               className="text-sm text-foreground p-0"
-              onClick={() => setStep(1)}
-            >
+              onClick={() => setStep(1)}>
               {t("wrongEmail")}
             </Button>
           </div>

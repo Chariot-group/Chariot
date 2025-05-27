@@ -18,17 +18,10 @@ interface Props {
   updatePlayer: (player: ICharacter) => void;
   isUpdate: boolean;
 }
-export default function PlayerModalDetails({
-  player,
-  onClose,
-  updatePlayer,
-  isUpdate,
-}: Props) {
+export default function PlayerModalDetails({ player, onClose, updatePlayer, isUpdate }: Props) {
   const t = useTranslations("CharacterDetailsPanel");
 
-  const [panel, setPanel] = useState<
-    "characteristics" | "stats" | "spells" | "plus"
-  >("characteristics");
+  const [panel, setPanel] = useState<"characteristics" | "stats" | "spells" | "plus">("characteristics");
 
   const [name, setName] = useState<string>(player.name);
 
@@ -82,36 +75,29 @@ export default function PlayerModalDetails({
             className={`hover:underline underline-offset-2 cursor-pointer ${
               panel === "characteristics" && "underline"
             }`}
-            onClick={() => setPanel("characteristics")}
-          >
+            onClick={() => setPanel("characteristics")}>
             {t("panels.characterisitcs")}
           </span>
           <span
-            className={`hover:underline underline-offset-2 cursor-pointer ${
-              panel === "stats" && "underline"
-            }`}
-            onClick={() => setPanel("stats")}
-          >
+            className={`hover:underline underline-offset-2 cursor-pointer ${panel === "stats" && "underline"}`}
+            onClick={() => setPanel("stats")}>
             {t("panels.stats")}
           </span>
           <span
-            className={`hover:underline underline-offset-2 cursor-pointer ${
-              panel === "spells" && "underline"
-            }`}
-            onClick={() => setPanel("spells")}
-          >
+            className={`hover:underline underline-offset-2 cursor-pointer ${panel === "spells" && "underline"}`}
+            onClick={() => setPanel("spells")}>
             {t("panels.spells")}
           </span>
           <span
-            className={`hover:underline underline-offset-2 cursor-pointer ${
-              panel === "plus" && "underline"
-            }`}
-            onClick={() => setPanel("plus")}
-          >
+            className={`hover:underline underline-offset-2 cursor-pointer ${panel === "plus" && "underline"}`}
+            onClick={() => setPanel("plus")}>
             {t("panels.other")}
           </span>
         </div>
-        <XIcon onClick={onClose} className="cursor-pointer" />
+        <XIcon
+          onClick={onClose}
+          className="cursor-pointer"
+        />
       </div>
       {panel === "characteristics" && (
         <Characteristic
@@ -190,8 +176,7 @@ export function Champs({
     <div className="flex flex-row items-center w-full">
       <Label
         htmlFor={id}
-        className="text-foreground flex flex-row gap-1 items-center w-full"
-      >
+        className="text-foreground flex flex-row gap-1 items-center w-full">
         <span className="font-bold w-auto">{label}:</span>
         <Input
           min={min}

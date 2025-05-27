@@ -11,9 +11,7 @@ interface Props {
   groupsRight: IGroup[]; // Liste des groupes à afficher
   setGroupsRight: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
   groupsToFight: (IGroupWithRelations | null)[]; // Liste des groupes à afficher
-  setGroupsToFight: React.Dispatch<
-    React.SetStateAction<(IGroupWithRelations | null)[]>
-  >; // Setter de la liste des groupes
+  setGroupsToFight: React.Dispatch<React.SetStateAction<(IGroupWithRelations | null)[]>>; // Setter de la liste des groupes
 }
 
 const GroupSelector = ({

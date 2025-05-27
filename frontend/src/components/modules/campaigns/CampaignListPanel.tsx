@@ -15,7 +15,7 @@ interface Props {
   selectedCampaign: ICampaign | null;
   setSelectedCampaign: (campaign: ICampaign | null) => void;
   addable?: boolean;
-  search: string,
+  search: string;
   setSearch: (search: string) => void;
 }
 
@@ -25,7 +25,7 @@ const CampaignListPanel = ({
   setSelectedCampaign,
   addable = true,
   search,
-  setSearch
+  setSearch,
 }: Props) => {
   const currentLocale = useLocale();
   const t = useTranslations("CampaignListPanel");
@@ -54,7 +54,7 @@ const CampaignListPanel = ({
           offset,
           label: encodeURIComponent(search),
         });
-        if(response.statusCode === 401){
+        if (response.statusCode === 401) {
           return;
         }
         if (reset) {
@@ -73,7 +73,7 @@ const CampaignListPanel = ({
         setLoading(false);
       }
     },
-    [loading, selectedCampaign?.deletedAt]
+    [loading, selectedCampaign?.deletedAt],
   );
 
   useInfiniteScroll(containerRef, fetchCampaigns, page, loading, search);
@@ -91,28 +91,33 @@ const CampaignListPanel = ({
   }, [currentLocale, search, selectedCampaign?.deletedAt]);
 
   const [createModalOpen, setCreateModalOpen] = useState<boolean>(false);
-  
+
   const createCampaign = useCallback(async (label: string) => {
     try {
-      const response = await CampaignService.createCampaign({label, description: "", groups: {main: [], npc: [], archived: []}});
+      const response = await CampaignService.createCampaign({
+        label,
+        description: "",
+        groups: { main: [], npc: [], archived: [] },
+      });
       fetchCampaigns(search, 1, true);
       success(t("created"));
-    } catch(err){
+    } catch (err) {
       error(t("error"));
     }
   }, []);
 
   return (
     <div className="w-full h-full flex flex-col">
-      {
-        createModalOpen &&
-        <CreateCampaign isOpen={createModalOpen} onClose={() => setCreateModalOpen(false)} onConfirm={createCampaign} />
-      }
+      {createModalOpen && (
+        <CreateCampaign
+          isOpen={createModalOpen}
+          onClose={() => setCreateModalOpen(false)}
+          onConfirm={createCampaign}
+        />
+      )}
 
       <CardHeader className="flex-none h-auto items-center gap-3">
-        <CardTitle className="text-foreground font-bold">
-          {t("title")}
-        </CardTitle>
+        <CardTitle className="text-foreground font-bold">{t("title")}</CardTitle>
         <SearchInput
           value={search}
           onChange={setSearch}
@@ -120,32 +125,28 @@ const CampaignListPanel = ({
         />
         {addable && (
           <Card
-          onClick={() => setCreateModalOpen(true)}
+            onClick={() => setCreateModalOpen(true)}
             ref={cardRef}
-            className="w-full bg-primary justify-center flex p-2 gap-3 border-ring hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] hover:border-primary cursor-pointer shadow-md"
-          >
+            className="w-full bg-primary justify-center flex p-2 gap-3 border-ring hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] hover:border-primary cursor-pointer shadow-md">
             <span className="text-background font-bold">{t("create")}</span>
           </Card>
         )}
       </CardHeader>
       <CardContent
         ref={containerRef}
-        className="flex-1 h-auto overflow-auto scrollbar-hide"
-      >
+        className="flex-1 h-auto overflow-auto scrollbar-hide">
         <div className="flex flex-col gap-3">
           {loading && <Loading />}
-          {campaigns && campaigns.length > 0 &&
+          {campaigns &&
+            campaigns.length > 0 &&
             campaigns.map((campaign) => (
               <Card
                 key={campaign._id}
                 className={`flex p-2 gap-3 border-ring shadow-md hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] cursor-pointer bg-background ${
                   selectedCampaign?._id === campaign._id ? "shadow-[inset_0_0_0_1px_hsl(var(--ring))]" : "border"
                 }`}
-                onClick={() => setSelectedCampaign(campaign)}
-              >
-                <span className="text-foreground font-bold">
-                  {campaign.label}
-                </span>
+                onClick={() => setSelectedCampaign(campaign)}>
+                <span className="text-foreground font-bold">{campaign.label}</span>
               </Card>
             ))}
           {campaigns && campaigns.length === 0 && !loading && (

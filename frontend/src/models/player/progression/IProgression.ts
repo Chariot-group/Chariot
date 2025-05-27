@@ -1,4 +1,4 @@
 export default interface IProgression {
-    level: number;
-    experience: number;
+  level: number;
+  experience: number;
 }

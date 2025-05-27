@@ -5,7 +5,7 @@ const useInfiniteScroll = (
   findAll: Function,
   page: number,
   loading: boolean,
-  search?: string
+  search?: string,
 ) => {
   useEffect(() => {
     const handleScroll = () => {

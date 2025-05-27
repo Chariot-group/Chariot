@@ -4,10 +4,7 @@ import apiClient from "@/services/apiConfig";
 const moduleUrl = "/auth/login";
 
 const AuthService = {
-  async login(query: {
-    email: string;
-    password: string;
-  }) {
+  async login(query: { email: string; password: string }) {
     try {
       const response = await apiClient(APIContentType.JSON).post(moduleUrl, query);
 

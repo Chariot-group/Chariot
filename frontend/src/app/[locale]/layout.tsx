@@ -11,7 +11,6 @@ import RestraintMobile from "@/components/modules/mobile/restraintMobile";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "../globals.css";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -44,10 +43,10 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang={locale}
+      suppressHydrationWarning={true}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
             <ToastContainer />
@@ -56,9 +55,7 @@ export default async function LocaleLayout({
             </div>
 
             <div className="hidden lg:block">
-              <TooltipProvider>
-                {children}
-              </TooltipProvider>
+              <TooltipProvider>{children}</TooltipProvider>
             </div>
           </AuthProvider>
         </NextIntlClientProvider>

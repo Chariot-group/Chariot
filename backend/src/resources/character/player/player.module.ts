@@ -8,7 +8,10 @@ import {
 } from '@/resources/character/player/schemas/player.schema';
 import { Group, GroupSchema } from '@/resources/group/schemas/group.schema';
 import { CharacterService } from '@/resources/character/character.service';
-import { Character, CharacterSchema } from '@/resources/character/core/schemas/character.schema';
+import {
+  Character,
+  CharacterSchema,
+} from '@/resources/character/core/schemas/character.schema';
 
 @Module({
   controllers: [PlayerController],

@@ -5,11 +5,7 @@ import { IGroup } from "@/models/groups/IGroup";
 import { Grip } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useTranslations } from "next-intl";
 
 interface Props {
@@ -54,9 +50,7 @@ const GroupListPanelItem = ({
 
   const isOverlay = currentPanelType === "overlay";
 
-  const style = transform
-    ? { transform: `translate(${transform.x}px, ${transform.y}px)` }
-    : undefined;
+  const style = transform ? { transform: `translate(${transform.x}px, ${transform.y}px)` } : undefined;
 
   const pointerStart = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
@@ -84,28 +78,21 @@ const GroupListPanelItem = ({
         reverse ? "bg-background" : "bg-card"
       } ${grabbled && "cursor-pointer justify-center"} ${
         isOverlay ? "opacity-80 scale-105 pointer-events-none" : ""
-      } ${groupSelected?._id === group._id ? "border-2" : ""} ${
-        updated && "pl-0"
-      }
+      } ${groupSelected?._id === group._id ? "border-2" : ""} ${updated && "pl-0"}
         ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
       onClick={(e) => {
         if (setGroupSelected && !disabled && !grabbled) {
           setGroupSelected(group);
         }
-      }}
-    >
+      }}>
       {!grabbled && (
         <Tooltip>
           <TooltipTrigger asChild>
             <div className="flex justify-between items-center w-full">
-              <span className="cursor-pointer text-foreground font-bold">
-                {group.label}
-              </span>
+              <span className="cursor-pointer text-foreground font-bold">{group.label}</span>
               {displayMembersCount && (
                 <span className="text-muted-foreground ml-2">
-                  {group.characters
-                    ? `(${group.characters.length})`
-                    : `(0)`}
+                  {group.characters ? `(${group.characters.length})` : `(0)`}
                 </span>
               )}
             </div>
@@ -113,18 +100,14 @@ const GroupListPanelItem = ({
           <TooltipContent>
             <p>
               {group.characters
-                ? `${group.characters.length} ${t(
-                    group.characters.length === 1 ? "member" : "members"
-                  )}`
+                ? `${group.characters.length} ${t(group.characters.length === 1 ? "member" : "members")}`
                 : `0 ${t("members")}`}
             </p>
           </TooltipContent>
         </Tooltip>
       )}
 
-      {grabbled && updated && (
-        <span className="rounded-full bg-secondary size-2 m-1"></span>
-      )}
+      {grabbled && updated && <span className="rounded-full bg-secondary size-2 m-1"></span>}
 
       {grabbled && changeLabel && (
         <div className="flex items-center gap-2">
@@ -132,13 +115,11 @@ const GroupListPanelItem = ({
             value={group.label}
             id={group._id}
             className="bg-card"
-            onChange={(e) => changeLabel(e.target.value, group)}
-          ></Input>
+            onChange={(e) => changeLabel(e.target.value, group)}></Input>
           <span
             {...listeners}
             {...attributes}
-            className="cursor-grab active:cursor-grabbing"
-          >
+            className="cursor-grab active:cursor-grabbing">
             <Grip />
           </span>
         </div>

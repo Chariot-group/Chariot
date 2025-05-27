@@ -1,10 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import INpc from "@/models/npc/INpc";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -67,26 +63,19 @@ export default function NpcLanguagesSection({ npc, isUpdate, updateNpc }: Props)
               </Tooltip>
             )}
           </div>
-          {languages.length <= 0 && (
-            <span className="text-gray-500 text-sm">
-              {t("languages.noLanguage")}
-            </span>
-          )}
+          {languages.length <= 0 && <span className="text-gray-500 text-sm">{t("languages.noLanguage")}</span>}
           {languages.length > 0 && (
             <ul className="list-disc">
               {languages.map((language, index) => (
                 <li
                   key={index}
-                  className="text-sm flex flex-row gap-2 items-center"
-                >
+                  className="text-sm flex flex-row gap-2 items-center">
                   <DotIcon className="text-foreground" />
                   <Input
                     id={index.toString()}
                     type={"text"}
                     value={language ?? ""}
-                    onChange={(e) =>
-                      handleLanguageChange(index, e.target.value)
-                    }
+                    onChange={(e) => handleLanguageChange(index, e.target.value)}
                     placeholder={t("languages.languageName")}
                     className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0`}
                   />

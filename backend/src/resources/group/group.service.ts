@@ -184,7 +184,7 @@ export class GroupService {
         createdBy: new Types.ObjectId(userId),
       };
 
-      if( onlyWithMembers == 'true' ) {
+      if (onlyWithMembers == 'true') {
         filters.characters = { $ne: [] };
       }
 

@@ -5,14 +5,14 @@ import { AppService } from '@/app.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly logger: Logger
+    private readonly logger: Logger,
   ) {}
 
   readonly SERVICE = AppController.name;
 
   @Get()
   getHello(): string {
-    this.logger.log("Say Hello World", this.SERVICE);
+    this.logger.log('Say Hello World', this.SERVICE);
     return this.appService.getHello();
   }
 }

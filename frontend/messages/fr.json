@@ -111,7 +111,6 @@
       "subClass": "Sous-classe",
       "level": "Niveau",
       "hitDice": "Dé de vie"
-
     },
     "speed": {
       "walking": "Marche",
@@ -231,7 +230,7 @@
       "currentPv": "PV actuels",
       "temporaryPv": "PV temporaires"
     },
-    "abilityScores":{
+    "abilityScores": {
       "strength": "Force",
       "dexterity": "Dextérité",
       "constitution": "Constitution",
@@ -266,7 +265,6 @@
       "description": "Description physique",
       "size": "Taille"
     }
-    
   },
   "Global": {
     "cancel": "Annuler"

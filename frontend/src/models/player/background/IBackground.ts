@@ -1,8 +1,8 @@
 export default interface IBackground {
-    personalityTraits?: string;
-    ideals?: string;
-    bonds?: string;
-    flaws?: string;
-    alliesAndOrgs?: string;
-    backstory?: string;
+  personalityTraits?: string;
+  ideals?: string;
+  bonds?: string;
+  flaws?: string;
+  alliesAndOrgs?: string;
+  backstory?: string;
 }

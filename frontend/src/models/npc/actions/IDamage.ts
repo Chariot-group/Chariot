@@ -1,4 +1,4 @@
 export default interface IDamage {
-    dice?: string;
-    type?: string;
+  dice?: string;
+  type?: string;
 }

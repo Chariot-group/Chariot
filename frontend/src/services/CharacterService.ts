@@ -4,12 +4,15 @@ import apiClient from "@/services/apiConfig";
 const END_POINT = "/groups";
 
 const CharacterService = {
-  async getAllCharacters(query: {
-    page?: number;
-    offset?: number;
-    name?: string;
-    sort?: string;
-  }, idGroup: string) {
+  async getAllCharacters(
+    query: {
+      page?: number;
+      offset?: number;
+      name?: string;
+      sort?: string;
+    },
+    idGroup: string,
+  ) {
     try {
       const response = await apiClient(APIContentType.JSON).get(`${END_POINT}/${idGroup}/characters`, {
         params: query,
@@ -69,7 +72,7 @@ const CharacterService = {
       console.error("API error:", err);
       return "error";
     }
-  }
+  },
 };
 
 export default CharacterService;

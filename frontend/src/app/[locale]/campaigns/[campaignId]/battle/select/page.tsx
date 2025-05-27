@@ -13,9 +13,7 @@ const BattleSelectionPage = () => {
 
   const [groupsLeft, setGroupsLeft] = useState<IGroup[]>([]);
   const [groupsRight, setGroupsRight] = useState<IGroup[]>([]);
-  const [fightingGroups, setFightingGroups] = useState<
-    (IGroupWithRelations | null)[]
-  >([null, null]);
+  const [fightingGroups, setFightingGroups] = useState<(IGroupWithRelations | null)[]>([null, null]);
 
   return (
     <div className="mt-12 flex flex-col w-full gap-4 items-center">
@@ -33,9 +31,7 @@ const BattleSelectionPage = () => {
       </div>
       {fightingGroups[0] && fightingGroups[1] && (
         <div className="flex justify-end p-5">
-          <Link
-            href={`/campaigns/${campaignId}/battle/${fightingGroups[0]?._id}/${fightingGroups[1]?._id}`}
-          >
+          <Link href={`/campaigns/${campaignId}/battle/${fightingGroups[0]?._id}/${fightingGroups[1]?._id}`}>
             <Button className="text-xl h-12 px-8">{t("battle")}</Button>
           </Link>
         </div>

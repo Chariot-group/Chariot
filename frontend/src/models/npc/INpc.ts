@@ -5,7 +5,7 @@ import IProfile from "@/models/npc/profile/IProfile";
 import IStatsBase from "@/models/npc/stat/IStatsBase";
 
 export default interface INpc extends ICharacter<IStatsBase> {
-    actions: IActions;
-    challenge: IChallenge;
-    profile?: IProfile;
+  actions: IActions;
+  challenge: IChallenge;
+  profile?: IProfile;
 }

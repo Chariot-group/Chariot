@@ -13,13 +13,9 @@ const BattlePage = () => {
 
   const t = useTranslations("BattlePage");
 
-  const [groupsToFight, setGroupsToFight] = useState<
-    (IGroupWithRelations | null)[]
-  >([null, null]);
+  const [groupsToFight, setGroupsToFight] = useState<(IGroupWithRelations | null)[]>([null, null]);
 
-  const getStringParam = (
-    param: string | string[] | undefined
-  ): string | undefined => {
+  const getStringParam = (param: string | string[] | undefined): string | undefined => {
     if (Array.isArray(param)) return param[0];
     return param;
   };

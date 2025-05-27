@@ -15,9 +15,7 @@ interface Props {
 const InitiativeTracker = ({ groups, campaignId }: Props) => {
   const t = useTranslations("InitiativeTracker");
   const [participants, setParticipants] = useState<IParticipant[]>([]);
-  const [currentParticipant, setCurrentParticipant] = useState<
-    IParticipant | undefined
-  >(undefined);
+  const [currentParticipant, setCurrentParticipant] = useState<IParticipant | undefined>(undefined);
   const [currentRound, setCurrentRound] = useState<number>(1);
 
   useEffect(() => {
@@ -67,14 +65,10 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
 
   const handleNext = () => {
     if (!currentParticipant) return;
-    const currentIndex = participants.findIndex(
-      (p) => p === currentParticipant
-    );
+    const currentIndex = participants.findIndex((p) => p === currentParticipant);
     const total = participants.length;
 
-    const validParticipants = participants.filter(
-      (p) => p.character.stats.currentHitPoints > 0
-    );
+    const validParticipants = participants.filter((p) => p.character.stats.currentHitPoints > 0);
     if (validParticipants.length === 0) return;
 
     const nextParticipant = [...Array(total - 1)]
@@ -84,9 +78,7 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
 
     if (nextParticipant) {
       setCurrentParticipant(nextParticipant);
-      if (
-        nextParticipant.character._id === validParticipants[0].character._id
-      ) {
+      if (nextParticipant.character._id === validParticipants[0].character._id) {
         setCurrentRound((prev) => prev + 1);
       }
     }
@@ -94,14 +86,10 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
 
   const handlePrevious = () => {
     if (!currentParticipant) return;
-    const currentIndex = participants.findIndex(
-      (p) => p === currentParticipant
-    );
+    const currentIndex = participants.findIndex((p) => p === currentParticipant);
     const total = participants.length;
 
-    const validParticipants = participants.filter(
-      (p) => p.character.stats.currentHitPoints > 0
-    );
+    const validParticipants = participants.filter((p) => p.character.stats.currentHitPoints > 0);
     if (validParticipants.length === 0) return;
 
     const previousParticipant = [...Array(total - 1)]
@@ -112,11 +100,7 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
     if (previousParticipant) {
       setCurrentParticipant(previousParticipant);
 
-      if (
-        currentParticipant.character._id ===
-          validParticipants[0].character._id &&
-        currentRound > 1
-      ) {
+      if (currentParticipant.character._id === validParticipants[0].character._id && currentRound > 1) {
         setCurrentRound((prev) => prev - 1);
       }
     }
@@ -133,7 +117,9 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
     <div className="p-5">
       <div className="relative flex justify-between my-4">
         <Link href={`/campaigns/${campaignId}/battle/select`}>
-          <Button variant="outline" onClick={handleReset}>
+          <Button
+            variant="outline"
+            onClick={handleReset}>
             {t("backToSelection")}
           </Button>
         </Link>
@@ -148,7 +134,9 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
         currentParticipant={currentParticipant}
       />
       <div className="relative flex justify-between mt-5">
-        <Button variant="outline" onClick={handleReset}>
+        <Button
+          variant="outline"
+          onClick={handleReset}>
           {t("reset")} <RefreshCcw />
         </Button>
         {currentParticipant && (
@@ -159,11 +147,8 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
               disabled={
                 currentRound === 1 &&
                 currentParticipant.character._id ===
-                  participants.find(
-                    (p) => p.character.stats.currentHitPoints > 1
-                  )?.character._id
-              }
-            >
+                  participants.find((p) => p.character.stats.currentHitPoints > 1)?.character._id
+              }>
               {t("previous")} <ArrowLeft />
             </Button>
             <Button onClick={handleNext}>
@@ -172,7 +157,9 @@ const InitiativeTracker = ({ groups, campaignId }: Props) => {
           </div>
         )}
         {!currentParticipant && (
-          <Button className="absolute left-[47%]" onClick={handleBattleStart}>
+          <Button
+            className="absolute left-[47%]"
+            onClick={handleBattleStart}>
             {t("start")} <Swords />
           </Button>
         )}
