@@ -1,0 +1,67 @@
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
+import * as nodemailer from 'nodemailer';
+import * as fs from 'fs/promises';
+import * as path from 'path';
+
+@Injectable()
+export class MaillingService {
+
+    private readonly SERVICE_NAME = MaillingService.name;
+    private readonly logger = new Logger(this.SERVICE_NAME);
+
+
+    async sendOTP(username: string, email: string, otp: number, local: string) {
+        try{
+
+            let transporter: nodemailer.Transporter = nodemailer.createTransport({
+                host: process.env.SMTP_HOST,
+                port: Number(process.env.SMTP_PORT),
+                secure: Boolean(process.env.SMTP_SECURE),
+                auth: {
+                    user: process.env.SMTP_USER,
+                    pass: process.env.SMTP_PASS,
+                },
+            });
+
+            let infos: {subjetct: string, template: string} = null;
+            switch (local) {
+                case 'fr':
+                    infos = {
+                        subjetct: 'Votre code OTP',
+                        template: 'otpFr',
+                    };
+                    break;
+                case 'es':
+                    infos = {
+                        subjetct: 'Su código OTP',
+                        template: 'otpEs',
+                    };
+                    break;
+                default:
+                    infos = {
+                        subjetct: 'Your OTP code',
+                        template: 'otpEn',
+                    };
+                    break;
+            }
+
+            const html = await fs.readFile(
+                path.resolve(`src/mailling/templates/${infos.template}.html`),
+                'utf8',
+            );
+
+            await transporter.sendMail({
+                to: email,
+                from: `"No Reply" <${process.env.RECEIVER_EMAIL}>`,
+                subject: infos.subjetct,
+                html: html.replace('{{username}}', username).replace('{{otp}}', otp.toString()),
+            });
+            
+            this.logger.verbose(`Email send at ${email} in ${local}`, this.SERVICE_NAME);
+        }catch(error) {
+            const message = `Error while send otp code at ${email}: ${error.message}`;
+            this.logger.error(message, null, this.SERVICE_NAME);
+            throw new InternalServerErrorException(message);
+        }
+    }
+}
