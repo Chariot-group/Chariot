@@ -1,10 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import INpc from "@/models/npc/INpc";
 import ISense from "@/models/npc/stat/sub/ISenses";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
@@ -78,17 +74,14 @@ export default function NpcSensesSection({ npc, isUpdate, updateNpc }: Props) {
               </Tooltip>
             )}
           </div>
-          {senses.length <= 0 && (
-            <span className="text-gray-500 text-sm">{t("senses.noSens")}</span>
-          )}
+          {senses.length <= 0 && <span className="text-gray-500 text-sm">{t("senses.noSens")}</span>}
           {senses.length > 0 && (
             <ul className="list-disc">
               {senses.map((sense, index) => {
                 return (
                   <li
                     key={index}
-                    className="text-sm flex flex-row gap-2 items-center"
-                  >
+                    className="text-sm flex flex-row gap-2 items-center">
                     <DotIcon className="text-foreground" />
                     <Input
                       readOnly={!isUpdate}

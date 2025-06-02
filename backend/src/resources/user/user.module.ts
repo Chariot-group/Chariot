@@ -4,7 +4,10 @@ import { UserController } from '@/resources/user/user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from '@/resources/user/schemas/user.schema';
 import { CampaignModule } from '@/resources/campaign/campaign.module';
-import { Campaign, CampaignSchema } from '@/resources/campaign/schemas/campaign.schema';
+import {
+  Campaign,
+  CampaignSchema,
+} from '@/resources/campaign/schemas/campaign.schema';
 
 @Module({
   imports: [
@@ -12,13 +15,13 @@ import { Campaign, CampaignSchema } from '@/resources/campaign/schemas/campaign.
       { name: User.name, schema: UserSchema },
       { name: Campaign.name, schema: CampaignSchema },
     ]),
-    CampaignModule
+    CampaignModule,
   ],
   controllers: [UserController],
   providers: [UserService],
   exports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    UserService
+    UserService,
   ],
 })
 export class UserModule {}

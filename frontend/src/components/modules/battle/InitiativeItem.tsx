@@ -16,12 +16,7 @@ interface Props {
   isCurrent?: boolean;
 }
 
-const InitiativeItem = ({
-  participant,
-  setParticipant,
-  handleInitiativeChange,
-  isCurrent,
-}: Props) => {
+const InitiativeItem = ({ participant, setParticipant, handleInitiativeChange, isCurrent }: Props) => {
   const t = useTranslations("InitiativeItem");
 
   const [localInitiative, setLocalInitiative] = useState<string>("");
@@ -48,11 +43,7 @@ const InitiativeItem = ({
   };
 
   const onInitiativeFocus = () => {
-    setLocalInitiative(
-      (participant.initiative ?? 0) === 0
-        ? ""
-        : (participant.initiative ?? 0).toString()
-    );
+    setLocalInitiative((participant.initiative ?? 0) === 0 ? "" : (participant.initiative ?? 0).toString());
   };
 
   const onHPChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,10 +71,8 @@ const InitiativeItem = ({
   return (
     <TableRow
       className={`text-xl ${
-        participant.character.stats.currentHitPoints <= 0 &&
-        "hover:bg-destructive/30 bg-destructive/20"
-      } ${isCurrent && "bg-secondary/20 hover:bg-secondary/30"}`}
-    >
+        participant.character.stats.currentHitPoints <= 0 && "hover:bg-destructive/30 bg-destructive/20"
+      } ${isCurrent && "bg-secondary/20 hover:bg-secondary/30"}`}>
       <TableCell>
         <div className="relative flex items-center">
           <Input
@@ -110,8 +99,7 @@ const InitiativeItem = ({
       <TableCell>
         <Badge
           variant="outline"
-          className="text-xl bg-card w-20 flex justify-between"
-        >
+          className="text-xl bg-card w-20 flex justify-between">
           {participant.character.stats.armorClass}
           <Shield />
         </Badge>
@@ -121,8 +109,7 @@ const InitiativeItem = ({
         <Button
           variant="secondary"
           className="bg-secondary/80 hover:bg-secondary/60"
-          onClick={() => setShowDetails(true)}
-        >
+          onClick={() => setShowDetails(true)}>
           {t("detail")}
         </Button>
         <CharacterModal

@@ -158,196 +158,196 @@
   {
     "name": "Cultist",
     "classification": {
-        "type": "humanoid",
-        "subtype": "any race",
-        "alignment": "any non-good alignment",
-        "size": "Medium"
+      "type": "humanoid",
+      "subtype": "any race",
+      "alignment": "any non-good alignment",
+      "size": "Medium"
     },
     "stats": {
-        "maxHitPoints": 9,
-        "currentHitPoints": 9,
-        "tempHitPoints": 0,
-        "hitDice": "2d8",
-        "armorClass": 12,
-        "speed": {
-            "walk": 30
-        },
-        "abilityScores": {
-            "strength": 11,
-            "dexterity": 12,
-            "constitution": 10,
-            "intelligence": 10,
-            "wisdom": 11,
-            "charisma": 10
-        },
-        "savingThrows": {},
-        "skills": {
-            "deception": 2,
-            "religion": 2
-        },
-        "senses": {
-            "passivePerception": 10
-        }
+      "maxHitPoints": 9,
+      "currentHitPoints": 9,
+      "tempHitPoints": 0,
+      "hitDice": "2d8",
+      "armorClass": 12,
+      "speed": {
+        "walk": 30
+      },
+      "abilityScores": {
+        "strength": 11,
+        "dexterity": 12,
+        "constitution": 10,
+        "intelligence": 10,
+        "wisdom": 11,
+        "charisma": 10
+      },
+      "savingThrows": {},
+      "skills": {
+        "deception": 2,
+        "religion": 2
+      },
+      "senses": {
+        "passivePerception": 10
+      }
     },
     "combat": {
-        "challengeRating": 0.125,
-        "experiencePoints": 25,
-        "resistances": [],
-        "immunities": [],
-        "vulnerabilities": []
+      "challengeRating": 0.125,
+      "experiencePoints": 25,
+      "resistances": [],
+      "immunities": [],
+      "vulnerabilities": []
     },
     "traits": {
-        "languages": ["any one language (usually Common)"],
-        "abilities": [
-            {
-                "name": "Dark Devotion",
-                "description": "The cultist has advantage on saving throws against being charmed or frightened."
-            }
-        ]
+      "languages": ["any one language (usually Common)"],
+      "abilities": [
+        {
+          "name": "Dark Devotion",
+          "description": "The cultist has advantage on saving throws against being charmed or frightened."
+        }
+      ]
     },
     "actions": {
-        "standard": [
-            {
-                "name": "Scimitar",
-                "type": "melee",
-                "attackBonus": 3,
-                "damage": {
-                    "dice": "1d6+1",
-                    "type": "slashing"
-                },
-                "range": "5 feet"
-            }
-        ],
-        "legendary": [],
-        "lair": []
+      "standard": [
+        {
+          "name": "Scimitar",
+          "type": "melee",
+          "attackBonus": 3,
+          "damage": {
+            "dice": "1d6+1",
+            "type": "slashing"
+          },
+          "range": "5 feet"
+        }
+      ],
+      "legendary": [],
+      "lair": []
     }
   },
   {
     "name": "Drider",
     "classification": {
-        "type": "monstrosity",
-        "alignment": "chaotic evil",
-        "size": "Large"
+      "type": "monstrosity",
+      "alignment": "chaotic evil",
+      "size": "Large"
     },
     "stats": {
-        "maxHitPoints": 123,
-        "currentHitPoints": 123,
-        "tempHitPoints": 0,
-        "hitDice": "13d10+52",
-        "armorClass": 19,
-        "speed": {
-            "walk": 30,
-            "climb": 30
-        },
-        "abilityScores": {
-            "strength": 16,
-            "dexterity": 16,
-            "constitution": 18,
-            "intelligence": 13,
-            "wisdom": 14,
-            "charisma": 12
-        },
-        "savingThrows": {},
-        "skills": {
-            "perception": 5,
-            "stealth": 9
-        },
-        "senses": {
-            "darkvision": 120,
-            "passivePerception": 15
-        }
+      "maxHitPoints": 123,
+      "currentHitPoints": 123,
+      "tempHitPoints": 0,
+      "hitDice": "13d10+52",
+      "armorClass": 19,
+      "speed": {
+        "walk": 30,
+        "climb": 30
+      },
+      "abilityScores": {
+        "strength": 16,
+        "dexterity": 16,
+        "constitution": 18,
+        "intelligence": 13,
+        "wisdom": 14,
+        "charisma": 12
+      },
+      "savingThrows": {},
+      "skills": {
+        "perception": 5,
+        "stealth": 9
+      },
+      "senses": {
+        "darkvision": 120,
+        "passivePerception": 15
+      }
     },
     "combat": {
-        "challengeRating": 6,
-        "experiencePoints": 2300,
-        "resistances": [],
-        "immunities": [],
-        "vulnerabilities": []
+      "challengeRating": 6,
+      "experiencePoints": 2300,
+      "resistances": [],
+      "immunities": [],
+      "vulnerabilities": []
     },
     "traits": {
-        "languages": ["Elvish", "Undercommon"],
-        "abilities": [
-            {
-                "name": "Fey Ancestry",
-                "description": "The drider has advantage on saving throws against being charmed, and magic can't put the drider to sleep."
-            },
-            {
-                "name": "Innate Spellcasting",
-                "description": "The drider's innate spellcasting ability is Wisdom (spell save DC 13). The drider can innately cast the following spells, requiring no material components: At will: dancing lights. 1/day each: darkness, faerie fire."
-            },
-            {
-                "name": "Spider Climb",
-                "description": "The drider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
-            },
-            {
-                "name": "Sunlight Sensitivity",
-                "description": "While in sunlight, the drider has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
-            },
-            {
-                "name": "Web Walker",
-                "description": "The drider ignores movement restrictions caused by webbing."
-            }
-        ]
+      "languages": ["Elvish", "Undercommon"],
+      "abilities": [
+        {
+          "name": "Fey Ancestry",
+          "description": "The drider has advantage on saving throws against being charmed, and magic can't put the drider to sleep."
+        },
+        {
+          "name": "Innate Spellcasting",
+          "description": "The drider's innate spellcasting ability is Wisdom (spell save DC 13). The drider can innately cast the following spells, requiring no material components: At will: dancing lights. 1/day each: darkness, faerie fire."
+        },
+        {
+          "name": "Spider Climb",
+          "description": "The drider can climb difficult surfaces, including upside down on ceilings, without needing to make an ability check."
+        },
+        {
+          "name": "Sunlight Sensitivity",
+          "description": "While in sunlight, the drider has disadvantage on attack rolls, as well as on Wisdom (Perception) checks that rely on sight."
+        },
+        {
+          "name": "Web Walker",
+          "description": "The drider ignores movement restrictions caused by webbing."
+        }
+      ]
     },
     "actions": {
-        "standard": [
+      "standard": [
+        {
+          "name": "Multiattack",
+          "description": "The drider makes three attacks, either with its longsword or its longbow. It can replace one of those attacks with a bite attack."
+        },
+        {
+          "name": "Bite",
+          "type": "melee",
+          "attackBonus": 6,
+          "damage": [
             {
-                "name": "Multiattack",
-                "description": "The drider makes three attacks, either with its longsword or its longbow. It can replace one of those attacks with a bite attack."
+              "dice": "1d4",
+              "type": "piercing"
             },
             {
-                "name": "Bite",
-                "type": "melee",
-                "attackBonus": 6,
-                "damage": [
-                    {
-                        "dice": "1d4",
-                        "type": "piercing"
-                    },
-                    {
-                        "dice": "2d8",
-                        "type": "poison"
-                    }
-                ],
-                "range": "5 feet"
-            },
-            {
-                "name": "Longsword",
-                "type": "melee",
-                "attackBonus": 6,
-                "damage": [
-                    {
-                        "dice": "1d8+3",
-                        "type": "slashing",
-                        "notes": "One handed"
-                    },
-                    {
-                        "dice": "1d10+3",
-                        "type": "slashing",
-                        "notes": "Two handed"
-                    }
-                ],
-                "range": "5 feet"
-            },
-            {
-                "name": "Longbow",
-                "type": "ranged",
-                "attackBonus": 6,
-                "damage": [
-                    {
-                        "dice": "1d8+3",
-                        "type": "piercing"
-                    },
-                    {
-                        "dice": "1d8",
-                        "type": "poison"
-                    }
-                ],
-                "range": "150/600 feet"
+              "dice": "2d8",
+              "type": "poison"
             }
-        ],
-        "legendary": [],
-        "lair": []
+          ],
+          "range": "5 feet"
+        },
+        {
+          "name": "Longsword",
+          "type": "melee",
+          "attackBonus": 6,
+          "damage": [
+            {
+              "dice": "1d8+3",
+              "type": "slashing",
+              "notes": "One handed"
+            },
+            {
+              "dice": "1d10+3",
+              "type": "slashing",
+              "notes": "Two handed"
+            }
+          ],
+          "range": "5 feet"
+        },
+        {
+          "name": "Longbow",
+          "type": "ranged",
+          "attackBonus": 6,
+          "damage": [
+            {
+              "dice": "1d8+3",
+              "type": "piercing"
+            },
+            {
+              "dice": "1d8",
+              "type": "poison"
+            }
+          ],
+          "range": "150/600 feet"
+        }
+      ],
+      "legendary": [],
+      "lair": []
     }
   },
   {
@@ -567,5 +567,5 @@
       "legendary": [],
       "lair": []
     }
-  }  
+  }
 ]

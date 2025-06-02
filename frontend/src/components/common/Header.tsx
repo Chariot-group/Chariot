@@ -10,11 +10,7 @@ import jwt from "jsonwebtoken";
 import AuthService from "@/services/authService";
 import { IUser } from "@/models/users/IUser";
 import stringService from "@/services/stringService";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useRouter } from "next/navigation";
 
 interface HeaderProps {
@@ -41,12 +37,11 @@ export function Header({ campaign, battle }: HeaderProps) {
         console.error("Error fetching user:", err);
       }
     },
-    [router]
+    [router],
   );
 
   const logout = () => {
-    document.cookie =
-      "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     router.push("/auth/login");
   };
 
@@ -76,15 +71,12 @@ export function Header({ campaign, battle }: HeaderProps) {
         {!campaign && <div className="w-1/12"></div>}
         <div className="flex flex-col items-center">
           <Link href={"/campaigns"}>
-            <h1 className="text-foreground text-2xl font-bold">{`${t(
-              "home"
-            )}`}</h1>
+            <h1 className="text-foreground text-2xl font-bold">{`${t("home")}`}</h1>
           </Link>
           {campaign && (
             <Link
               href={`/campaigns?search=${campaign.label}`}
-              className="text-foreground hover:underline underline-offset-2"
-            >
+              className="text-foreground hover:underline underline-offset-2">
               <p className="text-foreground">{campaign.label}</p>
             </Link>
           )}
@@ -103,8 +95,7 @@ export function Header({ campaign, battle }: HeaderProps) {
               <PopoverContent className="w-auto p-2 mr-5">
                 <a
                   onClick={logout}
-                  className="hover:underline underline-offset-4 cursor-pointer"
-                >
+                  className="hover:underline underline-offset-4 cursor-pointer">
                   {t("signout")}
                 </a>
               </PopoverContent>
