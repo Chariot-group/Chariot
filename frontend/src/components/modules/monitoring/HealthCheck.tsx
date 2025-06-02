@@ -25,11 +25,7 @@ const HealthCheck = () => {
   }, []);
 
   return (
-    <div
-      className={`p-4 rounded-md text-white ${
-        status === t("status.ok") ? "bg-green-500" : "bg-red-500"
-      }`}
-    >
+    <div className={`p-4 rounded-md text-white ${status === t("status.ok") ? "bg-green-500" : "bg-red-500"}`}>
       {t("status.label")} : {status.toUpperCase()}
     </div>
   );

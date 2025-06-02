@@ -105,15 +105,16 @@ export default function LoginPage() {
                 <p className="text-[0.8rem] font-medium">
                   <Link
                     href="forget-password"
-                    className="hover:underline underline-offset-2"
-                  >
+                    className="hover:underline underline-offset-2">
                     {t("forgotPassword")}
                   </Link>
                 </p>
               </div>
             </div>
             {!loading && (
-              <Button className="w-[20%]" onClick={() => login()}>
+              <Button
+                className="w-[20%]"
+                onClick={() => login()}>
                 {t("login")}
               </Button>
             )}
@@ -131,8 +132,7 @@ export default function LoginPage() {
           <Link
             target="_blank"
             href="#"
-            className="hover:underline underline-offset-2"
-          >
+            className="hover:underline underline-offset-2">
             {t("noAccount.link")}
           </Link>
         </p>

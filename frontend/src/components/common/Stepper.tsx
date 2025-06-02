@@ -23,24 +23,20 @@ export const Stepper: React.FC<StepperProps> = ({ steps, currentStep }) => {
                   isCompleted
                     ? "bg-primary text-white border-primary"
                     : isActive
-                    ? "border-primary text-primary"
-                    : "border-muted-foreground text-muted-foreground"
-                )}
-              >
+                      ? "border-primary text-primary"
+                      : "border-muted-foreground text-muted-foreground",
+                )}>
                 {stepNumber}
               </div>
-              <div className="absolute top-full mt-2 w-max text-xs text-center left-1/2 -translate-x-1/2">
-                {step}
-              </div>
+              <div className="absolute top-full mt-2 w-max text-xs text-center left-1/2 -translate-x-1/2">{step}</div>
             </div>
             {index < steps.length - 1 && (
               <div
                 className={cn(
                   "mx-2 w-full h-1 z-0 rounded-lg",
-                  isCompleted ||
-                    (isCompleted && stepNumber + 1 === currentStep + 1)
+                  isCompleted || (isCompleted && stepNumber + 1 === currentStep + 1)
                     ? "bg-primary"
-                    : "bg-muted-foreground"
+                    : "bg-muted-foreground",
                 )}
               />
             )}

@@ -4,8 +4,7 @@ import { SeederService } from '@/seeder/seeder.service';
 import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
-
-  const SERVICE_NAME: string = "SEEDER";
+  const SERVICE_NAME: string = 'SEEDER';
 
   const start: number = Date.now();
   Logger.log('Creating an application context...', SERVICE_NAME);

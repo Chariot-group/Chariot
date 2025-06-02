@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/useToast';
-import { useTranslations } from 'next-intl';
-import { useState, useEffect, useRef } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/useToast";
+import { useTranslations } from "next-intl";
+import { useState, useEffect, useRef } from "react";
 
 interface CreateCampaginPopupProps {
-    isOpen: boolean;
-    onClose: () => void;
-    onConfirm: (name: string) => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: (name: string) => void;
 }
 export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }: CreateCampaginPopupProps) {
   // Pour gérer l'animation
@@ -22,7 +22,7 @@ export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }:
   const [name, setName] = useState<string>("");
   const nameRef = useRef<string>("");
   const [hasError, setError] = useState<boolean>(false);
-  
+
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
@@ -46,16 +46,16 @@ export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }:
       setError(false);
       return true;
     }
-  }
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         handleClose();
         return;
       }
 
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         updateName("");
         setError(false);
         onClose();
@@ -63,19 +63,19 @@ export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }:
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [onConfirm, onClose]);
 
   const updateName = (name: string) => {
     setName(name);
     nameRef.current = name;
-  }
+  };
 
   const handleClose = () => {
-    if(checkName()){
+    if (checkName()) {
       updateName("");
       onClose();
     }
@@ -83,36 +83,37 @@ export default function CreateCampaginValidation({ isOpen, onClose, onConfirm }:
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div 
+      <div
         className="absolute inset-0 bg-black bg-opacity-50"
         onClick={onClose}></div>
-      
-      <Card className={`p-5 w-1/4 relative transform transition-all duration-300 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+
+      <Card
+        className={`p-5 w-1/4 relative transform transition-all duration-300 ${isVisible ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
         {/* Contenu */}
         <div className="flex flex-col gap-6 text-center">
           <div className="flex flex-col gap-3">
-            <h3 className="text-2xl">
-              {t("title")}
-            </h3>
+            <h3 className="text-2xl">{t("title")}</h3>
             <div className="flex flex-col">
-                <p>
-                    {t("subTitles.info")}
-                </p>
-                <p>
-                    {t("subTitles.warning")}
-                </p>
+              <p>{t("subTitles.info")}</p>
+              <p>{t("subTitles.warning")}</p>
             </div>
           </div>
           <div>
-            <Input type={"text"} value={name} onChange={(e) => updateName(e.target.value)} placeholder={t("placeholder")} className={`bg-background ${hasError && 'border-destructive'}`} />
+            <Input
+              type={"text"}
+              value={name}
+              onChange={(e) => updateName(e.target.value)}
+              placeholder={t("placeholder")}
+              className={`bg-background ${hasError && "border-destructive"}`}
+            />
           </div>
           <div className="flex justify-center gap-3">
-            <Button variant={"outline"} onClick={onClose} >
+            <Button
+              variant={"outline"}
+              onClick={onClose}>
               {global("cancel")}
             </Button>
-            <Button onClick={() => handleClose()}>
-              {t("actions.create")}
-            </Button>
+            <Button onClick={() => handleClose()}>{t("actions.create")}</Button>
           </div>
         </div>
       </Card>
