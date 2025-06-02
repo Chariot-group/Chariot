@@ -29,7 +29,7 @@ export default function CharacterClassesSection({ player, isUpdate, updatePlayer
       name: "",
       subclass: "",
       level: 1,
-      hitDie: 6,
+      hitDice: 6,
     };
     changeClasses([newClass, ...classes]);
   };
@@ -52,9 +52,9 @@ export default function CharacterClassesSection({ player, isUpdate, updatePlayer
     changeClasses(newClasses);
   };
 
-  const updateHitDieClass = (index: number, hitDie: number) => {
+  const updateHitDiceClass = (index: number, hitDice: number) => {
     const newClasses = [...classes];
-    newClasses[index].hitDie = hitDie;
+    newClasses[index].hitDice = hitDice;
     changeClasses(newClasses);
   };
 
@@ -138,18 +138,18 @@ export default function CharacterClassesSection({ player, isUpdate, updatePlayer
                   id={`level-${index}`}
                   type={"number"}
                   placeholder={t("classes.subClass")}
-                  setValue={(value) => updateLevelClass(index, value)}
+                  setValue={(value) => updateLevelClass(index, Number(value))}
                 />
                 <Champs
                   isActive={isUpdate}
                   width="w-auto"
                   color="card"
                   label={t("classes.hitDice")}
-                  value={classe.hitDie}
-                  id={`hitDie-${index}`}
+                  value={classe.hitDice}
+                  id={`hitDice-${index}`}
                   type={"number"}
                   placeholder={t("classes.hitDice")}
-                  setValue={(value) => updateHitDieClass(index, value)}
+                  setValue={(value) => updateHitDiceClass(index, Number(value))}
                 />
               </div>
             </Card>
