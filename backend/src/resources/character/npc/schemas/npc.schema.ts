@@ -12,8 +12,8 @@ export class NPC extends Character {
   @Prop({ type: Actions, default: {} })
   actions: Actions;
 
-  @Prop({ type: [Challenge], default: [] })
-  challenge: Challenge[];
+  @Prop({ type: Challenge, default: {} })
+  challenge: Challenge;
 
   @Prop({ type: NPCProfile, default: {} })
   profile?: NPCProfile;
