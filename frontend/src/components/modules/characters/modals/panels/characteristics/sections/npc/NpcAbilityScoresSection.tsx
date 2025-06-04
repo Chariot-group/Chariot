@@ -60,7 +60,7 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
         ...npc.stats,
         savingThrows: {
           ...npc.stats.savingThrows,
-          constitution: value,
+          constitution: parseInt(value),
         },
       },
     });
