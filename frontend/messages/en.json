@@ -438,7 +438,12 @@
     "label": "OTP",
     "placeholder": "Enter your code",
     "send": "Verify code",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "toasts": {
+      "invalidOTP": "The code is invalid",
+      "otpRequired": "You must enter the code sent by email",
+      "otpValid": "Code validated, you can change your password."
+    }
   },
   "changePassword": {
     "title": "Reset your password",
@@ -450,7 +455,6 @@
     "send": "Change password",
     "toasts": {
       "passwordChanged": "Password changed!",
-      "invalidOTP": "The code is invalid",
       "passwordsNotMatching": "Passwords do not match",
       "internal": "An error occurred while trying to change the password"
     },

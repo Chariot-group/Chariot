@@ -438,7 +438,12 @@
     "label": "OPT",
     "placeholder": "Entrez votre code",
     "send": "Vérifier le code",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "toasts": {
+      "invalidOTP": "Le code est invalide",
+      "otpRequired": "Le code est requis",
+      "otpValid": "Code validé, vous pouvez changer votre mot de passe."
+    }
   },
   "changePassword": {
     "title": "Réinitialiser votre mot de passe",
@@ -450,7 +455,6 @@
     "send": "Changer le mot de passe",
     "toasts": {
       "passwordChanged": "Mot de passe changé !",
-      "invalidOTP": "Le code est invalide",
       "passwordsNotMatching": "Les mots de passe ne correspondent pas",
       "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
     },

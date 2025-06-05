@@ -437,7 +437,12 @@
     "label": "OTP",
     "placeholder": "Ingresa tu código",
     "send": "Verificar código",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "toasts": {
+      "invalidOTP": "Código validado, puede cambiar su contraseña.",
+      "otpRequired": "Debe ingresar un código OTP válido",
+      "otpValid": "El código es válido."
+    }
   },
   "changePassword": {
     "title": "Restablecer tu contraseña",
@@ -449,7 +454,6 @@
     "send": "Cambiar contraseña",
     "toasts": {
       "passwordChanged": "¡Contraseña cambiada!",
-      "invalidOTP": "El código es inválido",
       "passwordsNotMatching": "Las contraseñas no coinciden",
       "internal": "Ocurrió un error al intentar cambiar la contraseña"
     },
