@@ -27,6 +27,7 @@
     },
     "errors": {
       "invalidEmail": "El correo electrónico es inválido",
+      "passwordRequired": "La contraseña es obligatoria",
       "invalidCredentials": "Correo electrónico o contraseña inválidos",
       "internal": "Ocurrió un error al intentar iniciar sesión"
     },

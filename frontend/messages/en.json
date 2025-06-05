@@ -27,6 +27,7 @@
     },
     "errors": {
       "invalidEmail": "The email is invalid",
+      "passwordRequired": "The password is required",
       "invalidCredentials": "Email or password invalid",
       "internal": "An error occurred when we tried to log you in"
     },
