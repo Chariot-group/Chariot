@@ -102,7 +102,17 @@ export default function ConfirmOTP({ setStep, setOTP, otp, userId }: ConfirmOTPP
                 {t("cancel")}
               </Button>
             </Link>
-            <Button type="submit">{t("send")}</Button>
+            {!loading && (
+              <Button
+                type="submit">
+                {t("send")}
+              </Button>
+            )}
+            {loading && (
+              <Button className="w-[20%]">
+                <Loading />
+              </Button>
+            )}
           </div>
         </form>
       </Form>
