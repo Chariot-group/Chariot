@@ -286,6 +286,7 @@ export default function CampaignGroupsPage() {
             setGroups={setGroups}
             changeLabel={() => { }}
             updatedGroup={[]}
+            displayMembersCount={true}
           />
         </div>
         <div className="h-[90vh] justify-center flex flex-col">
