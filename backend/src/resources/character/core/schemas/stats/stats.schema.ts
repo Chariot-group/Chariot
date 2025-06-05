@@ -56,7 +56,7 @@ export class Stats {
   @Prop({ type: Skills, default: {} })
   skills: Skills;
 
-  @Prop({ type: [SenseSchema], default: [] })
+  @Prop({ type: [Sense], default: [] })
   senses: Sense[];
 }
 

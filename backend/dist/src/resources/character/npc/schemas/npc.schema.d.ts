@@ -6,7 +6,7 @@ import { Character } from '@/resources/character/core/schemas/character.schema';
 export type NPCDocument = NPC & Document;
 export declare class NPC extends Character {
     actions: Actions;
-    challenge: Challenge[];
+    challenge: Challenge;
     profile?: NPCProfile;
 }
 export declare const NPCSchema: import("mongoose").Schema<NPC, import("mongoose").Model<NPC, any, any, any, Document<unknown, any, NPC, any> & NPC & Required<{

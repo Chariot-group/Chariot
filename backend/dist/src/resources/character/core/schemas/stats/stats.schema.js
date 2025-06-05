@@ -77,7 +77,7 @@ __decorate([
     __metadata("design:type", skill_schema_1.Skills)
 ], Stats.prototype, "skills", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [sense_1.SenseSchema], default: [] }),
+    (0, mongoose_1.Prop)({ type: [sense_1.Sense], default: [] }),
     __metadata("design:type", Array)
 ], Stats.prototype, "senses", void 0);
 exports.Stats = Stats = __decorate([

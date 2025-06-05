@@ -16,7 +16,7 @@ const class_transformer_1 = require("class-transformer");
 const savingThrows_dto_1 = require("./sub/savingThrows.dto");
 const speed_dto_1 = require("./sub/speed.dto");
 const skill_dto_1 = require("./sub/skill.dto");
-const sense_1 = require("./sub/sense");
+const sense_dto_1 = require("./sub/sense.dto");
 class StatsDto {
 }
 exports.StatsDto = StatsDto;
@@ -88,7 +88,7 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsArray)(),
     (0, class_validator_1.ValidateNested)({ each: true }),
-    (0, class_transformer_1.Type)(() => sense_1.SenseDto),
+    (0, class_transformer_1.Type)(() => sense_dto_1.SenseDto),
     __metadata("design:type", Array)
 ], StatsDto.prototype, "senses", void 0);
 //# sourceMappingURL=stats.dto.js.map

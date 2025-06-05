@@ -1501,13 +1501,13 @@
         "name": "Occultist",
         "subclass": "The Great Old One",
         "level": 5,
-        "hitDie": 8
+        "hitDice": 8
       },
       {
         "name": "Mage",
         "subclass": "School of Divination",
         "level": 7,
-        "hitDie": 6
+        "hitDice": 6
       }
     ],
     "profile": {

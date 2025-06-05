@@ -23,8 +23,8 @@ __decorate([
     __metadata("design:type", actions_schema_1.Actions)
 ], NPC.prototype, "actions", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: [challenge_schema_1.Challenge], default: [] }),
-    __metadata("design:type", Array)
+    (0, mongoose_1.Prop)({ type: challenge_schema_1.Challenge, default: {} }),
+    __metadata("design:type", challenge_schema_1.Challenge)
 ], NPC.prototype, "challenge", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: npc_profile_schema_1.NPCProfile, default: {} }),

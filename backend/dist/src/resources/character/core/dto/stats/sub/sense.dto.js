@@ -9,24 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SenseSchema = exports.Sense = void 0;
-const mongoose_1 = require("@nestjs/mongoose");
+exports.SenseDto = void 0;
 const class_validator_1 = require("class-validator");
-let Sense = class Sense {
-};
-exports.Sense = Sense;
+class SenseDto {
+}
+exports.SenseDto = SenseDto;
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, mongoose_1.Prop)({ type: String, default: '' }),
+    (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
-], Sense.prototype, "name", void 0);
+], SenseDto.prototype, "name", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, mongoose_1.Prop)({ type: Number, default: 0 }),
+    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
-], Sense.prototype, "value", void 0);
-exports.Sense = Sense = __decorate([
-    (0, mongoose_1.Schema)({ _id: false })
-], Sense);
-exports.SenseSchema = mongoose_1.SchemaFactory.createForClass(Sense);
-//# sourceMappingURL=sense.js.map
+], SenseDto.prototype, "value", void 0);
+//# sourceMappingURL=sense.dto.js.map
