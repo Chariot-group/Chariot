@@ -45,7 +45,7 @@ const GroupSelector = ({
   };
 
   return (
-    <div className="flex flex-row items-center justify-center gap-4 w-full border">
+    <div className="flex flex-row items-center justify-center gap-4 w-full">
       <div className="w-full">
         <GroupListPanel
           displayMembersCount={true}
