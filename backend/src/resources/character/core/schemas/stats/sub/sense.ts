@@ -1,11 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IsOptional } from 'class-validator';
 
-@Schema()
+@Schema({ _id: false })
 export class Sense {
-  @Prop({ required: true })
+  @IsOptional()
+  @Prop({ type: String, default: '' })
   name: string;
 
-  @Prop({ required: true, type: Number })
+  @IsOptional()
+  @Prop({ type: Number, default: 0 })
   value: number;
 }
 
