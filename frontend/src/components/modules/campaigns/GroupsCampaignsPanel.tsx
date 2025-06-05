@@ -153,9 +153,9 @@ export default function GroupsCampaignsPanel({
           </Tooltip>
         )}
       </div>
-      <div className="flex flex-row gap-4 mt-4 justify-between h-full">
+      <div className="flex flex-row gap-10 mt-4 justify-between h-full">
         <GroupDnDWrapper onDragEnd={handleDragEnd}>
-          <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
+          <div className="rounded-xl border border-ring bg-card text-card-foreground shadow w-1/3">
             <GroupListPanel
               displayMembersCount
               updatedGroup={updatedGroup}
@@ -167,16 +167,13 @@ export default function GroupsCampaignsPanel({
               idCampaign={idCampaign}
               addable={false}
               type="main"
-              setGroupSelected={() => {}}
+              setGroupSelected={() => { }}
               groupSelected={null}
               search={mainSearch}
               setSearch={setMainSearch}
             />
           </div>
-          <div className="flex items-center">
-            <span className="text-muted-foreground">{"< >"}</span>
-          </div>
-          <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
+          <div className="rounded-xl border border-ring bg-card text-card-foreground shadow w-1/3">
             <GroupListPanel
               displayMembersCount
               updatedGroup={updatedGroup}
@@ -188,16 +185,13 @@ export default function GroupsCampaignsPanel({
               idCampaign={idCampaign}
               addable={false}
               type="npc"
-              setGroupSelected={() => {}}
+              setGroupSelected={() => { }}
               groupSelected={null}
               search={npcSearch}
               setSearch={setNpcSearch}
             />
           </div>
-          <div className="flex items-center">
-            <span className="text-muted-foreground">{"< >"}</span>
-          </div>
-          <div className="rounded-xl border border-ring bg-card text-card-foreground shadow">
+          <div className="rounded-xl border border-ring bg-card text-card-foreground shadow w-1/3">
             <GroupListPanel
               displayMembersCount
               updatedGroup={updatedGroup}
@@ -209,7 +203,7 @@ export default function GroupsCampaignsPanel({
               idCampaign={idCampaign}
               addable={false}
               type="archived"
-              setGroupSelected={() => {}}
+              setGroupSelected={() => { }}
               groupSelected={null}
               search={archivedSearch}
               setSearch={setArchivedSearch}
