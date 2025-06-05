@@ -3,11 +3,16 @@
 import Field from "@/components/common/Field";
 import Loading from "@/components/common/Loading";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/useToast";
 import AuthService from "@/services/authService";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
 
 interface ConfirmEmailProps {
   setStep: (step: 1 | 2 | 3) => void;
@@ -17,26 +22,30 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
   const t = useTranslations("confirmEmail");
   const { success, error } = useToast();
 
-  const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const sendEmail = useCallback(async (email: string) => {
+  const confirmEmailSchema = z.object({
+    email: z.string().email(t("toasts.invalidEmail")),
+  });
+
+  const form = useForm<z.infer<typeof confirmEmailSchema>>({
+    resolver: zodResolver(confirmEmailSchema),
+    defaultValues: {
+      email: ""
+    },
+  });
+
+  const sendEmail = useCallback(async (value: z.infer<typeof confirmEmailSchema>) => {
     try {
-      let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailRegex.test(email)) {
-        error(t("toasts.invalidEmail"));
-        return;
-      }
+
       setLoading(true);
       let locale = window.location.pathname.split("/")[1];
-      let reponse = await AuthService.resetPassword(email, locale);
-      if (reponse.statusCode && reponse.statusCode === 200) {
-        error(t("toasts.emailNotFound"));
-        setLoading(false);
-        return;
-      }
+      let reponse = await AuthService.resetPassword(value.email, locale);
       if (reponse.statusCode && reponse.statusCode !== 200) {
-        error(t("toasts.internal"));
+        error(t("toasts.emailNotFound"));
+        form.setError("email", {
+          message: t("toasts.emailNotFound"),
+        });
         setLoading(false);
         return;
       }
@@ -56,31 +65,48 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
         <h1 className="text-xl font-bold">{t("title")}</h1>
         <p className="text-sm w-[70%] text-center">{t("description")}</p>
       </div>
-      <div className="w-full flex flex-col gap-[4dvh] items-center justify-center">
-        <div className="w-[50%]">
-          <Field
-            id={"email"}
-            type={"email"}
-            label={t("label")}
-            placeholder={t("placeholder")}
-            value={email}
-            setValue={setEmail}
-          />
-        </div>
-        <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
-          <Link href={"login"}>
-            <Button variant={"outline"}>
-              {t("cancel")}
-            </Button>
-          </Link>
-          {!loading && <Button onClick={() => sendEmail(email)}>{t("send")}</Button>}
-          {loading && (
-            <Button className="w-[20%]">
-              <Loading />
-            </Button>
-          )}
-        </div>
-      </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(sendEmail)}
+          className="w-full flex flex-col gap-[5dvh] items-center justify-center">
+          <div className="w-[50%] flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      placeholder={t("placeholder")}
+                      {...field}
+                      className="bg-background"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
+            <Link href={"login"}>
+              <Button variant={"outline"}>
+                {t("cancel")}
+              </Button>
+            </Link>
+            {!loading && (
+              <Button
+                type="submit">
+                {t("send")}
+              </Button>
+            )}
+            {loading && (
+              <Button className="w-[20%]">
+                <Loading />
+              </Button>
+            )}
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
