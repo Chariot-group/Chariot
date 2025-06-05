@@ -7,31 +7,55 @@ import Profile from "@/components/modules/characters/modals/panels/characteristi
 import Treasure from "@/components/modules/characters/modals/panels/characteristics/sections/player/PlayerTreasureSection";
 
 interface Props {
-    player : IPlayer;
-    updatePlayer: (player: IPlayer) => void;
-    isUpdate: boolean;
+  player: IPlayer;
+  updatePlayer: (player: IPlayer) => void;
+  isUpdate: boolean;
 }
 export default function PlayerCharacteristicSection({ player, updatePlayer, isUpdate }: Props) {
-    return (
-        <div className="flex flex-row gap-3 h-[90%] overflow-auto">
-            <AbilityScores updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
-            <div className="flex flex-col gap-3 w-1/6 h-full">
-                {/* PV */}
-                <Battle updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
-        
-                {/* Profile + Progression */}
-                <Profile updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
-                                    
-                {/* Appareance */}
-                <Appearance updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
-            </div>
-            <div className="flex flex-col gap-3 w-4/6 h-full">
-                {/* Background */}
-                <Background updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
-                            
-                {/* Treasure */}
-                <Treasure updatePlayer={updatePlayer} isUpdate={isUpdate} player={player} />
-            </div>
-        </div>
-    )
+  return (
+    <div className="flex flex-row gap-3 h-[90%] overflow-auto">
+      <AbilityScores
+        updatePlayer={updatePlayer}
+        isUpdate={isUpdate}
+        player={player}
+      />
+      <div className="flex flex-col gap-3 w-1/6 h-full">
+        {/* PV */}
+        <Battle
+          updatePlayer={updatePlayer}
+          isUpdate={isUpdate}
+          player={player}
+        />
+
+        {/* Profile + Progression */}
+        <Profile
+          updatePlayer={updatePlayer}
+          isUpdate={isUpdate}
+          player={player}
+        />
+
+        {/* Appareance */}
+        <Appearance
+          updatePlayer={updatePlayer}
+          isUpdate={isUpdate}
+          player={player}
+        />
+      </div>
+      <div className="flex flex-col gap-3 w-4/6 h-full">
+        {/* Background */}
+        <Background
+          updatePlayer={updatePlayer}
+          isUpdate={isUpdate}
+          player={player}
+        />
+
+        {/* Treasure */}
+        <Treasure
+          updatePlayer={updatePlayer}
+          isUpdate={isUpdate}
+          player={player}
+        />
+      </div>
+    </div>
+  );
 }

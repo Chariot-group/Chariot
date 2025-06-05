@@ -5,11 +5,7 @@ import DeleteValidation from "@/components/modals/DeleteValidation";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useToast } from "@/hooks/useToast";
 import { IGroup } from "@/models/groups/IGroup";
 import { PenBoxIcon, SaveIcon, TrashIcon, XIcon } from "lucide-react";
@@ -22,7 +18,7 @@ interface GroupDetailsPanelProps {
   onDelete: (group: IGroup) => void;
   isUpdating: boolean;
   startUpdate: () => void;
-  cancelUpdate : () => void;
+  cancelUpdate: () => void;
   saveActions: () => void;
 }
 export default function GroupDetailsPanel({
@@ -32,7 +28,7 @@ export default function GroupDetailsPanel({
   isUpdating,
   startUpdate,
   cancelUpdate,
-  saveActions
+  saveActions,
 }: GroupDetailsPanelProps) {
   const t = useTranslations("GroupDetailsPanel");
   const { error } = useToast();
@@ -55,8 +51,7 @@ export default function GroupDetailsPanel({
 
   return (
     <div className="flex flex-col h-full w-full gap-3 p-5">
-      {
-        group && deleteModalOpen && 
+      {group && deleteModalOpen && (
         <DeleteValidation
           isOpen={deleteModalOpen}
           onClose={() => setDeleteModalOpen(false)}
@@ -65,8 +60,8 @@ export default function GroupDetailsPanel({
           confirmMessage={t("actions.modal.confirm")}
           onConfirm={() => onDelete(group)}
         />
-      }
-      
+      )}
+
       <div className="flex flex-row gap-3 justify-between">
         <Field
           isActive={isUpdating}
@@ -78,60 +73,66 @@ export default function GroupDetailsPanel({
           value={label}
           setValue={setLabel}
         />
-          {!isUpdating && group && (
-            <div className="flex flex-row gap-3 items-center">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant="secondary" onClick={() => startUpdate()}>
-                    <PenBoxIcon className="text-forground cursor-pointer" />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t("actions.update")}</p>
-                </TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <TrashIcon
-                    onClick={() => setDeleteModalOpen(true)}
-                    className="text-primary cursor-pointer"
-                  />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t("actions.groupDelete")}</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          )}
-          {
-            isUpdating && group && (
-              <div className="flex flex-row gap-3 items-center">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="outline" onClick={() => cancelUpdate()}>
-                      <XIcon className="text-forground cursor-pointer"/>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{t("actions.cancel")}</p>
-                  </TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="secondary" onClick={() => saveActions()}>
-                      <SaveIcon className="text-forground cursor-pointer"/>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{t("actions.save")}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-            )
-          }
+        {!isUpdating && group && (
+          <div className="flex flex-row gap-3 items-center">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="secondary"
+                  onClick={() => startUpdate()}>
+                  <PenBoxIcon className="text-forground cursor-pointer" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("actions.update")}</p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <TrashIcon
+                  onClick={() => setDeleteModalOpen(true)}
+                  className="text-primary cursor-pointer"
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("actions.groupDelete")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
+        {isUpdating && group && (
+          <div className="flex flex-row gap-3 items-center">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  onClick={() => cancelUpdate()}>
+                  <XIcon className="text-forground cursor-pointer" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("actions.cancel")}</p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="secondary"
+                  onClick={() => saveActions()}>
+                  <SaveIcon className="text-forground cursor-pointer" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("actions.save")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
       </div>
       <div className="w-full">
-        <Label htmlFor={"description"} className="text-foreground">
+        <Label
+          htmlFor={"description"}
+          className="text-foreground">
           {t("labels.description")}
         </Label>
         <Textarea

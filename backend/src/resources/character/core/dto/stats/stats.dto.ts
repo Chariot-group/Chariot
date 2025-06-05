@@ -11,7 +11,7 @@ import { Type } from 'class-transformer';
 import { SavingThrowsDto } from '@/resources/character/core/dto/stats/sub/savingThrows.dto';
 import { SpeedDto } from '@/resources/character/core/dto/stats/sub/speed.dto';
 import { SkillDto } from '@/resources/character/core/dto/stats/sub/skill.dto';
-import { SenseDto } from '@/resources/character/core/dto/stats/sub/sense';
+import { SenseDto } from '@/resources/character/core/dto/stats/sub/sense.dto';
 
 export class StatsDto {
   @IsOptional()

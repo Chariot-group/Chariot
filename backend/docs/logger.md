@@ -32,16 +32,16 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly logger: Logger
+    private readonly logger: Logger,
   ) {}
 
   readonly SERVICE_NAME = AppController.name;
 
   @Get()
   getHello(): string {
-    this.logger.log("Info hello world", this.SERVICE_NAME); // Apparait comme info dans combine.log
-    this.logger.warn("Warning hello world", this.SERVICE_NAME); // Apparait comme warn dans combine.log
-    this.logger.error("Error hello world", this.SERVICE_NAME); // Apparait comme error dans combine.log et error.log
+    this.logger.log('Info hello world', this.SERVICE_NAME); // Apparait comme info dans combine.log
+    this.logger.warn('Warning hello world', this.SERVICE_NAME); // Apparait comme warn dans combine.log
+    this.logger.error('Error hello world', this.SERVICE_NAME); // Apparait comme error dans combine.log et error.log
     return this.appService.getHello();
   }
 }

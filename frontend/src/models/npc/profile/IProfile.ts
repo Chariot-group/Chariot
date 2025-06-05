@@ -1,5 +1,5 @@
 export default interface IProfile {
-    type?: string;
-    subtype?: string;
-    alignment?: string;
+  type?: string;
+  subtype?: string;
+  alignment?: string;
 }

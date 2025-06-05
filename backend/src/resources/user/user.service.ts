@@ -12,7 +12,10 @@ import { UpdateUserDto } from '@/resources/user/dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { Model, Types } from 'mongoose';
-import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
+import {
+  Campaign,
+  CampaignDocument,
+} from '@/resources/campaign/schemas/campaign.schema';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()

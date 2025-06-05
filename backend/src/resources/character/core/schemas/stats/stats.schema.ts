@@ -8,7 +8,10 @@ import {
   SIZES,
   Size,
 } from '@/resources/character/core/constants/sizes.constant';
-import { Sense, SenseSchema } from '@/resources/character/core/schemas/stats/sub/sense';
+import {
+  Sense,
+  SenseSchema,
+} from '@/resources/character/core/schemas/stats/sub/sense';
 
 @Schema({ _id: false })
 export class Stats {
@@ -56,7 +59,7 @@ export class Stats {
   @Prop({ type: Skills, default: {} })
   skills: Skills;
 
-  @Prop({ type: [SenseSchema], default: [] })
+  @Prop({ type: [Sense], default: [] })
   senses: Sense[];
 }
 

@@ -1,10 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import INpc from "@/models/npc/INpc";
 import ISense from "@/models/npc/stat/sub/ISenses";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
@@ -42,19 +38,9 @@ export default function NpcSensesSection({ npc, isUpdate, updateNpc }: Props) {
     changeSenses(newSenses);
   };
 
-  const updateName = (index: number, name: string) => {
+  const updateSense = (index: number, key: keyof ISense, value: string | number) => {
     const newSenses = [...senses];
-    const newSense = { ...newSenses[index] };
-    newSense.name = name;
-    newSenses[index] = newSense;
-    changeSenses(newSenses);
-  };
-
-  const updateValue = (index: number, value: any) => {
-    const newSenses = [...senses];
-    const newSense = { ...newSenses[index] };
-    newSense.value = parseInt(value);
-    newSenses[index] = newSense;
+    newSenses[index] = { ...newSenses[index], [key]: key === "value" ? parseInt(value as string) : value };
     changeSenses(newSenses);
   };
 
@@ -78,26 +64,23 @@ export default function NpcSensesSection({ npc, isUpdate, updateNpc }: Props) {
               </Tooltip>
             )}
           </div>
-          {senses.length <= 0 && (
-            <span className="text-gray-500 text-sm">{t("senses.noSens")}</span>
-          )}
+          {senses.length <= 0 && <span className="text-gray-500 text-sm">{t("senses.noSens")}</span>}
           {senses.length > 0 && (
             <ul className="list-disc">
               {senses.map((sense, index) => {
                 return (
                   <li
                     key={index}
-                    className="text-sm flex flex-row gap-2 items-center"
-                  >
+                    className="text-sm flex flex-row gap-0.5 items-center">
                     <DotIcon className="text-foreground" />
                     <Input
                       readOnly={!isUpdate}
                       id={index.toString()}
                       type={"text"}
-                      value={sense.name}
-                      onChange={(e) => updateName(index, e.target.value)}
+                      value={sense?.name || ""}
+                      onChange={(e) => updateSense(index, "name", e.target.value)}
                       placeholder={t("senses.sensName")}
-                      className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0`}
+                      className={`w-1/2 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0`}
                     />
                     <span> :</span>
                     <Input
@@ -105,17 +88,17 @@ export default function NpcSensesSection({ npc, isUpdate, updateNpc }: Props) {
                       min={0}
                       id={index.toString()}
                       type={"number"}
-                      value={sense.value}
-                      onChange={(e) => updateValue(index, e.target.value)}
+                      value={sense?.value || 0}
+                      onChange={(e) => updateSense(index, "value", e.target.value)}
                       placeholder={t("senses.value")}
-                      className={`w-10 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0`}
+                      className={`w-1/3 p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0`}
                     />
                     {isUpdate && (
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <TrashIcon
                             onClick={() => removeSense(index)}
-                            className="cursor-pointer text-primary"
+                            className="cursor-pointer text-primary ml-2"
                           />
                         </TooltipTrigger>
                         <TooltipContent>

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  DndContext,
-  DragEndEvent,
-  DragOverlay,
-  closestCorners,
-} from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverlay, closestCorners } from "@dnd-kit/core";
 import { useState } from "react";
 import GroupListPanelItem from "./GroupListPanelItem";
 import { IGroup } from "@/models/groups/IGroup";
@@ -32,18 +27,17 @@ export default function GroupDnDWrapper({
         setActiveGroup(group);
       }}
       onDragEnd={(event) => internalHandleDragEnd(event)}
-      onDragCancel={() => setActiveGroup(null)}
-    >
+      onDragCancel={() => setActiveGroup(null)}>
       {children}
 
       <DragOverlay>
         {activeGroup ? (
           <GroupListPanelItem
-            idCampaign={""} 
+            idCampaign={""}
             group={activeGroup}
             currentPanelType={"overlay"}
             grabbled={true}
-            />
+          />
         ) : null}
       </DragOverlay>
     </DndContext>

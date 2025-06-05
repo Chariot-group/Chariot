@@ -9,22 +9,12 @@ interface Props {
   isUpdate: boolean;
   updateNpc: (npc: INpc) => void;
 }
-export default function NpcFightingSection({
-  npc,
-  isUpdate,
-  updateNpc,
-}: Props) {
+export default function NpcFightingSection({ npc, isUpdate, updateNpc }: Props) {
   const t = useTranslations("CharacterDetailsPanel");
 
-  const [maxHitPoints, setMaxHitPoints] = useState<number>(
-    npc.stats.maxHitPoints
-  );
-  const [currentHitPoints, setCurrentHitPoints] = useState<number>(
-    npc.stats.currentHitPoints
-  );
-  const [tempHitPoints, setTempHitPoints] = useState<number>(
-    npc.stats.tempHitPoints
-  );
+  const [maxHitPoints, setMaxHitPoints] = useState<number>(npc.stats.maxHitPoints);
+  const [currentHitPoints, setCurrentHitPoints] = useState<number>(npc.stats.currentHitPoints);
+  const [tempHitPoints, setTempHitPoints] = useState<number>(npc.stats.tempHitPoints);
   const [armorClass, setArmorClass] = useState<number>(npc.stats.armorClass);
 
   const changeMaxHitPoints = (value: any) => {
