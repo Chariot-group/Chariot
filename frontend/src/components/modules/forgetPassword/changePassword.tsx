@@ -83,9 +83,11 @@ export default function ChangePassword({ otp, userId, setStep }: ChangePasswordP
           />
         </div>
         <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
-          <Button variant={"outline"}>
-            <Link href={"login"}>{t("cancel")}</Link>
-          </Button>
+          <Link href={"login"}>
+            <Button variant={"outline"}>
+              {t("cancel")}
+            </Button>
+          </Link>
           {!loading && <Button onClick={() => changePassword(password, confirmPassword)}>{t("send")}</Button>}
           {loading && (
             <Button className="w-[20%]">

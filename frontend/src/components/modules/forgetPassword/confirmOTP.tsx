@@ -42,9 +42,11 @@ export default function ConfirmOTP({ setStep, setOTP, otp }: ConfirmOTPProps) {
           </InputOTP>
         </div>
         <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
-          <Button variant={"outline"}>
-            <Link href={"login"}>{t("cancel")}</Link>
-          </Button>
+          <Link href={"login"}>
+            <Button variant={"outline"}>
+              {t("cancel")}
+            </Button>
+          </Link>
           <Button onClick={() => setStep(3)}>{t("send")}</Button>
         </div>
       </div>
