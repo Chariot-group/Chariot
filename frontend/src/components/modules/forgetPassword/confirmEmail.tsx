@@ -1,9 +1,8 @@
 "use client";
 
-import Field from "@/components/common/Field";
 import Loading from "@/components/common/Loading";
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/useToast";
 import AuthService from "@/services/authService";
@@ -75,6 +74,7 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
               name="email"
               render={({ field }) => (
                 <FormItem>
+                  <FormLabel>{t("label")}</FormLabel>
                   <FormControl>
                     <Input
                       placeholder={t("placeholder")}
@@ -89,7 +89,7 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
           </div>
           <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
             <Link href={"login"}>
-              <Button variant={"outline"}>
+              <Button type="button" variant={"outline"}>
                 {t("cancel")}
               </Button>
             </Link>

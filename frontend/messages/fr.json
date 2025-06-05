@@ -456,6 +456,8 @@
     "toasts": {
       "passwordChanged": "Mot de passe changé !",
       "passwordsNotMatching": "Les mots de passe ne correspondent pas",
+      "passwordRequired": "Le mot de passe est requis",
+      "confirmPasswordRequired": "La confirmation du mot de passe est requise",
       "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
     },
     "cancel": "Annuler"

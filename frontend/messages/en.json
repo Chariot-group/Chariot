@@ -456,6 +456,8 @@
     "toasts": {
       "passwordChanged": "Password changed!",
       "passwordsNotMatching": "Passwords do not match",
+      "passwordRequired": "You must enter a password",
+      "confirmPasswordRequired": "You must confirm your password",
       "internal": "An error occurred while trying to change the password"
     },
     "cancel": "Cancel"

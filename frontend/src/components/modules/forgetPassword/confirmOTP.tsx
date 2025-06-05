@@ -16,10 +16,9 @@ import z from "zod";
 interface ConfirmOTPProps {
   setStep: (step: 1 | 2 | 3) => void;
   setOTP: (otp: string) => void;
-  otp: string;
   userId: string;
 }
-export default function ConfirmOTP({ setStep, setOTP, otp, userId }: ConfirmOTPProps) {
+export default function ConfirmOTP({ setStep, setOTP, userId }: ConfirmOTPProps) {
   const t = useTranslations("confirmOTP");
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -97,7 +96,7 @@ export default function ConfirmOTP({ setStep, setOTP, otp, userId }: ConfirmOTPP
           />
           <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
             <Link href={"login"}>
-              <Button variant={"outline"}>
+              <Button type="button" variant={"outline"}>
                 {t("cancel")}
               </Button>
             </Link>

@@ -38,7 +38,6 @@ export default function ForgotPasswordPage() {
             setStep={setStep}
             setOTP={setOTP}
             userId={userId}
-            otp={otp}
           />
         )}
         {step === 3 && (
