@@ -24,7 +24,7 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
   const [loading, setLoading] = useState<boolean>(false);
 
   const confirmEmailSchema = z.object({
-    email: z.string().email(t("toasts.invalidEmail")),
+    email: z.string().email(t("toasts.emailRequired")),
   });
 
   const form = useForm<z.infer<typeof confirmEmailSchema>>({

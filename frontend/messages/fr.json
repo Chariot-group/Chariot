@@ -420,6 +420,7 @@
     "toasts": {
       "sendingEmail": "Un email a été envoyé ! Vérifier vos spams.",
       "invalidEmail": "L'email est invalide",
+      "emailRequired": "L'email est requis",
       "emailNotFound": "Aucun compte trouvé avec cet email",
       "internal": "Une erreur c'est produite quand nous avons essayé de vous envoyer l'email"
     },
