@@ -27,7 +27,7 @@ export default function LoginPage() {
   const { error, success } = useToast();
 
   const authFormSchema = z.object({
-    email: z.string().email(t("errors.invalidEmail")),
+    email: z.string().email(t("errors.emailRequired")),
     password: z.string().min(1, t("errors.passwordRequired")),
   });
 

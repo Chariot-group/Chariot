@@ -26,6 +26,7 @@
       "link": "Enjoy free access !"
     },
     "errors": {
+      "emailRequired": "The email is required",
       "invalidEmail": "The email is invalid",
       "passwordRequired": "The password is required",
       "invalidCredentials": "Email or password invalid",

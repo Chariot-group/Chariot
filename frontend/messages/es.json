@@ -26,6 +26,7 @@
       "link": "¡Disfruta del acceso gratuito !"
     },
     "errors": {
+      "emailRequired": "El correo electrónico es obligatorio",
       "invalidEmail": "El correo electrónico es inválido",
       "passwordRequired": "La contraseña es obligatoria",
       "invalidCredentials": "Correo electrónico o contraseña inválidos",
