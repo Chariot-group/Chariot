@@ -167,8 +167,6 @@ export default function GroupsCampaignsPanel({
               idCampaign={idCampaign}
               addable={false}
               type="main"
-              setGroupSelected={() => { }}
-              groupSelected={null}
               search={mainSearch}
               setSearch={setMainSearch}
             />
@@ -185,8 +183,6 @@ export default function GroupsCampaignsPanel({
               idCampaign={idCampaign}
               addable={false}
               type="npc"
-              setGroupSelected={() => { }}
-              groupSelected={null}
               search={npcSearch}
               setSearch={setNpcSearch}
             />
@@ -203,8 +199,6 @@ export default function GroupsCampaignsPanel({
               idCampaign={idCampaign}
               addable={false}
               type="archived"
-              setGroupSelected={() => { }}
-              groupSelected={null}
               search={archivedSearch}
               setSearch={setArchivedSearch}
             />

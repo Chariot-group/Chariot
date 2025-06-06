@@ -16,8 +16,8 @@ import GroupListPanelItem from "@/components/modules/groups/GroupListPanelItem";
 interface Props {
   groups: IGroup[]; // Liste des groupes à afficher
   setGroups: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
-  groupSelected: IGroup | null; // Groupe selectionné
-  setGroupSelected: (group: IGroup | null) => void; // Fonction pour mettre à jour le groupe selectionné
+  groupSelected?: IGroup | null; // Groupe selectionné
+  setGroupSelected?: (group: IGroup | null) => void; // Fonction pour mettre à jour le groupe selectionné
   offset?: number; // Nombre de groupes à afficher par page
   idCampaign: string; // ID de la campagne des groupes
   reverse?: boolean; // Si vrai, les couleurs de fond sont inversé
@@ -37,7 +37,7 @@ export default function GroupListPanel({
   groups,
   setGroups,
   offset = 8,
-  groupSelected,
+  groupSelected = null,
   setGroupSelected,
   idCampaign,
   reverse = false,
@@ -86,8 +86,9 @@ export default function GroupListPanel({
         );
         if (reset) {
           setGroups(response.data || []);
+
           if (!context) {
-            setGroupSelected(response.data[0] || null);
+            setGroupSelected && setGroupSelected(response.data[0] || null);
           }
         } else {
           setGroups((prev) => {
@@ -122,7 +123,7 @@ export default function GroupListPanel({
         //Fix un bug surement dû au seeder.
         return [response.data, ...prev];
       });
-      setGroupSelected(response.data);
+      setGroupSelected && setGroupSelected(response.data);
       setSearch("");
     } catch (err) {
       error(t("error"));
@@ -133,7 +134,7 @@ export default function GroupListPanel({
 
   useEffect(() => {
     if (newGroup) {
-      setGroupSelected(newGroup);
+      setGroupSelected && setGroupSelected(newGroup);
       setNewGroup(null);
     }
   }, [groupSelected]);
@@ -164,9 +165,8 @@ export default function GroupListPanel({
       </CardHeader>
       <CardContent
         ref={cardRef}
-        className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${
-          isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
-        }`}>
+        className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
+          }`}>
         <div
           className="flex flex-col gap-3"
           ref={setNodeRef}>

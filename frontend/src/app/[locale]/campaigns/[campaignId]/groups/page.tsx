@@ -284,8 +284,6 @@ export default function CampaignGroupsPage() {
             setGroupSelected={setGroupSelected}
             groups={groups}
             setGroups={setGroups}
-            changeLabel={() => { }}
-            updatedGroup={[]}
             displayMembersCount={true}
           />
         </div>
