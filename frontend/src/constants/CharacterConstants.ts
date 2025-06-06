@@ -57,7 +57,6 @@ export const DEFAULT_PLAYER: IPlayer = {
       wisdom: 0,
       charisma: 0,
     },
-    darkvision: 0,
     languages: [],
     passivePerception: 0,
     savingThrows: {
@@ -129,7 +128,6 @@ export const DEFAULT_NPC: INpc = {
       wisdom: 0,
       charisma: 0,
     },
-    darkvision: 0,
     languages: [],
     passivePerception: 0,
     savingThrows: {

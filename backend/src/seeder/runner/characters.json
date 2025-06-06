@@ -31,7 +31,6 @@
         "stealth": 6
       },
       "senses": {
-        "darkvision": 60,
         "passivePerception": 9
       }
     },
@@ -108,7 +107,6 @@
         "perception": 3
       },
       "senses": {
-        "darkvision": 60,
         "passivePerception": 13
       }
     },
@@ -253,7 +251,6 @@
         "stealth": 9
       },
       "senses": {
-        "darkvision": 120,
         "passivePerception": 15
       }
     },
@@ -521,7 +518,6 @@
         "intimidation": 2
       },
       "senses": {
-        "darkvision": 60,
         "passivePerception": 10
       }
     },
