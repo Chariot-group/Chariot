@@ -31,7 +31,7 @@ interface ICharacterListPanelProps {
   updateCharacters: RefObject<ICharacter[]>;
 }
 const CharacterListPanel = ({
-  offset = 8,
+  offset = 16,
   characterSelected,
   setCharacterSelected,
   group,
@@ -50,6 +50,7 @@ const CharacterListPanel = ({
   const { error } = useToast();
 
   const [characters, setCharacters] = useState<ICharacter[]>([]);
+  const [hasMore, setHasMore] = useState(true);
 
   //Pagination
   const [page, setPage] = useState(1);
@@ -63,7 +64,7 @@ const CharacterListPanel = ({
 
   const fetchCharacters = useCallback(
     async (search: string, nextPage = 1, reset = false) => {
-      if (loading) return;
+      if (loading || !hasMore) return;
       setLoading(true);
 
       try {
@@ -75,6 +76,7 @@ const CharacterListPanel = ({
           },
           group._id,
         );
+        setHasMore(response.data.length <= offset);
         if (reset) {
           setCharacters(response.data);
           setCharacterSelected(response.data[0]);
@@ -91,10 +93,10 @@ const CharacterListPanel = ({
         setLoading(false);
       }
     },
-    [loading, group._id, group.characters],
+    [loading, group._id],
   );
 
-  useInfiniteScroll(containerRef, fetchCharacters, page, loading, search);
+  useInfiniteScroll(containerRef, fetchCharacters, page, loading, search, hasMore);
 
   //Mesurer la hauteur des cards
   useEffect(() => {
@@ -118,7 +120,6 @@ const CharacterListPanel = ({
       setCharacterSelected(filtered[0]);
       return;
     }
-    setCharacters([]);
     fetchCharacters(search, 1, true);
   }, [currentLocale, search, group._id]);
 
@@ -219,7 +220,7 @@ const CharacterListPanel = ({
       </CardHeader>
       <CardContent
         ref={containerRef}
-        className="flex-1 h-auto overflow-auto scrollbar-hide">
+        className="flex-1 h-full overflow-auto scrollbar-hide">
         <div className="grid grid-cols-4 gap-3 items-start">
           {loading && <Loading />}
           {characters.length > 0 &&
