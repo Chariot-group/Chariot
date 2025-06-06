@@ -38,7 +38,7 @@ export default function GroupListPanel({
   setGroups,
   offset = 8,
   groupSelected = null,
-  setGroupSelected,
+  setGroupSelected = () => {},
   idCampaign,
   reverse = false,
   type = "all",
@@ -88,7 +88,7 @@ export default function GroupListPanel({
           setGroups(response.data || []);
 
           if (!context) {
-            setGroupSelected && setGroupSelected(response.data[0] || null);
+            setGroupSelected(response.data[0] || null);
           }
         } else {
           setGroups((prev) => {
@@ -123,7 +123,7 @@ export default function GroupListPanel({
         //Fix un bug surement dû au seeder.
         return [response.data, ...prev];
       });
-      setGroupSelected && setGroupSelected(response.data);
+      setGroupSelected(response.data);
       setSearch("");
     } catch (err) {
       error(t("error"));
@@ -134,7 +134,7 @@ export default function GroupListPanel({
 
   useEffect(() => {
     if (newGroup) {
-      setGroupSelected && setGroupSelected(newGroup);
+      setGroupSelected(newGroup);
       setNewGroup(null);
     }
   }, [groupSelected]);
