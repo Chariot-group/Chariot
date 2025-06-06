@@ -41,14 +41,10 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
       let locale = window.location.pathname.split("/")[1];
       let reponse = await AuthService.resetPassword(value.email, locale);
       if (reponse.statusCode && reponse.statusCode !== 200) {
-        error(t("toasts.emailNotFound"));
-        form.setError("email", {
-          message: t("toasts.emailNotFound"),
-        });
-        setLoading(false);
-        return;
+        setUserId(value.email);
+      } else {
+        setUserId(reponse.data._id);
       }
-      setUserId(reponse.data._id);
       success(t("toasts.sendingEmail"));
       setLoading(false);
       setStep(2);
