@@ -454,5 +454,10 @@
       "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
     },
     "cancel": "Annuler"
+  },
+  "NotFound": {
+    "title": "Échec critique",
+    "description": "Jet de Charisme : 2. Même le serveur ne vous répond pas.",
+    "backToHome": "Retour à l'accueil"
   }
 }
