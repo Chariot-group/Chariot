@@ -70,6 +70,21 @@ const AuthService = {
       return err.response?.data;
     }
   },
+
+  async verifyOTP(id: string, otp: string) {
+    try {
+      const response = await apiClient(APIContentType.JSON).post(`/auth/${id}/verify-otp`, { otp });
+
+      if (!response || !response.data || response === undefined) {
+        throw new Error("Invalid API response");
+      }
+
+      return response.data;
+    } catch (err: any) {
+      console.error("API error:", err);
+      return err.response?.data;
+    }
+  },
 };
 
 export default AuthService;

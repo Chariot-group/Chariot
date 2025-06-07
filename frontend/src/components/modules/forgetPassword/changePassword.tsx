@@ -1,14 +1,19 @@
 "use client";
 
-import Field from "@/components/common/Field";
 import Loading from "@/components/common/Loading";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/useToast";
 import AuthService from "@/services/authService";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
 
 interface ChangePasswordProps {
   otp: string;
@@ -17,29 +22,49 @@ interface ChangePasswordProps {
 }
 export default function ChangePassword({ otp, userId, setStep }: ChangePasswordProps) {
   const t = useTranslations("changePassword");
+  const otpInlt = useTranslations("confirmOTP");
   const { success, error } = useToast();
   const router = useRouter();
 
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [typePassword, setTypePassword] = useState<"password" | "string">("password");
+  const [typeConfirmPassword, setTypeConfirmPassword] = useState<"password" | "string">("password");
 
-  const changePassword = useCallback(async (password: string, confirmPassword: string) => {
+  const changePasswordSchema = z.object({
+    password: z.string().min(1, t("toasts.passwordRequired")),
+    confirmPassword: z.string().min(1, t("toasts.confirmPasswordRequired")),
+  });
+
+  const form = useForm<z.infer<typeof changePasswordSchema>>({
+    resolver: zodResolver(changePasswordSchema),
+    defaultValues: {
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const changePassword = useCallback(async (values: z.infer<typeof changePasswordSchema>) => {
     try {
-      if (password !== confirmPassword) {
+      if (values.password !== values.confirmPassword) {
         error(t("toasts.passwordsNotMatching"));
+        form.setError("confirmPassword", {
+          message: t("toasts.passwordsNotMatching"),
+        });
         return;
       }
       setLoading(true);
-      let response = await AuthService.changePassword(userId, otp, password, confirmPassword);
+      let response = await AuthService.changePassword(userId, otp, values.password, values.confirmPassword);
       if (response.statusCode && response.statusCode === 401) {
-        error(t("toasts.invalidOTP"));
+        error(otpInlt("toasts.invalidOTP"));
         setStep(2);
         setLoading(false);
         return;
       }
       if (response.statusCode && response.statusCode === 400) {
         error(t("toasts.passwordsNotMatching"));
+        form.setError("confirmPassword", {
+          message: t("toasts.passwordsNotMatching"),
+        });
         setLoading(false);
         return;
       }
@@ -63,39 +88,98 @@ export default function ChangePassword({ otp, userId, setStep }: ChangePasswordP
         <h1 className="text-xl font-bold">{t("title")}</h1>
         <p className="text-sm w-[70%] text-center">{t("description")}</p>
       </div>
-      <div className="w-full flex flex-col gap-[4dvh] items-center justify-center">
-        <div className="w-[50%] flex flex-col gap-[2dvh]">
-          <Field
-            id={"password"}
-            type={"password"}
-            label={t("password")}
-            placeholder={t("placeholderPassword")}
-            value={password}
-            setValue={setPassword}
-          />
-          <Field
-            id={"confirmPassword"}
-            type={"password"}
-            label={t("confirmPassword")}
-            placeholder={t("placeholderConfirmPassword")}
-            value={confirmPassword}
-            setValue={setConfirmPassword}
-          />
-        </div>
-        <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
-          <Link href={"login"}>
-            <Button variant={"outline"}>
-              {t("cancel")}
-            </Button>
-          </Link>
-          {!loading && <Button onClick={() => changePassword(password, confirmPassword)}>{t("send")}</Button>}
-          {loading && (
-            <Button className="w-[20%]">
-              <Loading />
-            </Button>
-          )}
-        </div>
-      </div>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(changePassword)}
+          className="w-full flex flex-col gap-[5dvh] items-center justify-center">
+          <div className="w-[50%] flex flex-col gap-[2dvh]">
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("password")}</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center justify-between relative">
+                      <Input
+                        placeholder={t("placeholderPassword")}
+                        {...field}
+                        type={typePassword}
+                        className="bg-background"
+                      />
+                      {
+                        typePassword === "password" ? (
+                          <EyeOffIcon
+                            className="absolute right-2 cursor-pointer"
+                            onClick={() => setTypePassword("string")}
+                            size={20}
+                          />
+                        ) : (
+                          <EyeIcon
+                            className="absolute right-2 cursor-pointer"
+                            onClick={() => setTypePassword("password")}
+                            size={20}
+                          />
+                        )
+                      }
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("confirmPassword")}</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center justify-between relative">
+                      <Input
+                        placeholder={t("placeholderConfirmPassword")}
+                        {...field}
+                        type={typeConfirmPassword}
+                        className="bg-background"
+                      />
+                      {
+                        typeConfirmPassword === "password" ? (
+                          <EyeOffIcon
+                            className="absolute right-2 cursor-pointer"
+                            onClick={() => setTypeConfirmPassword("string")}
+                            size={20}
+                          />
+                        ) : (
+                          <EyeIcon
+                            className="absolute right-2 cursor-pointer"
+                            onClick={() => setTypeConfirmPassword("password")}
+                            size={20}
+                          />
+                        )
+                      }
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
+            <Link href={"login"}>
+              <Button type="button" variant={"outline"}>
+                {t("cancel")}
+              </Button>
+            </Link>
+            {!loading && <Button type="submit">{t("send")}</Button>}
+            {loading && (
+              <Button className="w-[20%]">
+                <Loading />
+              </Button>
+            )}
+          </div>
+        </form>
+      </Form>
     </div>
   );
 }
