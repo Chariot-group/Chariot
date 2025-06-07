@@ -164,3 +164,23 @@ export const DEFAULT_NPC: INpc = {
     type: "",
   },
 };
+
+
+export const LANGUAGES: string[] = [
+  "Common",
+  "Dwarvish",
+  "Elvish",
+  "Giant",
+  "Gnomish",
+  "Goblin",
+  "Halfling",
+  "Orc",
+  "Abyssal",
+  "Celestial",
+  "Draconic",
+  "Deep Speech",
+  "Infernal",
+  "Primordial",
+  "Sylvan",
+  "Undercommon"
+];

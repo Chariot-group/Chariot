@@ -148,7 +148,8 @@
     "languages": {
       "title": "Languages",
       "noLanguage": "No languages found",
-      "languageName": "Language"
+      "languageName": "Language",
+      "noMatch": "No match found"
     },
     "details": {
       "attackBonus": "Attack Bonus",
