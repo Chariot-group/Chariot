@@ -36,7 +36,7 @@ interface Props {
 export default function GroupListPanel({
   groups,
   setGroups,
-  offset = 8,
+  offset = 11,
   groupSelected = null,
   setGroupSelected = () => {},
   idCampaign,
@@ -65,6 +65,7 @@ export default function GroupListPanel({
   //Pagination
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState(true);
 
   //Infinite scroll
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -84,6 +85,7 @@ export default function GroupListPanel({
           },
           idCampaign,
         );
+        setHasMore(response.data.length <= offset);
         if (reset) {
           setGroups(response.data || []);
 
@@ -139,7 +141,7 @@ export default function GroupListPanel({
     }
   }, [groupSelected]);
 
-  useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
+  useInfiniteScroll(cardRef, fetchGroups, page, loading, search, hasMore);
 
   useEffect(() => {
     setGroups([]);
@@ -165,7 +167,7 @@ export default function GroupListPanel({
       </CardHeader>
       <CardContent
         ref={cardRef}
-        className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
+        className={`flex-1 h-full overflow-auto scrollbar-hide ${isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
           }`}>
         <div
           className="flex flex-col gap-3"

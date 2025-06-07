@@ -20,7 +20,7 @@ interface Props {
 }
 
 const CampaignListPanel = ({
-  offset = 8,
+  offset = 16,
   selectedCampaign,
   setSelectedCampaign,
   addable = true,
@@ -37,6 +37,7 @@ const CampaignListPanel = ({
   //Pagination
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
   //Ref pour le scroll infini
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -57,6 +58,7 @@ const CampaignListPanel = ({
         if (response.statusCode === 401) {
           return;
         }
+        setHasMore(response.data.length <= offset);
         if (reset) {
           setCampaigns(response.data);
           setSelectedCampaign(response.data[0] || null);
@@ -76,7 +78,7 @@ const CampaignListPanel = ({
     [loading, selectedCampaign?.deletedAt],
   );
 
-  useInfiniteScroll(containerRef, fetchCampaigns, page, loading, search);
+  useInfiniteScroll(containerRef, fetchCampaigns, page, loading, search, hasMore);
 
   //Mesurer la hauteur des cards
   useEffect(() => {
@@ -134,7 +136,7 @@ const CampaignListPanel = ({
       </CardHeader>
       <CardContent
         ref={containerRef}
-        className="flex-1 h-auto overflow-auto scrollbar-hide">
+        className="flex-1 h-full overflow-auto scrollbar-hide">
         <div className="flex flex-col gap-3">
           {loading && <Loading />}
           {campaigns &&
