@@ -6,14 +6,15 @@ const useInfiniteScroll = (
   page: number,
   loading: boolean,
   search?: string,
+  hasMore?: boolean,
 ) => {
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current || loading) return;
+      if (!containerRef.current || loading || !hasMore) return;
 
       const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
 
-      if (scrollTop + clientHeight >= scrollHeight - 1) {
+      if (scrollTop + clientHeight >= scrollHeight - 5) {
         findAll(search, page + 1);
       }
     };
@@ -28,7 +29,7 @@ const useInfiniteScroll = (
         currentRef.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [page, findAll]);
+  }, [page, findAll, hasMore, loading, search]);
 };
 
 export default useInfiniteScroll;
