@@ -3,6 +3,8 @@ import { Champs } from "@/components/modules/characters/modals/PlayerModalDetail
 import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
 import { useTranslations } from "next-intl";
+import { getSkillsFor } from "@/constants/CharacterConstants";
+import IAbilityScores from "@/models/npc/stat/sub/IAbilityScores";
 
 interface Props {
   player: IPlayer;
@@ -25,6 +27,25 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   const [intelligenceAS, setIntelligenceAS] = useState<number>(player.stats.abilityScores.intelligence);
   const [wisdomAS, setWisdomAS] = useState<number>(player.stats.abilityScores.wisdom);
   const [charismaAS, setCharismaAS] = useState<number>(player.stats.abilityScores.charisma);
+
+  const changeAbility = (oldValue: any, value: any, ability: keyof IAbilityScores) => {
+    getSkillsFor(ability).forEach((skill) => {
+      const skillValue = player.stats.skills[skill];
+      if (skillValue == oldValue) {
+        player.stats.skills[skill] = parseInt(value);
+        updatePlayer({
+          ...player,
+          stats: {
+            ...player.stats,
+            skills: {
+              ...player.stats.skills,
+              [skill]: parseInt(value),
+            },
+          },
+        });
+      }
+    });
+  }
 
   const changeStrengthST = (value: any) => {
     setStrengthST(value);
@@ -105,6 +126,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeStrengthAS = (value: any) => {
+    changeAbility(strengthAS, value, "strength");
     setStrengthAS(value);
     updatePlayer({
       ...player,
@@ -118,6 +140,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeDexterityAS = (value: any) => {
+    changeAbility(dexterityAS, value, "dexterity");
     setDexterityAS(value);
     updatePlayer({
       ...player,
@@ -131,6 +154,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeConstitutionAS = (value: any) => {
+    changeAbility(constitutionAS, value, "constitution");
     setConstitutionAS(value);
     updatePlayer({
       ...player,
@@ -144,6 +168,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeIntelligenceAS = (value: any) => {
+    changeAbility(intelligenceAS, value, "intelligence");
     setIntelligenceAS(value);
     updatePlayer({
       ...player,
@@ -157,6 +182,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeWisdomAS = (value: any) => {
+    changeAbility(wisdomAS, value, "wisdom");
     setWisdomAS(value);
     updatePlayer({
       ...player,
@@ -170,6 +196,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeCharismaAS = (value: any) => {
+    changeAbility(charismaAS, value, "charisma");
     setCharismaAS(value);
     updatePlayer({
       ...player,

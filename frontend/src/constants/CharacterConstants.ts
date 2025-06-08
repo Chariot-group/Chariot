@@ -1,5 +1,8 @@
 import INpc from "@/models/npc/INpc";
 import IPlayer from "@/models/player/IPlayer";
+import ISavingThrows from "@/models/npc/stat/sub/ISavingThrows";
+import ISkills from "@/models/npc/stat/sub/ISkills";
+import IAbilityScores from "@/models/npc/stat/sub/IAbilityScores";
 
 export const SIZES = ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"] as const;
 
@@ -184,3 +187,39 @@ export const LANGUAGES: string[] = [
   "Sylvan",
   "Undercommon"
 ];
+
+export const CHARACTERISTICS_LINKS: Record<keyof ISavingThrows, (keyof ISkills)[]> = {
+  "dexterity": [
+    "acrobatics",
+    "stealth",
+    "sleightHand"
+  ],
+  "intelligence": [
+    "arcana",
+    "history",
+    "nature",
+    "religion",
+    "investigation"
+  ],
+  "strength": [
+    "athletics"
+  ],
+  "wisdom": [
+    "animalHandling",
+    "insight",
+    "medicine",
+    "perception",
+    "survival"
+  ],
+  "charisma": [
+    "intimidation",
+    "persuasion",
+    "performance",
+    "deception"
+  ],
+  "constitution": [],
+}
+
+export function getSkillsFor(characteristic: keyof IAbilityScores): (keyof ISkills)[] {
+  return CHARACTERISTICS_LINKS[characteristic];
+}
