@@ -47,6 +47,10 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
     });
   }
 
+  const calculeSavingThrow = (abilityScore: number, setter: (n: number) => void) => {
+    return setter(Math.floor((abilityScore - 10) / 2));
+  };
+
   const changeStrengthST = (value: any) => {
     setStrengthST(value);
     updateNpc({
@@ -127,6 +131,7 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
   };
   const changeStrengthAS = (value: any) => {
     changeAbility(strengthAS, value, "strength");
+    calculeSavingThrow(parseInt(value), changeStrengthST);
     setStrengthAS(value);
     updateNpc({
       ...npc,
@@ -141,6 +146,7 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
   };
   const changeDexterityAS = (value: any) => {
     changeAbility(dexterityAS, value, "dexterity");
+    calculeSavingThrow(parseInt(value), changeDexterityST);
     setDexterityAS(value);
     updateNpc({
       ...npc,
@@ -155,6 +161,7 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
   };
   const changeConstitutionAS = (value: any) => {
     changeAbility(constitutionAS, value, "constitution");
+    calculeSavingThrow(parseInt(value), changeConstitutionST);
     setConstitutionAS(value);
     updateNpc({
       ...npc,
@@ -169,6 +176,7 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
   };
   const changeIntelligenceAS = (value: any) => {
     changeAbility(intelligenceAS, value, "intelligence");
+    calculeSavingThrow(parseInt(value), changeIntelligenceST);
     setIntelligenceAS(value);
     updateNpc({
       ...npc,
@@ -183,6 +191,7 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
   };
   const changeWisdomAS = (value: any) => {
     changeAbility(wisdomAS, value, "wisdom");
+    calculeSavingThrow(parseInt(value), changeWisdomST);
     setWisdomAS(value);
     updateNpc({
       ...npc,
@@ -197,6 +206,7 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
   };
   const changeCharismaAS = (value: any) => {
     changeAbility(charismaAS, value, "charisma");
+    calculeSavingThrow(parseInt(value), changeCharismaST);
     setCharismaAS(value);
     updateNpc({
       ...npc,

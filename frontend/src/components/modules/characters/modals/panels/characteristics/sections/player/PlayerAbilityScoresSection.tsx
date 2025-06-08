@@ -47,6 +47,10 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   }
 
+  const calculeSavingThrow = (abilityScore: number, setter: (n: number) => void) => {
+    return setter(Math.floor((abilityScore - 10) / 2));
+  };
+
   const changeStrengthST = (value: any) => {
     setStrengthST(value);
     updatePlayer({
@@ -127,6 +131,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   };
   const changeStrengthAS = (value: any) => {
     changeAbility(strengthAS, value, "strength");
+    calculeSavingThrow(parseInt(value), changeStrengthST);
     setStrengthAS(value);
     updatePlayer({
       ...player,
@@ -141,6 +146,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   };
   const changeDexterityAS = (value: any) => {
     changeAbility(dexterityAS, value, "dexterity");
+    calculeSavingThrow(parseInt(value), changeDexterityST);
     setDexterityAS(value);
     updatePlayer({
       ...player,
@@ -155,6 +161,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   };
   const changeConstitutionAS = (value: any) => {
     changeAbility(constitutionAS, value, "constitution");
+    calculeSavingThrow(parseInt(value), changeConstitutionST);
     setConstitutionAS(value);
     updatePlayer({
       ...player,
@@ -169,6 +176,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   };
   const changeIntelligenceAS = (value: any) => {
     changeAbility(intelligenceAS, value, "intelligence");
+    calculeSavingThrow(parseInt(value), changeIntelligenceST);
     setIntelligenceAS(value);
     updatePlayer({
       ...player,
@@ -183,6 +191,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   };
   const changeWisdomAS = (value: any) => {
     changeAbility(wisdomAS, value, "wisdom");
+    calculeSavingThrow(parseInt(value), changeWisdomST);
     setWisdomAS(value);
     updatePlayer({
       ...player,
@@ -197,6 +206,7 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   };
   const changeCharismaAS = (value: any) => {
     changeAbility(charismaAS, value, "charisma");
+    calculeSavingThrow(parseInt(value), changeCharismaST);
     setCharismaAS(value);
     updatePlayer({
       ...player,
