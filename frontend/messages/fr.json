@@ -26,7 +26,9 @@
       "link": "Profitez de l'accès gratuit !"
     },
     "errors": {
+      "emailRequired": "L'email est requis",
       "invalidEmail": "L'email est invalide",
+      "passwordRequired": "Le mot de passe est requis",
       "invalidCredentials": "Email ou mot de passe invalide",
       "internal": "Une erreur c'est produite quand nous avons essayé de vous connecter"
     },
@@ -419,6 +421,7 @@
     "toasts": {
       "sendingEmail": "Un email a été envoyé ! Vérifier vos spams.",
       "invalidEmail": "L'email est invalide",
+      "emailRequired": "L'email est requis",
       "emailNotFound": "Aucun compte trouvé avec cet email",
       "internal": "Une erreur c'est produite quand nous avons essayé de vous envoyer l'email"
     },
@@ -438,7 +441,12 @@
     "label": "OPT",
     "placeholder": "Entrez votre code",
     "send": "Vérifier le code",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "toasts": {
+      "invalidOTP": "Le code est invalide",
+      "otpRequired": "Le code est requis",
+      "otpValid": "Code validé, vous pouvez changer votre mot de passe."
+    }
   },
   "changePassword": {
     "title": "Réinitialiser votre mot de passe",
@@ -450,8 +458,9 @@
     "send": "Changer le mot de passe",
     "toasts": {
       "passwordChanged": "Mot de passe changé !",
-      "invalidOTP": "Le code est invalide",
       "passwordsNotMatching": "Les mots de passe ne correspondent pas",
+      "passwordRequired": "Le mot de passe est requis",
+      "confirmPasswordRequired": "La confirmation du mot de passe est requise",
       "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
     },
     "cancel": "Annuler"

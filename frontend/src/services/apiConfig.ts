@@ -11,14 +11,13 @@ const apiClient = (contentType: string) => {
     baseURL: url,
     headers: {
       "Content-Type": contentType || APIContentType.JSON,
-      Authorization: `Bearer ${
-        typeof window !== "undefined"
-          ? document.cookie
-              .split("; ")
-              .find((row) => row.startsWith("accessToken="))
-              ?.split("=")[1] || ""
-          : ""
-      }`,
+      Authorization: `Bearer ${typeof window !== "undefined"
+        ? document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("accessToken="))
+          ?.split("=")[1] || ""
+        : ""
+        }`,
     },
     withCredentials: true,
   });
@@ -26,11 +25,14 @@ const apiClient = (contentType: string) => {
   instance.interceptors.response.use(
     (response) => response,
     (error) => {
+      console.error("API Error:", error);
       if (error.response?.status === 401) {
-        document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        if (!error.response.request.responseURL.includes("/auth/")) {
+          document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-        if (typeof window !== "undefined") {
-          window.location.href = "/auth/login";
+          if (typeof window !== "undefined") {
+            window.location.href = "/auth/login";
+          }
         }
       }
 

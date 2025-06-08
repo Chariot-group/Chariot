@@ -17,6 +17,7 @@ import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { MaillingService } from '@/mailling/mailling.service';
 import { ResetPasswordDto } from '@/resources/auth/dto/resetPassword.dto';
+import verifyOTPDto from './dto/verifyOTPDto.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +26,7 @@ export class AuthService {
     private jwtService: JwtService,
     private maillingService: MaillingService,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
-  ) {}
+  ) { }
 
   private readonly SERVICE_NAME = AuthService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
@@ -47,7 +48,7 @@ export class AuthService {
 
   private async validateResourceById(
     id: string,
-    changePassword: changePasswordDto,
+    changePassword: changePasswordDto | verifyOTPDto,
   ): Promise<void> {
     if (!Types.ObjectId.isValid(id)) {
       const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
@@ -209,6 +210,32 @@ export class AuthService {
         throw error;
       }
       const message = `Error while changing password of #${id}: ${error.message}`;
+      this.logger.error(message, null, this.SERVICE_NAME);
+      throw new InternalServerErrorException(message);
+    }
+  }
+
+  async verifyOTP(id: string, verifyOTPDto: verifyOTPDto) {
+    try {
+      const start: number = Date.now();
+      await this.validateResourceById(id, verifyOTPDto);
+      const end: number = Date.now();
+
+      const message = `OTP of #${id} verify in ${end - start}ms`;
+      this.logger.verbose(message, this.SERVICE_NAME);
+      return {
+        message,
+      };
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException ||
+        error instanceof GoneException ||
+        error instanceof UnauthorizedException
+      ) {
+        throw error;
+      }
+      const message = `Error while verifying otp of #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }

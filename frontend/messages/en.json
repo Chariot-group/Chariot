@@ -26,7 +26,9 @@
       "link": "Enjoy free access !"
     },
     "errors": {
+      "emailRequired": "The email is required",
       "invalidEmail": "The email is invalid",
+      "passwordRequired": "The password is required",
       "invalidCredentials": "Email or password invalid",
       "internal": "An error occurred when we tried to log you in"
     },
@@ -419,6 +421,7 @@
     "toasts": {
       "sendingEmail": "An email has been sent! Check your spam folder.",
       "invalidEmail": "Invalid email",
+      "emailRequired": "The email is required",
       "emailNotFound": "No account found with this email",
       "internal": "An error occurred while trying to send the email"
     },
@@ -438,7 +441,12 @@
     "label": "OTP",
     "placeholder": "Enter your code",
     "send": "Verify code",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "toasts": {
+      "invalidOTP": "The code is invalid",
+      "otpRequired": "You must enter the code sent by email",
+      "otpValid": "Code validated, you can change your password."
+    }
   },
   "changePassword": {
     "title": "Reset your password",
@@ -450,8 +458,9 @@
     "send": "Change password",
     "toasts": {
       "passwordChanged": "Password changed!",
-      "invalidOTP": "The code is invalid",
       "passwordsNotMatching": "Passwords do not match",
+      "passwordRequired": "You must enter a password",
+      "confirmPasswordRequired": "You must confirm your password",
       "internal": "An error occurred while trying to change the password"
     },
     "cancel": "Cancel"
