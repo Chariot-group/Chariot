@@ -228,7 +228,8 @@
       "armorClass": "Classe d'armure",
       "maxPv": "Points de vie max",
       "currentPv": "PV actuels",
-      "temporaryPv": "PV temporaires"
+      "temporaryPv": "PV temporaires",
+      "initiativeBonus": "Bonus d'initiative"
     },
     "abilityScores": {
       "strength": "Force",

@@ -228,7 +228,8 @@
       "armorClass": "Armor Class",
       "maxPv": "Max Hit Points",
       "currentPv": "Current HP",
-      "temporaryPv": "Temporary HP"
+      "temporaryPv": "Temporary HP",
+      "initiativeBonus": "Bonus Initiative"
     },
     "abilityScores": {
       "strength": "Strength",

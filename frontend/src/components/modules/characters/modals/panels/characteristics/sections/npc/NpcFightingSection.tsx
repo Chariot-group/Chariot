@@ -109,6 +109,15 @@ export default function NpcFightingSection({ npc, isUpdate, updateNpc }: Props) 
         placeholder={t("batlle.armorClass")}
         setValue={changeArmorClass}
       />
+      <Champs
+        isActive={false}
+        color="card"
+        id={"attackBonus"}
+        type={"text"}
+        label={t("batlle.initiativeBonus")}
+        placeholder={t("batlle.initiativeBonus")}
+        value={npc.stats.savingThrows.dexterity}
+        setValue={() => { }}></Champs>
     </Card>
   );
 }
