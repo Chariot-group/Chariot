@@ -457,7 +457,7 @@
   },
   "NotFound": {
     "title": "Échec critique, page introuvable",
-    "description": "Charisma roll: 1. Even the waiter doesn't answer.",
-    "backToHome": "Back to home"
+    "description": "Jet de charisme : 1. Même le serveur ne répond pas.",
+    "backToHome": "Retour à l'accueil"
   }
 }

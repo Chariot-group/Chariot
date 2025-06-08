@@ -457,7 +457,7 @@
   },
   "NotFound": {
     "title": "Critical failure, page not found",
-    "description": "Tirada de carisma: 1. Ni siquiera el camarero te contesta.",
-    "backToHome": "Volver a la página principal"
+    "description": "Charisma roll: 1. Even the server doesn't answer.",
+    "backToHome": "Back to home"
   }
 }
