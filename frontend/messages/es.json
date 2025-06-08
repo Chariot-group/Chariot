@@ -453,5 +453,10 @@
       "internal": "Ocurrió un error al intentar cambiar la contraseña"
     },
     "cancel": "Cancelar"
+  },
+  "NotFound": {
+    "title": "Fallo crítico, página no encontrada",
+    "description": "Tirada de carisma: 1. Ni siquiera el camarero te contesta.",
+    "backToHome": "Volver a la página principal"
   }
 }

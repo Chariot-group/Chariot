@@ -456,8 +456,8 @@
     "cancel": "Annuler"
   },
   "NotFound": {
-    "title": "Échec critique",
-    "description": "Jet de Charisme : 2. Même le serveur ne vous répond pas.",
-    "backToHome": "Retour à l'accueil"
+    "title": "Échec critique, page introuvable",
+    "description": "Charisma roll: 1. Even the waiter doesn't answer.",
+    "backToHome": "Back to home"
   }
 }
