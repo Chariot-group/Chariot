@@ -69,6 +69,7 @@ export default function GroupListPanel({
 
   //Infinite scroll
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const fetchGroups = useCallback(
     async (search: string, nextPage = 1, reset = false) => {
@@ -85,7 +86,7 @@ export default function GroupListPanel({
           },
           idCampaign,
         );
-        setHasMore(response.data.length <= offset);
+        setHasMore(response.data.length === offset);
         if (reset) {
           setGroups(response.data || []);
 
@@ -141,7 +142,7 @@ export default function GroupListPanel({
     }
   }, [groupSelected]);
 
-  useInfiniteScroll(cardRef, fetchGroups, page, loading, search, hasMore);
+  useInfiniteScroll(sentinelRef, fetchGroups, page, loading, search, hasMore);
 
   useEffect(() => {
     setGroups([]);
@@ -207,6 +208,9 @@ export default function GroupListPanel({
             </div>
           )}
         </div>
+        {groups.length >= offset && (
+          <div ref={sentinelRef} className="h-1" />
+        )}
       </CardContent>
     </div>
   );

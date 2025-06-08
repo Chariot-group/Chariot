@@ -42,6 +42,7 @@ const CampaignListPanel = ({
   //Ref pour le scroll infini
   const containerRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null); //Ref pour mesurer la hauteur des cards
+  const sentinelRef = useRef<HTMLDivElement>(null);
   const [cardHeight, setCardHeight] = useState(0);
 
   const fetchCampaigns = useCallback(
@@ -58,7 +59,7 @@ const CampaignListPanel = ({
         if (response.statusCode === 401) {
           return;
         }
-        setHasMore(response.data.length <= offset);
+        setHasMore(response.data.length === offset);
         if (reset) {
           setCampaigns(response.data);
           setSelectedCampaign(response.data[0] || null);
@@ -78,7 +79,7 @@ const CampaignListPanel = ({
     [loading, selectedCampaign?.deletedAt],
   );
 
-  useInfiniteScroll(containerRef, fetchCampaigns, page, loading, search, hasMore);
+  useInfiniteScroll(sentinelRef, fetchCampaigns, page, loading, search, hasMore);
 
   //Mesurer la hauteur des cards
   useEffect(() => {
@@ -157,6 +158,9 @@ const CampaignListPanel = ({
             </div>
           )}
         </div>
+        {campaigns.length >= offset && (
+          <div ref={sentinelRef} className="h-1" />
+        )}
       </CardContent>
     </div>
   );

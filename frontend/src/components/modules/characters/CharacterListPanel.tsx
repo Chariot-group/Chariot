@@ -61,10 +61,11 @@ const CharacterListPanel = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null); //Ref pour mesurer la hauteur des cards
   const [cardHeight, setCardHeight] = useState(0);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const fetchCharacters = useCallback(
     async (search: string, nextPage = 1, reset = false) => {
-      if (loading || !hasMore) return;
+      if (loading || (!hasMore && !reset)) return;
       setLoading(true);
 
       try {
@@ -76,7 +77,7 @@ const CharacterListPanel = ({
           },
           group._id,
         );
-        setHasMore(response.data.length <= offset);
+        setHasMore(response.data.length === offset);
         if (reset) {
           setCharacters(response.data);
           setCharacterSelected(response.data[0]);
@@ -96,7 +97,7 @@ const CharacterListPanel = ({
     [loading, group._id],
   );
 
-  useInfiniteScroll(containerRef, fetchCharacters, page, loading, search, hasMore);
+  useInfiniteScroll(sentinelRef, fetchCharacters, page, loading, search, hasMore);
 
   //Mesurer la hauteur des cards
   useEffect(() => {
@@ -249,6 +250,9 @@ const CharacterListPanel = ({
             </div>
           )}
         </div>
+        {characters.length >= offset && (
+          <div ref={sentinelRef} className="h-1" />
+        )}
       </CardContent>
     </div>
   );

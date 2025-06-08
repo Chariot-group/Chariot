@@ -276,7 +276,7 @@ export default function CampaignGroupsPage() {
     <div className="w-full flex flex-col">
       <Header campaign={campaign} />
       <main className="h-full flex flex-row">
-        <div className="w-1/4">
+        <div className="w-1/4 h-[87dvh]">
           <GroupListPanel
             search={search}
             setSearch={setSearch}
@@ -313,7 +313,7 @@ export default function CampaignGroupsPage() {
                 <div className="w-full justify-center flex flex-row">
                   <div className="w-[90%] border border-ring"></div>
                 </div>
-                <div className="h-[60vh] w-full flex flex-row pl-5 pr-5 gap-5">
+                <div className="h-[63dvh] w-full flex flex-row pl-5 pr-5 gap-5">
                   <CharacterListPanel
                     offset={characterOffset}
                     newCharacters={newCharacterRef}

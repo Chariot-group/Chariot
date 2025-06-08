@@ -1,35 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const useInfiniteScroll = (
-  containerRef: React.RefObject<HTMLDivElement | null>,
-  findAll: Function,
+const useInfiniteScrollObserver = (
+  sentinelRef: React.RefObject<HTMLDivElement | null>,
+  fetchNextPage: Function,
   page: number,
   loading: boolean,
   search?: string,
-  hasMore?: boolean,
+  hasMore?: boolean
 ) => {
+  const didMountRef = useRef(false);
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current || loading || !hasMore) return;
+    if (!sentinelRef.current || loading || !hasMore) return;
 
-      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    const observer = new IntersectionObserver(
+      entries => {
+        const [entry] = entries;
 
-      if (scrollTop + clientHeight >= scrollHeight - 5) {
-        findAll(search, page + 1);
+        // Ignore la première intersection pour éviter déclenchement immédiat
+        if (!didMountRef.current) {
+          didMountRef.current = true;
+          return;
+        }
+
+        if (entry.isIntersecting) {
+          if (hasMore) {
+            fetchNextPage(search, page + 1);
+          }
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
       }
-    };
+    );
 
-    const currentRef = containerRef.current;
-    if (currentRef) {
-      currentRef.addEventListener("scroll", handleScroll);
-    }
+    observer.observe(sentinelRef.current);
 
     return () => {
-      if (currentRef) {
-        currentRef.removeEventListener("scroll", handleScroll);
+      if (sentinelRef.current) {
+        observer.unobserve(sentinelRef.current);
       }
     };
-  }, [page, findAll, hasMore, loading, search]);
+  }, [sentinelRef, loading, hasMore, fetchNextPage, search, page]);
 };
 
-export default useInfiniteScroll;
+export default useInfiniteScrollObserver;

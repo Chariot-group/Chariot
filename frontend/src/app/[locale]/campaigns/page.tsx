@@ -154,7 +154,7 @@ export default function CampaignsPage() {
     <div className="h-[91dvh] w-full flex flex-col">
       <Header campaign={selectedCampaign} />
       <main className="h-full flex flex-row">
-        <div className="h-full w-1/4">
+        <div className="h-[87dvh] w-1/4">
           <CampaignListPanel
             search={search}
             setSearch={setSearch}
@@ -184,7 +184,7 @@ export default function CampaignsPage() {
                 <div className="w-[90vh] flex flex-col">
                   <div className="w-[80vh] border border-ring"></div>
                 </div>
-                <div className="w-full h-[70vh] flex flex-row items-center p-5">
+                <div className="w-full h-[68dvh] flex flex-row items-center p-5">
                   <GroupsCampaignsPanel
                     setUpdatedGroup={setUpdatedGroup}
                     updatedGroup={updatedGroup}
