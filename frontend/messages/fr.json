@@ -159,7 +159,7 @@
     "spellCasting": {
       "title": "Lancer de sorts",
       "noSpellCasting": "Aucun lancé de sort trouvé",
-      "ability": "Capacité",
+      "ability": "Charactéristique d'incantation",
       "saveDice": "Dé de sauvegarde",
       "attackBonus": "Bonus d'attaque",
       "countSpell": "Nombre de sorts",
