@@ -32,6 +32,7 @@ interface Props {
   updatedGroup?: IGroup[]; // Liste des groupes à ne pas afficher
   onlyWithMembers?: boolean; // Si vrai, n'affiche que les groupes avec des membres
   displayMembersCount?: boolean; // Si vrai, affiche le nombre de membres du groupe
+  onAdd?: () => void; // Fonction pour ajouter un groupe, si nécessaire
 }
 export default function GroupListPanel({
   groups,
@@ -52,6 +53,7 @@ export default function GroupListPanel({
   updatedGroup,
   onlyWithMembers = false,
   displayMembersCount = false,
+  onAdd,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -111,7 +113,7 @@ export default function GroupListPanel({
     [loading, groupSelected?.deletedAt, idCampaign],
   );
 
-  const createGroup = useCallback(async () => {
+  const defaultCreateGroup = useCallback(async () => {
     try {
       const response = await GroupService.createGroup({
         label: t("newGroup.label"),
@@ -165,13 +167,23 @@ export default function GroupListPanel({
       </CardHeader>
       <CardContent
         ref={cardRef}
-        className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
-          }`}>
+        className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${
+          isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
+        }`}>
         <div
           className="flex flex-col gap-3"
           ref={setNodeRef}>
           {addable && (
-            <Button onClick={() => createGroup()}>
+            <Button
+              onClick={() => {
+                if (onAdd) {
+                  console.log("onAdd function called");
+                  onAdd();
+                } else {
+                  console.log("defaultCreateGroup function called");
+                  defaultCreateGroup();
+                }
+              }}>
               <span className="text-background font-bold">{t("create")}</span>
             </Button>
           )}

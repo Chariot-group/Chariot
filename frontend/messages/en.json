@@ -63,7 +63,8 @@
   },
   "GroupListPanelItem": {
     "members": "members",
-    "member": "member"
+    "member": "member",
+    "newGroup": "New group"
   },
   "CharacterDetailsPanel": {
     "npc": "NPC",
@@ -368,7 +369,7 @@
       "save": "Campaign updated successfully",
       "errorDetetingCampaign": "Error deleting campaign",
       "deletedCampaign": "Campaign deleted successfully"
-    }
+  }
   },
   "InitiativeTracker": {
     "reset": "Reset",

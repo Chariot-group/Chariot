@@ -63,7 +63,8 @@
   },
   "GroupListPanelItem": {
     "members": "Miembros",
-    "member": "Miembro"
+    "member": "Miembro",
+    "newGroup": "Nuevo grupo"
   },
   "CharacterDetailsPanel": {
     "npc": "PNJ",

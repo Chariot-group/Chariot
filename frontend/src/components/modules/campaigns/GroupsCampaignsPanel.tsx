@@ -92,17 +92,27 @@ export default function GroupsCampaignsPanel({
     groupSetters[to]((prev) => [...prev, group]);
   };
 
-  const createGroup = useCallback(async () => {
+  const createGroup = useCallback(async (type: "main" | "npc" | "archived") => {
     try {
       let current = {
         _id: newGroupRef.current.length,
-        label: t("newGroup.label"),
+        label: "",
         description: "",
-        campaigns: [{ idCampaign: idCampaign, type: "npc" }],
+        campaigns: [{ idCampaign: idCampaign, type }],
       };
       newGroupRef.current.push(current);
       setUpdatedGroup([...updatedGroup, current as unknown as IGroup]);
-      setNpcGroups((prev) => [...prev, current as unknown as IGroup]);
+      switch (type) {
+        case "main":
+          setMainGroups((prev) => [...prev, current as unknown as IGroup]);
+          break;
+        case "npc":
+          setNpcGroups((prev) => [...prev, current as unknown as IGroup]);
+          break;
+        case "archived":
+          setArchivedGroups((prev) => [...prev, current as unknown as IGroup]);
+          break;
+      }
     } catch (err) {
       error(t("error"));
     }
@@ -131,28 +141,13 @@ export default function GroupsCampaignsPanel({
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="flex flex-row gap-3 justify-start items-center">
-        <Link
-          href={`/campaigns/${idCampaign}/groups`}
-          className="text-foreground hover:underline underline-offset-2">
-          <h2 className="flex gap-1 items-center">
-            <MousePointerClick className="h-[2dvh]" /> {t("title.default")}
-          </h2>
-        </Link>
-        {isUpdating && (
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <PlusCircleIcon
-                className="text-primary hover:cursor-pointer"
-                onClick={createGroup}
-              />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("create")}</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
-      </div>
+      <Link
+        href={`/campaigns/${idCampaign}/groups`}
+        className="text-foreground hover:underline underline-offset-2">
+        <h2 className="flex gap-1 items-center">
+          <MousePointerClick className="h-[2dvh]" /> {t("title.default")}
+        </h2>
+      </Link>
       <div className="flex flex-row gap-10 mt-4 justify-between h-full">
         <GroupDnDWrapper onDragEnd={handleDragEnd}>
           <div className="rounded-xl border border-ring bg-card text-card-foreground shadow w-1/3">
@@ -165,7 +160,8 @@ export default function GroupsCampaignsPanel({
               reverse={true}
               grabbled={isUpdating}
               idCampaign={idCampaign}
-              addable={false}
+              addable={isUpdating}
+              onAdd={() => createGroup("main")}
               type="main"
               search={mainSearch}
               setSearch={setMainSearch}
@@ -181,7 +177,8 @@ export default function GroupsCampaignsPanel({
               reverse={true}
               grabbled={isUpdating}
               idCampaign={idCampaign}
-              addable={false}
+              addable={isUpdating}
+              onAdd={() => createGroup("npc")}
               type="npc"
               search={npcSearch}
               setSearch={setNpcSearch}
@@ -197,7 +194,8 @@ export default function GroupsCampaignsPanel({
               reverse={true}
               grabbled={isUpdating}
               idCampaign={idCampaign}
-              addable={false}
+              addable={isUpdating}
+              onAdd={() => createGroup("archived")}
               type="archived"
               search={archivedSearch}
               setSearch={setArchivedSearch}
