@@ -36,7 +36,7 @@ interface Props {
 export default function GroupListPanel({
   groups,
   setGroups,
-  offset = 11,
+  offset = 18,
   groupSelected = null,
   setGroupSelected = () => {},
   idCampaign,
@@ -168,8 +168,9 @@ export default function GroupListPanel({
       </CardHeader>
       <CardContent
         ref={cardRef}
-        className={`flex-1 h-full overflow-auto scrollbar-hide ${isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
-          }`}>
+        className={`flex-1 h-full overflow-auto scrollbar-hide ${
+          isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
+        }`}>
         <div
           className="flex flex-col gap-3"
           ref={setNodeRef}>
@@ -209,7 +210,10 @@ export default function GroupListPanel({
           )}
         </div>
         {groups.length >= offset && (
-          <div ref={sentinelRef} className="h-1" />
+          <div
+            ref={sentinelRef}
+            className="h-1"
+          />
         )}
       </CardContent>
     </div>
