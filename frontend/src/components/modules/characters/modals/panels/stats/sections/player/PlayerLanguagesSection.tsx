@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { LANGUAGES } from "@/constants/CharacterConstants";
@@ -48,6 +47,19 @@ export default function PlayerLanguagesSection({ player, isUpdate, updatePlayer 
     const newLanguages = [...languages];
     newLanguages[index] = value;
     changeLanguages(newLanguages);
+  };
+
+  const getTranslatedLanguages = (): string[] => {
+    let langs: string[] = [];
+    LANGUAGES.forEach((lang) => {
+      const translated = t(`languages.items.${lang}`, { defaultValue: lang });
+      if (translated !== lang) {
+        langs.push(translated);
+      } else {
+        langs.push(lang);
+      }
+    });
+    return langs;
   };
 
   return (
@@ -99,7 +111,7 @@ export default function PlayerLanguagesSection({ player, isUpdate, updatePlayer 
                           {t("languages.noMatch")}
                         </CommandEmpty>
                         <CommandGroup>
-                          {LANGUAGES.map((option) => (
+                          {getTranslatedLanguages().map((option) => (
                             <CommandItem
                               key={option}
                               value={option}

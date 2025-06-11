@@ -151,7 +151,24 @@
       "title": "Langues",
       "noLanguage": "Aucune langue trouvée",
       "languageName": "Langue",
-      "noMatch": "Aucune langue correspondente trouvée"
+      "noMatch": "Aucune langue correspondente trouvée",
+      "items": {
+        "common": "Commun",
+        "dwarvish": "Nain",
+        "elvish": "Elfe",
+        "giant": "Géant",
+        "gnomish": "Gnome",
+        "goblin": "Gobelin",
+        "orc": "Orque",
+        "abyssal": "Abyssal",
+        "celestial": "Céleste",
+        "draconic": "Draconique",
+        "deepSpeech": "Parole profonde",
+        "infernal": "Infernal",
+        "primordial": "Primordial",
+        "sylvan": "Sylvestre",
+        "undercommon": "Sous-commun"
+      }
     },
     "details": {
       "attackBonus": "Bonus d'attaque",

@@ -170,22 +170,21 @@ export const DEFAULT_NPC: INpc = {
 
 
 export const LANGUAGES: string[] = [
-  "Common",
-  "Dwarvish",
-  "Elvish",
-  "Giant",
-  "Gnomish",
-  "Goblin",
-  "Halfling",
-  "Orc",
-  "Abyssal",
-  "Celestial",
-  "Draconic",
-  "Deep Speech",
-  "Infernal",
-  "Primordial",
-  "Sylvan",
-  "Undercommon"
+  "common",
+  "dwarvish",
+  "elvish",
+  "giant",
+  "gnomish",
+  "goblin",
+  "orc",
+  "abyssal",
+  "celestial",
+  "draconic",
+  "deepSpeech",
+  "infernal",
+  "primordial",
+  "sylvan",
+  "undercommon"
 ];
 
 export const CHARACTERISTICS_LINKS: Record<keyof ISavingThrows, (keyof ISkills)[]> = {

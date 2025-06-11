@@ -50,6 +50,19 @@ export default function NpcLanguagesSection({ npc, isUpdate, updateNpc }: Props)
     changeLanguages(newLanguages);
   };
 
+  const getTranslatedLanguages = (): string[] => {
+    let langs: string[] = [];
+    LANGUAGES.forEach((lang) => {
+      const translated = t(`languages.items.${lang}`, { defaultValue: lang });
+      if (translated !== lang) {
+        langs.push(translated);
+      } else {
+        langs.push(lang);
+      }
+    });
+    return langs;
+  };
+
   return (
     <Card className="p-4 flex flex-col bg-background">
       <div className="flex flex-row gap-3 w-full h-full">
@@ -99,7 +112,7 @@ export default function NpcLanguagesSection({ npc, isUpdate, updateNpc }: Props)
                           {t("languages.noMatch")}
                         </CommandEmpty>
                         <CommandGroup>
-                          {LANGUAGES.map((option) => (
+                          {getTranslatedLanguages().map((option) => (
                             <CommandItem
                               key={option}
                               value={option}
