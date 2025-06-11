@@ -44,9 +44,6 @@ export class Stats {
   @Prop({ type: AbilityScores, default: {} })
   abilityScores: AbilityScores;
 
-  @Prop({ default: 0 })
-  darkvision: number;
-
   @Prop({ type: [String], default: [] })
   languages: string[];
 

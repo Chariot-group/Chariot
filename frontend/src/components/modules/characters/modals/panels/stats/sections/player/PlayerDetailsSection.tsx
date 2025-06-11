@@ -13,22 +13,11 @@ interface Props {
 export default function PlayerDetailsSection({ player, isUpdate, updatePlayer }: Props) {
   const t = useTranslations("CharacterDetailsPanel");
 
-  const [darkvision, setDarkvision] = useState<number>(player.stats.darkvision);
   const [proficiencyBonus, setProficiencyBonus] = useState<number>(player.stats.proficiencyBonus);
   const [passivePerception, setPassivePerception] = useState<number>(player.stats.passivePerception);
 
   const [inspiration, setInspiration] = useState<boolean>(player.inspiration);
 
-  const changeDarkvision = (value: any) => {
-    setDarkvision(value);
-    updatePlayer({
-      ...player,
-      stats: {
-        ...player.stats,
-        darkvision: parseInt(value),
-      },
-    });
-  };
   const changeProficiencyBonus = (value: any) => {
     setProficiencyBonus(value);
     updatePlayer({
@@ -59,17 +48,6 @@ export default function PlayerDetailsSection({ player, isUpdate, updatePlayer }:
 
   return (
     <Card className="p-4 flex flex-col bg-background">
-      <Champs
-        isActive={isUpdate}
-        min={0}
-        color="card"
-        label={t("details.darkvision")}
-        value={darkvision}
-        id={"darkvision"}
-        type={"number"}
-        placeholder={t("details.darkvision")}
-        setValue={changeDarkvision}
-      />
       <Champs
         isActive={isUpdate}
         min={0}

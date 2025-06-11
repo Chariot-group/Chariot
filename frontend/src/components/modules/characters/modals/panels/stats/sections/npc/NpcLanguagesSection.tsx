@@ -1,8 +1,13 @@
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { LANGUAGES } from "@/constants/CharacterConstants";
+import { cn } from "@/lib/utils";
 import INpc from "@/models/npc/INpc";
-import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
+import { Check, DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -31,6 +36,8 @@ export default function NpcLanguagesSection({ npc, isUpdate, updateNpc }: Props)
     changeLanguages([...languages, ""]);
   };
 
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   const removeLanguage = (index: number) => {
     const newLanguages = [...languages];
     newLanguages.splice(index, 1);
@@ -41,6 +48,19 @@ export default function NpcLanguagesSection({ npc, isUpdate, updateNpc }: Props)
     const newLanguages = [...languages];
     newLanguages[index] = value;
     changeLanguages(newLanguages);
+  };
+
+  const getTranslatedLanguages = (): string[] => {
+    let langs: string[] = [];
+    LANGUAGES.forEach((lang) => {
+      const translated = t(`languages.items.${lang}`, { defaultValue: lang });
+      if (translated !== lang) {
+        langs.push(translated);
+      } else {
+        langs.push(lang);
+      }
+    });
+    return langs;
   };
 
   return (
@@ -71,14 +91,44 @@ export default function NpcLanguagesSection({ npc, isUpdate, updateNpc }: Props)
                   key={index}
                   className="text-sm flex flex-row gap-2 items-center">
                   <DotIcon className="text-foreground" />
-                  <Input
-                    id={index.toString()}
-                    type={"text"}
-                    value={language ?? ""}
-                    onChange={(e) => handleLanguageChange(index, e.target.value)}
-                    placeholder={t("languages.languageName")}
-                    className={`w-[10vh] p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0`}
-                  />
+                  <Popover open={openIndex === index} onOpenChange={(open) => setOpenIndex(open ? index : null)}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="ghost" disabled={!isUpdate}
+                        className="w-[10vh] p-0 pl-1 h-7 border-none shadow-none text-left items-left justify-start font-normal disabled:opacity-1"
+                      >
+                        {language || t("languages.languageName")}
+                      </Button>
+                    </PopoverTrigger>
+
+                    <PopoverContent className="w-[150px] p-0">
+                      <Command>
+                        <CommandInput
+                          placeholder={t("languages.languageName")}
+                          value={language ?? ""}
+                          onValueChange={(val) => handleLanguageChange(index, val)}
+                        />
+                        <CommandEmpty>
+                          {t("languages.noMatch")}
+                        </CommandEmpty>
+                        <CommandGroup>
+                          {getTranslatedLanguages().map((option) => (
+                            <CommandItem
+                              key={option}
+                              value={option}
+                              onSelect={() => {
+                                handleLanguageChange(index, option)
+                                setOpenIndex(null)
+                              }}
+                            >
+                              <Check className={cn("mr-2 h-4 w-4", language === option ? "opacity-100" : "opacity-0")} />
+                              {option}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   {isUpdate && (
                     <Tooltip>
                       <TooltipTrigger asChild>

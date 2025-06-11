@@ -150,10 +150,27 @@
     "languages": {
       "title": "Languages",
       "noLanguage": "No languages found",
-      "languageName": "Language"
+      "languageName": "Language",
+      "noMatch": "No match found",
+      "items": {
+        "common": "Common",
+        "dwarvish": "Dwarvish",
+        "elvish": "Elvish",
+        "giant": "Giant",
+        "gnomish": "Gnomish",
+        "goblin": "Goblin",
+        "orc": "Orc",
+        "abyssal": "Abyssal",
+        "celestial": "Celestial",
+        "draconic": "Draconic",
+        "deepSpeech": "Deep Speech",
+        "infernal": "Infernal",
+        "primordial": "Primordial",
+        "sylvan": "Sylvan",
+        "undercommon": "Undercommon"
+      }
     },
     "details": {
-      "darkvision": "Darkvision",
       "attackBonus": "Attack Bonus",
       "passivePerception": "Passive Perception",
       "inspiration": "Inspiration"
@@ -228,9 +245,10 @@
     },
     "batlle": {
       "armorClass": "Armor Class",
-      "maxPv": "Max Hit Points",
-      "currentPv": "Current HP",
-      "temporaryPv": "Temporary HP"
+      "maxHP": "Max Hit Points",
+      "currentHP": "Current HP",
+      "temporaryHP": "Temporary HP",
+      "initiativeBonus": "Initiative"
     },
     "abilityScores": {
       "strength": "Strength",
