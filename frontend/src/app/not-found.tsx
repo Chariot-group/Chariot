@@ -1,15 +1,29 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
-import { use } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Page() {
 
     const t = useTranslations("NotFound");
+    const pathname = usePathname();
 
+    const [locale, setLocale] = useState<string>("en");
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        const pathSegments = pathname.split("/");
+        setLocale(pathSegments[1] || "en"); // Default to "en" if no locale is found
+    }, []);
+
+    if (!isMounted) {
+        return null; // Prevent rendering until mounted
+    }
     return (
         <div className="w-full h-[100dvh] flex flex-col items-center justify-center bg-background">
             <Card className="w-[40%] shadow-md relative">
@@ -19,7 +33,7 @@ export default function Page() {
                         <h1 className="text-xl font-bold">{t('title')}</h1>
                         <p className="text-muted-foreground text-center">{t('description')}</p>
                     </div>
-                    <Link href={"campaigns"}>
+                    <Link href={`/${locale}/campaigns`} >
                         <Button>{t('backToHome')}</Button>
                     </Link>
                 </div>
