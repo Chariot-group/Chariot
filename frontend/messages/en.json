@@ -228,10 +228,10 @@
     },
     "batlle": {
       "armorClass": "Armor Class",
-      "maxPv": "Max Hit Points",
-      "currentPv": "Current HP",
-      "temporaryPv": "Temporary HP",
-      "initiativeBonus": "Bonus Initiative"
+      "maxHP": "Max Hit Points",
+      "currentHP": "Current HP",
+      "temporaryHP": "Temporary HP",
+      "initiativeBonus": "Initiative"
     },
     "abilityScores": {
       "strength": "Strength",

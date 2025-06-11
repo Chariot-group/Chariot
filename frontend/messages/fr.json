@@ -228,10 +228,10 @@
     },
     "batlle": {
       "armorClass": "Classe d'armure",
-      "maxPv": "Points de vie max",
-      "currentPv": "PV actuels",
-      "temporaryPv": "PV temporaires",
-      "initiativeBonus": "Bonus d'initiative"
+      "maxHP": "Points de vie max",
+      "currentHP": "PV actuels",
+      "temporaryHP": "PV temporaires",
+      "initiativeBonus": "Initiative"
     },
     "abilityScores": {
       "strength": "Force",

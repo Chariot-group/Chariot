@@ -228,10 +228,10 @@
     },
     "batlle": {
       "armorClass": "Clase de armadura",
-      "maxPv": "Puntos de golpe máximos",
-      "currentPv": "PG actuales",
-      "temporaryPv": "PG temporales",
-      "initiativeBonus": "Bono de iniciativa"
+      "maxHP": "Puntos de golpe máximos",
+      "currentHP": "PG actuales",
+      "temporaryHP": "PG temporales",
+      "initiativeBonus": "Iniciativa"
     },
     "abilityScores": {
       "strength": "Fuerza",
