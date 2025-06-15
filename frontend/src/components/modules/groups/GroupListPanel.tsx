@@ -98,9 +98,7 @@ export default function GroupListPanel({
             //Fix un bug surement dû au seeder.
             return [
               ...prev,
-              ...response.data.filter(
-                (newGroup: { _id: string }) => !prev.some((existingGroup) => existingGroup._id === newGroup._id),
-              ),
+              ...response.data
             ];
           });
         }
