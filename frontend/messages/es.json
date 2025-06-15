@@ -456,7 +456,7 @@
   },
   "NotFound": {
     "title": "Fallo crítico, página no encontrada",
-    "description": "Tirada de localización: 1. El hibourse se queda mirando el cartel... pero el cartel no responde.",
-    "backToHome": "Rechazar un dado de localización"
+    "description": "Tirada de localización: 1. El oso lechuza se queda mirando el cartel... pero el cartel no responde.",
+    "backToHome": "Volver a la página de inicio"
   }
 }

@@ -458,6 +458,6 @@
   "NotFound": {
     "title": "Critical failure, page not found",
     "description": "Location roll: 1. The owlbear stares at the sign... but the sign doesn't respond.",
-    "backToHome": "Reject a location die"
+    "backToHome": "Back to home page"
   }
 }

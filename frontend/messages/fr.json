@@ -457,7 +457,7 @@
   },
   "NotFound": {
     "title": "Échec critique, page introuvable",
-    "description": "Jet de localisation : 1. Le hibourse fixe le panneau… mais le panneau ne répond pas.",
-    "backToHome": "Rejeter un dé de localisation"
+    "description": "Jet de localisation : 1. Le hibours fixe le panneau… mais le panneau ne répond pas.",
+    "backToHome": "Retour à l'accueil"
   }
 }
