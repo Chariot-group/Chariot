@@ -13,7 +13,6 @@ export default interface IStatsBase {
   armorClass: number;
   speed: ISpeed;
   abilityScores: IAbilityScores;
-  darkvision: number;
   languages: string[];
   passivePerception: number;
   savingThrows: ISavingThrows;
