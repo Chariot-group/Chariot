@@ -463,5 +463,10 @@
       "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
     },
     "cancel": "Annuler"
+  },
+  "NotFound": {
+    "title": "Échec critique, page introuvable",
+    "description": "Jet de localisation : 1. Le hibours fixe le panneau… mais le panneau ne répond pas.",
+    "backToHome": "Retour à l'accueil"
   }
 }
