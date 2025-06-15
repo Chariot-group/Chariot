@@ -456,7 +456,7 @@
   },
   "NotFound": {
     "title": "Fallo crítico, página no encontrada",
-    "description": "Tirada de carisma: 1. Ni siquiera el servidor te contesta.",
-    "backToHome": "Volver a la página principal"
+    "description": "Tirada de localización: 1. El hibourse se queda mirando el cartel... pero el cartel no responde.",
+    "backToHome": "Rechazar un dado de localización"
   }
 }

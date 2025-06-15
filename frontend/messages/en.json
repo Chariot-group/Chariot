@@ -457,7 +457,7 @@
   },
   "NotFound": {
     "title": "Critical failure, page not found",
-    "description": "Charisma roll: 1. Even the server doesn't answer.",
-    "backToHome": "Back to home"
+    "description": "Location roll: 1. The owlbear stares at the sign... but the sign doesn't respond.",
+    "backToHome": "Reject a location die"
   }
 }
