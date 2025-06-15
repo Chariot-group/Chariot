@@ -151,10 +151,27 @@
     "languages": {
       "title": "Langues",
       "noLanguage": "Aucune langue trouvée",
-      "languageName": "Langue"
+      "languageName": "Langue",
+      "noMatch": "Aucune langue correspondente trouvée",
+      "items": {
+        "common": "Commun",
+        "dwarvish": "Nain",
+        "elvish": "Elfe",
+        "giant": "Géant",
+        "gnomish": "Gnome",
+        "goblin": "Gobelin",
+        "orc": "Orque",
+        "abyssal": "Abyssal",
+        "celestial": "Céleste",
+        "draconic": "Draconique",
+        "deepSpeech": "Parole profonde",
+        "infernal": "Infernal",
+        "primordial": "Primordial",
+        "sylvan": "Sylvestre",
+        "undercommon": "Sous-commun"
+      }
     },
     "details": {
-      "darkvision": "Vision nocturne",
       "attackBonus": "Bonus d'attaque",
       "passivePerception": "Perception passive",
       "inspiration": "Inspiration"
@@ -162,7 +179,7 @@
     "spellCasting": {
       "title": "Lancer de sorts",
       "noSpellCasting": "Aucun lancé de sort trouvé",
-      "ability": "Capacité",
+      "ability": "Charactéristique d'incantation",
       "saveDice": "Dé de sauvegarde",
       "attackBonus": "Bonus d'attaque",
       "countSpell": "Nombre de sorts",
@@ -229,9 +246,10 @@
     },
     "batlle": {
       "armorClass": "Classe d'armure",
-      "maxPv": "Points de vie max",
-      "currentPv": "PV actuels",
-      "temporaryPv": "PV temporaires"
+      "maxHP": "Points de vie max",
+      "currentHP": "PV actuels",
+      "temporaryHP": "PV temporaires",
+      "initiativeBonus": "Initiative"
     },
     "abilityScores": {
       "strength": "Force",
@@ -464,5 +482,10 @@
       "internal": "Une erreur c'est produite quand nous avons essayé de changer le mot de passe"
     },
     "cancel": "Annuler"
+  },
+  "NotFound": {
+    "title": "Échec critique, page introuvable",
+    "description": "Jet de localisation : 1. Le hibours fixe le panneau… mais le panneau ne répond pas.",
+    "backToHome": "Retour à l'accueil"
   }
 }

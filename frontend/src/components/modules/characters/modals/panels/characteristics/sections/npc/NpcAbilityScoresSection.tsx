@@ -3,6 +3,8 @@ import { Champs } from "@/components/modules/characters/modals/PlayerModalDetail
 import { useState } from "react";
 import INpc from "@/models/npc/INpc";
 import { useTranslations } from "next-intl";
+import { getSkillsFor } from "@/constants/CharacterConstants";
+import IAbilityScores from "@/models/npc/stat/sub/IAbilityScores";
 
 interface Props {
   npc: INpc;
@@ -25,6 +27,29 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
   const [intelligenceAS, setIntelligenceAS] = useState<number>(npc.stats.abilityScores.intelligence);
   const [wisdomAS, setWisdomAS] = useState<number>(npc.stats.abilityScores.wisdom);
   const [charismaAS, setCharismaAS] = useState<number>(npc.stats.abilityScores.charisma);
+
+  const changeAbility = (oldValue: any, value: any, ability: keyof IAbilityScores) => {
+    getSkillsFor(ability).forEach((skill) => {
+      const skillValue = npc.stats.skills[skill];
+      if (skillValue == oldValue) {
+        npc.stats.skills[skill] = parseInt(value);
+        updateNpc({
+          ...npc,
+          stats: {
+            ...npc.stats,
+            skills: {
+              ...npc.stats.skills,
+              [skill]: parseInt(value),
+            },
+          },
+        });
+      }
+    });
+  }
+
+  const calculeSavingThrow = (abilityScore: number, setter: (n: number) => void) => {
+    return setter(Math.floor((abilityScore - 10) / 2));
+  };
 
   const changeStrengthST = (value: any) => {
     setStrengthST(value);
@@ -105,6 +130,8 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
     });
   };
   const changeStrengthAS = (value: any) => {
+    changeAbility(strengthAS, value, "strength");
+    calculeSavingThrow(parseInt(value), changeStrengthST);
     setStrengthAS(value);
     updateNpc({
       ...npc,
@@ -118,6 +145,8 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
     });
   };
   const changeDexterityAS = (value: any) => {
+    changeAbility(dexterityAS, value, "dexterity");
+    calculeSavingThrow(parseInt(value), changeDexterityST);
     setDexterityAS(value);
     updateNpc({
       ...npc,
@@ -131,6 +160,8 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
     });
   };
   const changeConstitutionAS = (value: any) => {
+    changeAbility(constitutionAS, value, "constitution");
+    calculeSavingThrow(parseInt(value), changeConstitutionST);
     setConstitutionAS(value);
     updateNpc({
       ...npc,
@@ -144,6 +175,8 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
     });
   };
   const changeIntelligenceAS = (value: any) => {
+    changeAbility(intelligenceAS, value, "intelligence");
+    calculeSavingThrow(parseInt(value), changeIntelligenceST);
     setIntelligenceAS(value);
     updateNpc({
       ...npc,
@@ -157,6 +190,8 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
     });
   };
   const changeWisdomAS = (value: any) => {
+    changeAbility(wisdomAS, value, "wisdom");
+    calculeSavingThrow(parseInt(value), changeWisdomST);
     setWisdomAS(value);
     updateNpc({
       ...npc,
@@ -170,6 +205,8 @@ export default function NpcAbilityScoresSection({ npc, isUpdate, updateNpc }: Pr
     });
   };
   const changeCharismaAS = (value: any) => {
+    changeAbility(charismaAS, value, "charisma");
+    calculeSavingThrow(parseInt(value), changeCharismaST);
     setCharismaAS(value);
     updateNpc({
       ...npc,

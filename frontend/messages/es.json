@@ -151,10 +151,27 @@
     "languages": {
       "title": "Idiomas",
       "noLanguage": "No se encontraron idiomas",
-      "languageName": "Idioma"
+      "languageName": "Idioma",
+      "noMatch": "No se encontraron coincidencias",
+      "items": {
+        "common": "Común",
+        "dwarvish": "Enano",
+        "elvish": "Élfico",
+        "giant": "Gigante",
+        "gnomish": "Gnómico",
+        "goblin": "Goblin",
+        "orc": "Orco",
+        "abyssal": "Abisal",
+        "celestial": "Celestial",
+        "draconic": "Dracónico",
+        "deepSpeech": "Lenguaje profundo",
+        "infernal": "Infernal",
+        "primordial": "Primordial",
+        "sylvan": "Silvano",
+        "undercommon": "Inframundo"
+      }
     },
     "details": {
-      "darkvision": "Visión en la oscuridad",
       "attackBonus": "Bono de ataque",
       "passivePerception": "Percepción pasiva",
       "inspiration": "Inspiración"
@@ -229,9 +246,10 @@
     },
     "batlle": {
       "armorClass": "Clase de armadura",
-      "maxPv": "Puntos de golpe máximos",
-      "currentPv": "PG actuales",
-      "temporaryPv": "PG temporales"
+      "maxHP": "Puntos de golpe máximos",
+      "currentHP": "PG actuales",
+      "temporaryHP": "PG temporales",
+      "initiativeBonus": "Iniciativa"
     },
     "abilityScores": {
       "strength": "Fuerza",
@@ -463,5 +481,10 @@
       "internal": "Ocurrió un error al intentar cambiar la contraseña"
     },
     "cancel": "Cancelar"
+  },
+  "NotFound": {
+    "title": "Fallo crítico, página no encontrada",
+    "description": "Tirada de localización: 1. El oso lechuza se queda mirando el cartel... pero el cartel no responde.",
+    "backToHome": "Volver a la página de inicio"
   }
 }
