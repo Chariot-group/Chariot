@@ -29,7 +29,7 @@ export class GroupService {
     @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
     @InjectModel(Character.name)
     private characterModel: Model<CharacterDocument>,
-  ) {}
+  ) { }
 
   private readonly SERVICE_NAME = GroupService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
@@ -222,7 +222,7 @@ export class GroupService {
       const start: number = Date.now();
       const groups = await this.groupModel
         .find(filters)
-        .sort(sortCriteria)
+        .sort({ ...sortCriteria, _id: 'asc' })
         .limit(offset)
         .skip((page - 1) * offset);
 

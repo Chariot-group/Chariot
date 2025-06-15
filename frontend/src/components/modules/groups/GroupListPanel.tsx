@@ -36,9 +36,9 @@ interface Props {
 export default function GroupListPanel({
   groups,
   setGroups,
-  offset = 8,
+  offset = 18,
   groupSelected = null,
-  setGroupSelected,
+  setGroupSelected = () => {},
   idCampaign,
   reverse = false,
   type = "all",
@@ -65,9 +65,11 @@ export default function GroupListPanel({
   //Pagination
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState(true);
 
   //Infinite scroll
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const fetchGroups = useCallback(
     async (search: string, nextPage = 1, reset = false) => {
@@ -84,20 +86,19 @@ export default function GroupListPanel({
           },
           idCampaign,
         );
+        setHasMore(response.data.length === offset);
         if (reset) {
           setGroups(response.data || []);
 
           if (!context) {
-            setGroupSelected && setGroupSelected(response.data[0] || null);
+            setGroupSelected(response.data[0] || null);
           }
         } else {
           setGroups((prev) => {
             //Fix un bug surement dû au seeder.
             return [
               ...prev,
-              ...response.data.filter(
-                (newGroup: { _id: string }) => !prev.some((existingGroup) => existingGroup._id === newGroup._id),
-              ),
+              ...response.data
             ];
           });
         }
@@ -123,7 +124,7 @@ export default function GroupListPanel({
         //Fix un bug surement dû au seeder.
         return [response.data, ...prev];
       });
-      setGroupSelected && setGroupSelected(response.data);
+      setGroupSelected(response.data);
       setSearch("");
     } catch (err) {
       error(t("error"));
@@ -134,12 +135,12 @@ export default function GroupListPanel({
 
   useEffect(() => {
     if (newGroup) {
-      setGroupSelected && setGroupSelected(newGroup);
+      setGroupSelected(newGroup);
       setNewGroup(null);
     }
   }, [groupSelected]);
 
-  useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
+  useInfiniteScroll(sentinelRef, fetchGroups, page, loading, search, hasMore);
 
   useEffect(() => {
     setGroups([]);
@@ -165,8 +166,9 @@ export default function GroupListPanel({
       </CardHeader>
       <CardContent
         ref={cardRef}
-        className={`flex-1 min-h-[500px] overflow-auto scrollbar-hide ${isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
-          }`}>
+        className={`flex-1 h-full overflow-auto scrollbar-hide ${
+          isOver ? (reverse ? "bg-primary/10" : "bg-primary/20") : ""
+        }`}>
         <div
           className="flex flex-col gap-3"
           ref={setNodeRef}>
@@ -205,6 +207,12 @@ export default function GroupListPanel({
             </div>
           )}
         </div>
+        {groups.length >= offset && (
+          <div
+            ref={sentinelRef}
+            className="h-1"
+          />
+        )}
       </CardContent>
     </div>
   );

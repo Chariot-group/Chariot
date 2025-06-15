@@ -46,8 +46,9 @@ const GroupSelector = ({
 
   return (
     <div className="flex flex-row items-center justify-center gap-4 w-full">
-      <div className="w-full">
+      <div className="w-full h-[50vh]">
         <GroupListPanel
+          offset={10}
           displayMembersCount={true}
           onlyWithMembers={true}
           updatedGroup={[]}
@@ -82,8 +83,9 @@ const GroupSelector = ({
         />
       </div>
       <p className="text-4xl">{t("versus")}</p>
-      <div className="w-full">
+      <div className="w-full h-[50vh]">
         <GroupListPanel
+          offset={10}
           displayMembersCount={true}
           onlyWithMembers={true}
           updatedGroup={[]}

@@ -151,10 +151,10 @@ export default function CampaignsPage() {
   useBeforeUnload(isUpdating, t("form.unsave"));
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="h-[91dvh] w-full flex flex-col">
       <Header campaign={selectedCampaign} />
       <main className="h-full flex flex-row">
-        <div className="w-1/4">
+        <div className="h-[87dvh] w-1/4">
           <CampaignListPanel
             search={search}
             setSearch={setSearch}
@@ -166,11 +166,11 @@ export default function CampaignsPage() {
           <div className="h-[80vh] border border-ring"></div>
         </div>
         <div className="w-full">
-          <div className="w-full h-full flex flex-row justify-center items-center">
+          <div className="w-full h-[90%] flex flex-row justify-center items-center">
             {loading && <Loading />}
             {!loading && selectedCampaign && (
               <div className="flex flex-col justify-start items-center w-full h-full">
-                <div className="w-full flex flex-col">
+                <div className="w-full flex flex-col ">
                   <CampaignDetailsPanel
                     campaign={selectedCampaign}
                     setCampaign={setSelectedCampaign}
@@ -184,7 +184,7 @@ export default function CampaignsPage() {
                 <div className="w-[90vh] flex flex-col">
                   <div className="w-[80vh] border border-ring"></div>
                 </div>
-                <div className="w-full h-full flex flex-row items-center p-5">
+                <div className="w-full h-[68dvh] flex flex-row items-center p-5">
                   <GroupsCampaignsPanel
                     setUpdatedGroup={setUpdatedGroup}
                     updatedGroup={updatedGroup}
