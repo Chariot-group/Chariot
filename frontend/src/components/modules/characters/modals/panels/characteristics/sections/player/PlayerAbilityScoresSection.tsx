@@ -29,22 +29,19 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   const [wisdomAS, setWisdomAS] = useState<number>(player.stats.abilityScores.wisdom);
   const [charismaAS, setCharismaAS] = useState<number>(player.stats.abilityScores.charisma);
 
-  const changeAbility = (oldValue: any, value: any, ability: keyof IAbilityScores) => {
+  const changeAbility = (value: any, ability: keyof IAbilityScores) => {
     getSkillsFor(ability).forEach((skill) => {
-      const skillValue = player.stats.skills[skill];
-      if (skillValue == oldValue) {
-        player.stats.skills[skill] = parseInt(value);
-        updatePlayer({
-          ...player,
-          stats: {
-            ...player.stats,
-            skills: {
-              ...player.stats.skills,
-              [skill]: parseInt(value),
-            },
+      player.stats.skills[skill] = parseInt(value);
+      updatePlayer({
+        ...player,
+        stats: {
+          ...player.stats,
+          skills: {
+            ...player.stats.skills,
+            [skill]: parseInt(value),
           },
-        });
-      }
+        },
+      });
     });
   }
 
@@ -131,8 +128,8 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeStrengthAS = (value: any) => {
-    changeAbility(strengthAS, value, "strength");
     let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "strength");
     setStrengthST(st);
     setStrengthAS(value);
     updatePlayer({
@@ -151,8 +148,8 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeDexterityAS = (value: any) => {
-    changeAbility(dexterityAS, value, "dexterity");
     let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "dexterity");
     setDexterityST(st);
     setDexterityAS(value);
     updatePlayer({
@@ -171,8 +168,8 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeConstitutionAS = (value: any) => {
-    changeAbility(constitutionAS, value, "constitution");
     let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "constitution");
     setConstitutionST(st);
     setConstitutionAS(value);
     updatePlayer({
@@ -191,8 +188,8 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeIntelligenceAS = (value: any) => {
-    changeAbility(intelligenceAS, value, "intelligence");
     let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "intelligence");
     setIntelligenceST(st);
     setIntelligenceAS(value);
     updatePlayer({
@@ -211,8 +208,8 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeWisdomAS = (value: any) => {
-    changeAbility(wisdomAS, value, "wisdom");
     let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "wisdom");
     setWisdomST(st);
     setWisdomAS(value);
     updatePlayer({
@@ -231,8 +228,8 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeCharismaAS = (value: any) => {
-    changeAbility(charismaAS, value, "charisma");
     let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "charisma");
     setCharismaST(st);
     setCharismaAS(value);
     updatePlayer({
