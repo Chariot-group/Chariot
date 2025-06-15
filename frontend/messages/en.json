@@ -463,5 +463,10 @@
       "internal": "An error occurred while trying to change the password"
     },
     "cancel": "Cancel"
+  },
+  "NotFound": {
+    "title": "Critical failure, page not found",
+    "description": "Location roll: 1. The owlbear stares at the sign... but the sign doesn't respond.",
+    "backToHome": "Back to home page"
   }
 }
