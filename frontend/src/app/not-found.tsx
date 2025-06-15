@@ -33,7 +33,7 @@ export default function Page() {
                         <h1 className="text-xl font-bold">{t('title')}</h1>
                         <p className="text-muted-foreground text-center">{t('description')}</p>
                     </div>
-                    <img src={"/illustrations/404/404_Owlbear_wb.png"} alt="Owlbear 404 illustration" className="w-1/2"></img>
+                    <img src={"/illustrations/404/404_Owlbear_wb.webp"} alt="Owlbear 404 illustration" className="w-1/2"></img>
                     <Link href={`/${locale}/campaigns`} >
                         <Button>{t('backToHome')}</Button>
                     </Link>
