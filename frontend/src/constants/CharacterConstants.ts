@@ -1,5 +1,8 @@
 import INpc from "@/models/npc/INpc";
 import IPlayer from "@/models/player/IPlayer";
+import ISavingThrows from "@/models/npc/stat/sub/ISavingThrows";
+import ISkills from "@/models/npc/stat/sub/ISkills";
+import IAbilityScores from "@/models/npc/stat/sub/IAbilityScores";
 
 export const SIZES = ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"] as const;
 
@@ -57,7 +60,6 @@ export const DEFAULT_PLAYER: IPlayer = {
       wisdom: 0,
       charisma: 0,
     },
-    darkvision: 0,
     languages: [],
     passivePerception: 0,
     savingThrows: {
@@ -129,7 +131,6 @@ export const DEFAULT_NPC: INpc = {
       wisdom: 0,
       charisma: 0,
     },
-    darkvision: 0,
     languages: [],
     passivePerception: 0,
     savingThrows: {
@@ -166,3 +167,58 @@ export const DEFAULT_NPC: INpc = {
     type: "",
   },
 };
+
+
+export const LANGUAGES: string[] = [
+  "common",
+  "dwarvish",
+  "elvish",
+  "giant",
+  "gnomish",
+  "goblin",
+  "orc",
+  "abyssal",
+  "celestial",
+  "draconic",
+  "deepSpeech",
+  "infernal",
+  "primordial",
+  "sylvan",
+  "undercommon"
+];
+
+export const CHARACTERISTICS_LINKS: Record<keyof ISavingThrows, (keyof ISkills)[]> = {
+  "dexterity": [
+    "acrobatics",
+    "stealth",
+    "sleightHand"
+  ],
+  "intelligence": [
+    "arcana",
+    "history",
+    "nature",
+    "religion",
+    "investigation"
+  ],
+  "strength": [
+    "athletics"
+  ],
+  "wisdom": [
+    "animalHandling",
+    "insight",
+    "medicine",
+    "perception",
+    "survival"
+  ],
+  "charisma": [
+    "intimidation",
+    "persuasion",
+    "performance",
+    "deception"
+  ],
+  "constitution": [],
+}
+
+export function getSkillsFor(characteristic: keyof IAbilityScores): (keyof ISkills)[] {
+  return CHARACTERISTICS_LINKS[characteristic];
+}
