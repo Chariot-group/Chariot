@@ -1,6 +1,4 @@
 import { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from 'next/font/google';
 import "./globals.css";
 
@@ -31,16 +29,13 @@ export default async function RootLayout({
 }) {
     const { locale } = await params;
 
-    const messages = await getMessages();
 
     return (
         <html
             lang={locale}
             suppressHydrationWarning={true}>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <NextIntlClientProvider messages={messages}>
                     {children}
-                </NextIntlClientProvider>
             </body>
         </html>
     );
