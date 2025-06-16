@@ -62,22 +62,37 @@ export default function CampaignsPage() {
 
   const saveActions = async () => {
     if (selectedCampaign) {
-      groupsLabelRef.current.forEach(async (group) => {
-        if (!Number.isInteger(Number(group._id))) {
-          await GroupService.updateGroup(group._id, { label: group.label });
-        } else {
-          newGroupRef.current.forEach((newGroup) => {
-            if (newGroup._id === group._id) {
-              newGroup.label = group.label;
+      setLoading(true);
+      await Promise.all(
+        groupsLabelRef.current
+          .filter((group) => !(typeof group._id === "string" && (group._id.startsWith("temp-"))))
+          .map(async (group) => {
+            const label = group.label?.trim() || "newgroup";
+            const matchingGroup = newGroupRef.current.find((g) => g._id === group._id);
+            if (matchingGroup) {
+              matchingGroup.label = label;
             }
-          });
-        }
-      });
+            if (typeof group._id === "string" && !group._id.startsWith("temp-") && !group._id.startsWith("new-")) {
+              await GroupService.updateGroup(group._id, { label });
+            } else {
+              newGroupRef.current.forEach((newGroup) => {
+                if (newGroup._id === group._id) {
+                  newGroup.label = label;
+                }
+              });
+            }
+          }),
+      );
 
-      newGroupRef.current.forEach(async (group) => {
-        const { _id, ...groupWhitoutId } = group;
-        await GroupService.createGroup(groupWhitoutId);
-      });
+      await Promise.all(
+        newGroupRef.current
+          .filter((group) => typeof group._id === "string" && (group._id.startsWith("temp-") || group._id.startsWith("new-")))
+          .map(async (group) => {
+            const label = group.label?.trim()?.length ? group.label.trim() : "newgroup";
+            const { _id, label: _, ...rest } = group;
+            await GroupService.createGroup({ ...rest, label });
+          }),
+      );
 
       updateCampaign(selectedCampaign);
 
@@ -86,6 +101,7 @@ export default function CampaignsPage() {
       groupsRef.current = new Map();
 
       setUpdatedGroup([]);
+      setLoading(false);
 
       success(t("toasts.save"));
     }

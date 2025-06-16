@@ -3,13 +3,12 @@
 import { useTranslations } from "next-intl";
 import GroupListPanel from "@/components/modules/groups/GroupListPanel";
 import { IGroup } from "@/models/groups/IGroup";
-import { RefObject, useCallback, useState } from "react";
+import { RefObject, useCallback, useEffect, useState } from "react";
 import { DragEndEvent } from "@dnd-kit/core";
 import GroupDnDWrapper from "@/components/modules/groups/GroupDndProvider";
 import { ICampaign } from "@/models/campaigns/ICampaign";
 import { useToast } from "@/hooks/useToast";
-import { MousePointerClick, PlusCircleIcon } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { MousePointerClick } from "lucide-react";
 import Link from "next/link";
 
 interface Props {
@@ -95,7 +94,7 @@ export default function GroupsCampaignsPanel({
   const createGroup = useCallback(async (type: "main" | "npc" | "archived") => {
     try {
       let current = {
-        _id: newGroupRef.current.length,
+        _id: `temp-${Date.now()}-${Math.random()}`,
         label: "",
         description: "",
         campaigns: [{ idCampaign: idCampaign, type }],
@@ -125,6 +124,12 @@ export default function GroupsCampaignsPanel({
   const changeLabel = (label: string, group: IGroup) => {
     if (groupsLabelRef.current.find((g) => g._id === group._id)) {
       groupsLabelRef.current = groupsLabelRef.current.map((g) => {
+        if (g._id === group._id) {
+          return { ...g, label };
+        }
+        return g;
+      });
+      newGroupRef.current = newGroupRef.current.map((g) => {
         if (g._id === group._id) {
           return { ...g, label };
         }

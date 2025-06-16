@@ -3,7 +3,7 @@
 import { useToast } from "@/hooks/useToast";
 import { IGroup } from "@/models/groups/IGroup";
 import { useLocale, useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import GroupService from "@/services/groupService";
 import useInfiniteScroll from "@/hooks/useInfiniteScroll";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,6 +12,7 @@ import Loading from "@/components/common/Loading";
 import { Button } from "@/components/ui/button";
 import { useDroppable } from "@dnd-kit/core";
 import GroupListPanelItem from "@/components/modules/groups/GroupListPanelItem";
+import { set } from "react-hook-form";
 
 interface Props {
   groups: IGroup[]; // Liste des groupes à afficher
@@ -177,10 +178,8 @@ export default function GroupListPanel({
             <Button
               onClick={() => {
                 if (onAdd) {
-                  console.log("onAdd function called");
                   onAdd();
                 } else {
-                  console.log("defaultCreateGroup function called");
                   defaultCreateGroup();
                 }
               }}>
