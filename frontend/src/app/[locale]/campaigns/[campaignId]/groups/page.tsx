@@ -20,6 +20,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function CampaignGroupsPage() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [characterOffset, setCharacterOffset] = useState(16);
 
   const t = useTranslations("GroupPage");
   const { success, error } = useToast();
@@ -275,7 +276,7 @@ export default function CampaignGroupsPage() {
     <div className="w-full flex flex-col">
       <Header campaign={campaign} />
       <main className="h-full flex flex-row">
-        <div className="w-1/4">
+        <div className="w-1/4 h-[87dvh]">
           <GroupListPanel
             search={search}
             setSearch={setSearch}
@@ -292,7 +293,10 @@ export default function CampaignGroupsPage() {
         </div>
         <div className="w-full">
           <div className="w-full h-full flex flex-row justify-center items-center">
-            {loading && <Loading />}
+            <div className="h-full">
+              {loading && <Loading />}
+            </div>
+
             {!loading && groupSelected && campaign && (
               <div className="w-full h-full flex flex-col">
                 <div className="w-full">
@@ -309,8 +313,9 @@ export default function CampaignGroupsPage() {
                 <div className="w-full justify-center flex flex-row">
                   <div className="w-[90%] border border-ring"></div>
                 </div>
-                <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
+                <div className="h-[63dvh] w-full flex flex-row pl-5 pr-5 gap-5">
                   <CharacterListPanel
+                    offset={characterOffset}
                     newCharacters={newCharacterRef}
                     removeCharacters={removedCharacterRef}
                     isUpdating={isUpdating}
