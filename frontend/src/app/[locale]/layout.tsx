@@ -7,6 +7,8 @@ import { AuthProvider } from "@/providers/authProvider";
 import RestraintMobile from "@/components/modules/mobile/restraintMobile";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "../globals.css";
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: "Chariot",
@@ -21,6 +23,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const messages = await getMessages();
 
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale as Locale)) {
@@ -28,15 +31,17 @@ export default async function LocaleLayout({
   }
 
   return (
-    <AuthProvider>
-      <ToastContainer />
-      <div className="block lg:hidden">
-        <RestraintMobile />
-      </div>
+    <NextIntlClientProvider messages={messages}>
+      <AuthProvider>
+        <ToastContainer />
+        <div className="block lg:hidden">
+          <RestraintMobile />
+        </div>
 
-      <div className="hidden lg:block">
-        <TooltipProvider>{children}</TooltipProvider>
-      </div>
-    </AuthProvider>
+        <div className="hidden lg:block">
+          <TooltipProvider>{children}</TooltipProvider>
+        </div>
+      </AuthProvider>
+    </NextIntlClientProvider>
   );
 }
