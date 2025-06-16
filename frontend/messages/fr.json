@@ -63,7 +63,8 @@
   },
   "GroupListPanelItem": {
     "members": "membres",
-    "member": "membre"
+    "member": "membre",
+    "newGroup": "Nouveau groupe"
   },
   "CharacterDetailsPanel": {
     "npc": "PNJ",
@@ -378,7 +379,8 @@
       "step5": "Etape 5: Let's play !"
     },
     "form": {
-      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?"
+      "unsave": "Vous avez des modifications non sauvegardées. Continuer ?",
+      "newGroup": "Nouveau groupe"
     },
     "toasts": {
       "cancel": "Modification annulée",

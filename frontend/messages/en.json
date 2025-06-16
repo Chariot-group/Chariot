@@ -63,7 +63,8 @@
   },
   "GroupListPanelItem": {
     "members": "members",
-    "member": "member"
+    "member": "member",
+    "newGroup": "New group"
   },
   "CharacterDetailsPanel": {
     "npc": "NPC",
@@ -379,14 +380,15 @@
       "step5": "Step 5: Let’s play!"
     },
     "form": {
-      "unsave": "You have unsaved changes. Do you want to continue?"
+      "unsave": "You have unsaved changes. Do you want to continue?",
+      "newGroup": "New group"
     },
     "toasts": {
       "cancel": "updating cancelled",
       "save": "Campaign updated successfully",
       "errorDetetingCampaign": "Error deleting campaign",
       "deletedCampaign": "Campaign deleted successfully"
-    }
+  }
   },
   "InitiativeTracker": {
     "reset": "Reset",
