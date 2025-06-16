@@ -67,7 +67,7 @@ export default function CampaignsPage() {
         groupsLabelRef.current
           .filter((group) => !(typeof group._id === "string" && (group._id.startsWith("temp-"))))
           .map(async (group) => {
-            const label = group.label?.trim() || "newgroup";
+            const label = group.label?.trim() || t("form.newGroup");
             const matchingGroup = newGroupRef.current.find((g) => g._id === group._id);
             if (matchingGroup) {
               matchingGroup.label = label;
@@ -88,7 +88,7 @@ export default function CampaignsPage() {
         newGroupRef.current
           .filter((group) => typeof group._id === "string" && (group._id.startsWith("temp-") || group._id.startsWith("new-")))
           .map(async (group) => {
-            const label = group.label?.trim()?.length ? group.label.trim() : "newgroup";
+            const label = group.label?.trim()?.length ? group.label.trim() :  t("form.newGroup");
             const { _id, label: _, ...rest } = group;
             await GroupService.createGroup({ ...rest, label });
           }),

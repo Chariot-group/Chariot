@@ -379,7 +379,8 @@
       "step5": "Paso 5: ¡A jugar!"
     },
     "form": {
-      "unsave": "Tienes cambios sin guardar. ¿Continuar?"
+      "unsave": "Tienes cambios sin guardar. ¿Continuar?",
+      "newGroup": "Nuevo grupo"
     },
     "toasts": {
       "cancel": "Campaña no guardada",
