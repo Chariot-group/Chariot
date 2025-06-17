@@ -242,7 +242,19 @@
       "subrace": "Sous-race",
       "type": "Type",
       "subtype": "Sous-type",
-      "alignment": "Alignement"
+      "alignment": "Alignement",
+      "noMatch": "Aucun alignement correspondant trouvé",
+      "alignments": {
+        "lawful_good": "Loyal Bon",
+        "neutral_good": "Neutre Bon",
+        "chaotic_good": "Chaotique Bon",
+        "lawful_neutral": "Loyal Neutre",
+        "neutral": "Neutre",
+        "chaotic_neutral": "Chaotique Neutre",
+        "lawful_evil": "Loyal Mauvais",
+        "neutral_evil": "Neutre Mauvais",
+        "chaotic_evil": "Chaotique Mauvais"
+      }
     },
     "batlle": {
       "armorClass": "Classe d'armure",
