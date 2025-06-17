@@ -1,28 +1,28 @@
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import INpc from "@/models/npc/INpc";
+import ICharacter from "@/models/characters/ICharacter";
 import ISense from "@/models/npc/stat/sub/ISenses";
 import { DotIcon, PlusCircleIcon, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 interface Props {
-  npc: INpc;
+  character: ICharacter;
   isUpdate: boolean;
-  updateNpc: (npc: INpc) => void;
+  updateCharacter: (npc: ICharacter) => void;
 }
-export default function NpcSensesSection({ npc, isUpdate, updateNpc }: Props) {
+export default function CharacterSensesSection({ character, isUpdate, updateCharacter }: Props) {
   const t = useTranslations("CharacterDetailsPanel");
 
-  const [senses, setSenses] = useState<ISense[]>(npc.stats.senses);
+  const [senses, setSenses] = useState<ISense[]>(character.stats.senses);
 
   const changeSenses = (value: ISense[]) => {
     setSenses(value);
-    updateNpc({
-      ...npc,
+    updateCharacter({
+      ...character,
       stats: {
-        ...npc.stats,
+        ...character.stats,
         senses: value,
       },
     });

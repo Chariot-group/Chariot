@@ -2,7 +2,7 @@ import IPlayer from "@/models/player/IPlayer";
 import Details from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerDetailsSection";
 import Speed from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerSpeedSection";
 import Languages from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerLanguagesSection";
-import Senses from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerSensesSection";
+import CharacterSensesSection from "@/components/modules/characters/modals/panels/stats/sections/CharacterSensesSection";
 import Classes from "@/components/modules/characters/modals/panels/stats/sections/CharacterClassesSection";
 import Skills from "@/components/modules/characters/modals/panels/stats/sections/player/PlayerSkillsSection";
 
@@ -37,10 +37,10 @@ export default function PlayerStats({ player, isUpdate, updatePlayer }: Props) {
           isUpdate={isUpdate}
           player={player}
         />
-        <Senses
-          updatePlayer={updatePlayer}
+        <CharacterSensesSection
+          updateCharacter={(player) => updatePlayer(player as IPlayer)}
           isUpdate={isUpdate}
-          player={player}
+          character={player}
         />
       </div>
       <div className="flex flex-col gap-3 h-full border border-ring"></div>
