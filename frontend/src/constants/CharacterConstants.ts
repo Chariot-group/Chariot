@@ -222,3 +222,15 @@ export const CHARACTERISTICS_LINKS: Record<keyof ISavingThrows, (keyof ISkills)[
 export function getSkillsFor(characteristic: keyof IAbilityScores): (keyof ISkills)[] {
   return CHARACTERISTICS_LINKS[characteristic];
 }
+
+export const ALIGNMENTS: string[] = [
+  "lawful_good",
+  "neutral_good",
+  "chaotic_good",
+  "lawful_neutral",
+  "neutral",
+  "chaotic_neutral",
+  "lawful_evil",
+  "neutral_evil",
+  "chaotic_evil"
+];
