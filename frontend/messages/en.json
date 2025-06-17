@@ -172,7 +172,7 @@
       }
     },
     "details": {
-      "attackBonus": "Attack Bonus",
+      "proficiencyBonus": "Mastery bonus",
       "passivePerception": "Passive Perception",
       "inspiration": "Inspiration"
     },

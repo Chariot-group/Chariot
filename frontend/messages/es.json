@@ -172,7 +172,7 @@
       }
     },
     "details": {
-      "attackBonus": "Bono de ataque",
+      "proficiencyBonus": "Bonificación por maestría",
       "passivePerception": "Percepción pasiva",
       "inspiration": "Inspiración"
     },
