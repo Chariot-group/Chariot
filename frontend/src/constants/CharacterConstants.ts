@@ -70,6 +70,26 @@ export const DEFAULT_PLAYER: IPlayer = {
       wisdom: 0,
       charisma: 0,
     },
+    masteries: {
+      acrobatics: false,
+      animalHandling: false,
+      arcana: false,
+      athletics: false,
+      deception: false,
+      history: false,
+      insight: false,
+      intimidation: false,
+      investigation: false,
+      medicine: false,
+      nature: false,
+      perception: false,
+      performance: false,
+      persuasion: false,
+      religion: false,
+      sleightHand: false,
+      stealth: false,
+      survival: false,
+    },
     skills: {
       acrobatics: 0,
       animalHandling: 0,
@@ -167,7 +187,6 @@ export const DEFAULT_NPC: INpc = {
     type: "",
   },
 };
-
 
 export const LANGUAGES: string[] = [
   "common",
