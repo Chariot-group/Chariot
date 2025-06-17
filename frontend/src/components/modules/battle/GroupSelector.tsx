@@ -45,9 +45,10 @@ const GroupSelector = ({
   };
 
   return (
-    <>
-      <div>
+    <div className="flex flex-row items-center justify-center gap-4 w-full">
+      <div className="w-full h-[50vh]">
         <GroupListPanel
+          offset={10}
           displayMembersCount={true}
           onlyWithMembers={true}
           updatedGroup={[]}
@@ -60,10 +61,10 @@ const GroupSelector = ({
           groupSelected={
             groupsToFight[0]
               ? {
-                  ...groupsToFight[0],
-                  characters: groupsToFight[0].characters.map((c) => c._id),
-                  campaigns: groupsToFight[0].campaigns.map((c) => c._id),
-                }
+                ...groupsToFight[0],
+                characters: groupsToFight[0].characters.map((c) => c._id),
+                campaigns: groupsToFight[0].campaigns.map((c) => c._id),
+              }
               : null
           }
           setGroupSelected={(group) => handleGroupSelected(group, 0)}
@@ -71,19 +72,20 @@ const GroupSelector = ({
           disabledGroups={
             groupsToFight[1]
               ? [
-                  {
-                    ...groupsToFight[1],
-                    characters: groupsToFight[1].characters.map((c) => c._id),
-                    campaigns: groupsToFight[1].campaigns.map((c) => c._id),
-                  },
-                ]
+                {
+                  ...groupsToFight[1],
+                  characters: groupsToFight[1].characters.map((c) => c._id),
+                  campaigns: groupsToFight[1].campaigns.map((c) => c._id),
+                },
+              ]
               : []
           }
         />
       </div>
       <p className="text-4xl">{t("versus")}</p>
-      <div>
+      <div className="w-full h-[50vh]">
         <GroupListPanel
+          offset={10}
           displayMembersCount={true}
           onlyWithMembers={true}
           updatedGroup={[]}
@@ -96,10 +98,10 @@ const GroupSelector = ({
           groupSelected={
             groupsToFight[1]
               ? {
-                  ...groupsToFight[1],
-                  characters: groupsToFight[1].characters.map((c) => c._id),
-                  campaigns: groupsToFight[1].campaigns.map((c) => c._id),
-                }
+                ...groupsToFight[1],
+                characters: groupsToFight[1].characters.map((c) => c._id),
+                campaigns: groupsToFight[1].campaigns.map((c) => c._id),
+              }
               : null
           }
           setGroupSelected={(group) => handleGroupSelected(group, 1)}
@@ -107,17 +109,17 @@ const GroupSelector = ({
           disabledGroups={
             groupsToFight[0]
               ? [
-                  {
-                    ...groupsToFight[0],
-                    characters: groupsToFight[0].characters.map((c) => c._id),
-                    campaigns: groupsToFight[0].campaigns.map((c) => c._id),
-                  },
-                ]
+                {
+                  ...groupsToFight[0],
+                  characters: groupsToFight[0].characters.map((c) => c._id),
+                  campaigns: groupsToFight[0].campaigns.map((c) => c._id),
+                },
+              ]
               : []
           }
         />
       </div>
-    </>
+    </div>
   );
 };
 

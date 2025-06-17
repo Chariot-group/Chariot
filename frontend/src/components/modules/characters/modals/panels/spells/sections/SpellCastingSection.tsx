@@ -23,6 +23,8 @@ export default function SpellCastingSection({ selectedSpellcasting, isUpdate, ch
   const [attackBonus, setAttackBonus] = useState<number>(selectedSpellcasting.attackBonus);
   const [totalSlots, setTotalSlots] = useState<number>(selectedSpellcasting.totalSlots);
 
+  const [levelSelected, setLevelSelected] = useState<number>(1);
+
   const changeAbility = (value: string) => {
     setAbility(value);
     changeSpellCasting({
@@ -131,7 +133,7 @@ export default function SpellCastingSection({ selectedSpellcasting, isUpdate, ch
   const addSpell = () => {
     const newSpell = {
       name: "",
-      level: 0,
+      level: levelSelected,
       description: "",
       castingTime: "",
       range: "",
@@ -260,7 +262,8 @@ export default function SpellCastingSection({ selectedSpellcasting, isUpdate, ch
               Object.keys(spellSlotsByLevel).map((level, index) => (
                 <Card
                   key={index}
-                  className={"p-4 flex h-full flex-col bg-card"}>
+                  onClick={() => setLevelSelected(parseInt(level))}
+                  className={`p-4 flex hover:shadow-[inset_0_0_0_1px_hsl(var(--ring))] h-full cursor-pointer flex-col bg-card ${levelSelected === parseInt(level) && 'shadow-[inset_0_0_0_1px_hsl(var(--ring))]'}`}>
                   <div className="flex flex-row gap-3 justify-between items-center">
                     <p className="text-sm">
                       <span className="font-bold">{t("spellCasting.slots.level")}: </span>
@@ -348,89 +351,96 @@ export default function SpellCastingSection({ selectedSpellcasting, isUpdate, ch
               </div>
             ))}
           {!loading &&
-            spells.map((spell, index) => (
-              <Card
-                key={index}
-                className={"p-4 flex flex-col bg-background"}>
-                <div className="flex flex-row gap-3 justify-between items-center">
-                  <Champs
-                    isActive={isUpdate}
-                    color="card"
-                    id={"name" + index}
-                    type={"text"}
-                    label={t("spellCasting.spells.name")}
-                    placeholder={t("spellCasting.spells.name")}
-                    value={spell.name}
-                    setValue={(value) => updateNameSpell(index, value)}></Champs>
-                  {isUpdate && (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <TrashIcon
-                          onClick={() => removeSpell(index)}
-                          className="text-primary cursor-pointer"
-                        />
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{t("actions.deleteSpell")}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-                </div>
-                <div className="flex flex-col">
-                  <Champs
-                    isActive={isUpdate}
-                    color="card"
-                    id={"level" + index}
-                    type={"number"}
-                    label={t("spellCasting.spells.level")}
-                    placeholder={t("spellCasting.spells.level")}
-                    value={spell.level}
-                    setValue={(value) => updateLevelSpell(index, value)}></Champs>
-                  <Champs
-                    isActive={isUpdate}
-                    color="card"
-                    id={"castingTime" + index}
-                    type={"text"}
-                    label={t("spellCasting.spells.castingTime")}
-                    placeholder={t("spellCasting.spells.castingTime")}
-                    value={spell.castingTime}
-                    setValue={(value) => updateCastingTimeSpell(index, value)}></Champs>
-                  <Champs
-                    isActive={isUpdate}
-                    color="card"
-                    id={"range" + index}
-                    type={"text"}
-                    label={t("spellCasting.spells.range")}
-                    placeholder={t("spellCasting.spells.range")}
-                    value={spell.range}
-                    setValue={(value) => updateRangeSpell(index, value)}></Champs>
-                  <Champs
-                    isActive={isUpdate}
-                    color="card"
-                    id={"components" + index}
-                    type={"text"}
-                    label={t("spellCasting.spells.components")}
-                    placeholder={t("spellCasting.spells.components")}
-                    value={spell.components.join(", ")}
-                    setValue={(value) => updateComponentsSpell(index, value.split(", "))}></Champs>
-                  <div className="flex flex-col w-full gap-1.5 mt-1 h-1/3">
-                    <Label
-                      htmlFor={"description"}
-                      className="text-foreground font-bold">
-                      {t("spellCasting.spells.description")}:
-                    </Label>
-                    <Textarea
-                      readOnly={!isUpdate}
-                      id={"description" + index}
-                      placeholder={t("spellCasting.spells.description")}
-                      value={spell.description}
-                      onChange={(e) => updateDescriptionSpell(index, e.target.value)}
-                      className="h-full rounded-xl resize-none bg-card border-ring"
-                    />
+            spells.map((spell, index) => {
+
+              if (spell.level !== levelSelected) {
+                return null;
+              }
+
+              return (
+                <Card
+                  key={index}
+                  className={"p-4 flex flex-col bg-background"}>
+                  <div className="flex flex-row gap-3 justify-between items-center">
+                    <Champs
+                      isActive={isUpdate}
+                      color="card"
+                      id={"name" + index}
+                      type={"text"}
+                      label={t("spellCasting.spells.name")}
+                      placeholder={t("spellCasting.spells.name")}
+                      value={spell.name}
+                      setValue={(value) => updateNameSpell(index, value)}></Champs>
+                    {isUpdate && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <TrashIcon
+                            onClick={() => removeSpell(index)}
+                            className="text-primary cursor-pointer"
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{t("actions.deleteSpell")}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
                   </div>
-                </div>
-              </Card>
-            ))}
+                  <div className="flex flex-col">
+                    <Champs
+                      isActive={isUpdate}
+                      color="card"
+                      id={"level" + index}
+                      type={"number"}
+                      label={t("spellCasting.spells.level")}
+                      placeholder={t("spellCasting.spells.level")}
+                      value={spell.level}
+                      setValue={(value) => updateLevelSpell(index, value)}></Champs>
+                    <Champs
+                      isActive={isUpdate}
+                      color="card"
+                      id={"castingTime" + index}
+                      type={"text"}
+                      label={t("spellCasting.spells.castingTime")}
+                      placeholder={t("spellCasting.spells.castingTime")}
+                      value={spell.castingTime}
+                      setValue={(value) => updateCastingTimeSpell(index, value)}></Champs>
+                    <Champs
+                      isActive={isUpdate}
+                      color="card"
+                      id={"range" + index}
+                      type={"text"}
+                      label={t("spellCasting.spells.range")}
+                      placeholder={t("spellCasting.spells.range")}
+                      value={spell.range}
+                      setValue={(value) => updateRangeSpell(index, value)}></Champs>
+                    <Champs
+                      isActive={isUpdate}
+                      color="card"
+                      id={"components" + index}
+                      type={"text"}
+                      label={t("spellCasting.spells.components")}
+                      placeholder={t("spellCasting.spells.components")}
+                      value={spell.components.join(", ")}
+                      setValue={(value) => updateComponentsSpell(index, value.split(", "))}></Champs>
+                    <div className="flex flex-col w-full gap-1.5 mt-1 h-1/3">
+                      <Label
+                        htmlFor={"description"}
+                        className="text-foreground font-bold">
+                        {t("spellCasting.spells.description")}:
+                      </Label>
+                      <Textarea
+                        readOnly={!isUpdate}
+                        id={"description" + index}
+                        placeholder={t("spellCasting.spells.description")}
+                        value={spell.description}
+                        onChange={(e) => updateDescriptionSpell(index, e.target.value)}
+                        className="h-full rounded-xl resize-none bg-card border-ring"
+                      />
+                    </div>
+                  </div>
+                </Card>
+              )
+            })}
         </div>
       </div>
     </div>

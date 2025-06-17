@@ -67,11 +67,11 @@ export default function NpcFightingSection({ npc, isUpdate, updateNpc }: Props) 
         isActive={isUpdate}
         min={0}
         color="card"
-        label={t("batlle.maxPv")}
+        label={t("batlle.maxHP")}
         value={maxHitPoints}
         id={"maxHP"}
         type={"number"}
-        placeholder={t("batlle.maxPv")}
+        placeholder={t("batlle.maxHP")}
         setValue={changeMaxHitPoints}
       />
       <Champs
@@ -79,11 +79,11 @@ export default function NpcFightingSection({ npc, isUpdate, updateNpc }: Props) 
         min={0}
         max={maxHitPoints}
         color="card"
-        label={t("batlle.currentPv")}
+        label={t("batlle.currentHP")}
         value={currentHitPoints}
         id={"hp"}
         type={"number"}
-        placeholder={t("batlle.currentPv")}
+        placeholder={t("batlle.currentHP")}
         setValue={changeCurrentHitPoints}
       />
       <Champs
@@ -91,11 +91,11 @@ export default function NpcFightingSection({ npc, isUpdate, updateNpc }: Props) 
         min={0}
         max={maxHitPoints}
         color="card"
-        label={t("batlle.temporaryPv")}
+        label={t("batlle.temporaryHP")}
         value={tempHitPoints}
         id={"tempHP"}
         type={"number"}
-        placeholder={t("batlle.temporaryPv")}
+        placeholder={t("batlle.temporaryHP")}
         setValue={changeTempHitPoints}
       />
       <Champs
@@ -109,6 +109,15 @@ export default function NpcFightingSection({ npc, isUpdate, updateNpc }: Props) 
         placeholder={t("batlle.armorClass")}
         setValue={changeArmorClass}
       />
+      <Champs
+        isActive={false}
+        color="card"
+        id={"attackBonus"}
+        type={"text"}
+        label={t("batlle.initiativeBonus")}
+        placeholder={t("batlle.initiativeBonus")}
+        value={npc.stats.savingThrows.dexterity}
+        setValue={() => { }}></Champs>
     </Card>
   );
 }

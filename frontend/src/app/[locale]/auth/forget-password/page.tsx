@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
           <ConfirmOTP
             setStep={setStep}
             setOTP={setOTP}
-            otp={otp}
+            userId={userId}
           />
         )}
         {step === 3 && (
