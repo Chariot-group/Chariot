@@ -306,7 +306,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.athletics && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.athletics) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.athletics)})
+              ({calculateBonus(player.stats.skills.athletics)})
             </span>
           )
         }
@@ -331,7 +331,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.acrobatics && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.acrobatics) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.acrobatics)})
+              ({calculateBonus(player.stats.skills.acrobatics)})
             </span>
           )
         }
@@ -356,7 +356,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.stealth && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.stealth) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.stealth)})
+              ({calculateBonus(player.stats.skills.stealth)})
             </span>
           )
         }
@@ -381,7 +381,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.sleightHand && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.sleightHand) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.sleightHand)})
+              ({calculateBonus(player.stats.skills.sleightHand)})
             </span>
           )
         }
@@ -406,7 +406,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.arcana && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.arcana) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.arcana)})
+              ({calculateBonus(player.stats.skills.arcana)})
             </span>
           )
         }
@@ -431,7 +431,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.history && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.history) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.history)})
+              ({calculateBonus(player.stats.skills.history)})
             </span>
           )
         }
@@ -456,7 +456,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.investigation && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.investigation) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.investigation)})
+              ({calculateBonus(player.stats.skills.investigation)})
             </span>
           )
         }
@@ -481,7 +481,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.nature && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.nature) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.nature)})
+              ({calculateBonus(player.stats.skills.nature)})
             </span>
           )
         }
@@ -506,7 +506,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.religion && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.religion) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.religion)})
+              ({calculateBonus(player.stats.skills.religion)})
             </span>
           )
         }
@@ -531,7 +531,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.animalHandling && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.animalHandling) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.animalHandling)})
+              ({calculateBonus(player.stats.skills.animalHandling)})
             </span>
           )
         }
@@ -556,7 +556,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.insight && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.insight) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.insight)})
+              ({calculateBonus(player.stats.skills.insight)})
             </span>
           )
         }
@@ -581,7 +581,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.medicine && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.medicine) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.medicine)})
+              ({calculateBonus(player.stats.skills.medicine)})
             </span>
           )
         }
@@ -606,7 +606,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.perception && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.perception) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.perception)})
+              ({calculateBonus(player.stats.skills.perception)})
             </span>
           )
         }
@@ -631,7 +631,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.survival && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.survival) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.survival)})
+              ({calculateBonus(player.stats.skills.survival)})
             </span>
           )
         }
@@ -656,7 +656,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.deception && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.deception) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.deception)})
+              ({calculateBonus(player.stats.skills.deception)})
             </span>
           )
         }
@@ -681,7 +681,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.intimidation && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.intimidation) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.intimidation)})
+              ({calculateBonus(player.stats.skills.intimidation)})
             </span>
           )
         }
@@ -706,7 +706,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.performance && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.performance) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.performance)})
+              ({calculateBonus(player.stats.skills.performance)})
             </span>
           )
         }
@@ -731,7 +731,7 @@ export default function PlayerSkillsSection({ player, isUpdate, updatePlayer }: 
         {
           player.stats.masteries.persuasion && (
             <span className="text-xs text-muted-foreground">
-              ({calculateBonus(player.stats.skills.persuasion) > 0 ? "+" : ""}{calculateBonus(player.stats.skills.persuasion)})
+              ({calculateBonus(player.stats.skills.persuasion)})
             </span>
           )
         }
