@@ -20,6 +20,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function CampaignGroupsPage() {
   const [loading, setLoading] = useState<boolean>(false);
+  const [characterOffset, setCharacterOffset] = useState(16);
 
   const t = useTranslations("GroupPage");
   const { success, error } = useToast();
@@ -275,7 +276,7 @@ export default function CampaignGroupsPage() {
     <div className="w-full flex flex-col">
       <Header campaign={campaign} />
       <main className="h-full flex flex-row">
-        <div className="w-[15%]">
+        <div className="w-1/4 h-[87dvh]">
           <GroupListPanel
             search={search}
             setSearch={setSearch}
@@ -284,47 +285,54 @@ export default function CampaignGroupsPage() {
             setGroupSelected={setGroupSelected}
             groups={groups}
             setGroups={setGroups}
-            changeLabel={() => {}}
-            updatedGroup={[]}
+            displayMembersCount={true}
           />
         </div>
         <div className="h-[90vh] justify-center flex flex-col">
           <div className="h-[80vh] border border-ring"></div>
         </div>
-        {loading && <Loading />}
-        {!loading && groupSelected && campaign && (
-          <div className="w-[85%] h[100vh] flex flex-col">
-            <div className="w-full">
-              <GroupDetailsPanel
-                group={groupSelected}
-                setGroup={setGroupSelected}
-                onDelete={deleteGroup}
-                isUpdating={isUpdating}
-                startUpdate={startUpdate}
-                saveActions={saveAction}
-                cancelUpdate={cancelUpdate}
-              />
+        <div className="w-full">
+          <div className="w-full h-full flex flex-row justify-center items-center">
+            <div className="h-full">
+              {loading && <Loading />}
             </div>
-            <div className="w-full justify-center flex flex-row">
-              <div className="w-[90%] border border-ring"></div>
-            </div>
-            <div className="h-[55vh] w-full flex flex-row pl-5 pr-5 gap-5">
-              <CharacterListPanel
-                newCharacters={newCharacterRef}
-                removeCharacters={removedCharacterRef}
-                isUpdating={isUpdating}
-                group={groupSelected}
-                characterSelected={characterSelected}
-                setCharacterSelected={setCharacterSelected}
-                addPlayer={addPlayer}
-                addNpc={addNpc}
-                deleteCharacter={deleteCharacter}
-                updateCharacter={updateCharacter}
-                updateCharacters={updateCharacterRef}
-              />
-            </div>
+
+            {!loading && groupSelected && campaign && (
+              <div className="w-full h-full flex flex-col">
+                <div className="w-full">
+                  <GroupDetailsPanel
+                    group={groupSelected}
+                    setGroup={setGroupSelected}
+                    onDelete={deleteGroup}
+                    isUpdating={isUpdating}
+                    startUpdate={startUpdate}
+                    saveActions={saveAction}
+                    cancelUpdate={cancelUpdate}
+                  />
+                </div>
+                <div className="w-full justify-center flex flex-row">
+                  <div className="w-[90%] border border-ring"></div>
+                </div>
+                <div className="h-[63dvh] w-full flex flex-row pl-5 pr-5 gap-5">
+                  <CharacterListPanel
+                    offset={characterOffset}
+                    newCharacters={newCharacterRef}
+                    removeCharacters={removedCharacterRef}
+                    isUpdating={isUpdating}
+                    group={groupSelected}
+                    characterSelected={characterSelected}
+                    setCharacterSelected={setCharacterSelected}
+                    addPlayer={addPlayer}
+                    addNpc={addNpc}
+                    deleteCharacter={deleteCharacter}
+                    updateCharacter={updateCharacter}
+                    updateCharacters={updateCharacterRef}
+                  />
+                </div>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </main>
     </div>
   );

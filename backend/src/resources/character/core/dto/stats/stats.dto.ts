@@ -39,10 +39,6 @@ export class StatsDto {
   passivePerception?: number;
 
   @IsOptional()
-  @IsNumber()
-  darkvision?: number;
-
-  @IsOptional()
   @IsString({ each: true })
   languages?: string[];
 

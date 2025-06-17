@@ -26,7 +26,9 @@
       "link": "¡Disfruta del acceso gratuito !"
     },
     "errors": {
+      "emailRequired": "El correo electrónico es obligatorio",
       "invalidEmail": "El correo electrónico es inválido",
+      "passwordRequired": "La contraseña es obligatoria",
       "invalidCredentials": "Correo electrónico o contraseña inválidos",
       "internal": "Ocurrió un error al intentar iniciar sesión"
     },
@@ -61,7 +63,8 @@
   },
   "GroupListPanelItem": {
     "members": "Miembros",
-    "member": "Miembro"
+    "member": "Miembro",
+    "newGroup": "Nuevo grupo"
   },
   "CharacterDetailsPanel": {
     "npc": "PNJ",
@@ -148,10 +151,27 @@
     "languages": {
       "title": "Idiomas",
       "noLanguage": "No se encontraron idiomas",
-      "languageName": "Idioma"
+      "languageName": "Idioma",
+      "noMatch": "No se encontraron coincidencias",
+      "items": {
+        "common": "Común",
+        "dwarvish": "Enano",
+        "elvish": "Élfico",
+        "giant": "Gigante",
+        "gnomish": "Gnómico",
+        "goblin": "Goblin",
+        "orc": "Orco",
+        "abyssal": "Abisal",
+        "celestial": "Celestial",
+        "draconic": "Dracónico",
+        "deepSpeech": "Lenguaje profundo",
+        "infernal": "Infernal",
+        "primordial": "Primordial",
+        "sylvan": "Silvano",
+        "undercommon": "Inframundo"
+      }
     },
     "details": {
-      "darkvision": "Visión en la oscuridad",
       "attackBonus": "Bono de ataque",
       "passivePerception": "Percepción pasiva",
       "inspiration": "Inspiración"
@@ -226,9 +246,10 @@
     },
     "batlle": {
       "armorClass": "Clase de armadura",
-      "maxPv": "Puntos de golpe máximos",
-      "currentPv": "PG actuales",
-      "temporaryPv": "PG temporales"
+      "maxHP": "Puntos de golpe máximos",
+      "currentHP": "PG actuales",
+      "temporaryHP": "PG temporales",
+      "initiativeBonus": "Iniciativa"
     },
     "abilityScores": {
       "strength": "Fuerza",
@@ -358,7 +379,8 @@
       "step5": "Paso 5: ¡A jugar!"
     },
     "form": {
-      "unsave": "Tienes cambios sin guardar. ¿Continuar?"
+      "unsave": "Tienes cambios sin guardar. ¿Continuar?",
+      "newGroup": "Nuevo grupo"
     },
     "toasts": {
       "cancel": "Campaña no guardada",
@@ -417,6 +439,7 @@
     "toasts": {
       "sendingEmail": "¡Se ha enviado un correo! Revisa tu carpeta de spam.",
       "invalidEmail": "Correo electrónico inválido",
+      "emailRequired": "El correo electrónico es obligatorio",
       "emailNotFound": "No se encontró una cuenta con este correo",
       "internal": "Ocurrió un error al intentar enviar el correo"
     },
@@ -436,7 +459,12 @@
     "label": "OTP",
     "placeholder": "Ingresa tu código",
     "send": "Verificar código",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "toasts": {
+      "invalidOTP": "Código validado, puede cambiar su contraseña.",
+      "otpRequired": "Debe ingresar un código OTP válido",
+      "otpValid": "El código es válido."
+    }
   },
   "changePassword": {
     "title": "Restablecer tu contraseña",
@@ -448,10 +476,16 @@
     "send": "Cambiar contraseña",
     "toasts": {
       "passwordChanged": "¡Contraseña cambiada!",
-      "invalidOTP": "El código es inválido",
       "passwordsNotMatching": "Las contraseñas no coinciden",
+      "passwordRequired": "La contraseña es obligatoria",
+      "confirmPasswordRequired": "La confirmación de la contraseña es obligatoria",
       "internal": "Ocurrió un error al intentar cambiar la contraseña"
     },
     "cancel": "Cancelar"
+  },
+  "NotFound": {
+    "title": "Fallo crítico, página no encontrada",
+    "description": "Tirada de localización: 1. El oso lechuza se queda mirando el cartel... pero el cartel no responde.",
+    "backToHome": "Volver a la página de inicio"
   }
 }

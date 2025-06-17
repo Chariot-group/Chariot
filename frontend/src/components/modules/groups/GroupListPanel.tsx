@@ -16,8 +16,8 @@ import GroupListPanelItem from "@/components/modules/groups/GroupListPanelItem";
 interface Props {
   groups: IGroup[]; // Liste des groupes à afficher
   setGroups: React.Dispatch<React.SetStateAction<IGroup[]>>; // Setter de la liste des groupes
-  groupSelected: IGroup | null; // Groupe selectionné
-  setGroupSelected: (group: IGroup | null) => void; // Fonction pour mettre à jour le groupe selectionné
+  groupSelected?: IGroup | null; // Groupe selectionné
+  setGroupSelected?: (group: IGroup | null) => void; // Fonction pour mettre à jour le groupe selectionné
   offset?: number; // Nombre de groupes à afficher par page
   idCampaign: string; // ID de la campagne des groupes
   reverse?: boolean; // Si vrai, les couleurs de fond sont inversé
@@ -32,13 +32,14 @@ interface Props {
   updatedGroup?: IGroup[]; // Liste des groupes à ne pas afficher
   onlyWithMembers?: boolean; // Si vrai, n'affiche que les groupes avec des membres
   displayMembersCount?: boolean; // Si vrai, affiche le nombre de membres du groupe
+  onAdd?: () => void; // Fonction pour ajouter un groupe, si nécessaire
 }
 export default function GroupListPanel({
   groups,
   setGroups,
-  offset = 8,
-  groupSelected,
-  setGroupSelected,
+  offset = 18,
+  groupSelected = null,
+  setGroupSelected = () => {},
   idCampaign,
   reverse = false,
   type = "all",
@@ -52,6 +53,7 @@ export default function GroupListPanel({
   updatedGroup,
   onlyWithMembers = false,
   displayMembersCount = false,
+  onAdd,
 }: Props) {
   const currentLocal = useLocale();
   const t = useTranslations("GroupListPanel");
@@ -65,9 +67,11 @@ export default function GroupListPanel({
   //Pagination
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasMore, setHasMore] = useState(true);
 
   //Infinite scroll
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
 
   const fetchGroups = useCallback(
     async (search: string, nextPage = 1, reset = false) => {
@@ -84,8 +88,10 @@ export default function GroupListPanel({
           },
           idCampaign,
         );
+        setHasMore(response.data.length === offset);
         if (reset) {
           setGroups(response.data || []);
+
           if (!context) {
             setGroupSelected(response.data[0] || null);
           }
@@ -94,9 +100,7 @@ export default function GroupListPanel({
             //Fix un bug surement dû au seeder.
             return [
               ...prev,
-              ...response.data.filter(
-                (newGroup: { _id: string }) => !prev.some((existingGroup) => existingGroup._id === newGroup._id),
-              ),
+              ...response.data
             ];
           });
         }
@@ -110,7 +114,7 @@ export default function GroupListPanel({
     [loading, groupSelected?.deletedAt, idCampaign],
   );
 
-  const createGroup = useCallback(async () => {
+  const defaultCreateGroup = useCallback(async () => {
     try {
       const response = await GroupService.createGroup({
         label: t("newGroup.label"),
@@ -138,7 +142,7 @@ export default function GroupListPanel({
     }
   }, [groupSelected]);
 
-  useInfiniteScroll(cardRef, fetchGroups, page, loading, search);
+  useInfiniteScroll(sentinelRef, fetchGroups, page, loading, search, hasMore);
 
   useEffect(() => {
     setGroups([]);
@@ -171,7 +175,14 @@ export default function GroupListPanel({
           className="flex flex-col gap-3"
           ref={setNodeRef}>
           {addable && (
-            <Button onClick={() => createGroup()}>
+            <Button
+              onClick={() => {
+                if (onAdd) {
+                  onAdd();
+                } else {
+                  defaultCreateGroup();
+                }
+              }}>
               <span className="text-background font-bold">{t("create")}</span>
             </Button>
           )}
@@ -205,6 +216,12 @@ export default function GroupListPanel({
             </div>
           )}
         </div>
+        {groups.length >= offset && (
+          <div
+            ref={sentinelRef}
+            className="h-1"
+          />
+        )}
       </CardContent>
     </div>
   );

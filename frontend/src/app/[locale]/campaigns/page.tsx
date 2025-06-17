@@ -62,22 +62,37 @@ export default function CampaignsPage() {
 
   const saveActions = async () => {
     if (selectedCampaign) {
-      groupsLabelRef.current.forEach(async (group) => {
-        if (!Number.isInteger(Number(group._id))) {
-          await GroupService.updateGroup(group._id, { label: group.label });
-        } else {
-          newGroupRef.current.forEach((newGroup) => {
-            if (newGroup._id === group._id) {
-              newGroup.label = group.label;
+      setLoading(true);
+      await Promise.all(
+        groupsLabelRef.current
+          .filter((group) => !(typeof group._id === "string" && (group._id.startsWith("temp-"))))
+          .map(async (group) => {
+            const label = group.label?.trim() || t("form.newGroup");
+            const matchingGroup = newGroupRef.current.find((g) => g._id === group._id);
+            if (matchingGroup) {
+              matchingGroup.label = label;
             }
-          });
-        }
-      });
+            if (typeof group._id === "string" && !group._id.startsWith("temp-") && !group._id.startsWith("new-")) {
+              await GroupService.updateGroup(group._id, { label });
+            } else {
+              newGroupRef.current.forEach((newGroup) => {
+                if (newGroup._id === group._id) {
+                  newGroup.label = label;
+                }
+              });
+            }
+          }),
+      );
 
-      newGroupRef.current.forEach(async (group) => {
-        const { _id, ...groupWhitoutId } = group;
-        await GroupService.createGroup(groupWhitoutId);
-      });
+      await Promise.all(
+        newGroupRef.current
+          .filter((group) => typeof group._id === "string" && (group._id.startsWith("temp-") || group._id.startsWith("new-")))
+          .map(async (group) => {
+            const label = group.label?.trim()?.length ? group.label.trim() :  t("form.newGroup");
+            const { _id, label: _, ...rest } = group;
+            await GroupService.createGroup({ ...rest, label });
+          }),
+      );
 
       updateCampaign(selectedCampaign);
 
@@ -86,6 +101,7 @@ export default function CampaignsPage() {
       groupsRef.current = new Map();
 
       setUpdatedGroup([]);
+      setLoading(false);
 
       success(t("toasts.save"));
     }
@@ -151,10 +167,10 @@ export default function CampaignsPage() {
   useBeforeUnload(isUpdating, t("form.unsave"));
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="h-[91dvh] w-full flex flex-col">
       <Header campaign={selectedCampaign} />
       <main className="h-full flex flex-row">
-        <div className="w-1/4">
+        <div className="h-[87dvh] w-1/4">
           <CampaignListPanel
             search={search}
             setSearch={setSearch}
@@ -166,11 +182,11 @@ export default function CampaignsPage() {
           <div className="h-[80vh] border border-ring"></div>
         </div>
         <div className="w-full">
-          <div className="w-full h-full flex flex-row justify-center items-center">
+          <div className="w-full h-[90%] flex flex-row justify-center items-center">
             {loading && <Loading />}
             {!loading && selectedCampaign && (
               <div className="flex flex-col justify-start items-center w-full h-full">
-                <div className="w-full flex flex-col">
+                <div className="w-full flex flex-col ">
                   <CampaignDetailsPanel
                     campaign={selectedCampaign}
                     setCampaign={setSelectedCampaign}
@@ -184,7 +200,7 @@ export default function CampaignsPage() {
                 <div className="w-[90vh] flex flex-col">
                   <div className="w-[80vh] border border-ring"></div>
                 </div>
-                <div className="w-full h-full flex flex-row items-center p-5">
+                <div className="w-full h-[68dvh] flex flex-row items-center p-5">
                   <GroupsCampaignsPanel
                     setUpdatedGroup={setUpdatedGroup}
                     updatedGroup={updatedGroup}

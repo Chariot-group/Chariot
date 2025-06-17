@@ -3,6 +3,9 @@ import { Champs } from "@/components/modules/characters/modals/PlayerModalDetail
 import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
 import { useTranslations } from "next-intl";
+import { getSkillsFor } from "@/constants/CharacterConstants";
+import IAbilityScores from "@/models/npc/stat/sub/IAbilityScores";
+import { set } from "react-hook-form";
 
 interface Props {
   player: IPlayer;
@@ -25,6 +28,26 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
   const [intelligenceAS, setIntelligenceAS] = useState<number>(player.stats.abilityScores.intelligence);
   const [wisdomAS, setWisdomAS] = useState<number>(player.stats.abilityScores.wisdom);
   const [charismaAS, setCharismaAS] = useState<number>(player.stats.abilityScores.charisma);
+
+  const changeAbility = (value: any, ability: keyof IAbilityScores) => {
+    getSkillsFor(ability).forEach((skill) => {
+      player.stats.skills[skill] = parseInt(value);
+      updatePlayer({
+        ...player,
+        stats: {
+          ...player.stats,
+          skills: {
+            ...player.stats.skills,
+            [skill]: parseInt(value),
+          },
+        },
+      });
+    });
+  }
+
+  const calculeSavingThrow = (abilityScore: number) => {
+    return Math.floor((abilityScore - 10) / 2);
+  };
 
   const changeStrengthST = (value: any) => {
     setStrengthST(value);
@@ -105,6 +128,9 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
   const changeStrengthAS = (value: any) => {
+    let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "strength");
+    setStrengthST(st);
     setStrengthAS(value);
     updatePlayer({
       ...player,
@@ -114,10 +140,17 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
           ...player.stats.abilityScores,
           strength: parseInt(value),
         },
+        savingThrows: {
+          ...player.stats.savingThrows,
+          strength: st,
+        },
       },
     });
   };
   const changeDexterityAS = (value: any) => {
+    let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "dexterity");
+    setDexterityST(st);
     setDexterityAS(value);
     updatePlayer({
       ...player,
@@ -127,10 +160,17 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
           ...player.stats.abilityScores,
           dexterity: parseInt(value),
         },
+        savingThrows: {
+          ...player.stats.savingThrows,
+          dexterity: st,
+        },
       },
     });
   };
   const changeConstitutionAS = (value: any) => {
+    let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "constitution");
+    setConstitutionST(st);
     setConstitutionAS(value);
     updatePlayer({
       ...player,
@@ -140,10 +180,17 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
           ...player.stats.abilityScores,
           constitution: parseInt(value),
         },
+        savingThrows: {
+          ...player.stats.savingThrows,
+          constitution: st,
+        },
       },
     });
   };
   const changeIntelligenceAS = (value: any) => {
+    let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "intelligence");
+    setIntelligenceST(st);
     setIntelligenceAS(value);
     updatePlayer({
       ...player,
@@ -153,10 +200,17 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
           ...player.stats.abilityScores,
           intelligence: parseInt(value),
         },
+        savingThrows: {
+          ...player.stats.savingThrows,
+          intelligence: st,
+        },
       },
     });
   };
   const changeWisdomAS = (value: any) => {
+    let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "wisdom");
+    setWisdomST(st);
     setWisdomAS(value);
     updatePlayer({
       ...player,
@@ -166,10 +220,17 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
           ...player.stats.abilityScores,
           wisdom: parseInt(value),
         },
+        savingThrows: {
+          ...player.stats.savingThrows,
+          wisdom: st,
+        },
       },
     });
   };
   const changeCharismaAS = (value: any) => {
+    let st = calculeSavingThrow(parseInt(value));
+    changeAbility(st, "charisma");
+    setCharismaST(st);
     setCharismaAS(value);
     updatePlayer({
       ...player,
@@ -178,6 +239,10 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
         abilityScores: {
           ...player.stats.abilityScores,
           charisma: parseInt(value),
+        },
+        savingThrows: {
+          ...player.stats.savingThrows,
+          charisma: st,
         },
       },
     });

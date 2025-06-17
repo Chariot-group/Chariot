@@ -115,7 +115,9 @@ const GroupListPanelItem = ({
             value={group.label}
             id={group._id}
             className="bg-card"
-            onChange={(e) => changeLabel(e.target.value, group)}></Input>
+            placeholder={t("newGroup")}
+            onChange={(e) => changeLabel(e.target.value, group)}
+          />
           <span
             {...listeners}
             {...attributes}
