@@ -2,7 +2,7 @@ import INpc from "@/models/npc/INpc";
 import Speed from "@/components/modules/characters/modals/panels/stats/sections/npc/NpcSpeedSection";
 import Languages from "@/components/modules/characters/modals/panels/stats/sections/npc/NpcLanguagesSection";
 import Skills from "@/components/modules/characters/modals/panels/stats/sections/npc/NpcSkillsSection";
-import Senses from "@/components/modules/characters/modals/panels/stats/sections/npc/NpcSensesSection";
+import CharacterSensesSection from "@/components/modules/characters/modals/panels/stats/sections/CharacterSensesSection";
 import Details from "@/components/modules/characters/modals/panels/stats/sections/npc/NpcDetailsSection";
 
 interface Props {
@@ -36,10 +36,10 @@ export default function NpcStats({ npc, isUpdate, updateNpc }: Props) {
           isUpdate={isUpdate}
           npc={npc}
         />
-        <Senses
-          updateNpc={updateNpc}
+        <CharacterSensesSection
+          updateCharacter={(npc) => updateNpc(npc as INpc)}
           isUpdate={isUpdate}
-          npc={npc}
+          character={npc}
         />
       </div>
     </div>
