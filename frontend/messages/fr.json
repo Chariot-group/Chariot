@@ -126,20 +126,20 @@
       "athletics": "Athlétisme",
       "acrobatics": "Acrobaties",
       "stealth": "Discrétion",
-      "animalHandling": "Manipulation animale",
+      "animalHandling": "Dressage",
       "arcana": "Arcanes",
       "deception": "Tromperie",
       "history": "Histoire",
-      "insight": "Perspicacité",
+      "insight": "Intuition",
       "intimidation": "Intimidation",
       "investigation": "Investigation",
       "medicine": "Médecine",
       "nature": "Nature",
       "perception": "Perception",
-      "performance": "Performance",
+      "performance": "Représentation",
       "persuasion": "Persuasion",
       "religion": "Religion",
-      "sleightHand": "Tour de passe-passe",
+      "sleightHand": "Escamotage",
       "survival": "Survie"
     },
     "senses": {
@@ -177,7 +177,7 @@
       "inspiration": "Inspiration"
     },
     "spellCasting": {
-      "title": "Lancer de sorts",
+      "title": "Lançeur de sorts",
       "noSpellCasting": "Aucun lancé de sort trouvé",
       "ability": "Charactéristique d'incantation",
       "saveDice": "Dé de sauvegarde",
