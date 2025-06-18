@@ -244,7 +244,7 @@ export default function CampaignGroupsPage() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter" && isUpdating) {
+      if (event.key === "Enter" && !event.shiftKey && isUpdating) {
         saveAction();
         return;
       }
