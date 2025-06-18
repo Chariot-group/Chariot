@@ -1,7 +1,7 @@
 import { Stats } from '@/resources/character/core/schemas/stats/stats.schema';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Masteries } from './player-masteries.schema';
-import { MasteriesAbility } from './player-masteriesAbility';
+import { Masteries } from '@/resources/character/player/schemas/stats/player-masteries.schema';
+import { MasteriesAbility } from '@/resources/character/player/schemas/stats/player-masteriesAbility';
 
 @Schema({ _id: false })
 export class PlayerStats extends Stats {
