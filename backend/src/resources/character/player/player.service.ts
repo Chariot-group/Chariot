@@ -19,50 +19,10 @@ export class PlayerService {
     @InjectModel(Character.name)
     private characterModel: Model<Character>,
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
-  ) {}
+  ) { }
 
   private readonly SERVICE_NAME = PlayerService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
-
-  private async validateGroupRelations(groupIds: string[]): Promise<void> {
-    if (!groupIds || groupIds.length === 0) return;
-
-    for (const groupId of groupIds) {
-      if (!Types.ObjectId.isValid(groupId)) {
-        throw new BadRequestException(`Invalid group ID: #${groupId}`);
-      }
-
-      const group = await this.groupModel.findById(groupId).exec();
-      if (!group) {
-        throw new NotFoundException(`Group not found: #${groupId}`);
-      }
-
-      if (group.deletedAt) {
-        throw new GoneException(`Group already deleted: #${groupId}`);
-      }
-    }
-  }
-
-  private async validateResource(id: string): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching character #${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new BadRequestException(message);
-    }
-    const player = await this.characterModel.findById(id).exec();
-
-    if (!player) {
-      const message = `Player #${id} not found`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new NotFoundException(message);
-    }
-
-    if (player.deletedAt) {
-      const message = `Player #${id} is gone`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new GoneException(message);
-    }
-  }
 
   async create(createPlayerDto: CreatePlayerDto, userId: string) {
     try {
@@ -74,7 +34,6 @@ export class PlayerService {
             );
           }
         }
-        await this.validateGroupRelations(createPlayerDto.groups);
       }
 
       const start = Date.now();
@@ -100,11 +59,7 @@ export class PlayerService {
         data: savedPlayer,
       };
     } catch (error) {
-      if (
-        error instanceof BadRequestException ||
-        error instanceof NotFoundException ||
-        error instanceof GoneException
-      ) {
+      if (error instanceof BadRequestException) {
         throw error;
       }
       let message = `Error creating Player: ${error.message}`;
@@ -116,7 +71,6 @@ export class PlayerService {
   async update(id: string, updatePlayerDto: UpdatePlayerDto) {
     try {
       let { groups, ...playerData } = updatePlayerDto;
-      await this.validateResource(id);
 
       let player = await this.characterModel.findById(id).exec();
 
