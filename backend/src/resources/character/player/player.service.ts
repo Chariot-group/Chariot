@@ -68,7 +68,7 @@ export class PlayerService {
     }
   }
 
-  async update(id: string, updatePlayerDto: UpdatePlayerDto) {
+  async update(id: Types.ObjectId, updatePlayerDto: UpdatePlayerDto) {
     try {
       let { groups, ...playerData } = updatePlayerDto;
 

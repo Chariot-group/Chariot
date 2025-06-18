@@ -8,6 +8,7 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Character, CharacterDocument } from '@/resources/character/core/schemas/character.schema';
 import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
+import { ParseMongoIdPipe } from '@/common/pipes/parse-mong-id.pipe';
 
 @Controller('characters/players')
 export class PlayerController {
@@ -22,12 +23,7 @@ export class PlayerController {
   private readonly CONTROLLER_NAME = PlayerController.name;
   private readonly logger = new Logger(this.CONTROLLER_NAME);
 
-  private async validateResource(id: string): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching character #${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.CONTROLLER_NAME);
-      throw new BadRequestException(message);
-    }
+  private async validateResource(id: Types.ObjectId): Promise<void> {
     const player = await this.characterModel.findById(id).exec();
 
     if (!player) {
@@ -73,7 +69,7 @@ export class PlayerController {
 
   @IsCreator(CharacterService)
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
+  async update(@Param('id', ParseMongoIdPipe) id: Types.ObjectId, @Body() updatePlayerDto: UpdatePlayerDto) {
     await this.validateResource(id);
     await this.validateGroupRelations(updatePlayerDto.groups);
 
