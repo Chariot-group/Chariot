@@ -25,7 +25,7 @@ export class CharacterService {
   private readonly logger = new Logger(this.SERVICE_NAME);
 
   async findAllByUser(
-    userId: string,
+    userId: Types.ObjectId,
     query: { page?: number; offset?: number; name?: string; sort?: string },
     groupId?: string,
   ) {
