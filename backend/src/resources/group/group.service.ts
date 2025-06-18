@@ -170,7 +170,7 @@ export class GroupService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: Types.ObjectId) {
     try {
       const start: number = Date.now();
       const group = await this.groupModel
@@ -193,7 +193,7 @@ export class GroupService {
     }
   }
 
-  async update(id: string, updateGroupDto: UpdateGroupDto) {
+  async update(id: Types.ObjectId, updateGroupDto: UpdateGroupDto) {
     try {
       let { characters, campaigns, ...groupData } = updateGroupDto;
 
@@ -294,7 +294,7 @@ export class GroupService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: Types.ObjectId) {
     try {
       const group = await this.groupModel.findById(id).exec();
 

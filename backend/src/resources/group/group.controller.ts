@@ -26,6 +26,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
 import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
 import { Character, CharacterDocument } from '@/resources/character/core/schemas/character.schema';
+import { ParseMongoIdPipe } from '@/common/pipes/parse-mong-id.pipe';
 
 @UseGuards(IsCreatorGuard)
 @Controller('groups')
@@ -64,7 +65,7 @@ export class GroupController {
     }
   }
 
-  private async validateResource(id: string): Promise<void> {
+  private async validateResource(id: Types.ObjectId): Promise<void> {
     if (!Types.ObjectId.isValid(id)) {
       const message = `Error while fetching group #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.CONTROLLER_NAME);
@@ -142,7 +143,7 @@ export class GroupController {
   @Get(':id/characters')
   findAllCharacters(
     @Req() request,
-    @Param('id') id: string,
+    @Param('id', ParseMongoIdPipe) id: Types.ObjectId,
     @Query('page', ParseNullableIntPipe) page?: number,
     @Query('offset', ParseNullableIntPipe) offset?: number,
     @Query('name') name?: string,
@@ -153,13 +154,13 @@ export class GroupController {
     return this.characterService.findAllByUser(
       userId,
       { page, offset, name, sort },
-      id,
+      id.toString(),
     );
   }
 
   @IsCreator(GroupService)
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     await this.validateResource(id);
 
     return this.groupService.findOne(id);
@@ -167,7 +168,7 @@ export class GroupController {
 
   @IsCreator(GroupService)
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
+  async update(@Param('id', ParseMongoIdPipe) id: Types.ObjectId, @Body() updateGroupDto: UpdateGroupDto) {
     await this.validateResource(id);
 
     const { characters, campaigns } = updateGroupDto;
@@ -187,7 +188,7 @@ export class GroupController {
 
   @IsCreator(GroupService)
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     await this.validateResource(id);
 
     return this.groupService.remove(id);
