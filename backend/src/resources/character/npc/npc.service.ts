@@ -10,7 +10,6 @@ import { CreateNpcDto } from '@/resources/character/npc/dto/create-npc.dto';
 import { UpdateNpcDto } from '@/resources/character/npc/dto/update-npc.dto';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { NPC, NPCDocument } from '@/resources/character/npc/schemas/npc.schema';
 import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
 import {
   Character,
@@ -23,7 +22,7 @@ export class NpcService {
     @InjectModel(Character.name)
     private characterModel: Model<CharacterDocument>,
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
-  ) {}
+  ) { }
 
   private readonly SERVICE_NAME = NpcService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
@@ -44,27 +43,6 @@ export class NpcService {
       if (group.deletedAt) {
         throw new GoneException(`Group already deleted: #${groupId}`);
       }
-    }
-  }
-
-  private async validateResource(id: string): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching character #${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new BadRequestException(message);
-    }
-    const npc = await this.characterModel.findById(id).exec();
-
-    if (!npc) {
-      const message = `NPC #${id} not found`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new NotFoundException(message);
-    }
-
-    if (npc.deletedAt) {
-      const message = `NPC #${id} is gone`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new GoneException(message);
     }
   }
 
@@ -119,7 +97,6 @@ export class NpcService {
   async update(id: string, updateNpcDto: UpdateNpcDto) {
     try {
       let { groups, ...npcData } = updateNpcDto;
-      await this.validateResource(id);
 
       let npc = await this.characterModel.findById(id).exec();
 
