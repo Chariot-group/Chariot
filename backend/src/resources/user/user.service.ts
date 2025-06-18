@@ -9,7 +9,7 @@ import { CreateUserDto } from '@/resources/user/dto/create-user.dto';
 import { UpdateUserDto } from '@/resources/user/dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@/resources/user/schemas/user.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -117,7 +117,7 @@ export class UserService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: Types.ObjectId) {
     try {
       const start: number = Date.now();
       const user = await this.userModel.findById(id).exec();
@@ -165,7 +165,7 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: Types.ObjectId, updateUserDto: UpdateUserDto) {
     try {
       const start: number = Date.now();
       const userUpdate = await this.userModel
@@ -198,7 +198,7 @@ export class UserService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: Types.ObjectId) {
     try {
       const start: number = Date.now();
       const user = await this.userModel.findById(id).exec();

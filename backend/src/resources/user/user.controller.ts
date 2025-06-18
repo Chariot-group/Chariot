@@ -18,6 +18,7 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
+import { ParseMongoIdPipe } from '@/common/pipes/parse-mong-id.pipe';
 
 @Controller('users')
 export class UserController {
@@ -30,7 +31,7 @@ export class UserController {
   private readonly CONTROLLER_NAME = UserController.name;
   private readonly logger = new Logger(this.CONTROLLER_NAME);
 
-  private async validateUser(id: string): Promise<void> {
+  private async validateUser(id: Types.ObjectId): Promise<void> {
     if (!Types.ObjectId.isValid(id)) {
       const message = `Error while validating user #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.CONTROLLER_NAME);
@@ -92,14 +93,14 @@ export class UserController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     await this.validateUser(id);
 
     return this.userService.findOne(id);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(@Param('id', ParseMongoIdPipe) id: Types.ObjectId, @Body() updateUserDto: UpdateUserDto) {
     await this.validateUser(id);
 
     const { campaigns = [] } = updateUserDto;
@@ -115,7 +116,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     await this.validateUser(id);
 
     return this.userService.remove(id);
