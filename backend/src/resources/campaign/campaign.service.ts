@@ -1,10 +1,8 @@
 import {
   BadRequestException,
-  GoneException,
   Injectable,
   InternalServerErrorException,
   Logger,
-  NotFoundException,
 } from '@nestjs/common';
 import { CreateCampaignDto } from '@/resources/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/resources/campaign/dto/update-campaign.dto';
@@ -50,13 +48,6 @@ export class CampaignService {
         data: campaign,
       };
     } catch (error) {
-      if (
-        error instanceof BadRequestException ||
-        error instanceof GoneException ||
-        error instanceof NotFoundException
-      ) {
-        throw error;
-      }
       const message = `Error while creating campaign: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
@@ -161,14 +152,6 @@ export class CampaignService {
         data: campaign,
       };
     } catch (error) {
-      if (
-        error instanceof NotFoundException ||
-        error instanceof GoneException ||
-        error instanceof BadRequestException
-      ) {
-        throw error;
-      }
-
       const message = `Error while fetching campaign #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
@@ -251,9 +234,7 @@ export class CampaignService {
       };
     } catch (error) {
       if (
-        error instanceof BadRequestException ||
-        error instanceof NotFoundException ||
-        error instanceof GoneException
+        error instanceof BadRequestException
       ) {
         throw error;
       }
@@ -289,14 +270,6 @@ export class CampaignService {
         data: campaign,
       };
     } catch (error) {
-      if (
-        error instanceof BadRequestException ||
-        error instanceof NotFoundException ||
-        error instanceof GoneException
-      ) {
-        throw error;
-      }
-
       const message = `Error while deleting campaign #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
