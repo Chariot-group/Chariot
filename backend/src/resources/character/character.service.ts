@@ -72,7 +72,7 @@ export class CharacterService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: Types.ObjectId) {
     try {
       const start: number = Date.now();
       const character = await this.characterModel
@@ -94,7 +94,7 @@ export class CharacterService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: Types.ObjectId) {
     try {
       const start: number = Date.now();
 
