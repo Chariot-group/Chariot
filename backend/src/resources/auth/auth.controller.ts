@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, GoneException, Logger, NotFoundException, Param, Patch, Post } from '@nestjs/common';
 import { AuthService } from '@/resources/auth/auth.service';
 import { SignInDto } from '@/resources/auth/dto/signIn.dto';
 import { CreateUserDto } from '@/resources/user/dto/create-user.dto';
@@ -8,6 +8,9 @@ import { changePasswordDto } from '@/resources/auth/dto/changePassword.dto';
 import { Public } from '@/common/decorators/public.decorator';
 import verifyOTPDto from '@/resources/auth/dto/verifyOTPDto.dto';
 import { UserController } from '@/resources/user/user.controller';
+import { Model, Types } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -15,7 +18,52 @@ export class AuthController {
     private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly userController: UserController,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
   ) { }
+
+  private readonly CONTROLLER_NAME = AuthService.name;
+  private readonly logger = new Logger(this.CONTROLLER_NAME);
+
+  private async validateResourceByEmail(email: string): Promise<void> {
+    const user = await this.userModel.findOne({ email });
+
+    if (user.deletedAt) {
+      const message = `User ${email} deleted`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new GoneException(message);
+    }
+
+    if (!user) {
+      const message = `User ${email} not found`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new NotFoundException(message);
+    }
+
+  }
+
+  private async validateResourceById(
+    id: string,
+  ): Promise<void> {
+    if (!Types.ObjectId.isValid(id)) {
+      const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new BadRequestException(message);
+    }
+    let user = await this.userModel.findById(id);
+
+    if (user.deletedAt) {
+      const message = `User #${id} deleted`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new GoneException(message);
+    }
+
+    if (!user) {
+      const message = `User #${id} not found`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new NotFoundException(message);
+    }
+
+  }
 
   @Public()
   @Post('/login')
@@ -34,25 +82,32 @@ export class AuthController {
 
   @Public()
   @Patch(':id/change-password')
-  forgotPassword(
+  async forgotPassword(
     @Param('id') id: string,
     @Body() changePassword: changePasswordDto,
   ) {
+    await this.validateResourceById(id);
+
     return this.authService.forgotPassword(id, changePassword);
   }
 
   @Public()
   @Post(':id/verify-otp')
-  verifyOTP(
+  async verifyOTP(
     @Param('id') id: string,
-    @Body() verifyOTP: verifyOTPDto,
+    @Body() verifyOTPDto: verifyOTPDto,
   ) {
-    return this.authService.verifyOTP(id, verifyOTP);
+    await this.validateResourceById(id);
+
+    return this.authService.verifyOTP(id, verifyOTPDto);
   }
 
   @Public()
   @Patch('/reset-password')
-  resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    const { email } = resetPasswordDto;
+    await this.validateResourceByEmail(email);
+
     return this.authService.resetPassword(resetPasswordDto);
   }
 }

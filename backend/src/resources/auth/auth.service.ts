@@ -1,7 +1,6 @@
 import { UserService } from '@/resources/user/user.service';
 import {
   BadRequestException,
-  GoneException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -30,51 +29,6 @@ export class AuthService {
 
   private readonly SERVICE_NAME = AuthService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
-
-  private async validateResourceByEmail(email: string): Promise<void> {
-    const user = await this.userService.findByEmail(email);
-    if (!user) {
-      const message = `User ${email} not found`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new NotFoundException(message);
-    }
-
-    if (user.deletedAt) {
-      const message = `User ${email} deleted`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new GoneException(message);
-    }
-  }
-
-  private async validateResourceById(
-    id: string,
-    changePassword: changePasswordDto | verifyOTPDto,
-  ): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new BadRequestException(message);
-    }
-    let user = await this.userModel.findById(id);
-
-    if (!user) {
-      const message = `User #${id} not found`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new NotFoundException(message);
-    }
-
-    if (user.deletedAt) {
-      const message = `User #${id} deleted`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new GoneException(message);
-    }
-
-    if (user.otp == null || changePassword.otp !== user.otp) {
-      const message = `Error while updating user #${id}: Otp is incorrect`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new UnauthorizedException(message);
-    }
-  }
 
   async signIn(signInDto: SignInDto) {
     try {
@@ -111,7 +65,6 @@ export class AuthService {
       };
     } catch (error) {
       if (
-        error instanceof NotFoundException ||
         error instanceof UnauthorizedException
       ) {
         throw error;
@@ -125,7 +78,6 @@ export class AuthService {
   async resetPassword(resetPasswordDto: ResetPasswordDto) {
     try {
       const { email, locale } = resetPasswordDto;
-      await this.validateResourceByEmail(email);
 
       const user = await this.userService.findByEmail(email);
 
@@ -153,8 +105,7 @@ export class AuthService {
       };
     } catch (error) {
       if (
-        error instanceof NotFoundException ||
-        error instanceof GoneException
+        error instanceof NotFoundException
       ) {
         throw error;
       }
@@ -166,8 +117,6 @@ export class AuthService {
 
   async forgotPassword(id: string, changePassword: changePasswordDto) {
     try {
-      await this.validateResourceById(id, changePassword);
-
       if (changePassword.newPassword !== changePassword.confirmPassword) {
         const message = `Error while updating user #${id}: Passwords do not match`;
         this.logger.error(message, null, this.SERVICE_NAME);
@@ -202,10 +151,7 @@ export class AuthService {
       };
     } catch (error) {
       if (
-        error instanceof BadRequestException ||
-        error instanceof NotFoundException ||
-        error instanceof GoneException ||
-        error instanceof UnauthorizedException
+        error instanceof BadRequestException
       ) {
         throw error;
       }
@@ -217,20 +163,21 @@ export class AuthService {
 
   async verifyOTP(id: string, verifyOTPDto: verifyOTPDto) {
     try {
-      const start: number = Date.now();
-      await this.validateResourceById(id, verifyOTPDto);
-      const end: number = Date.now();
+      const user = await this.userModel.findById(id);
 
-      const message = `OTP of #${id} verify in ${end - start}ms`;
+      if (user.otp == null || verifyOTPDto.otp !== user.otp) {
+        const message = `Error while updating user #${id}: Otp is incorrect`;
+        this.logger.error(message, null, this.SERVICE_NAME);
+        throw new UnauthorizedException(message);
+      }
+
+      const message = `OTP of #${id} verified`;
       this.logger.verbose(message, this.SERVICE_NAME);
       return {
         message,
       };
     } catch (error) {
       if (
-        error instanceof BadRequestException ||
-        error instanceof NotFoundException ||
-        error instanceof GoneException ||
         error instanceof UnauthorizedException
       ) {
         throw error;
