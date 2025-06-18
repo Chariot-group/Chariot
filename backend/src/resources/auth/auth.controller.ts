@@ -7,12 +7,14 @@ import { ResetPasswordDto } from '@/resources/auth/dto/resetPassword.dto';
 import { changePasswordDto } from '@/resources/auth/dto/changePassword.dto';
 import { Public } from '@/common/decorators/public.decorator';
 import verifyOTPDto from '@/resources/auth/dto/verifyOTPDto.dto';
+import { UserController } from '@/resources/user/user.controller';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    private readonly userController: UserController,
   ) { }
 
   @Public()
@@ -23,7 +25,10 @@ export class AuthController {
 
   @Public()
   @Post('/register')
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
+    const { campaigns = [] } = createUserDto;
+    await this.userController.validateCampaignRelations(campaigns);
+
     return this.userService.create(createUserDto);
   }
 

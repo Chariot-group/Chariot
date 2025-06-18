@@ -18,10 +18,11 @@ import {
     CampaignModule,
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, UserController],
   exports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     UserService,
+    UserController,
   ],
 })
-export class UserModule {}
+export class UserModule { }
