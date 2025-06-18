@@ -46,7 +46,7 @@ export class NpcService {
     }
   }
 
-  async create(createNpcDto: CreateNpcDto, userId: string) {
+  async create(createNpcDto: CreateNpcDto, userId: Types.ObjectId) {
     try {
       if (createNpcDto.groups) {
         for (const groupId of createNpcDto.groups) {
@@ -94,7 +94,7 @@ export class NpcService {
     }
   }
 
-  async update(id: string, updateNpcDto: UpdateNpcDto) {
+  async update(id: Types.ObjectId, updateNpcDto: UpdateNpcDto) {
     try {
       let { groups, ...npcData } = updateNpcDto;
 

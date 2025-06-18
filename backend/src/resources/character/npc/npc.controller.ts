@@ -7,6 +7,7 @@ import { CharacterService } from '@/resources/character/character.service';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Character, CharacterDocument } from '@/resources/character/core/schemas/character.schema';
+import { ParseMongoIdPipe } from '@/common/pipes/parse-mong-id.pipe';
 
 @Controller('characters/npcs')
 export class NpcController {
@@ -19,17 +20,17 @@ export class NpcController {
   private readonly CONTROLLER_NAME = NpcController.name;
   private readonly logger = new Logger(this.CONTROLLER_NAME);
 
-  private async validateResource(id: string): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching character #${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.CONTROLLER_NAME);
-      throw new BadRequestException(message);
-    }
+  private async validateResource(id: Types.ObjectId): Promise<void> {
     const npc = await this.characterModel.findById(id).exec();
 
     if (!npc) {
       const message = `NPC #${id} not found`;
       this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new NotFoundException(message);
+    }
+
+    if (npc.deletedAt) {
+      const message = `NPC #${id} is gone`;
       throw new NotFoundException(message);
     }
 
@@ -49,7 +50,7 @@ export class NpcController {
 
   @IsCreator(CharacterService)
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateNpcDto: UpdateNpcDto) {
+  async update(@Param('id', ParseMongoIdPipe) id: Types.ObjectId, @Body() updateNpcDto: UpdateNpcDto) {
     await this.validateResource(id);
 
     return this.npcService.update(id, updateNpcDto);
