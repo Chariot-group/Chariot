@@ -6,7 +6,7 @@ import { IsCreator } from '@/common/decorators/is-creator.decorator';
 import { CharacterService } from '@/resources/character/character.service';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { Character, CharacterDocument } from '../core/schemas/character.schema';
+import { Character, CharacterDocument } from '@/resources/character/core/schemas/character.schema';
 import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
 
 @Controller('characters/players')
