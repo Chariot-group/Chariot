@@ -9,6 +9,10 @@ import {
   Query,
   Req,
   UseGuards,
+  BadRequestException,
+  NotFoundException,
+  GoneException,
+  Logger,
 } from '@nestjs/common';
 import { GroupService } from '@/resources/group/group.service';
 import { CreateGroupDto } from '@/resources/group/dto/create-group.dto';
@@ -17,6 +21,11 @@ import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';
 import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
 import { IsCreator } from '@/common/decorators/is-creator.decorator';
 import { CharacterService } from '@/resources/character/character.service';
+import { Model, Types } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
+import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
+import { Character, CharacterDocument } from '@/resources/character/core/schemas/character.schema';
 
 @UseGuards(IsCreatorGuard)
 @Controller('groups')
@@ -24,10 +33,87 @@ export class GroupController {
   constructor(
     private readonly groupService: GroupService,
     private readonly characterService: CharacterService,
-  ) {}
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
+    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
+    @InjectModel(Character.name)
+    private characterModel: Model<CharacterDocument>,
+  ) { }
+
+  private readonly CONTROLLER_NAME = GroupService.name;
+  private readonly logger = new Logger(this.CONTROLLER_NAME);
+
+  private async validateCharacterRelations(
+    characterIds: string[],
+  ): Promise<void> {
+    if (!characterIds || characterIds.length === 0) return;
+
+    for (const characterId of characterIds) {
+      if (!Types.ObjectId.isValid(characterId)) {
+        throw new BadRequestException(`Invalid character ID: ${characterId}`);
+      }
+
+      const character = await this.characterModel.findById(characterId).exec();
+
+      if (!character) {
+        throw new NotFoundException(`Character not found: ${characterId}`);
+      }
+
+      if (character.deletedAt) {
+        throw new GoneException(`Character deleted: ${characterId}`);
+      }
+    }
+  }
+
+  private async validateResource(id: string): Promise<void> {
+    if (!Types.ObjectId.isValid(id)) {
+      const message = `Error while fetching group #${id}: Id is not a valid mongoose id`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new BadRequestException(message);
+    }
+    const group = await this.groupModel.findById(id).exec();
+
+    if (!group) {
+      const message = `Group #${id} not found`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new NotFoundException(message);
+    }
+
+    if (group.deletedAt) {
+      const message = `group #${id} is gone`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new GoneException(message);
+    }
+  }
+
+  private async validatecampaignRelations(
+    campaignIds: string[],
+  ): Promise<void> {
+    if (!campaignIds || campaignIds.length === 0) return;
+
+    for (const campaignId of campaignIds) {
+      if (!Types.ObjectId.isValid(campaignId)) {
+        throw new BadRequestException(`Invalid campaign ID: ${campaignId}`);
+      }
+
+      const campaign = await this.campaignModel.findById(campaignId).exec();
+
+      if (!campaign) {
+        throw new NotFoundException(`Campaign not found: ${campaignId}`);
+      }
+
+      if (campaign.deletedAt) {
+        throw new GoneException(`Campaign deleted: ${campaignId}`);
+      }
+    }
+  }
 
   @Post()
-  create(@Req() request, @Body() createGroupDto: CreateGroupDto) {
+  async create(@Req() request, @Body() createGroupDto: CreateGroupDto) {
+    await this.validateCharacterRelations(createGroupDto.characters);
+    await this.validatecampaignRelations(
+      createGroupDto.campaigns.map((campaign) => campaign.idCampaign),
+    );
+
     const userId = request.user.userId;
 
     return this.groupService.create(createGroupDto, userId);
@@ -73,19 +159,37 @@ export class GroupController {
 
   @IsCreator(GroupService)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    await this.validateResource(id);
+
     return this.groupService.findOne(id);
   }
 
   @IsCreator(GroupService)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
+  async update(@Param('id') id: string, @Body() updateGroupDto: UpdateGroupDto) {
+    await this.validateResource(id);
+
+    const { characters, campaigns } = updateGroupDto;
+
+    if (characters) {
+      await this.validateCharacterRelations(characters);
+    }
+
+    if (campaigns) {
+      await this.validatecampaignRelations(
+        campaigns.map((campaign) => campaign.idCampaign),
+      );
+    }
+
     return this.groupService.update(id, updateGroupDto);
   }
 
   @IsCreator(GroupService)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
+    await this.validateResource(id);
+
     return this.groupService.remove(id);
   }
 }
