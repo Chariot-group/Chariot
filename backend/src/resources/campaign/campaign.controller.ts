@@ -10,6 +10,9 @@ import {
   Logger,
   Req,
   UseGuards,
+  BadRequestException,
+  NotFoundException,
+  GoneException,
 } from '@nestjs/common';
 import { CampaignService } from '@/resources/campaign/campaign.service';
 import { CreateCampaignDto } from '@/resources/campaign/dto/create-campaign.dto';
@@ -18,6 +21,10 @@ import { ParseNullableIntPipe } from '@/common/pipes/parse-nullable-int.pipe';
 import { GroupService } from '@/resources/group/group.service';
 import { IsCreatorGuard } from '@/common/guards/is-creator.guard';
 import { IsCreator } from '@/common/decorators/is-creator.decorator';
+import { Model, Types } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
+import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
+import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
 
 @UseGuards(IsCreatorGuard)
 @Controller('campaigns')
@@ -25,13 +32,66 @@ export class CampaignController {
   constructor(
     private readonly campaignService: CampaignService,
     private readonly groupService: GroupService,
-  ) {}
+    @InjectModel(Campaign.name) private campaignModel: Model<CampaignDocument>,
+    @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
+  ) { }
 
-  private readonly SERVICE_NAME = CampaignController.name;
-  private readonly logger = new Logger(this.SERVICE_NAME);
+  private readonly CONTROLLER_NAME = CampaignController.name;
+  private readonly logger = new Logger(this.CONTROLLER_NAME);
+
+  private async validateGroupRelations(
+    groupIds: string[],
+    type: 'Main' | 'NPC' | 'Archived',
+  ): Promise<void> {
+    if (!groupIds || groupIds.length === 0) return;
+
+    for (const groupId of groupIds) {
+      if (!Types.ObjectId.isValid(groupId)) {
+        throw new BadRequestException(`Invalid ${type} group ID: ${groupId}`);
+      }
+
+      const group = await this.groupModel.findById(groupId).exec();
+
+      if (!group) {
+        throw new NotFoundException(`${type} group not found: ${groupId}`);
+      }
+
+      if (group.deletedAt) {
+        throw new GoneException(`${type} group deleted: ${groupId}`);
+      }
+    }
+  }
+
+  private async validateResource(id: string): Promise<void> {
+    if (!Types.ObjectId.isValid(id)) {
+      const message = `Error while fetching campaign #${id}: Id is not a valid mongoose id`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new BadRequestException(message);
+    }
+    const campaign = await this.campaignModel.findById(id).exec();
+
+    if (!campaign) {
+      const message = `Campaign #${id} not found`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new NotFoundException(message);
+    }
+
+    if (campaign.deletedAt) {
+      const message = `Campaign #${id} is gone`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new GoneException(message);
+    }
+  }
 
   @Post()
-  create(@Req() request, @Body() createCampaignDto: CreateCampaignDto) {
+  async create(@Req() request, @Body() createCampaignDto: CreateCampaignDto) {
+    await this.validateGroupRelations(createCampaignDto.groups.main, 'Main');
+    await this.validateGroupRelations(createCampaignDto.groups.npc, 'NPC');
+    await this.validateGroupRelations(
+      createCampaignDto.groups.archived,
+      'Archived',
+    );
+
     const userId = request.user.userId;
 
     return this.campaignService.create(createCampaignDto, userId);
@@ -82,22 +142,40 @@ export class CampaignController {
 
   @IsCreator(CampaignService)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
+    await this.validateResource(id);
+
     return this.campaignService.findOne(id);
   }
 
   @IsCreator(CampaignService)
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateCampaignDto: UpdateCampaignDto,
   ) {
+    await this.validateResource(id);
+
+    if (updateCampaignDto.groups) {
+      await this.validateGroupRelations(
+        updateCampaignDto.groups.main,
+        'Main',
+      );
+      await this.validateGroupRelations(updateCampaignDto.groups.npc, 'NPC');
+      await this.validateGroupRelations(
+        updateCampaignDto.groups.archived,
+        'Archived',
+      );
+    }
+
     return this.campaignService.update(id, updateCampaignDto);
   }
 
   @IsCreator(CampaignService)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
+    await this.validateResource(id);
+
     return this.campaignService.remove(id);
   }
 }
