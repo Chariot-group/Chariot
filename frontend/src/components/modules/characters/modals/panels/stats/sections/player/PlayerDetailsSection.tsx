@@ -52,11 +52,11 @@ export default function PlayerDetailsSection({ player, isUpdate, updatePlayer }:
         isActive={isUpdate}
         min={0}
         color="card"
-        label={t("details.attackBonus")}
+        label={t("details.proficiencyBonus")}
         value={proficiencyBonus}
         id={"proficiencyBonus"}
         type={"number"}
-        placeholder={t("details.attackBonus")}
+        placeholder={t("details.proficiencyBonus")}
         setValue={changeProficiencyBonus}
       />
       <Champs
