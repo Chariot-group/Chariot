@@ -5,16 +5,18 @@ import {
   ForbiddenException,
   UnauthorizedException,
   Type,
+  BadRequestException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ModuleRef } from '@nestjs/core';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class IsCreatorGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private moduleRef: ModuleRef,
-  ) {}
+  ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const handler = context.getHandler();
@@ -28,7 +30,11 @@ export class IsCreatorGuard implements CanActivate {
 
     if (!userId) throw new UnauthorizedException('User not authenticated');
     if (!resourceId) throw new ForbiddenException('Missing resource id');
-
+    
+    if (!Types.ObjectId.isValid(resourceId)) {
+      const message = `Error while fetching character #${resourceId}: Id is not a valid mongoose id`;
+      throw new BadRequestException(message);
+    }
     try {
       // Dynamically resolve the service using ModuleRef
       const service = await this.moduleRef.resolve(serviceClass);

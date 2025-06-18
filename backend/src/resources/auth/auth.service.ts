@@ -115,7 +115,7 @@ export class AuthService {
     }
   }
 
-  async forgotPassword(id: string, changePassword: changePasswordDto) {
+  async forgotPassword(id: Types.ObjectId, changePassword: changePasswordDto) {
     try {
       if (changePassword.newPassword !== changePassword.confirmPassword) {
         const message = `Error while updating user #${id}: Passwords do not match`;
@@ -161,7 +161,7 @@ export class AuthService {
     }
   }
 
-  async verifyOTP(id: string, verifyOTPDto: verifyOTPDto) {
+  async verifyOTP(id: Types.ObjectId, verifyOTPDto: verifyOTPDto) {
     try {
       const user = await this.userModel.findById(id);
 

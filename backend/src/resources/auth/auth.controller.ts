@@ -11,6 +11,7 @@ import { UserController } from '@/resources/user/user.controller';
 import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '@/resources/user/schemas/user.schema';
+import { ParseMongoIdPipe } from '@/common/pipes/parse-mong-id.pipe';
 
 @Controller('auth')
 export class AuthController {
@@ -27,35 +28,24 @@ export class AuthController {
   private async validateResourceByEmail(email: string): Promise<void> {
     const user = await this.userModel.findOne({ email });
 
-    if (user.deletedAt) {
-      const message = `User ${email} deleted`;
-      this.logger.error(message, null, this.CONTROLLER_NAME);
-      throw new GoneException(message);
-    }
-
     if (!user) {
       const message = `User ${email} not found`;
       this.logger.error(message, null, this.CONTROLLER_NAME);
       throw new NotFoundException(message);
     }
 
-  }
-
-  private async validateResourceById(
-    id: string,
-  ): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while updating user #${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.CONTROLLER_NAME);
-      throw new BadRequestException(message);
-    }
-    let user = await this.userModel.findById(id);
-
     if (user.deletedAt) {
-      const message = `User #${id} deleted`;
+      const message = `User ${email} deleted`;
       this.logger.error(message, null, this.CONTROLLER_NAME);
       throw new GoneException(message);
     }
+  }
+
+  private async validateResourceById(
+    id: Types.ObjectId,
+  ): Promise<void> {
+    let user = await this.userModel.findById(id);
+
 
     if (!user) {
       const message = `User #${id} not found`;
@@ -63,6 +53,11 @@ export class AuthController {
       throw new NotFoundException(message);
     }
 
+    if (user.deletedAt) {
+      const message = `User #${id} deleted`;
+      this.logger.error(message, null, this.CONTROLLER_NAME);
+      throw new GoneException(message);
+    }
   }
 
   @Public()
@@ -83,7 +78,7 @@ export class AuthController {
   @Public()
   @Patch(':id/change-password')
   async forgotPassword(
-    @Param('id') id: string,
+    @Param('id', ParseMongoIdPipe) id: Types.ObjectId,
     @Body() changePassword: changePasswordDto,
   ) {
     await this.validateResourceById(id);
@@ -94,7 +89,7 @@ export class AuthController {
   @Public()
   @Post(':id/verify-otp')
   async verifyOTP(
-    @Param('id') id: string,
+    @Param('id', ParseMongoIdPipe) id: Types.ObjectId,
     @Body() verifyOTPDto: verifyOTPDto,
   ) {
     await this.validateResourceById(id);
