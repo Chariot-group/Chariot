@@ -172,7 +172,7 @@
       }
     },
     "details": {
-      "attackBonus": "Bonus d'attaque",
+      "proficiencyBonus": "Bonus de maîtrise",
       "passivePerception": "Perception passive",
       "inspiration": "Inspiration"
     },
