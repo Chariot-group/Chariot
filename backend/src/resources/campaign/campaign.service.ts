@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  Type,
 } from '@nestjs/common';
 import { CreateCampaignDto } from '@/resources/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/resources/campaign/dto/update-campaign.dto';
@@ -134,7 +135,7 @@ export class CampaignService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: Types.ObjectId) {
     try {
       const start: number = Date.now();
       const campaign = await this.campaignModel
@@ -158,7 +159,7 @@ export class CampaignService {
     }
   }
 
-  async update(id: string, updateCampaignDto: UpdateCampaignDto) {
+  async update(id: Types.ObjectId, updateCampaignDto: UpdateCampaignDto) {
     try {
       const start = Date.now();
 
@@ -244,7 +245,7 @@ export class CampaignService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: Types.ObjectId) {
     try {
       const start: number = Date.now();
 

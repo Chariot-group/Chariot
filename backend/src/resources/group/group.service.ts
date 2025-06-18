@@ -73,7 +73,7 @@ export class GroupService {
   }
 
   async findAllByUser(
-    userId: string,
+    userId: Types.ObjectId,
     query: {
       page?: number;
       offset?: number;

@@ -25,6 +25,7 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Group, GroupDocument } from '@/resources/group/schemas/group.schema';
 import { Campaign, CampaignDocument } from '@/resources/campaign/schemas/campaign.schema';
+import { ParseMongoIdPipe } from '@/common/pipes/parse-mong-id.pipe';
 
 @UseGuards(IsCreatorGuard)
 @Controller('campaigns')
@@ -62,7 +63,7 @@ export class CampaignController {
     }
   }
 
-  private async validateResource(id: string): Promise<void> {
+  private async validateResource(id: Types.ObjectId): Promise<void> {
     if (!Types.ObjectId.isValid(id)) {
       const message = `Error while fetching campaign #${id}: Id is not a valid mongoose id`;
       this.logger.error(message, null, this.CONTROLLER_NAME);
@@ -119,7 +120,7 @@ export class CampaignController {
   @Get(':id/groups')
   async findAllGroups(
     @Req() request,
-    @Param('id') id: string,
+    @Param('id', ParseMongoIdPipe) id: Types.ObjectId,
     @Query('page', ParseNullableIntPipe) page?: number,
     @Query('offset', ParseNullableIntPipe) offset?: number,
     @Query('sort') sort?: string,
@@ -134,7 +135,7 @@ export class CampaignController {
       return this.groupService.findAllByUser(
         userId,
         { page, offset, sort, label, onlyWithMembers },
-        id,
+        id.toString(),
         type,
       );
     }
@@ -142,7 +143,7 @@ export class CampaignController {
 
   @IsCreator(CampaignService)
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     await this.validateResource(id);
 
     return this.campaignService.findOne(id);
@@ -151,7 +152,7 @@ export class CampaignController {
   @IsCreator(CampaignService)
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseMongoIdPipe) id: Types.ObjectId,
     @Body() updateCampaignDto: UpdateCampaignDto,
   ) {
     await this.validateResource(id);
@@ -173,7 +174,7 @@ export class CampaignController {
 
   @IsCreator(CampaignService)
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     await this.validateResource(id);
 
     return this.campaignService.remove(id);
