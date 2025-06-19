@@ -43,6 +43,14 @@ export const DEFAULT_PLAYER: IPlayer = {
     pp: 0,
   },
   stats: {
+    masteriesAbility: {
+      strength: false,
+      dexterity: false,
+      constitution: false,
+      intelligence: false,
+      wisdom: false,
+      charisma: false,
+    },
     proficiencyBonus: 0,
     size: SIZES[0],
     maxHitPoints: 10,
@@ -69,6 +77,26 @@ export const DEFAULT_PLAYER: IPlayer = {
       intelligence: 0,
       wisdom: 0,
       charisma: 0,
+    },
+    masteries: {
+      acrobatics: false,
+      animalHandling: false,
+      arcana: false,
+      athletics: false,
+      deception: false,
+      history: false,
+      insight: false,
+      intimidation: false,
+      investigation: false,
+      medicine: false,
+      nature: false,
+      perception: false,
+      performance: false,
+      persuasion: false,
+      religion: false,
+      sleightHand: false,
+      stealth: false,
+      survival: false,
     },
     skills: {
       acrobatics: 0,
@@ -168,7 +196,6 @@ export const DEFAULT_NPC: INpc = {
   },
 };
 
-
 export const LANGUAGES: string[] = [
   "common",
   "dwarvish",
@@ -222,3 +249,15 @@ export const CHARACTERISTICS_LINKS: Record<keyof ISavingThrows, (keyof ISkills)[
 export function getSkillsFor(characteristic: keyof IAbilityScores): (keyof ISkills)[] {
   return CHARACTERISTICS_LINKS[characteristic];
 }
+
+export const ALIGNMENTS: string[] = [
+  "lawful_good",
+  "neutral_good",
+  "chaotic_good",
+  "lawful_neutral",
+  "neutral",
+  "chaotic_neutral",
+  "lawful_evil",
+  "neutral_evil",
+  "chaotic_evil"
+];

@@ -105,7 +105,7 @@
       "range": "Portée",
       "standard": "Standard",
       "legendary": "Légendaire",
-      "lair": "Aérien"
+      "lair": "Repaire"
     },
     "classes": {
       "noClass": "Aucune classe trouvée",
@@ -126,20 +126,20 @@
       "athletics": "Athlétisme",
       "acrobatics": "Acrobaties",
       "stealth": "Discrétion",
-      "animalHandling": "Manipulation animale",
+      "animalHandling": "Dressage",
       "arcana": "Arcanes",
       "deception": "Tromperie",
       "history": "Histoire",
-      "insight": "Perspicacité",
+      "insight": "Intuition",
       "intimidation": "Intimidation",
       "investigation": "Investigation",
       "medicine": "Médecine",
       "nature": "Nature",
       "perception": "Perception",
-      "performance": "Performance",
+      "performance": "Représentation",
       "persuasion": "Persuasion",
       "religion": "Religion",
-      "sleightHand": "Tour de passe-passe",
+      "sleightHand": "Escamotage",
       "survival": "Survie"
     },
     "senses": {
@@ -172,12 +172,12 @@
       }
     },
     "details": {
-      "attackBonus": "Bonus d'attaque",
+      "proficiencyBonus": "Bonus de maîtrise",
       "passivePerception": "Perception passive",
       "inspiration": "Inspiration"
     },
     "spellCasting": {
-      "title": "Lancer de sorts",
+      "title": "Lançeur de sorts",
       "noSpellCasting": "Aucun lancé de sort trouvé",
       "ability": "Charactéristique d'incantation",
       "saveDice": "Dé de sauvegarde",
@@ -242,7 +242,19 @@
       "subrace": "Sous-race",
       "type": "Type",
       "subtype": "Sous-type",
-      "alignment": "Alignement"
+      "alignment": "Alignement",
+      "noMatch": "Aucun alignement correspondant trouvé",
+      "alignments": {
+        "lawful_good": "Loyal Bon",
+        "neutral_good": "Neutre Bon",
+        "chaotic_good": "Chaotique Bon",
+        "lawful_neutral": "Loyal Neutre",
+        "neutral": "Neutre",
+        "chaotic_neutral": "Chaotique Neutre",
+        "lawful_evil": "Loyal Mauvais",
+        "neutral_evil": "Neutre Mauvais",
+        "chaotic_evil": "Chaotique Mauvais"
+      }
     },
     "batlle": {
       "armorClass": "Classe d'armure",

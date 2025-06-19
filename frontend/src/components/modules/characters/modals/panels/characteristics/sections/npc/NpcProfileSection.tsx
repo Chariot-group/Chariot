@@ -6,6 +6,13 @@ import { Size, SIZES } from "@/constants/CharacterConstants";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
+import { ALIGNMENTS } from "@/constants/CharacterConstants";
+import { Popover, PopoverContent } from "@/components/ui/popover";
+import { PopoverTrigger } from "@radix-ui/react-popover";
+import { Button } from "@/components/ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Props {
   npc: INpc;
@@ -85,6 +92,22 @@ export default function NpcProfileSection({ npc, isUpdate, updateNpc }: Props) {
     });
   };
 
+  const [open, setOpen] = useState<boolean>(false);
+
+
+  const getTranslatedAlignments = (): string[] => {
+    let alignments: string[] = [];
+    ALIGNMENTS.forEach((alignment) => {
+      const translated = t(`profile.alignments.${alignment}`, { defaultValue: alignment });
+      if (translated !== alignment) {
+        alignments.push(translated);
+      } else {
+        alignments.push(alignment);
+      }
+    });
+    return alignments;
+  };
+
   return (
     <Card className="p-4 flex flex-col bg-background">
       <Champs
@@ -105,15 +128,51 @@ export default function NpcProfileSection({ npc, isUpdate, updateNpc }: Props) {
         isActive={isUpdate}
         setValue={changeSubType}
       />
-      <Champs
-        label={t("profile.alignment")}
-        value={alignment}
-        id={"alignment"}
-        type={"text"}
-        placeholder={t("profile.alignment")}
-        isActive={isUpdate}
-        setValue={changeAlignment}
-      />
+      <div className="flex flex-row items-center w-full">
+        <Label
+          htmlFor={"alignment"}
+          className="text-foreground flex flex-row gap-1 items-center w-full">
+          <span className="font-bold w-auto">{t("profile.alignment")}:</span>
+          <Popover open={open} onOpenChange={(open) => setOpen(open)}>
+            <PopoverTrigger asChild className="border">
+              <Button
+                variant="ghost" disabled={!isUpdate}
+                className="w-[10vh] p-0 pl-1 h-7 border-none shadow-none text-left items-left justify-start font-normal disabled:opacity-1"
+              >
+                {alignment || t("profile.alignment")}
+              </Button>
+            </PopoverTrigger>
+
+            <PopoverContent className="w-[150px] p-0">
+              <Command>
+                <CommandInput
+                  placeholder={t("profile.alignment")}
+                  value={alignment ?? ""}
+                  onValueChange={(val) => changeAlignment(val)}
+                />
+                <CommandEmpty>
+                  {t("profile.noMatch")}
+                </CommandEmpty>
+                <CommandGroup>
+                  {getTranslatedAlignments().map((option) => (
+                    <CommandItem
+                      key={option}
+                      value={option}
+                      onSelect={() => {
+                        changeAlignment(option)
+                        setOpen(false)
+                      }}
+                    >
+                      <Check className={cn("mr-2 h-4 w-4", alignment === option ? "opacity-100" : "opacity-0")} />
+                      {option}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </Label>
+      </div>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label className="text-foreground flex flex-row gap-1 items-center">
           <span className="font-bold">{t("appearance.size")}:</span>

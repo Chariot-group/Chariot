@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -20,34 +19,13 @@ export class CharacterService {
     @InjectModel(Character.name)
     private characterModel: Model<CharacterDocument>,
     @InjectModel(Group.name) private groupModel: Model<GroupDocument>,
-  ) {}
-
-  private async validateResource(id: string): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching character ${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new BadRequestException(message);
-    }
-    const character = await this.characterModel.findById(id).exec();
-
-    if (!character) {
-      const message = `Character ${id} not found`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new NotFoundException(message);
-    }
-
-    if (character.deletedAt) {
-      const message = `Character ${id} is gone`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new GoneException(message);
-    }
-  }
+  ) { }
 
   private readonly SERVICE_NAME = CharacterService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
   async findAllByUser(
-    userId: string,
+    userId: Types.ObjectId,
     query: { page?: number; offset?: number; name?: string; sort?: string },
     groupId?: string,
   ) {
@@ -94,10 +72,8 @@ export class CharacterService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: Types.ObjectId) {
     try {
-      await this.validateResource(id);
-
       const start: number = Date.now();
       const character = await this.characterModel
         .findById(id)
@@ -112,28 +88,14 @@ export class CharacterService {
         data: character,
       };
     } catch (error) {
-      if (
-        error instanceof NotFoundException ||
-        error instanceof GoneException ||
-        error instanceof BadRequestException
-      ) {
-        throw error;
-      }
-
       const message = `Error while fetching character #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
   }
 
-  async remove(id: string) {
+  async remove(id: Types.ObjectId) {
     try {
-      if (!Types.ObjectId.isValid(id)) {
-        const message = `Error while deleting character #${id}: Id is not a valid mongoose id`;
-        this.logger.error(message, null, this.SERVICE_NAME);
-        throw new BadRequestException(message);
-      }
-
       const start: number = Date.now();
 
       const character = await this.characterModel.findById(id).exec();
@@ -167,7 +129,6 @@ export class CharacterService {
       };
     } catch (error) {
       if (
-        error instanceof BadRequestException ||
         error instanceof NotFoundException ||
         error instanceof GoneException
       ) {

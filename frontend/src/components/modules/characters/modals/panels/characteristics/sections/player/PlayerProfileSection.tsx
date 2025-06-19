@@ -3,6 +3,9 @@ import { Champs } from "@/components/modules/characters/modals/PlayerModalDetail
 import { useState } from "react";
 import IPlayer from "@/models/player/IPlayer";
 import { useTranslations } from "next-intl";
+import { ALIGNMENTS } from "@/constants/CharacterConstants";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface Props {
   player: IPlayer;
@@ -69,6 +72,19 @@ export default function PlayerProfileSection({ player, isUpdate, updatePlayer }:
     });
   };
 
+  const getTranslatedAlignments = (): string[] => {
+    let alignments: string[] = [];
+    ALIGNMENTS.forEach((alignment) => {
+      const translated = t(`profile.alignments.${alignment}`, { defaultValue: alignment });
+      if (translated !== alignment) {
+        alignments.push(translated);
+      } else {
+        alignments.push(alignment);
+      }
+    });
+    return alignments;
+  };
+
   return (
     <Card className="p-4 flex flex-col bg-background">
       <Champs
@@ -112,15 +128,29 @@ export default function PlayerProfileSection({ player, isUpdate, updatePlayer }:
         placeholder={t("profile.subrace")}
         value={subrace}
         setValue={changeSubrace}></Champs>
-      <Champs
-        isActive={isUpdate}
-        color="card"
-        id={"alignment"}
-        type={"text"}
-        label={t("profile.alignment")}
-        placeholder={t("profile.alignment")}
-        value={alignment}
-        setValue={changeAlignment}></Champs>
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label className="text-foreground flex flex-row gap-1 items-center">
+          <span className="font-bold">{t("profile.alignment")}:</span>
+          <Select
+            onValueChange={changeAlignment}
+            defaultValue={alignment}>
+            <SelectTrigger
+              disabled={!isUpdate}
+              className="p-0 h-7 border-none shadow-none focus-visible:ring-0 focus-visible:ring-offset-0">
+              <SelectValue placeholder={t("profile.alignment")} />
+            </SelectTrigger>
+            <SelectContent className="border-ring">
+              {getTranslatedAlignments().map((size) => (
+                <SelectItem
+                  key={size}
+                  value={size}>
+                  {size}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </Label>
+      </div>
     </Card>
   );
 }

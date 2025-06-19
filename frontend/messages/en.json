@@ -172,7 +172,7 @@
       }
     },
     "details": {
-      "attackBonus": "Attack Bonus",
+      "proficiencyBonus": "Proficiency bonus",
       "passivePerception": "Passive Perception",
       "inspiration": "Inspiration"
     },
@@ -242,7 +242,19 @@
       "subrace": "Subrace",
       "type": "Type",
       "subtype": "Subtype",
-      "alignment": "Alignment"
+      "alignment": "Alignment",
+      "noMatch": "No matching alignment found",
+      "alignments": {
+        "lawful_good": "Lawful Good",
+        "neutral_good": "Neutral Good",
+        "chaotic_good": "Chaotic Good",
+        "lawful_neutral": "Lawful Neutral",
+        "neutral": "Neutral",
+        "chaotic_neutral": "Chaotic Neutral",
+        "lawful_evil": "Lawful Evil",
+        "neutral_evil": "Neutral Evil",
+        "chaotic_evil": "Chaotic Evil"
+      }
     },
     "batlle": {
       "armorClass": "Armor Class",

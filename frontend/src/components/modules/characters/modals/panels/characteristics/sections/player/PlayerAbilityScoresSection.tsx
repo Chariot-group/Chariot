@@ -6,6 +6,9 @@ import { useTranslations } from "next-intl";
 import { getSkillsFor } from "@/constants/CharacterConstants";
 import IAbilityScores from "@/models/npc/stat/sub/IAbilityScores";
 import { set } from "react-hook-form";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import IMasteryAbility from "@/models/player/stats/IMasteryAbility";
 
 interface Props {
   player: IPlayer;
@@ -248,141 +251,295 @@ export default function PlayerAbilityScoresSection({ player, isUpdate, updatePla
     });
   };
 
+  const updateMasteryAbility = (ability: keyof IMasteryAbility, value: boolean) => {
+
+    const currentAbilities: IMasteryAbility = player.stats.masteriesAbility;
+
+    const trueCount: number = Object.values(currentAbilities).filter(v => v).length;
+
+    if (value === true && trueCount >= 2 && !currentAbilities[ability]) {
+      return;
+    }
+
+    updatePlayer({
+      ...player,
+      stats: {
+        ...player.stats,
+        masteriesAbility: {
+          ...player.stats.masteriesAbility,
+          [ability]: value,
+        },
+      },
+    });
+  }
+
   return (
     <div className="flex flex-col gap-3 w-1/6 h-full">
       {/* Stats */}
       <Card className="p-4 flex flex-col bg-background">
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.strength")}
-          value={strengthAS}
-          id={"strengthAS"}
-          type={"number"}
-          placeholder={t("abilityScores.strength")}
-          setValue={changeStrengthAS}
-        />
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.save")}
-          value={strengthST}
-          id={"strengthST"}
-          type={"number"}
-          placeholder={t("abilityScores.save")}
-          setValue={changeStrengthST}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <Checkbox
+            disabled={!isUpdate}
+            id="mastery-strength"
+            checked={player.stats.masteriesAbility.strength}
+            onCheckedChange={(value: boolean) => updateMasteryAbility("strength", value)}
+          />
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.strength")}
+            value={strengthAS}
+            id={"strengthAS"}
+            type={"number"}
+            placeholder={t("abilityScores.strength")}
+            setValue={changeStrengthAS}
+          />
+          {
+            player.stats.masteriesAbility.strength &&
+            <span className="text-xs text-muted-foreground">
+              ({player.stats.abilityScores.strength + player.stats.proficiencyBonus})
+            </span>
+          }
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.save")}
+            value={strengthST}
+            id={"strengthST"}
+            type={"number"}
+            placeholder={t("abilityScores.save")}
+            setValue={changeStrengthST}
+          />
+          {
+            player.stats.masteriesAbility.strength &&
+            <span className="text-xs text-muted-foreground">
+              ({calculeSavingThrow(player.stats.abilityScores.strength + player.stats.proficiencyBonus)})
+            </span>
+          }
+        </div>
+      </Card >
+      <Card className="p-4 flex flex-col bg-background">
+        <div className="flex items-center justify-between gap-2">
+          <Checkbox
+            disabled={!isUpdate}
+            id="mastery-strength"
+            checked={player.stats.masteriesAbility.dexterity}
+            onCheckedChange={(value: boolean) => updateMasteryAbility("dexterity", value)}
+          />
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.dexterity")}
+            value={dexterityAS}
+            id={"dexterityAS"}
+            type={"number"}
+            placeholder={t("abilityScores.dexterity")}
+            setValue={changeDexterityAS}
+          />
+          {
+            player.stats.masteriesAbility.dexterity &&
+            <span className="text-xs text-muted-foreground">
+              ({player.stats.abilityScores.dexterity + player.stats.proficiencyBonus})
+            </span>
+          }
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.save")}
+            value={dexterityST}
+            id={"dexterityST"}
+            type={"number"}
+            placeholder={t("abilityScores.save")}
+            setValue={changeDexterityST}
+          />
+          {
+            player.stats.masteriesAbility.dexterity &&
+            <span className="text-xs text-muted-foreground">
+              ({calculeSavingThrow(player.stats.abilityScores.dexterity + player.stats.proficiencyBonus)})
+            </span>
+          }
+        </div>
       </Card>
       <Card className="p-4 flex flex-col bg-background">
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.dexterity")}
-          value={dexterityAS}
-          id={"dexterityAS"}
-          type={"number"}
-          placeholder={t("abilityScores.dexterity")}
-          setValue={changeDexterityAS}
-        />
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.save")}
-          value={dexterityST}
-          id={"dexterityST"}
-          type={"number"}
-          placeholder={t("abilityScores.save")}
-          setValue={changeDexterityST}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <Checkbox
+            disabled={!isUpdate}
+            id="mastery-strength"
+            checked={player.stats.masteriesAbility.constitution}
+            onCheckedChange={(value: boolean) => updateMasteryAbility("constitution", value)}
+          />
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.constitution")}
+            value={constitutionAS}
+            id={"constitutionAS"}
+            type={"number"}
+            placeholder={t("abilityScores.constitution")}
+            setValue={changeConstitutionAS}
+          />
+          {
+            player.stats.masteriesAbility.constitution &&
+            <span className="text-xs text-muted-foreground">
+              ({player.stats.abilityScores.constitution + player.stats.proficiencyBonus})
+            </span>
+          }
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.save")}
+            value={constitutionST}
+            id={"constitutionST"}
+            type={"number"}
+            placeholder={t("abilityScores.save")}
+            setValue={changeConstitutionST}
+          />
+          {
+            player.stats.masteriesAbility.constitution &&
+            <span className="text-xs text-muted-foreground">
+              ({calculeSavingThrow(player.stats.abilityScores.constitution + player.stats.proficiencyBonus)})
+            </span>
+          }
+        </div>
       </Card>
       <Card className="p-4 flex flex-col bg-background">
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.constitution")}
-          value={constitutionAS}
-          id={"constitutionAS"}
-          type={"number"}
-          placeholder={t("abilityScores.constitution")}
-          setValue={changeConstitutionAS}
-        />
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.save")}
-          value={constitutionST}
-          id={"constitutionST"}
-          type={"number"}
-          placeholder={t("abilityScores.save")}
-          setValue={changeConstitutionST}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <Checkbox
+            disabled={!isUpdate}
+            id="mastery-strength"
+            checked={player.stats.masteriesAbility.intelligence}
+            onCheckedChange={(value: boolean) => updateMasteryAbility("intelligence", value)}
+          />
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.intelligence")}
+            value={intelligenceAS}
+            id={"intelligenceAS"}
+            type={"number"}
+            placeholder={t("abilityScores.intelligence")}
+            setValue={changeIntelligenceAS}
+          />
+          {
+            player.stats.masteriesAbility.intelligence &&
+            <span className="text-xs text-muted-foreground">
+              ({player.stats.abilityScores.intelligence + player.stats.proficiencyBonus})
+            </span>
+          }
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.save")}
+            value={intelligenceST}
+            id={"intelligenceST"}
+            type={"number"}
+            placeholder={t("abilityScores.save")}
+            setValue={changeIntelligenceST}
+          />
+          {
+            player.stats.masteriesAbility.intelligence &&
+            <span className="text-xs text-muted-foreground">
+              ({calculeSavingThrow(player.stats.abilityScores.intelligence + player.stats.proficiencyBonus)})
+            </span>
+          }
+        </div>
       </Card>
       <Card className="p-4 flex flex-col bg-background">
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.intelligence")}
-          value={intelligenceAS}
-          id={"intelligenceAS"}
-          type={"number"}
-          placeholder={t("abilityScores.intelligence")}
-          setValue={changeIntelligenceAS}
-        />
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.save")}
-          value={intelligenceST}
-          id={"intelligenceST"}
-          type={"number"}
-          placeholder={t("abilityScores.save")}
-          setValue={changeIntelligenceST}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <Checkbox
+            disabled={!isUpdate}
+            id="mastery-strength"
+            checked={player.stats.masteriesAbility.wisdom}
+            onCheckedChange={(value: boolean) => updateMasteryAbility("wisdom", value)}
+          />
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.wisdom")}
+            value={wisdomAS}
+            id={"wisdomAS"}
+            type={"number"}
+            placeholder={t("abilityScores.wisdom")}
+            setValue={changeWisdomAS}
+          />
+          {
+            player.stats.masteriesAbility.wisdom &&
+            <span className="text-xs text-muted-foreground">
+              ({player.stats.abilityScores.wisdom + player.stats.proficiencyBonus})
+            </span>
+          }
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.save")}
+            value={wisdomST}
+            id={"wisdomST"}
+            type={"number"}
+            placeholder={t("abilityScores.save")}
+            setValue={changeWisdomST}
+          />
+          {
+            player.stats.masteriesAbility.wisdom &&
+            <span className="text-xs text-muted-foreground">
+              ({calculeSavingThrow(player.stats.abilityScores.wisdom + player.stats.proficiencyBonus)})
+            </span>
+          }
+        </div>
       </Card>
       <Card className="p-4 flex flex-col bg-background">
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.wisdom")}
-          value={wisdomAS}
-          id={"wisdomAS"}
-          type={"number"}
-          placeholder={t("abilityScores.wisdom")}
-          setValue={changeWisdomAS}
-        />
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.save")}
-          value={wisdomST}
-          id={"wisdomST"}
-          type={"number"}
-          placeholder={t("abilityScores.save")}
-          setValue={changeWisdomST}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <Checkbox
+            disabled={!isUpdate}
+            id="mastery-strength"
+            checked={player.stats.masteriesAbility.charisma}
+            onCheckedChange={(value: boolean) => updateMasteryAbility("charisma", value)}
+          />
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.charisma")}
+            value={charismaAS}
+            id={"charismaAS"}
+            type={"number"}
+            placeholder={t("abilityScores.charisma")}
+            setValue={changeCharismaAS}
+          />
+          {
+            player.stats.masteriesAbility.charisma &&
+            <span className="text-xs text-muted-foreground">
+              ({player.stats.abilityScores.charisma + player.stats.proficiencyBonus})
+            </span>
+          }
+        </div>
+        <div className="flex items-center justify-between gap-2">
+          <Champs
+            isActive={isUpdate}
+            color="card"
+            label={t("abilityScores.save")}
+            value={charismaST}
+            id={"charismaST"}
+            type={"number"}
+            placeholder={t("abilityScores.save")}
+            setValue={changeCharismaST}
+          />
+          {
+            player.stats.masteriesAbility.charisma &&
+            <span className="text-xs text-muted-foreground">
+              ({calculeSavingThrow(player.stats.abilityScores.charisma + player.stats.proficiencyBonus)})
+            </span>
+          }
+        </div>
       </Card>
-      <Card className="p-4 flex flex-col bg-background">
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.charisma")}
-          value={charismaAS}
-          id={"charismaAS"}
-          type={"number"}
-          placeholder={t("abilityScores.charisma")}
-          setValue={changeCharismaAS}
-        />
-        <Champs
-          isActive={isUpdate}
-          color="card"
-          label={t("abilityScores.save")}
-          value={charismaST}
-          id={"charismaST"}
-          type={"number"}
-          placeholder={t("abilityScores.save")}
-          setValue={changeCharismaST}
-        />
-      </Card>
-    </div>
+    </div >
   );
 }

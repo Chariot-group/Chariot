@@ -126,8 +126,8 @@
       "athletics": "Atletismo",
       "acrobatics": "Acrobacias",
       "stealth": "Sigilo",
-      "animalHandling": "Manejo de animales",
-      "arcana": "Arcanos",
+      "animalHandling": "Trato con animales",
+      "arcana": "Arcano",
       "deception": "Engaño",
       "history": "Historia",
       "insight": "Perspicacia",
@@ -136,7 +136,7 @@
       "medicine": "Medicina",
       "nature": "Naturaleza",
       "perception": "Percepción",
-      "performance": "Actuación",
+      "performance": "Interpretación",
       "persuasion": "Persuasión",
       "religion": "Religión",
       "sleightHand": "Juego de manos",
@@ -172,7 +172,7 @@
       }
     },
     "details": {
-      "attackBonus": "Bono de ataque",
+      "proficiencyBonus": "Masteria de combate",
       "passivePerception": "Percepción pasiva",
       "inspiration": "Inspiración"
     },
@@ -242,7 +242,19 @@
       "subrace": "Subraza",
       "type": "Tipo",
       "subtype": "Subtipo",
-      "alignment": "Alineamiento"
+      "alignment": "Alineamiento",
+      "noMatch": "No se ha encontrado ninguna alineación",
+      "alignments": {
+        "lawful_good": "Legal Bueno",
+        "neutral_good": "Neutral Bueno",
+        "chaotic_good": "Caótico Bueno",
+        "lawful_neutral": "Legal Neutral",
+        "neutral": "Neutral",
+        "chaotic_neutral": "Caótico Neutral",
+        "lawful_evil": "Legal Mal",
+        "neutral_evil": "Neutral Mal",
+        "chaotic_evil": "Caótico Mal"
+      }
     },
     "batlle": {
       "armorClass": "Clase de armadura",
