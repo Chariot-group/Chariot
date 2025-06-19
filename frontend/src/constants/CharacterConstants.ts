@@ -43,6 +43,14 @@ export const DEFAULT_PLAYER: IPlayer = {
     pp: 0,
   },
   stats: {
+    masteriesAbility: {
+      strength: false,
+      dexterity: false,
+      constitution: false,
+      intelligence: false,
+      wisdom: false,
+      charisma: false,
+    },
     proficiencyBonus: 0,
     size: SIZES[0],
     maxHitPoints: 10,
