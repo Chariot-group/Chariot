@@ -54,3 +54,7 @@ Un système de **seeder** a été mis en place pour injecter des données de tes
   ```bash
   docker compose exec backend npm run seed:clean
   ```
+
+## License
+
+This project is proprietary. All rights reserved. See the [LICENSE](LICENSE) file for more information.
