@@ -3,7 +3,6 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
-  Type,
 } from '@nestjs/common';
 import { CreateCampaignDto } from '@/resources/campaign/dto/create-campaign.dto';
 import { UpdateCampaignDto } from '@/resources/campaign/dto/update-campaign.dto';

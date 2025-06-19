@@ -16,7 +16,7 @@ import { Model, Types } from 'mongoose';
 import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { MaillingService } from '@/mailling/mailling.service';
 import { ResetPasswordDto } from '@/resources/auth/dto/resetPassword.dto';
-import verifyOTPDto from './dto/verifyOTPDto.dto';
+import verifyOTPDto from '@/resources/auth/dto/verifyOTPDto.dto';
 
 @Injectable()
 export class AuthService {

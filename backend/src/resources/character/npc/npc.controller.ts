@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Patch, Param, Req, GoneException, Logger, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Body, Patch, Param, Req, GoneException, Logger, NotFoundException } from '@nestjs/common';
 import { NpcService } from '@/resources/character/npc/npc.service';
 import { CreateNpcDto } from '@/resources/character/npc/dto/create-npc.dto';
 import { UpdateNpcDto } from '@/resources/character/npc/dto/update-npc.dto';
