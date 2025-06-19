@@ -1,6 +1,4 @@
 import {
-  BadRequestException,
-  GoneException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -34,79 +32,9 @@ export class GroupService {
   private readonly SERVICE_NAME = GroupService.name;
   private readonly logger = new Logger(this.SERVICE_NAME);
 
-  private async validateCharacterRelations(
-    characterIds: string[],
-  ): Promise<void> {
-    if (!characterIds || characterIds.length === 0) return;
-
-    for (const characterId of characterIds) {
-      if (!Types.ObjectId.isValid(characterId)) {
-        throw new BadRequestException(`Invalid character ID: ${characterId}`);
-      }
-
-      const character = await this.characterModel.findById(characterId).exec();
-
-      if (!character) {
-        throw new NotFoundException(`Character not found: ${characterId}`);
-      }
-
-      if (character.deletedAt) {
-        throw new GoneException(`Character deleted: ${characterId}`);
-      }
-    }
-  }
-
-  private async validateResource(id: string): Promise<void> {
-    if (!Types.ObjectId.isValid(id)) {
-      const message = `Error while fetching group #${id}: Id is not a valid mongoose id`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new BadRequestException(message);
-    }
-    const group = await this.groupModel.findById(id).exec();
-
-    if (!group) {
-      const message = `Group #${id} not found`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new NotFoundException(message);
-    }
-
-    if (group.deletedAt) {
-      const message = `group #${id} is gone`;
-      this.logger.error(message, null, this.SERVICE_NAME);
-      throw new GoneException(message);
-    }
-  }
-
-  private async validatecampaignRelations(
-    campaignIds: string[],
-  ): Promise<void> {
-    if (!campaignIds || campaignIds.length === 0) return;
-
-    for (const campaignId of campaignIds) {
-      if (!Types.ObjectId.isValid(campaignId)) {
-        throw new BadRequestException(`Invalid campaign ID: ${campaignId}`);
-      }
-
-      const campaign = await this.campaignModel.findById(campaignId).exec();
-
-      if (!campaign) {
-        throw new NotFoundException(`Campaign not found: ${campaignId}`);
-      }
-
-      if (campaign.deletedAt) {
-        throw new GoneException(`Campaign deleted: ${campaignId}`);
-      }
-    }
-  }
-
   async create(createGroupDto: CreateGroupDto, userId: string) {
     try {
       const { characters = [], campaigns, ...groupData } = createGroupDto;
-
-      await this.validateCharacterRelations(characters);
-      await this.validatecampaignRelations(
-        campaigns.map((campaign) => campaign.idCampaign),
-      );
 
       const start: number = Date.now();
       const group = await this.groupModel.create({
@@ -137,13 +65,6 @@ export class GroupService {
         data: group,
       };
     } catch (error) {
-      if (
-        error instanceof BadRequestException ||
-        error instanceof GoneException ||
-        error instanceof NotFoundException
-      ) {
-        throw error;
-      }
       const errorMessage = `Error while creating group: ${error.message}`;
       this.logger.error(errorMessage, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(errorMessage);
@@ -151,7 +72,7 @@ export class GroupService {
   }
 
   async findAllByUser(
-    userId: string,
+    userId: Types.ObjectId,
     query: {
       page?: number;
       offset?: number;
@@ -248,10 +169,8 @@ export class GroupService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: Types.ObjectId) {
     try {
-      await this.validateResource(id);
-
       const start: number = Date.now();
       const group = await this.groupModel
         .findById(id)
@@ -267,39 +186,21 @@ export class GroupService {
         data: group,
       };
     } catch (error) {
-      if (
-        error instanceof NotFoundException ||
-        error instanceof GoneException ||
-        error instanceof BadRequestException
-      ) {
-        throw error;
-      }
-
       const message = `Error while fetching group #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
     }
   }
 
-  async update(id: string, updateGroupDto: UpdateGroupDto) {
+  async update(id: Types.ObjectId, updateGroupDto: UpdateGroupDto) {
     try {
       let { characters, campaigns, ...groupData } = updateGroupDto;
-      await this.validateResource(id);
 
       let group = await this.groupModel
         .findById(id)
         .populate('campaigns')
         .exec();
 
-      if (characters) {
-        await this.validateCharacterRelations(characters);
-      }
-
-      if (campaigns) {
-        await this.validatecampaignRelations(
-          campaigns.map((campaign) => campaign.idCampaign),
-        );
-      }
       let campaignIds = group.campaigns.map((campaign) =>
         campaign._id.toString(),
       );
@@ -382,9 +283,7 @@ export class GroupService {
       };
     } catch (error) {
       if (
-        error instanceof NotFoundException ||
-        error instanceof GoneException ||
-        error instanceof BadRequestException
+        error instanceof NotFoundException
       ) {
         throw error;
       }
@@ -394,10 +293,8 @@ export class GroupService {
     }
   }
 
-  async remove(id: string) {
+  async remove(id: Types.ObjectId) {
     try {
-      await this.validateResource(id);
-
       const group = await this.groupModel.findById(id).exec();
 
       const start: number = Date.now();
@@ -422,13 +319,6 @@ export class GroupService {
         data: group,
       };
     } catch (error) {
-      if (
-        error instanceof BadRequestException ||
-        error instanceof NotFoundException ||
-        error instanceof GoneException
-      ) {
-        throw error;
-      }
       const message = `Error while deleting group #${id}: ${error.message}`;
       this.logger.error(message, null, this.SERVICE_NAME);
       throw new InternalServerErrorException(message);
