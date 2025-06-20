@@ -49,8 +49,8 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
       setLoading(false);
       setStep(2);
     } catch (e) {
-      console.log(e);
       error(t("toasts.internal"));
+      setLoading(false);
     }
   }, []);
 

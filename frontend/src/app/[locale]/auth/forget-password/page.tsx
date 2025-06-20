@@ -7,15 +7,49 @@ import ConfirmOTP from "@/components/modules/forgetPassword/confirmOTP";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ForgotPasswordPage() {
   const t = useTranslations("forgetPassword");
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
-
   const [otp, setOTP] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
+
+  useEffect(() => {
+    document.cookie = `step=${step}; otp=${otp}; userId=${userId};`;
+    console.log(`Cookie set: step=${step}, otp=${otp}, userId=${userId}`);
+  }, [step, otp, userId]);
+
+  useEffect(() => {
+
+    const stepParam: string | undefined = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("step="))
+      ?.split("=")[1];
+
+    const otpParam: string | undefined = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("otp="))
+      ?.split("=")[1];
+
+    const userIdParam: string | undefined = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("userId="))
+      ?.split("=")[1];
+
+    console.log(stepParam, otpParam, userIdParam);
+
+    if (stepParam) {
+      setStep(Number(stepParam) as 1 | 2 | 3);
+    }
+    if (otpParam) {
+      setOTP(otpParam);
+    }
+    if (userIdParam) {
+      setUserId(userIdParam);
+    }
+  }, []);
 
   return (
     <div className="w-full h-[100dvh] gap-1 flex flex-col items-center bg-background">
