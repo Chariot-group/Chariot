@@ -16,9 +16,18 @@ export default function ForgotPasswordPage() {
   const [otp, setOTP] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
 
+  const [isMounted, setIsMounter] = useState<boolean>(false);
+
+  const cancel = () => {
+    document.cookie = `step=; otp=; userId=;`;
+  }
+
   useEffect(() => {
-    document.cookie = `step=${step}; otp=${otp}; userId=${userId};`;
-    console.log(`Cookie set: step=${step}, otp=${otp}, userId=${userId}`);
+    if (isMounted) {
+      document.cookie = `step=${step};`;
+      document.cookie = `otp=${otp};`;
+      document.cookie = `userId=${userId};`;
+    }
   }, [step, otp, userId]);
 
   useEffect(() => {
@@ -38,8 +47,6 @@ export default function ForgotPasswordPage() {
       .find((row) => row.startsWith("userId="))
       ?.split("=")[1];
 
-    console.log(stepParam, otpParam, userIdParam);
-
     if (stepParam) {
       setStep(Number(stepParam) as 1 | 2 | 3);
     }
@@ -49,6 +56,8 @@ export default function ForgotPasswordPage() {
     if (userIdParam) {
       setUserId(userIdParam);
     }
+
+    setIsMounter(true);
   }, []);
 
   return (
@@ -65,6 +74,7 @@ export default function ForgotPasswordPage() {
           <ConfirmEmail
             setStep={setStep}
             setUserId={setUserId}
+            cancel={cancel}
           />
         )}
         {step === 2 && (
@@ -72,6 +82,7 @@ export default function ForgotPasswordPage() {
             setStep={setStep}
             setOTP={setOTP}
             userId={userId}
+            cancel={cancel}
           />
         )}
         {step === 3 && (
@@ -79,6 +90,7 @@ export default function ForgotPasswordPage() {
             otp={otp}
             userId={userId}
             setStep={setStep}
+            cancel={cancel}
           />
         )}
       </Card>

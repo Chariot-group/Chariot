@@ -17,8 +17,9 @@ interface ConfirmOTPProps {
   setStep: (step: 1 | 2 | 3) => void;
   setOTP: (otp: string) => void;
   userId: string;
+  cancel: () => void;
 }
-export default function ConfirmOTP({ setStep, setOTP, userId }: ConfirmOTPProps) {
+export default function ConfirmOTP({ setStep, setOTP, userId, cancel }: ConfirmOTPProps) {
   const t = useTranslations("confirmOTP");
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -96,7 +97,7 @@ export default function ConfirmOTP({ setStep, setOTP, userId }: ConfirmOTPProps)
           />
           <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
             <Link href={"login"}>
-              <Button type="button" variant={"outline"}>
+              <Button type="button" onClick={cancel} variant={"outline"}>
                 {t("cancel")}
               </Button>
             </Link>
