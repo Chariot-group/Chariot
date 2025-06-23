@@ -255,8 +255,7 @@ export class CampaignService {
         if (campaign.groups[group] && campaign.groups[group].length > 0) {
           campaign.groups[group].forEach(async (groupId) => {
             await this.groupModel
-              .updateOne({ _id: groupId }, { $pull: { campaign: id } })
-              .exec();
+              .updateOne({ _id: groupId }, { $pull: { campaign: id } });
           });
         }
       });
