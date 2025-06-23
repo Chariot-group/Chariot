@@ -19,8 +19,9 @@ interface ChangePasswordProps {
   otp: string;
   userId: string;
   setStep: (step: 1 | 2 | 3) => void;
+  cancel: () => void;
 }
-export default function ChangePassword({ otp, userId, setStep }: ChangePasswordProps) {
+export default function ChangePassword({ otp, userId, setStep, cancel }: ChangePasswordProps) {
   const t = useTranslations("changePassword");
   const otpInlt = useTranslations("confirmOTP");
   const { success, error } = useToast();
@@ -167,7 +168,7 @@ export default function ChangePassword({ otp, userId, setStep }: ChangePasswordP
           </div>
           <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
             <Link href={"login"}>
-              <Button type="button" variant={"outline"}>
+              <Button type="button" onClick={cancel} variant={"outline"}>
                 {t("cancel")}
               </Button>
             </Link>
