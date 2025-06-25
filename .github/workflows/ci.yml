@@ -9,23 +9,26 @@ on:
       - '**'
 
 jobs:
-  frontend:
-    name: Frontend
+  build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        project: [frontend, backend]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js for ${{ matrix.project }}
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: ${{ matrix.project }}/package-lock.json
 
-      - name: Install dependencies
-        working-directory: ./frontend
+      - name: Install dependencies for ${{ matrix.project }}
+        working-directory: ./${{ matrix.project }}
         run: |
           if [[ "$GITHUB_REF_NAME" == "main" || "$GITHUB_REF_NAME" == "integ" ]]; then
             npm ci
@@ -33,52 +36,15 @@ jobs:
             npm install
           fi
 
-      - name: Format frontend
-        working-directory: ./frontend
+      - name: Format check for ${{ matrix.project }}
+        working-directory: ./${{ matrix.project }}
         run: npm run format
 
-      # Décommenter lorsque les tests unitaires sont prêts
-      # - name: Run unit tests
-      #   working-directory: ./frontend
+      # Décommenter quand les tests unitaires sont prêts
+      # - name: Run unit tests for ${{ matrix.project }}
+      #   working-directory: ./${{ matrix.project }}
       #   run: npm test
 
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
-
-  backend:
-    name: Backend
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: backend/package-lock.json
-
-      - name: Install dependencies
-        working-directory: ./backend
-        run: |
-          if [[ "$GITHUB_REF_NAME" == "main" || "$GITHUB_REF_NAME" == "integ" ]]; then
-            npm ci
-          else
-            npm install
-          fi
-
-      - name: Format backend
-        working-directory: ./backend
-        run: npm run format
-
-      # Décommenter lorsque les tests unitaires sont prêts
-      # - name: Run unit tests
-      #   working-directory: ./backend
-      #   run: npm test
-
-      - name: Build backend
-        working-directory: ./backend
+      - name: Build ${{ matrix.project }}
+        working-directory: ./${{ matrix.project }}
         run: npm run build
