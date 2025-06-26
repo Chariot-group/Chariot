@@ -26,7 +26,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new JwtAuthGuard(reflector));
 
-  await app.listen(9000);
+  await app.listen(process.env.INTERNAL_API_PORT);
 
   console.log('Chariot API running on port:', process.env.API_PORT ?? 3000);
 }
