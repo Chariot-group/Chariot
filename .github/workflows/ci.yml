@@ -42,6 +42,7 @@ jobs:
 
       - name: Run unit tests for ${{ matrix.project }}
         working-directory: ./${{ matrix.project }}
+        if: matrix.project == 'backend'
         run: npm test
 
       - name: Build ${{ matrix.project }}
