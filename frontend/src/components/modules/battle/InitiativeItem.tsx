@@ -2,12 +2,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { IParticipant } from "@/models/participant/IParticipant";
 import { Heart, Shield, Sword } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import CharacterModal from "@/components/modules/characters/CharacterModal";
 import { useTranslations } from "next-intl";
 import CharacterService from "@/services/CharacterService";
+import InitiativeDamagePopover from "@/components/modules/battle/InitiativeDamagePopover";
 
 interface Props {
   participant: IParticipant;
@@ -46,8 +48,7 @@ const InitiativeItem = ({ participant, setParticipant, handleInitiativeChange, i
     setLocalInitiative((participant.initiative ?? 0) === 0 ? "" : (participant.initiative ?? 0).toString());
   };
 
-  const onHPChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const onHPChange = async (value: string) => {
     if (!/^\d*$/.test(value) || value.length > 4) return;
     setParticipant({
       ...participant,
@@ -70,9 +71,8 @@ const InitiativeItem = ({ participant, setParticipant, handleInitiativeChange, i
 
   return (
     <TableRow
-      className={`text-xl ${
-        participant.character.stats.currentHitPoints <= 0 && "hover:bg-destructive/30 bg-destructive/20"
-      } ${isCurrent && "bg-secondary/20 hover:bg-secondary/30"}`}>
+      className={`text-xl ${participant.character.stats.currentHitPoints <= 0 && "hover:bg-destructive/30 bg-destructive/20"
+        } ${isCurrent && "bg-secondary/20 hover:bg-secondary/30"}`}>
       <TableCell>
         <div className="relative flex items-center">
           <Input
@@ -87,14 +87,29 @@ const InitiativeItem = ({ participant, setParticipant, handleInitiativeChange, i
       </TableCell>
       <TableCell>{participant.character.name}</TableCell>
       <TableCell>
-        <div className="relative flex items-center">
-          <Input
-            className="w-24 bg-card  md:text-xl font-semibold"
-            value={participant.character.stats.currentHitPoints}
-            onChange={onHPChange}
-          />
-          <Heart className="absolute left-16" />
-        </div>
+        <Popover>
+          <div className="relative flex items-center gap-1">
+            <PopoverTrigger asChild>
+              <Input
+                className="w-24 bg-card md:text-xl font-semibold"
+                value={participant.character.stats.currentHitPoints}
+              />
+            </PopoverTrigger>
+            <Heart className="absolute left-16" />
+          </div>
+          <PopoverContent className="w-52 p-2 space-y-2">
+            <InitiativeDamagePopover
+              onMinusClicked={(value: number) => {
+                const newHP = Math.max(0, participant.character.stats.currentHitPoints - value);
+                onHPChange(newHP.toString());
+              }}
+              onPlusClicked={(value: number) => {
+                const newHP = participant.character.stats.currentHitPoints + value;
+                onHPChange(newHP.toString());
+              }}
+            />
+          </PopoverContent>
+        </Popover>
       </TableCell>
       <TableCell>
         <Badge

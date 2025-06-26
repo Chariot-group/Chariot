@@ -16,8 +16,9 @@ import z from "zod";
 interface ConfirmEmailProps {
   setStep: (step: 1 | 2 | 3) => void;
   setUserId: (userId: string) => void;
+  cancel: () => void
 }
-export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) {
+export default function ConfirmEmail({ setStep, setUserId, cancel }: ConfirmEmailProps) {
   const t = useTranslations("confirmEmail");
   const { success, error } = useToast();
 
@@ -49,8 +50,8 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
       setLoading(false);
       setStep(2);
     } catch (e) {
-      console.log(e);
       error(t("toasts.internal"));
+      setLoading(false);
     }
   }, []);
 
@@ -85,7 +86,7 @@ export default function ConfirmEmail({ setStep, setUserId }: ConfirmEmailProps) 
           </div>
           <div className="w-[50%] flex flex-row gap-[2dvh] items-center justify-center">
             <Link href={"login"}>
-              <Button type="button" variant={"outline"}>
+              <Button type="button" onClick={cancel} variant={"outline"}>
                 {t("cancel")}
               </Button>
             </Link>
