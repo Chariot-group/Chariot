@@ -160,8 +160,10 @@ export default function CampaignsPage() {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter" && isUpdating) {
-        saveActions();
+      if (event.key === "Enter" && !event.shiftKey && isUpdating) {
+        setTimeout(() => {
+          saveActions();
+        }, 100);
         return;
       }
 
