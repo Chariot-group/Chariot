@@ -40,10 +40,10 @@ jobs:
         working-directory: ./${{ matrix.project }}
         run: npm run format
 
-      # Décommenter quand les tests unitaires sont prêts
-      # - name: Run unit tests for ${{ matrix.project }}
-      #   working-directory: ./${{ matrix.project }}
-      #   run: npm test
+      - name: Run unit tests for ${{ matrix.project }}
+        working-directory: ./${{ matrix.project }}
+        if: matrix.project == 'backend'
+        run: npm test
 
       - name: Build ${{ matrix.project }}
         working-directory: ./${{ matrix.project }}
