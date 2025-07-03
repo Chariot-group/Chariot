@@ -42,7 +42,12 @@ export class StripeService {
                         email: customer.email,
                         username: customer.name,
                         campaigns: [],
-                        password: generateRandomPassword()
+                        password: generateRandomPassword(),
+                        subscriptions: [{
+                            expired_at: new Date(),
+                            started_at: new Date(),
+                            productId: sub.items.data[0].price.product.toString(),
+                        }],
                     }).then(user => user.data);
                 }
 
