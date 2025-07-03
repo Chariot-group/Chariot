@@ -1,9 +1,19 @@
 // stripe.service.ts
 import { Injectable, Logger } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import Stripe from 'stripe';
+import { User, UserDocument } from '@/resources/user/schemas/user.schema';
+import { UserService } from '@/resources/user/user.service';
+import { Model } from 'mongoose';
+import { generateRandomPassword } from '@/utils/utils.tools';
 
 @Injectable()
 export class StripeService {
+
+    constructor(
+        private readonly userService: UserService,
+        @InjectModel(User.name) private userModel: Model<UserDocument>
+    ) { }
 
     private readonly SERVICE_NAME = StripeService.name;
     private readonly logger = new Logger(this.SERVICE_NAME);
@@ -24,7 +34,19 @@ export class StripeService {
         switch (event.type) {
             case 'customer.subscription.created': {
                 const sub = event.data.object as Stripe.Subscription;
-                this.logger.verbose('🆕 Abonnement créé : ' + sub.id, this.SERVICE_NAME);
+
+                const customer = await this.stripe.customers.retrieve(sub.customer.toString()) as Stripe.Customer;
+                let user = await this.userService.findByEmail(customer.email);
+                if (!user) {
+                    user = await this.userService.create({
+                        email: customer.email,
+                        username: customer.name,
+                        campaigns: [],
+                        password: generateRandomPassword()
+                    }).then(user => user.data);
+                }
+
+                this.logger.verbose(`🆕 Abonnement créé pour l'utilisateur : ${user.email}`, this.SERVICE_NAME);
                 break;
             }
 
@@ -37,12 +59,6 @@ export class StripeService {
             case 'customer.subscription.updated': {
                 const updated = event.data.object as Stripe.Subscription;
                 this.logger.verbose('🔄 Abonnement mis à jour :' + updated.id, this.SERVICE_NAME);
-                break;
-            }
-
-            case 'customer.subscription.deleted': {
-                const deleted = event.data.object as Stripe.Subscription;
-                this.logger.verbose('⛔ Abonnement supprimé : ' + deleted.id, this.SERVICE_NAME);
                 break;
             }
 

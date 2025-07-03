@@ -13,6 +13,9 @@ export class User {
   @Prop({ required: true })
   email: string;
 
+  @Prop({ required: true, default: new Date() })
+  expired_at: Date;
+
   @Prop({ default: null, maxlength: 6 })
   otp?: string;
 
