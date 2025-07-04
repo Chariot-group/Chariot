@@ -48,6 +48,7 @@ services:
       - DEFAULT_PASSWORD=${DEFAULT_PASSWORD}
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
       - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - INTERNAL_API_PORT=${INTERNAL_API_PORT}
     depends_on:
       mongo:
         condition: service_healthy
