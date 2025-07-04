@@ -1,6 +1,9 @@
 import { IsDateString, IsString } from "class-validator";
 
 export class SubscribeDto {
+    @IsString()
+    readonly id: string;
+
     @IsDateString()
     readonly expired_at: Date;
 
@@ -9,4 +12,7 @@ export class SubscribeDto {
 
     @IsString()
     readonly productId: string;
+
+    @IsString()
+    readonly priceId: string;
 }
