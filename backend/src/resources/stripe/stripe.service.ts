@@ -122,46 +122,40 @@ export class StripeService {
         const startedAt = new Date(item.current_period_start * 1000);
         const expiredAt = new Date(item.current_period_end * 1000);
 
-        // Cherche la dernière subscription active, même si elle a le même ID
-        const latestActive = user.subscriptions.find((s) =>
-            !s.expired_at || s.expired_at > new Date()
+        // Récupère tous les abonnements encore actifs
+        const now = new Date();
+        const activeSubscriptions = user.subscriptions.filter((s) => s.expired_at > now);
+
+        // On cherche s'il y a un abonnement actif avec une offre différente
+        const conflictingActive = activeSubscriptions.find(
+            (s) => s.productId !== newProductId || s.priceId !== newPriceId,
         );
-        const latestActiveIndex = user.subscriptions.findIndex((s) =>
-            !s.expired_at || s.expired_at > new Date()
+
+        // On cherche s’il y a un abonnement actif avec la même offre (productId + priceId)
+        const matchingActive = activeSubscriptions.find(
+            (s) => s.productId === newProductId && s.priceId === newPriceId,
         );
 
-        if (latestActive) {
-            const sameOffer =
-                latestActive.priceId === newPriceId &&
-                latestActive.productId === newProductId &&
-                latestActive.id === newSubId;
+        if (matchingActive) {
+            // 🔁 Même offre encore active → on met juste à jour la date de fin
+            matchingActive.expired_at = expiredAt;
 
-            if (sameOffer) {
-                // Même formule : mise à jour de la date de fin
-                latestActive.expired_at = expiredAt;
-                this.logger.log(
-                    `📦 Abonnement mis à jour : ${newSubId} → ${expiredAt.toISOString()}`,
-                    this.SERVICE_NAME,
-                );
-            } else {
-                // Changement d'offre : clôturer l'actuel et enregistrer un nouveau
-                user.subscriptions[latestActiveIndex].expired_at = new Date(); // clôture immédiate
-
-                user.subscriptions.push({
-                    id: newSubId,
-                    productId: newProductId,
-                    priceId: newPriceId,
-                    started_at: startedAt,
-                    expired_at: expiredAt,
-                });
+            this.logger.log(
+                `📦 Prolongation de l'abonnement actif : ${newSubId} → ${expiredAt.toISOString()}`,
+                this.SERVICE_NAME,
+            );
+        } else {
+            if (conflictingActive) {
+                // 🔁 Offre différente encore active → on clôture immédiatement
+                conflictingActive.expired_at = now;
 
                 this.logger.log(
-                    `🔁 Changement d'offre détecté. Ancienne clôturée, nouvelle enregistrée pour ${user.email}`,
+                    `🔁 Changement d'offre détecté. Ancienne offre (${conflictingActive.priceId}) clôturée.`,
                     this.SERVICE_NAME,
                 );
             }
-        } else {
-            // Aucun abonnement actif → ajout direct
+
+            // ➕ Ajoute une nouvelle entrée, même si c'est une ancienne offre
             user.subscriptions.push({
                 id: newSubId,
                 productId: newProductId,
@@ -170,7 +164,10 @@ export class StripeService {
                 expired_at: expiredAt,
             });
 
-            this.logger.log(`📦 Nouvel abonnement enregistré : ${newSubId}`, this.SERVICE_NAME);
+            this.logger.log(
+                `📦 Nouvelle souscription enregistrée pour ${user.email} : ${newSubId}`,
+                this.SERVICE_NAME,
+            );
         }
 
         await user.save();
