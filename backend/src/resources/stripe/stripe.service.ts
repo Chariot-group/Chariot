@@ -6,8 +6,6 @@ import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { UserService } from '@/resources/user/user.service';
 import { Model } from 'mongoose';
 import { generateRandomPassword } from '@/utils/utils.tools';
-import { use } from 'passport';
-import { Subscribe } from '../user/schemas/subscribe/subscribe.schema';
 
 @Injectable()
 export class StripeService {
@@ -32,88 +30,116 @@ export class StripeService {
         );
     }
 
-    async handleEvent(event: Stripe.Event) {
+    async handleEvent(event: Stripe.Event): Promise<void> {
         switch (event.type) {
-            case 'customer.subscription.created': {
-                const sub = event.data.object as Stripe.Subscription;
+            case 'checkout.session.completed':
+                return this.handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session);
 
-                const customer = await this.stripe.customers.retrieve(sub.customer.toString()) as Stripe.Customer;
-                let user = await this.userService.findByEmail(customer.email);
-                if (!user) {
-                    user = await this.userService.create({
-                        email: customer.email,
-                        username: customer.name,
-                        campaigns: [],
-                        password: generateRandomPassword(),
-                    }).then(user => user.data);
-                }
+            case 'customer.subscription.updated':
+                return this.handleSubscriptionUpdated(event.data.object as Stripe.Subscription);
 
-                let item: Stripe.SubscriptionItem = sub.items.data[0];
-
-                user.subscriptions.push({
-                    id: sub.id,
-                    expired_at: new Date(item.current_period_end * 1000),
-                    started_at: new Date(item.current_period_start * 1000),
-                    productId: item.price.product.toString(),
-                    priceId: item.price.id
-                });
-
-                await user.save();
-
-                this.logger.verbose(`🆕 Abonnement créé pour l'utilisateur : ${user.email}`, this.SERVICE_NAME);
-                break;
-            }
-
-            case 'invoice.paid': {
-                const invoice = event.data.object as Stripe.Invoice;
-                this.logger.verbose('💰 Paiement reçu pour abonnement : ' + invoice.account_name, this.SERVICE_NAME);
-                break;
-            }
-
-
-            /**
-             * 2. Abonnement mis à jour (changement de plan / période)
-             * - Mise à jour du plan et de la périodicité uniquement
-             * - La mise à jour de la date de fin se fait uniquement à la validation du paiement (`invoice.paid`)
-             */
-            case 'customer.subscription.updated': {
-                const sub = event.data.object as Stripe.Subscription;
-                const previous = (event as any).previous_attributes;
-
-                if (!previous?.items) break;
-
-                const oldItem: Stripe.SubscriptionItem = previous.items.data[0];
-                const newItem: Stripe.SubscriptionItem = sub.items.data[0];
-
-                if (oldItem.price.id === newItem.price.id) break; // aucun changement
-
-                const customer = await this.stripe.customers.retrieve(sub.customer.toString()) as Stripe.Customer;
-                let user = await this.userService.findByEmail(customer.email);
-
-                // Archiver l'abonnement précédent
-                user.subscriptions = user.subscriptions.map((s) =>
-                    s.id === sub.id
-                        ? { ...s, expired_at: new Date() }
-                        : s
-                );
-
-                // Ajouter le nouveau plan comme nouvel abonnement
-                user.subscriptions.push({
-                    id: sub.id,
-                    priceId: newItem.price.id,
-                    productId: newItem.price.product.toString(),
-                    started_at: new Date(newItem.current_period_start * 1000),
-                    expired_at: new Date(newItem.current_period_end * 1000)
-                });
-
-                await user.save();
-                this.logger.verbose(`🔄 Plan mis à jour pour ${user.email}`, this.SERVICE_NAME);
-                break;
-            }
+            case 'customer.subscription.created':
+                return this.handleSubscriptionCreated(event.data.object as Stripe.Subscription);
 
             default:
-                this.logger.error(`📦 Event non géré : ${event.type}`, null, this.SERVICE_NAME);
-                return;
+                this.logger.log(`📦 Event non géré : ${event.type}`, this.SERVICE_NAME);
         }
+    }
+
+    private async handleCheckoutSessionCompleted(session: Stripe.Checkout.Session): Promise<void> {
+        if (session.mode !== 'subscription') return;
+
+        const customerId: string = session.customer as string;
+        const subscriptionId: string = session.subscription as string;
+
+        const customer: Stripe.Customer = await this.stripe.customers.retrieve(customerId) as Stripe.Customer;
+        let user = await this.userService.findByEmail(customer.email);
+        if (!user) {
+            user = await this.userService.create({
+                email: customer.email,
+                username: customer.name,
+                campaigns: [],
+                password: generateRandomPassword(),
+
+            }).then((user) => user.data);
+        }
+
+        const subscription: Stripe.Subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
+        const item: Stripe.SubscriptionItem = subscription.items.data[0];
+
+        user.subscriptions.push({
+            id: subscription.id,
+            productId: item.price.product as string,
+            priceId: item.price.id,
+            started_at: new Date(item.current_period_start * 1000),
+            expired_at: new Date(item.current_period_end * 1000),
+        });
+
+        await user.save();
+    }
+
+    private async handleSubscriptionUpdated(subscription: Stripe.Subscription): Promise<void> {
+        const customerId: string = subscription.customer as string;
+        const customer: Stripe.Customer = await this.stripe.customers.retrieve(customerId) as Stripe.Customer;
+
+        const user = await this.userService.findByEmail(customer.email);
+        if (!user) return;
+
+        const newSubId = subscription.id;
+        const item = subscription.items.data[0];
+        const newProductId = item.price.product as string;
+        const newPriceId = item.price.id;
+        const startedAt = new Date(item.current_period_start * 1000);
+        const expiredAt = new Date(item.current_period_end * 1000);
+
+        const isExpired = (date: Date) => date.getTime() < Date.now();
+
+        const activeSubs = user.subscriptions.filter((s) => !isExpired(s.expired_at));
+        const existing = user.subscriptions.find((s) => s.id === newSubId);
+
+        if (!existing) {
+            if (activeSubs.length > 0) {
+                await this.stripe.subscriptions.update(activeSubs[0].id, {
+                    cancel_at: Math.floor(startedAt.getTime() / 1000),
+                    proration_behavior: 'create_prorations',
+                });
+
+                activeSubs[0].expired_at = new Date(); // clôture immédiate
+            }
+
+            user.subscriptions.push({
+                id: newSubId,
+                productId: newProductId,
+                priceId: newPriceId,
+                started_at: startedAt,
+                expired_at: expiredAt,
+            });
+        } else {
+            existing.expired_at = expiredAt;
+        }
+
+        await user.save();
+    }
+
+    private async handleSubscriptionCreated(subscription: Stripe.Subscription): Promise<void> {
+        const customerId = subscription.customer as string;
+        const customer: Stripe.Customer = await this.stripe.customers.retrieve(customerId) as Stripe.Customer;
+
+        const user = await this.userService.findByEmail(customer.email);
+        if (!user) return;
+
+        const item = subscription.items.data[0];
+        const productId = item.price.product as string;
+        const priceId = item.price.id;
+
+        user.subscriptions.push({
+            id: subscription.id,
+            productId,
+            priceId,
+            started_at: new Date(item.current_period_start * 1000),
+            expired_at: new Date(item.current_period_end * 1000),
+        });
+
+        await user.save();
     }
 }
