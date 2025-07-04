@@ -1,11 +1,9 @@
 // stripe.controller.ts
 import {
-    Controller, Post, Req, Res, Headers, HttpException, HttpStatus,
-    Logger,
-    Get,
+    Controller, Post, Req, Res, Headers, Logger
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { StripeService } from './stripe.service';
+import { StripeService } from '@/resources/stripe/stripe.service';
 import { Public } from '@/common/decorators/public.decorator';
 
 @Controller('stripe')

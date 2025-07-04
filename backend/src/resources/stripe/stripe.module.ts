@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { StripeController } from './stripe.controller';
-import { StripeService } from './stripe.service';
-import { User, UserSchema } from '../user/schemas/user.schema';
-import { UserModule } from '../user/user.module';
+import { StripeController } from '@/resources/stripe/stripe.controller';
+import { StripeService } from '@/resources/stripe/stripe.service';
+import { User, UserSchema } from '@/resources/user/schemas/user.schema';
+import { UserModule } from '@/resources/user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
