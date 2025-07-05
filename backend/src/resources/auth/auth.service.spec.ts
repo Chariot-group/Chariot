@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './auth.service';
+import { AuthService } from '@/resources/auth/auth.service';
 import { UserService } from '@/resources/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { MaillingService } from '@/mailling/mailling.service';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedException, InternalServerErrorException, NotFoundException, BadRequestException } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
-import { User } from '../user/schemas/user.schema';
+import { User } from '@/resources/user/schemas/user.schema';
 import { Types } from 'mongoose';
 
 describe('AuthService - signIn', () => {
