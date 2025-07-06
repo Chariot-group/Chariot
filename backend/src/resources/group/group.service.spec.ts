@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GroupService } from './group.service';
+import { GroupService } from '@/resources/group/group.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { Group } from './schemas/group.schema';
+import { Group } from '@/resources/group/schemas/group.schema';
 import { Campaign } from '@/resources/campaign/schemas/campaign.schema';
 import { Character } from '@/resources/character/core/schemas/character.schema';
 import { Types } from 'mongoose';
@@ -70,7 +70,7 @@ describe('GroupService', () => {
       groupModel.create.mockResolvedValue({ _id: 'groupId', ...createDto });
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
-      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => { });
 
       const result = await service.create(createDto, userId);
 
@@ -107,7 +107,7 @@ describe('GroupService', () => {
       groupModel.create.mockResolvedValue({ _id: 'groupId', ...dtoWithoutCharacters });
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
-      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => { });
 
       const result = await service.create(dtoWithoutCharacters as any, userId);
 
@@ -156,7 +156,7 @@ describe('GroupService', () => {
 
     it('should throw InternalServerErrorException on error', async () => {
       groupModel.create.mockRejectedValue(new Error('DB error'));
-      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => { });
 
       await expect(service.create(createDto, userId)).rejects.toThrow(InternalServerErrorException);
       expect(loggerSpy).toHaveBeenCalledWith(expect.stringMatching(/Error while creating group: DB error/), null, service['SERVICE_NAME']);
@@ -226,7 +226,7 @@ describe('GroupService', () => {
 
       groupModel.countDocuments.mockResolvedValue(1);
 
-      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => { });
 
       const result = await service.findAllByUser(
         new Types.ObjectId(userId),
@@ -334,7 +334,7 @@ describe('GroupService', () => {
       campaignModel.findById.mockReturnValue({
         lean: jest.fn().mockResolvedValue(null),
       });
-      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => { });
 
       await expect(service.findAllByUser(
         new Types.ObjectId(userId),
@@ -355,7 +355,7 @@ describe('GroupService', () => {
       groupModel.skip.mockReturnThis();
       groupModel.exec = jest.fn().mockRejectedValue(new Error('DB fail'));
       groupModel.countDocuments.mockResolvedValue(0);
-      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => { });
 
       await expect(service.findAllByUser(
         new Types.ObjectId(userId),
@@ -375,7 +375,7 @@ describe('GroupService', () => {
         exec: jest.fn().mockResolvedValue({ _id: 'groupId' }),
       });
 
-      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => { });
 
       const result = await service.findOne(new Types.ObjectId('507f1f77bcf86cd799439011'));
 
@@ -394,7 +394,7 @@ describe('GroupService', () => {
         exec: jest.fn().mockRejectedValue(new Error('DB fail')),
       });
 
-      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => { });
 
       await expect(service.findOne(new Types.ObjectId('507f1f77bcf86cd799439011'))).rejects.toThrow(InternalServerErrorException);
 
@@ -423,7 +423,7 @@ describe('GroupService', () => {
       groupModel.updateOne.mockReturnValue({ exec: jest.fn().mockResolvedValue({ modifiedCount: 1 }) });
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
-      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => { });
 
       const result = await service.update(id, updateDto);
 
@@ -446,7 +446,7 @@ describe('GroupService', () => {
         }),
       });
       groupModel.updateOne.mockReturnValue({ exec: jest.fn().mockResolvedValue({ modifiedCount: 0 }) });
-      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => { });
 
       await expect(service.update(id, updateDto)).rejects.toThrow(NotFoundException);
 
@@ -461,7 +461,7 @@ describe('GroupService', () => {
         populate: jest.fn().mockReturnThis(),
         exec: jest.fn().mockRejectedValue(new Error('DB error')),
       });
-      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => { });
 
       await expect(service.update(id, updateDto)).rejects.toThrow(InternalServerErrorException);
 
@@ -483,7 +483,7 @@ describe('GroupService', () => {
         exec: jest.fn().mockResolvedValue(mockGroup),
       });
       characterModel.updateMany.mockReturnValue({ exec: jest.fn().mockResolvedValue({}) });
-      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'verbose').mockImplementation(() => { });
 
       const result = await service.remove(id);
 
@@ -500,7 +500,7 @@ describe('GroupService', () => {
       groupModel.findById.mockReturnValue({
         exec: jest.fn().mockRejectedValue(new Error('DB fail')),
       });
-      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => {});
+      const loggerSpy = jest.spyOn(service['logger'], 'error').mockImplementation(() => { });
 
       await expect(service.remove(id)).rejects.toThrow(InternalServerErrorException);
 

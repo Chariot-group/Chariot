@@ -1,21 +1,15 @@
-describe('GroupController', () => {
-  it('should be defined', () => {
-    expect(true).toBe(true);
-  });
-});
-
 import { Test, TestingModule } from '@nestjs/testing';
-import { GroupController } from './group.controller';
-import { GroupService } from './group.service';
+import { GroupController } from '@/resources/group/group.controller';
+import { GroupService } from '@/resources/group/group.service';
 import { CharacterService } from '@/resources/character/character.service';
 import { Types } from 'mongoose';
 import { getModelToken } from '@nestjs/mongoose';
-import { Group } from './schemas/group.schema';
+import { Group } from '@/resources/group/schemas/group.schema';
 import { Campaign } from '@/resources/campaign/schemas/campaign.schema';
 import { Character } from '@/resources/character/core/schemas/character.schema';
 import { BadRequestException, NotFoundException, GoneException } from '@nestjs/common';
-import type { CreateGroupDto } from './dto/create-group.dto';
-import type { UpdateGroupDto } from './dto/update-group.dto';
+import type { CreateGroupDto } from '@/resources/group/dto/create-group.dto';
+import type { UpdateGroupDto } from '@/resources/group/dto/update-group.dto';
 
 describe('GroupController - create', () => {
   let controller: GroupController;
