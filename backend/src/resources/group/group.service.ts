@@ -145,7 +145,8 @@ export class GroupService {
         .find(filters)
         .sort({ ...sortCriteria, _id: 'asc' })
         .limit(offset)
-        .skip((page - 1) * offset);
+        .skip((page - 1) * offset)
+        .exec();
 
       const totalItems = await this.groupModel.countDocuments(filters);
       const end: number = Date.now();
@@ -163,6 +164,7 @@ export class GroupService {
         },
       };
     } catch (error) {
+      if (error instanceof NotFoundException) throw error;
       const errorMessage = `Error while fetching groups: ${error.message}`;
       this.logger.error(errorMessage);
       throw new InternalServerErrorException(errorMessage);
