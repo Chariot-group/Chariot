@@ -6,8 +6,8 @@ import { Campaign } from '@/resources/campaign/schemas/campaign.schema';
 import { Character } from '@/resources/character/core/schemas/character.schema';
 import { Types } from 'mongoose';
 import { InternalServerErrorException, NotFoundException } from '@nestjs/common';
-import type { CreateGroupDto } from './dto/create-group.dto';
-import type { UpdateGroupDto } from './dto/update-group.dto';
+import type { CreateGroupDto } from '@/resources/group/dto/create-group.dto';
+import type { UpdateGroupDto } from '@/resources/group/dto/update-group.dto';
 
 describe('GroupService', () => {
   let service: GroupService;
