@@ -1,6 +1,6 @@
 import { IsDateString, IsString } from "class-validator";
 
-export class SubscribeDto {
+export class SubscriptionDto {
     @IsString()
     readonly id: string;
 

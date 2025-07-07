@@ -6,7 +6,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
-import { SubscribeDto } from '@/resources/user/dto/subscription/subscription.dto';
+import { SubscriptionDto } from '@/resources/user/dto/subscription/subscription.dto';
 
 export class CreateUserDto {
   @IsString()
@@ -18,7 +18,7 @@ export class CreateUserDto {
 
   @IsArray()
   @IsOptional()
-  readonly subscriptions?: SubscribeDto[];
+  readonly subscriptions?: SubscriptionDto[];
 
   @IsString()
   readonly password: string;
