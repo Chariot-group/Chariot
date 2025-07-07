@@ -4,7 +4,9 @@ import * as path from 'path';
 
 async function bootstrap() {
 
-    dotenv.config({ path: path.resolve(__dirname, '../../../../../.env') });
+    console.log(process.cwd());
+
+    dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
         apiVersion: '2025-05-28.basil',
     });
