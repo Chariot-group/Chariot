@@ -1,10 +1,12 @@
 import Stripe from 'stripe';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
 
     const API_VERSION = '2025-05-28.basil';
+    const SERVICE_NAME: string = 'STRIPE-CHECKOUT';
 
     dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
@@ -21,8 +23,8 @@ async function bootstrap() {
                     quantity: 1,
                 },
             ],
-            success_url: `http://localhost:3000/success/{CHECKOUT_SESSION_ID}`,
-            cancel_url: `http://localhost:3000/cancel`,
+            success_url: `${process.env.LANDING_PAGE_URL}/success/{CHECKOUT_SESSION_ID}`,
+            cancel_url: `${process.env.LANDING_PAGE_URL}/cancel`,
             custom_fields: [
                 {
                     key: "pseudo",
@@ -40,7 +42,7 @@ async function bootstrap() {
             ],
         });
 
-    console.log('👉 URL Checkout:', session.url);
+    Logger.log(`👉 URL Checkout: ${session.url}`, SERVICE_NAME);
 }
 
 bootstrap();
