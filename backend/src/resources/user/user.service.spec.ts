@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserService } from './user.service';
+import { UserService } from '@/resources/user/user.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
+import { User } from '@/resources/user/schemas/user.schema';
 import { ConflictException, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from '@/resources/user/dto/update-user.dto';
+import { CreateUserDto } from '@/resources/user/dto/create-user.dto';
 
 // Mock bcrypt
 jest.mock('bcrypt', () => ({

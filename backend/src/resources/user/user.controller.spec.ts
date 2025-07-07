@@ -1,6 +1,6 @@
 import { UserDocument } from '@/resources/user/schemas/user.schema';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserController } from './user.controller';
+import { UserController } from '@/resources/user/user.controller';
 import { UserService } from '@/resources/user/user.service';
 import { getModelToken } from '@nestjs/mongoose';
 import { User } from '@/resources/user/schemas/user.schema';
