@@ -1,4 +1,3 @@
-// stripe.controller.ts
 import {
     Controller, Post, Req, Res, Headers, Logger
 } from '@nestjs/common';
