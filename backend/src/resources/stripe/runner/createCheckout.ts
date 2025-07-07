@@ -4,11 +4,11 @@ import * as path from 'path';
 
 async function bootstrap() {
 
-    console.log(process.cwd());
+    const API_VERSION = '2025-05-28.basil';
 
     dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-        apiVersion: '2025-05-28.basil',
+        apiVersion: API_VERSION,
     });
 
     const session = await stripe.checkout.sessions.create(
