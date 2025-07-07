@@ -23,7 +23,7 @@ stripe login
 Dans un terminal (ne le ferme pas) :
 
 ```bash
-stripe listen --forward-to localhost:{ton port API}/webhook/stripe
+stripe listen --forward-to localhost:{ton port API}/stripe/webhook
 ```
 
 Cela permet de rediriger tous les événements Stripe vers ton backend local NestJS.
