@@ -1,9 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import Stripe from 'stripe';
-import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { UserService } from '@/resources/user/user.service';
-import { Model } from 'mongoose';
 import { generateRandomPassword } from '@/utils/utils.tools';
 
 @Injectable()
@@ -11,7 +8,6 @@ export class StripeService {
 
     constructor(
         private readonly userService: UserService,
-        @InjectModel(User.name) private userModel: Model<UserDocument>
     ) { }
 
     private readonly SERVICE_NAME = StripeService.name;
