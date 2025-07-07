@@ -6,7 +6,7 @@ import {
   IsString,
   MaxLength,
 } from 'class-validator';
-import { SubscribeDto } from '@/resources/user/dto/subscribe/subscribe.dto';
+import { SubscribeDto } from '@/resources/user/dto/subscription/subscription.dto';
 
 export class CreateUserDto {
   @IsString()

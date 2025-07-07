@@ -2,7 +2,7 @@ import { Prop, Schema } from '@nestjs/mongoose';
 import { SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({ _id: false })
-export class Subscribe {
+export class Subscription {
 
     @Prop({ required: true })
     id: string;
@@ -20,4 +20,4 @@ export class Subscribe {
     priceId: string;
 }
 
-export const SubscribeSchema = SchemaFactory.createForClass(Subscribe);
+export const SubscriptionSchema = SchemaFactory.createForClass(Subscription);
