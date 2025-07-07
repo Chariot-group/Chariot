@@ -5,6 +5,7 @@ import { instance } from '@/logger/winston.logger';
 import { ValidationPipe } from '@nestjs/common';
 import { JwtAuthGuard } from '@/common/guards/jwt-auth.guard';
 import * as cookieParser from 'cookie-parser';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -12,6 +13,13 @@ async function bootstrap() {
       instance: instance,
     }),
   });
+
+  app.use('/stripe/webhook', bodyParser.raw({
+    type: 'application/json',
+    verify: (req: any, res, buf) => {
+      req.rawBody = buf;
+    },
+  }));
 
   app.use(cookieParser());
 
