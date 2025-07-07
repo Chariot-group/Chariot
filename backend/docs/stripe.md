@@ -68,11 +68,11 @@ Ces événements seront captés par Stripe CLI et transmis à ton serveur via `/
 ## 🧰 Astuces
 
 Pour créer un abonnement: 
-1. Sur la page checkout, rempli les infos demandés (pour bien tester, il faut que tu es accès à l'email)
+1. Sur la page checkout, rempli les infos demandés (pour bien tester, il faut que tu aies accès à l'email)
 
 Pour modifier un abonnement:
 1. Sur la page checkout, met le même email que l'étape d'avant.
-2. La page va changé en te disant que tu as déjà une abonnement. Suis les étapes.
+2. La page va changer en te disant que tu as déjà une abonnement. Suis les étapes.
 3. Une fois connecté, tu peux changer d'offres
 
 ---
