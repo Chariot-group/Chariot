@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { StripeController } from './stripe.controller';
-import { StripeService } from './stripe.service';
+import { StripeController } from '@/resources/stripe/stripe.controller';
+import { StripeService } from '@/resources/stripe/stripe.service';
 import { Request, Response } from 'express';
 
 describe('StripeController - handleWebhook', () => {

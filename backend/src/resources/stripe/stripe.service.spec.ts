@@ -1,5 +1,5 @@
 import Stripe from 'stripe';
-import { StripeService } from './stripe.service';
+import { StripeService } from '@/resources/stripe/stripe.service';
 import { UserService } from '@/resources/user/user.service';
 import { Test, TestingModule } from '@nestjs/testing';
 
