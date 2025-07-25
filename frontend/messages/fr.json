@@ -505,11 +505,12 @@
     "placeholderConfirmPassword": "Confirmez votre mot de passe",
     "send": "Activer le compte",
     "toasts": {
-      "passwordChanged": "Mot de passe changé !",
+      "accountActivated": "Compte activé !",
       "passwordsNotMatching": "Les mots de passe ne correspondent pas",
       "passwordRequired": "Le mot de passe est requis",
       "confirmPasswordRequired": "La confirmation du mot de passe est requise",
-      "internal": "Une erreur c'est produite quand nous avons essayé d'activer le compte"
+      "internal": "Une erreur c'est produite quand nous avons essayé d'activer le compte",
+      "accountAlreadyActivated": "Le compte est déjà activé"
     },
     "cancel": "Annuler"
   },

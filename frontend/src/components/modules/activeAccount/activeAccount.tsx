@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/useToast";
+import AuthService from "@/services/authService";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { act, useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -24,6 +25,7 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [typePassword, setTypePassword] = useState<"password" | "string">("password");
   const [typeConfirmPassword, setTypeConfirmPassword] = useState<"password" | "string">("password");
+  const [userId, setUserId] = useState<string | null>(null);
 
   const changePasswordSchema = z.object({
     password: z.string().min(1, t("toasts.passwordRequired")),
@@ -40,6 +42,7 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
 
   const changePassword = useCallback(async (values: z.infer<typeof changePasswordSchema>) => {
     try {
+      if (userId === null) return;
       if (values.password !== values.confirmPassword) {
         error(t("toasts.passwordsNotMatching"));
         form.setError("confirmPassword", {
@@ -48,7 +51,21 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
         return;
       }
       setLoading(true);
-
+      let response = await AuthService.changePassword(userId, "", values.password, values.confirmPassword);
+      if (response.statusCode && response.statusCode === 400) {
+        error(t("toasts.passwordsNotMatching"));
+        form.setError("confirmPassword", {
+          message: t("toasts.passwordsNotMatching"),
+        });
+        setLoading(false);
+        return;
+      }
+      if (response.statusCode && response.statusCode !== 200) {
+        error(t("toasts.internal"));
+        setLoading(false);
+        return;
+      }
+      success(t("toasts.accountActivated"));
       setLoading(false);
       router.push("/auth/login");
     } catch (err) {
@@ -56,6 +73,40 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
       error(t("toasts.internal"));
     }
   }, []);
+
+  const verifyUser = useCallback(async (id: string) => {
+    try {
+      setLoading(true);
+      let response = await AuthService.findOne(id);
+      if (response.status && response.status === 406) {
+        error(t("toasts.accountAlreadyActivated"));
+        router.push("/auth/login");
+        setLoading(false);
+        return;
+      }
+      if (response.status && response.status !== 200) {
+        console.error(response);
+        error(t("toasts.internal"));
+        setLoading(false);
+        router.push("/auth/login");
+        return;
+      }
+      success(t("toasts.accountActivated"));
+      setUserId(response.data._id);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      error(t("toasts.internal"));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activateKey) {
+      verifyUser(activateKey);
+    } else {
+      router.push("/auth/login");
+    }
+  }, [activateKey]);
 
   return (
     <div className="p-6 w-full flex flex-col items-center justify-center gap-[4dvh]">

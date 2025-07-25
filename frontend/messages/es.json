@@ -504,11 +504,12 @@
     "placeholderConfirmPassword": "Confirma tu contraseña",
     "send": "Activar cuenta",
     "toasts": {
-      "passwordChanged": "¡Contraseña cambiada!",
+      "accountActivated": "¡Cuenta activada!",
       "passwordsNotMatching": "Las contraseñas no coinciden",
       "passwordRequired": "La contraseña es obligatoria",
       "confirmPasswordRequired": "La confirmación de la contraseña es obligatoria",
-      "internal": "Ocurrió un error al intentar activar la cuenta"
+      "internal": "Ocurrió un error al intentar activar la cuenta",
+      "accountAlreadyActivated": "La cuenta ya está activada"
     },
     "cancel": "Cancelar"
   },
