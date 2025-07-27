@@ -1,9 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import Stripe from 'stripe';
-import { User, UserDocument } from '@/resources/user/schemas/user.schema';
 import { UserService } from '@/resources/user/user.service';
-import { Model } from 'mongoose';
 import { generateRandomPassword } from '@/utils/utils.tools';
 import { MaillingService } from '@/mailling/mailling.service';
 
