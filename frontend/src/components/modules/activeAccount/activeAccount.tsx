@@ -25,11 +25,11 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [typePassword, setTypePassword] = useState<"password" | "string">("password");
   const [typeConfirmPassword, setTypeConfirmPassword] = useState<"password" | "string">("password");
-  const [userId, setUserId] = useState<string | null>(null);
 
   const changePasswordSchema = z.object({
     password: z.string().min(1, t("toasts.passwordRequired")),
     confirmPassword: z.string().min(1, t("toasts.confirmPasswordRequired")),
+    userId: z.string().min(1),
   });
 
   const form = useForm<z.infer<typeof changePasswordSchema>>({
@@ -37,12 +37,14 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
     defaultValues: {
       password: "",
       confirmPassword: "",
+      userId: "",
     },
   });
 
   const changePassword = useCallback(async (values: z.infer<typeof changePasswordSchema>) => {
     try {
-      if (userId === null) return;
+      console.log("Changing password for user:", values.userId);
+      if (values.userId === null) return;
       if (values.password !== values.confirmPassword) {
         error(t("toasts.passwordsNotMatching"));
         form.setError("confirmPassword", {
@@ -51,7 +53,7 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
         return;
       }
       setLoading(true);
-      let response = await AuthService.changePassword(userId, "", values.password, values.confirmPassword);
+      let response = await AuthService.changePassword(values.userId, "", values.password, values.confirmPassword);
       if (response.statusCode && response.statusCode === 400) {
         error(t("toasts.passwordsNotMatching"));
         form.setError("confirmPassword", {
@@ -91,8 +93,9 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
         router.push("/auth/login");
         return;
       }
-      success(t("toasts.accountActivated"));
-      setUserId(response.data._id);
+
+      console.log("User found:", response.data);
+      form.setValue("userId", response.data._id);
       setLoading(false);
     } catch (err) {
       console.error(err);
