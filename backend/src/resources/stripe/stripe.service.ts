@@ -9,8 +9,7 @@ export class StripeService {
 
     constructor(
         private readonly userService: UserService,
-        private maillingService: MaillingService,
-        @InjectModel(User.name) private userModel: Model<UserDocument>
+        private maillingService: MaillingService
     ) { }
 
     private readonly SERVICE_NAME = StripeService.name;
