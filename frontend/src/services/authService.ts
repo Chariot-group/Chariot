@@ -87,7 +87,7 @@ const AuthService = {
     }
   },
 
-  async findOne(id: string) {
+  async findUser(id: string) {
     try {
       const response = await apiClient(APIContentType.JSON).get(`/auth/${id}`);
 

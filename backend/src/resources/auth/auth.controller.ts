@@ -125,7 +125,7 @@ export class AuthController {
 
   @Public()
   @Get(':id')
-  async findOne(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
+  async verifyUserIsNew(@Param('id', ParseMongoIdPipe) id: Types.ObjectId) {
     await this.validateResourceById(id, true);
 
     return this.userService.findOne(id);
