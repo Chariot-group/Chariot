@@ -31,6 +31,11 @@ export class NpcController {
 
     if (npc.deletedAt) {
       const message = `NPC #${id} is gone`;
+      throw new NotFoundException(message);
+    }
+
+    if (npc.deletedAt) {
+      const message = `NPC #${id} is gone`;
       this.logger.error(message, null, this.CONTROLLER_NAME);
       throw new GoneException(message);
     }
