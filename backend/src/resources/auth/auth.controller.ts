@@ -42,7 +42,7 @@ export class AuthController {
   }
 
   private async validateResourceById(
-    id: Types.ObjectId, verifyDate: boolean
+    id: Types.ObjectId, verifyDate: boolean = false
   ): Promise<void> {
     let user = await this.userModel.findById(id);
 
@@ -94,7 +94,7 @@ export class AuthController {
   ) {
     this.logger.log(`Change password for user #${id}`, this.CONTROLLER_NAME);
     try {
-      await this.validateResourceById(id, false);
+      await this.validateResourceById(id);
     } catch (error) {
       this.logger.error(error.message, error.stack, this.CONTROLLER_NAME);
       throw error;
@@ -109,7 +109,7 @@ export class AuthController {
     @Param('id', ParseMongoIdPipe) id: Types.ObjectId,
     @Body() verifyOTPDto: verifyOTPDto,
   ) {
-    await this.validateResourceById(id, false);
+    await this.validateResourceById(id);
 
     return this.authService.verifyOTP(id, verifyOTPDto);
   }
