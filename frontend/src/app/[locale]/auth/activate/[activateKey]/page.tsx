@@ -1,6 +1,6 @@
 "use client";
 import LocaleSwitcher from "@/components/locale/LocaleSwitcher";
-import ActiveAccount from "@/components/modules/activeAccount/activeAccount";
+import ActiveAccount from "@/components/modules/activateAccount/activateAccount";
 import { Card } from "@/components/ui/card";
 import { useParams } from "next/navigation";
 
