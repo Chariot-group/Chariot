@@ -79,7 +79,7 @@ export default function ActiveAccount({ activateKey }: ChangePasswordProps) {
   const verifyUser = useCallback(async (id: string) => {
     try {
       setLoading(true);
-      let response = await AuthService.findOne(id);
+      let response = await AuthService.findUser(id);
       if (response.status && response.status === 406) {
         error(t("toasts.accountAlreadyActivated"));
         router.push("/auth/login");
