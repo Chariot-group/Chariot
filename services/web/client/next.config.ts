@@ -11,6 +11,15 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_APP_VERSION: packageJson.version,
   },
+  webpack: (config, { dev }) => {
+    if (dev) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: ["**/.git/**", "**/node_modules/**", "**/.next/**"],
+      };
+    }
+    return config;
+  },
   typescript: {
     ignoreBuildErrors: true,
   },

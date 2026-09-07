@@ -74,7 +74,7 @@ export class GroupService {
       const end: number = Date.now();
 
       const message: string = `Group created in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.log(message, this.SERVICE_NAME);
       return {
         message,
         data: group,
@@ -130,7 +130,7 @@ export class GroupService {
         const campaign = await this.campaignModel.findById(campaignId).lean();
         if (!campaign) {
           const message: string = `Error while fetching groups: Campaign #${campaignId} not found`;
-          this.logger.error(message, null, this.SERVICE_NAME);
+          this.logger.debug(message, this.SERVICE_NAME);
           throw new NotFoundException(message);
         }
 
@@ -172,7 +172,7 @@ export class GroupService {
       const end: number = Date.now();
 
       const message: string = `Groups found in ${end - start}ms`;
-      this.logger.verbose(message);
+      this.logger.debug(message);
 
       return {
         message: message,
@@ -202,7 +202,7 @@ export class GroupService {
       const end: number = Date.now();
 
       const message = `Group #${id} found in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.debug(message, this.SERVICE_NAME);
       return {
         message,
         data: group,
@@ -293,12 +293,12 @@ export class GroupService {
 
       if (groupUpdate.modifiedCount === 0) {
         const message = `Group #${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
+        this.logger.debug(message, this.SERVICE_NAME);
         throw new NotFoundException(message);
       }
 
       const message = `Group #${id} update in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.log(message, this.SERVICE_NAME);
       return {
         message,
         data: group,
@@ -387,7 +387,7 @@ export class GroupService {
       const end: number = Date.now();
 
       const message = `Group #${id} delete in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.log(message, this.SERVICE_NAME);
       return {
         message,
         data: group,

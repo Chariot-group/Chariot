@@ -67,7 +67,7 @@ export class MaillingService {
           .replaceAll('{{otp}}', otp.toString()),
       });
 
-      this.logger.verbose(
+      this.logger.log(
         `Email send at ${email} in ${local}`,
         this.SERVICE_NAME,
       );
@@ -117,7 +117,7 @@ export class MaillingService {
           ),
       });
 
-      this.logger.verbose(
+      this.logger.log(
         `Welcome email sent to ${email} in default language (en)`,
         this.SERVICE_NAME,
       );

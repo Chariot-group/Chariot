@@ -241,7 +241,7 @@ describe('MaillingService', () => {
         mockReadFile.mockResolvedValue('<html>{{username}} {{otp}}</html>');
         mockSendMail.mockResolvedValue({});
         const loggerSpy = jest
-          .spyOn(service['logger'], 'verbose')
+          .spyOn(service['logger'], 'log')
           .mockImplementation();
 
         await service.sendOTP('testuser', 'test@example.com', 123456, 'en');
@@ -408,7 +408,7 @@ describe('MaillingService', () => {
         mockReadFile.mockResolvedValue('<html>Welcome {{username}}</html>');
         mockSendMail.mockResolvedValue({});
         const loggerSpy = jest
-          .spyOn(service['logger'], 'verbose')
+          .spyOn(service['logger'], 'log')
           .mockImplementation();
 
         await service.sendWelcomeEmail('testuser', 'test@example.com', 'token');

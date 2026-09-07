@@ -61,7 +61,7 @@ export class CampaignService {
       const end: number = Date.now();
 
       const message: string = `Campaign created in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.log(message, this.SERVICE_NAME);
       return {
         message,
         data: campaign,
@@ -151,7 +151,7 @@ export class CampaignService {
       }));
 
       const message = `Campaigns found in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.debug(message, this.SERVICE_NAME);
       return {
         message,
         data: campaignsWithGroupsClean,
@@ -179,7 +179,7 @@ export class CampaignService {
       const end: number = Date.now();
 
       const message = `Campaign #${id} found in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.debug(message, this.SERVICE_NAME);
       return {
         message,
         data: campaign,
@@ -250,7 +250,7 @@ export class CampaignService {
       const end: number = Date.now();
 
       const message: string = `Campaign #${id} updated in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.log(message, this.SERVICE_NAME);
 
       return {
         message: message,
@@ -294,7 +294,7 @@ export class CampaignService {
       const end: number = Date.now();
 
       const message: string = `Campaign #${id} delete in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.log(message, this.SERVICE_NAME);
       return {
         message,
         data: campaign,

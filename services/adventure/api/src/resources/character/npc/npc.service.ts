@@ -98,6 +98,7 @@ export class NpcService {
       const end: number = Date.now();
 
       const message: string = `NPC created in ${end - start}ms`;
+      this.logger.log(message, this.SERVICE_NAME);
       return {
         message,
         data: savedNpc,
@@ -135,7 +136,7 @@ export class NpcService {
             (_, index) => !groupCheckResults[index],
           );
           const message: string = `Invalid group IDs: ${invalidNpcIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
+          this.logger.debug(message, this.SERVICE_NAME);
           throw new BadRequestException(message);
         }
 
@@ -147,7 +148,7 @@ export class NpcService {
             group._id.toString(),
           );
           const message: string = `Gone group IDs: ${goneGroupIds.join(', ')}`;
-          this.logger.error(message, null, this.SERVICE_NAME);
+          this.logger.debug(message, this.SERVICE_NAME);
           throw new GoneException(message);
         }
       } else {
@@ -186,12 +187,12 @@ export class NpcService {
 
       if (npcUpdate.modifiedCount === 0) {
         const message = `NPC #${id} not found`;
-        this.logger.error(message, null, this.SERVICE_NAME);
+        this.logger.debug(message, this.SERVICE_NAME);
         throw new NotFoundException(message);
       }
 
       const message = `NPC #${id} update in ${end - start}ms`;
-      this.logger.verbose(message, this.SERVICE_NAME);
+      this.logger.log(message, this.SERVICE_NAME);
       return {
         message,
         data: npc,

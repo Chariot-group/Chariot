@@ -90,7 +90,7 @@ describe('GroupService', () => {
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
       const loggerSpy = jest
-        .spyOn(service['logger'], 'verbose')
+        .spyOn(service['logger'], 'log')
         .mockImplementation(() => {});
 
       const result = await service.create(createDto, userId);
@@ -138,7 +138,7 @@ describe('GroupService', () => {
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
       const loggerSpy = jest
-        .spyOn(service['logger'], 'verbose')
+        .spyOn(service['logger'], 'log')
         .mockImplementation(() => {});
 
       const result = await service.create(dtoWithoutCharacters as any, userId);
@@ -275,7 +275,7 @@ describe('GroupService', () => {
       groupModel.countDocuments.mockResolvedValue(1);
 
       const loggerSpy = jest
-        .spyOn(service['logger'], 'verbose')
+        .spyOn(service['logger'], 'debug')
         .mockImplementation(() => {});
 
       const result = await service.findAllByUser(
@@ -397,7 +397,7 @@ describe('GroupService', () => {
         lean: jest.fn().mockResolvedValue(null),
       });
       const loggerSpy = jest
-        .spyOn(service['logger'], 'error')
+        .spyOn(service['logger'], 'debug')
         .mockImplementation(() => {});
 
       await expect(
@@ -443,7 +443,7 @@ describe('GroupService', () => {
       });
 
       const loggerSpy = jest
-        .spyOn(service['logger'], 'verbose')
+        .spyOn(service['logger'], 'debug')
         .mockImplementation(() => {});
 
       const result = await service.findOne(
@@ -501,7 +501,7 @@ describe('GroupService', () => {
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
       const loggerSpy = jest
-        .spyOn(service['logger'], 'verbose')
+        .spyOn(service['logger'], 'log')
         .mockImplementation(() => {});
 
       const result = await service.update(id, updateDto);
@@ -528,7 +528,7 @@ describe('GroupService', () => {
         exec: jest.fn().mockResolvedValue({ modifiedCount: 0 }),
       });
       const loggerSpy = jest
-        .spyOn(service['logger'], 'error')
+        .spyOn(service['logger'], 'debug')
         .mockImplementation(() => {});
 
       await expect(service.update(id, updateDto)).rejects.toThrow(
@@ -581,7 +581,7 @@ describe('GroupService', () => {
       characterModel.exec.mockResolvedValue([]);
       campaignModel.updateMany.mockResolvedValue({});
       const loggerSpy = jest
-        .spyOn(service['logger'], 'verbose')
+        .spyOn(service['logger'], 'log')
         .mockImplementation(() => {});
 
       const result = await service.remove(id);
@@ -638,7 +638,7 @@ describe('GroupService', () => {
       characterModel.updateMany.mockReturnValue({
         exec: jest.fn().mockResolvedValue({}),
       });
-      jest.spyOn(service['logger'], 'verbose').mockImplementation();
+      jest.spyOn(service['logger'], 'log').mockImplementation();
 
       await service.remove(id);
 
@@ -667,7 +667,7 @@ describe('GroupService', () => {
       characterModel.select.mockReturnThis();
       characterModel.lean.mockReturnThis();
       characterModel.exec.mockResolvedValue([]);
-      jest.spyOn(service['logger'], 'verbose').mockImplementation();
+      jest.spyOn(service['logger'], 'log').mockImplementation();
 
       await service.remove(id);
 
@@ -694,7 +694,7 @@ describe('GroupService', () => {
       characterModel.select.mockReturnThis();
       characterModel.lean.mockReturnThis();
       characterModel.exec.mockResolvedValue([]);
-      jest.spyOn(service['logger'], 'verbose').mockImplementation();
+      jest.spyOn(service['logger'], 'log').mockImplementation();
 
       await service.remove(id);
 
@@ -720,7 +720,7 @@ describe('GroupService', () => {
         exec: jest.fn().mockResolvedValue({}),
       });
       const loggerSpy = jest
-        .spyOn(service['logger'], 'verbose')
+        .spyOn(service['logger'], 'log')
         .mockImplementation();
 
       const result = await service.remove(id);
@@ -749,7 +749,7 @@ describe('GroupService', () => {
       characterModel.select.mockReturnThis();
       characterModel.lean.mockReturnThis();
       characterModel.exec.mockResolvedValue([{ _id: orphanCharacterId }]);
-      jest.spyOn(service['logger'], 'verbose').mockImplementation();
+      jest.spyOn(service['logger'], 'log').mockImplementation();
 
       await service.remove(id);
 
@@ -766,7 +766,7 @@ describe('GroupService', () => {
       groupModel.create.mockResolvedValue({ _id: 'groupId', ...createDto });
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
-      jest.spyOn(service['logger'], 'verbose').mockImplementation();
+      jest.spyOn(service['logger'], 'log').mockImplementation();
 
       await service.create(createDto, userId);
 
@@ -793,7 +793,7 @@ describe('GroupService', () => {
       });
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
-      jest.spyOn(service['logger'], 'verbose').mockImplementation();
+      jest.spyOn(service['logger'], 'log').mockImplementation();
 
       await service.create(dtoWithMultipleCampaigns, userId);
 
@@ -813,7 +813,7 @@ describe('GroupService', () => {
       });
       characterModel.updateMany.mockResolvedValue({});
       campaignModel.updateMany.mockResolvedValue({});
-      jest.spyOn(service['logger'], 'verbose').mockImplementation();
+      jest.spyOn(service['logger'], 'log').mockImplementation();
 
       await service.create(dtoNoCampaigns, userId);
 
@@ -946,7 +946,7 @@ describe('GroupService', () => {
         groupModel.updateOne.mockReturnValue({
           exec: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
         });
-        jest.spyOn(service['logger'], 'verbose').mockImplementation();
+        jest.spyOn(service['logger'], 'log').mockImplementation();
 
         await service.update(id, updateDtoNoCharacters);
 
@@ -970,7 +970,7 @@ describe('GroupService', () => {
         groupModel.updateOne.mockReturnValue({
           exec: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
         });
-        jest.spyOn(service['logger'], 'verbose').mockImplementation();
+        jest.spyOn(service['logger'], 'log').mockImplementation();
 
         await service.update(id, updateDtoNoCampaigns);
 
@@ -1010,7 +1010,7 @@ describe('GroupService', () => {
           exec: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
         });
         characterModel.updateMany.mockResolvedValue({});
-        jest.spyOn(service['logger'], 'verbose').mockImplementation();
+        jest.spyOn(service['logger'], 'log').mockImplementation();
 
         await service.update(id, updateDtoWithNewCharacters);
 
@@ -1033,7 +1033,7 @@ describe('GroupService', () => {
         groupModel.updateOne.mockReturnValue({
           exec: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
         });
-        jest.spyOn(service['logger'], 'verbose').mockImplementation();
+        jest.spyOn(service['logger'], 'log').mockImplementation();
 
         await expect(service.update(id, updateDto)).rejects.toThrow();
       });
@@ -1078,7 +1078,7 @@ describe('GroupService', () => {
         groupModel.create.mockResolvedValue({ _id: 'groupId', ...createDto });
         characterModel.updateMany.mockResolvedValue({});
         campaignModel.updateMany.mockResolvedValue({});
-        jest.spyOn(service['logger'], 'verbose').mockImplementation();
+        jest.spyOn(service['logger'], 'log').mockImplementation();
 
         const dtoWithManyCharacters = {
           ...createDto,

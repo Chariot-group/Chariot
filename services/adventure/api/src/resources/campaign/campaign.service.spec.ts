@@ -53,7 +53,7 @@ describe('CampaignService - create', () => {
     groupModel.updateMany.mockResolvedValue({});
 
     const loggerSpy = jest
-      .spyOn(service['logger'], 'verbose')
+      .spyOn(service['logger'], 'log')
       .mockImplementation(() => {});
 
     const result = await service.create(mockCampaignDto, userId);
