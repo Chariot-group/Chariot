@@ -1,11 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { LayersPlus } from "lucide-react";
+import { LayersMinus, LayersPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AddCombatantsDialog } from "@/components/dialogs/AddCombatantsDialog";
+import { RemoveCombatantGroupsDialog } from "@/components/dialogs/RemoveCombatantGroupsDialog";
 import { InitiativeTrackerHealthDialog } from "@/components/initiativeTracker/InitiativeTrackerHealthDialog";
 import { InitiativeTrackerTable } from "@/components/initiativeTracker/InitiativeTrackerTable";
 import { InitiativeTrackerTurnControls, type PreviousTurnState } from "@/components/initiativeTracker/InitiativeTrackerTurnControls";
@@ -22,6 +23,8 @@ import {
   type InitiativeTrackerRowStatus,
 } from "@/components/initiativeTracker/utils";
 import CharacterService from "@/services/CharacterService";
+import { buildSessionCharacterHref, withSessionCodeQuery } from "@/lib/sessionInAppNavigation";
+import { flushPendingInitiativeInputs } from "@/lib/flushPendingInitiativeInputs";
 import {
   buildConditionEntry,
   formatRemainingConditionDuration,
@@ -78,7 +81,6 @@ export default function InitiativeTrackerPage() {
   const dispatch = useAppDispatch();
   const store = useAppStore();
   const router = useRouter();
-  const { locale } = useParams<{ locale: string }>();
   const sessionCode = useAppSelector(selectSessionCode);
   const isInSession = useAppSelector(selectIsInSession);
   const participants = useAppSelector(selectSessionParticipants);
@@ -115,9 +117,8 @@ export default function InitiativeTrackerPage() {
 
   const ownCharacterSheetHref = React.useMemo(() => {
     if (!ownCharacterId) return null;
-    const query = sessionCode ? `?sessionCode=${encodeURIComponent(sessionCode)}` : "";
-    return `/${locale}/characters/${encodeURIComponent(ownCharacterId)}${query}`;
-  }, [locale, ownCharacterId, sessionCode]);
+    return buildSessionCharacterHref(ownCharacterId, sessionCode);
+  }, [ownCharacterId, sessionCode]);
 
   const playerCanAccessPreparationTracker = !isGameMaster
     && battleInitialized
@@ -248,10 +249,7 @@ export default function InitiativeTrackerPage() {
     };
   }, [dispatchTrackerAction, isGameMaster, remoteCharacterVersions, rows, sessionCode]);
 
-  const getSheetHref = (characterId: string) => {
-    const query = sessionCode ? `?sessionCode=${encodeURIComponent(sessionCode)}` : "";
-    return `/${locale}/characters/${encodeURIComponent(characterId)}${query}`;
-  };
+  const getSheetHref = (characterId: string) => buildSessionCharacterHref(characterId, sessionCode);
 
   const addCondition = (
     row: InitiativeTrackerRow,
@@ -293,7 +291,7 @@ export default function InitiativeTrackerPage() {
 
     if (isGameMaster) {
       if (lastConsultedSheetPath) {
-        router.replace(lastConsultedSheetPath);
+        router.replace(withSessionCodeQuery(lastConsultedSheetPath, sessionCode));
       }
       return;
     }
@@ -309,6 +307,7 @@ export default function InitiativeTrackerPage() {
     ownCharacterSheetHref,
     playerCanAccessPreparationTracker,
     router,
+    sessionCode,
   ]);
 
   React.useEffect(() => {
@@ -480,6 +479,7 @@ export default function InitiativeTrackerPage() {
 
     return {
       initiativeFor: t("initiativeFor", { name }),
+      initiativeModifierFor: (bonus: string) => t("initiativeModifierFor", { bonus }),
       viewSheetFor: t("viewSheetFor", { name }),
       viewSheet: t("viewSheet"),
       viewOwnSheet: t("viewOwnSheet"),
@@ -597,19 +597,34 @@ export default function InitiativeTrackerPage() {
             )}
 
             {isGameMaster ? (
-              <AddCombatantsDialog>
-                <Button
-                  type="button"
-                  variant="outline"
-                  aria-label={tInit("addCombatants")}
-                  className="gap-2 rounded-[15px] px-3 sm:px-4">
-                  <LayersPlus
-                    className="size-4"
-                    aria-hidden="true"
-                  />
-                  <span className="sr-only sm:not-sr-only">{tInit("addCombatants")}</span>
-                </Button>
-              </AddCombatantsDialog>
+              <div className="flex shrink-0 items-center gap-2">
+                <RemoveCombatantGroupsDialog>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    aria-label={tInit("removeCombatantGroups")}
+                    className="gap-2 rounded-[15px] px-3 sm:px-4">
+                    <LayersMinus
+                      className="size-4"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only sm:not-sr-only">{tInit("removeCombatantGroups")}</span>
+                  </Button>
+                </RemoveCombatantGroupsDialog>
+                <AddCombatantsDialog>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    aria-label={tInit("addCombatants")}
+                    className="gap-2 rounded-[15px] px-3 sm:px-4">
+                    <LayersPlus
+                      className="size-4"
+                      aria-hidden="true"
+                    />
+                    <span className="sr-only sm:not-sr-only">{tInit("addCombatants")}</span>
+                  </Button>
+                </AddCombatantsDialog>
+              </div>
             ) : null}
           </div>
         ) : null}
@@ -641,14 +656,6 @@ export default function InitiativeTrackerPage() {
           currentRound={currentRound}
           onSetConcentration={
             isGameMaster || playerCanEditOwnConcentration ? handleSetConcentration : undefined
-          }
-          onResolvePendingConcentrationCheck={
-            isGameMaster || playerCanEditOwnConcentration
-              ? (row, result) => {
-                  if (!shouldShowConcentrationSaveDialog({ row, isGameMaster, ownCharacterId })) return;
-                  handleResolvePendingConcentrationCheck(row, result);
-                }
-              : undefined
           }
           onOpenConcentrationSaveDialog={openConcentrationSaveDialogForRow}
           onRemoveFromInitiative={
@@ -727,6 +734,11 @@ export default function InitiativeTrackerPage() {
                 previousTurnState={previousTurnState}
                 labels={{
                   startCombat: t("startCombat"),
+                  cancelCombat: t("cancelCombat"),
+                  cancelCombatConfirmTitle: t("cancelCombatConfirmTitle"),
+                  cancelCombatConfirmDescription: t("cancelCombatConfirmDescription"),
+                  cancelCombatConfirmAction: t("cancelCombatConfirmAction"),
+                  cancelCombatCancelAction: t("cancelCombatCancelAction"),
                   endCombat: t("endCombat"),
                   endCombatConfirmTitle: t("endCombatConfirmTitle"),
                   endCombatConfirmDescription: t("endCombatConfirmDescription"),
@@ -738,7 +750,11 @@ export default function InitiativeTrackerPage() {
                   previousHintLocked: t("previousTurnHintLocked"),
                   previousHintNoPrevious: t("previousTurnHintNoPrevious"),
                 }}
-                onStartCombat={() => dispatchTrackerAction(startBattle())}
+                onStartCombat={() => {
+                  flushPendingInitiativeInputs();
+                  dispatchTrackerAction(startBattle());
+                }}
+                onCancelCombat={() => dispatchTrackerAction(endBattle(), { includeEnded: true })}
                 onEndCombat={() => dispatchTrackerAction(endBattle(), { includeEnded: true })}
                 onPrevious={() => dispatchTrackerAction(previousBattleTurn())}
                 onNext={() => dispatchTrackerAction(nextBattleTurn())}
