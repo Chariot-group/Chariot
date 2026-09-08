@@ -4,6 +4,8 @@ import {
   CreateBucketCommand,
   DeleteObjectCommand,
   HeadBucketCommand,
+  HeadObjectCommand,
+  ListObjectsV2Command,
   PutObjectCommand,
   S3Client,
   GetObjectCommand,
@@ -109,6 +111,44 @@ export class MinioService implements OnModuleInit {
   async deleteObjects(keys: string[]): Promise<void> {
     const unique = [...new Set(keys.filter(Boolean))];
     await Promise.all(unique.map((key) => this.deleteObject(key)));
+  }
+
+  async headObjectSize(key: string): Promise<number> {
+    this.assertEnabled();
+    try {
+      const res = await this.client.send(
+        new HeadObjectCommand({ Bucket: this.bucket, Key: key }),
+      );
+      return res.ContentLength ?? 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  async listObjectSizes(
+    prefix: string,
+  ): Promise<Array<{ key: string; size: number }>> {
+    this.assertEnabled();
+    const objects: Array<{ key: string; size: number }> = [];
+    let token: string | undefined;
+
+    do {
+      const res = await this.client.send(
+        new ListObjectsV2Command({
+          Bucket: this.bucket,
+          Prefix: prefix,
+          ContinuationToken: token,
+        }),
+      );
+      for (const obj of res.Contents ?? []) {
+        if (obj.Key) {
+          objects.push({ key: obj.Key, size: obj.Size ?? 0 });
+        }
+      }
+      token = res.IsTruncated ? res.NextContinuationToken : undefined;
+    } while (token);
+
+    return objects;
   }
 
   async createPresignedGetUrl(objectKey: string): Promise<{
