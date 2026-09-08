@@ -6,11 +6,11 @@ import { ServicesConfig } from "../proxy/services.config";
 @Injectable()
 export class HealthService {
   private readonly logger = new Logger(HealthService.name);
-  private readonly servicesConfig: ServicesConfig;
 
-  constructor(private readonly httpService: HttpService) {
-    this.servicesConfig = new ServicesConfig();
-  }
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly servicesConfig: ServicesConfig,
+  ) {}
 
   async getHealth() {
     return {
@@ -39,7 +39,8 @@ export class HealthService {
           );
           checks[service.name] = response.status === 200;
         } catch (error) {
-          this.logger.warn(`${service.name} service health check failed: ${error.message}`);
+          const message = error instanceof Error ? error.message : "Unknown error";
+          this.logger.warn(`${service.name} service health check failed: ${message}`);
           checks[service.name] = false;
         }
       }),

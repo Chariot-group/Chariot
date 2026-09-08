@@ -58,9 +58,6 @@ async function handleProxy(
       name?: string;
     };
     const errorMessage = error instanceof Error ? error.message : proxiedError.message || "Unknown proxy error";
-    const errorStack = error instanceof Error ? error.stack : undefined;
-
-    logger.error(`Proxy error: ${errorMessage}`, errorStack);
 
     if (proxiedError.response) {
       res.status(proxiedError.response.status).send(proxiedError.response.data);
