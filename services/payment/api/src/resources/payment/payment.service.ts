@@ -15,6 +15,8 @@ import { PromoCodeService } from '@/resources/promo-code/promo-code.service';
 import { AffiliationService } from '@/resources/affiliation/affiliation.service';
 import { KeycloakAdminService } from '@/common/services/keycloak-admin.service';
 import { Payment } from '@prisma/client';
+import { InjectMetric } from '@willsoto/nestjs-prometheus';
+import { Counter } from 'prom-client';
 import {
     calculateAffiliationDiscount,
     calculateCommissionAmount,
@@ -40,14 +42,18 @@ export class PaymentService {
         private readonly promoCodeService: PromoCodeService,
         private readonly affiliationService: AffiliationService,
         private readonly keycloakAdminService: KeycloakAdminService,
+        @InjectMetric('chariot_payments_created_total')
+        private readonly paymentsCreatedCounter: Counter,
+        @InjectMetric('chariot_promo_code_usages_total')
+        private readonly promoCodeUsagesCounter: Counter,
+        @InjectMetric('chariot_affiliation_usages_total')
+        private readonly affiliationUsagesCounter: Counter,
     ) { }
 
     async create(
         dto: CreatePaymentDto,
     ): Promise<IResponse<PaymentWithDiscount>> {
         try {
-            const start = Date.now();
-
             let promoCodeId: string | null = null;
             let affiliationId: string | null = null;
             let discountAmount = 0;
@@ -112,8 +118,13 @@ export class PaymentService {
                 },
             });
 
-            const message = `Payment created for user ${dto.userId} in ${Date.now() - start}ms`;
-            this.logger.verbose(message, this.SERVICE_NAME);
+            const stripeOrderId = payment.stripeSessionId ?? 'unknown';
+            const message = `Payment created stripeOrderId=${stripeOrderId} user=${dto.userId}`;
+            this.paymentsCreatedCounter.inc({
+                status: payment.status,
+                currency: payment.currency,
+            });
+            this.logger.log(message, this.SERVICE_NAME);
 
             return {
                 message,
@@ -160,7 +171,7 @@ export class PaymentService {
 
             if (!existing) {
                 const message = `Payment #${id} not found`;
-                this.logger.warn(message, this.SERVICE_NAME);
+                this.logger.debug(message, this.SERVICE_NAME);
                 throw new NotFoundException(message);
             }
 
@@ -192,6 +203,7 @@ export class PaymentService {
                                 currentTotalUses: { increment: 1 },
                             },
                         });
+                        this.promoCodeUsagesCounter.inc();
                     }
 
                     if (payment.affiliationId) {
@@ -214,6 +226,7 @@ export class PaymentService {
                                     commissionAmount,
                                 },
                             });
+                            this.affiliationUsagesCounter.inc();
                         }
                     }
                 }
@@ -222,7 +235,7 @@ export class PaymentService {
             });
 
             const message = `Payment #${id} status updated to ${dto.status} in ${Date.now() - start}ms`;
-            this.logger.verbose(message, this.SERVICE_NAME);
+            this.logger.log(message, this.SERVICE_NAME);
 
             return { message, data: updated };
         } catch (error) {
@@ -293,7 +306,7 @@ export class PaymentService {
             });
 
             const message = `${payments.length} payments found in ${Date.now() - start}ms`;
-            this.logger.verbose(message, this.SERVICE_NAME);
+            this.logger.debug(message, this.SERVICE_NAME);
 
             return {
                 message,
@@ -322,12 +335,12 @@ export class PaymentService {
 
             if (!payment) {
                 const message = `Payment #${id} not found`;
-                this.logger.warn(message, this.SERVICE_NAME);
+                this.logger.debug(message, this.SERVICE_NAME);
                 throw new NotFoundException(message);
             }
 
             const message = `Payment #${id} found in ${Date.now() - start}ms`;
-            this.logger.verbose(message, this.SERVICE_NAME);
+            this.logger.debug(message, this.SERVICE_NAME);
 
             return { message, data: payment };
         } catch (error) {
@@ -336,6 +349,19 @@ export class PaymentService {
             this.logger.error(message, error.stack, this.SERVICE_NAME);
             throw new InternalServerErrorException(message);
         }
+    }
+
+    async existsByStripeOrderId(orderId: string): Promise<boolean> {
+        const payment = await this.prisma.payment.findFirst({
+            where: {
+                OR: [
+                    { stripeSessionId: orderId },
+                    { stripePaymentIntentId: orderId },
+                ],
+            },
+            select: { id: true },
+        });
+        return payment != null;
     }
 
     async findByStripeSession(sessionId: string): Promise<IResponse<Payment>> {
@@ -348,12 +374,12 @@ export class PaymentService {
 
             if (!payment) {
                 const message = `Payment with Stripe session '${sessionId}' not found`;
-                this.logger.warn(message, this.SERVICE_NAME);
+                this.logger.debug(message, this.SERVICE_NAME);
                 throw new NotFoundException(message);
             }
 
             const message = `Payment for session '${sessionId}' found in ${Date.now() - start}ms`;
-            this.logger.verbose(message, this.SERVICE_NAME);
+            this.logger.debug(message, this.SERVICE_NAME);
 
             return { message, data: payment };
         } catch (error) {
@@ -373,7 +399,6 @@ export class PaymentService {
 
     async createCompleted(dto: CompletePaymentDto): Promise<IResponse<Payment>> {
         try {
-            const start = Date.now();
             const discountAmount = dto.discountAmount ?? 0;
             const finalAmount = dto.amount - discountAmount;
             const completionOrderId =
@@ -428,7 +453,7 @@ export class PaymentService {
                         },
                     });
 
-                    if (!existingPromoUsage) {
+                        if (!existingPromoUsage) {
                         await tx.promoCodeUsage.create({
                             data: {
                                 promoCodeId: dto.promoCodeId,
@@ -441,6 +466,7 @@ export class PaymentService {
                             where: { id: dto.promoCodeId },
                             data: { currentTotalUses: { increment: 1 } },
                         });
+                        this.promoCodeUsagesCounter.inc();
                     }
                 }
 
@@ -471,6 +497,7 @@ export class PaymentService {
                                     commissionAmount,
                                 },
                             });
+                            this.affiliationUsagesCounter.inc();
                         }
                     }
                 }
@@ -478,10 +505,17 @@ export class PaymentService {
                 return { payment: created, created: true };
             });
 
+            const stripeOrderId = dto.stripeSessionId ?? dto.stripePaymentIntentId ?? 'unknown';
             const message = result.created
-                ? `Completed payment recorded for user ${dto.userId} in ${Date.now() - start}ms`
-                : `Completed payment already recorded for user ${dto.userId} (${Date.now() - start}ms)`;
-            this.logger.verbose(message, this.SERVICE_NAME);
+                ? `Completed payment recorded stripeOrderId=${stripeOrderId} user=${dto.userId}`
+                : `Completed payment already recorded stripeOrderId=${stripeOrderId} user=${dto.userId}`;
+            if (result.created) {
+                this.paymentsCreatedCounter.inc({
+                    status: result.payment.status,
+                    currency: result.payment.currency,
+                });
+            }
+            this.logger.log(message, this.SERVICE_NAME);
 
             return { message, data: result.payment };
         } catch (error) {

@@ -10,12 +10,18 @@ services:
     ports:
       - "9100:9100"
     command:
-      - "--path.rootfs=/host"
+      # Ne pas monter `/` : sur Docker Desktop Mac ça traverse tout le disque
+      # (dont web/admin) et relance les watchers Next/Vite en boucle.
       - "--path.procfs=/host/proc"
       - "--path.sysfs=/host/sys"
-      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+      - "--collector.disable-defaults"
+      - "--collector.cpu"
+      - "--collector.meminfo"
+      - "--collector.loadavg"
+      - "--collector.uname"
     volumes:
-      - /:/host:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
     networks:
       - chariot-group-network
 

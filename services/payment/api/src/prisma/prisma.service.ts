@@ -25,11 +25,11 @@ export class PrismaService
 
     async onModuleInit() {
         await this.$connect();
-        this.logger.verbose('Connected to PostgreSQL');
+        this.logger.log('Connected to PostgreSQL');
     }
 
     async onModuleDestroy() {
         await this.$disconnect();
-        this.logger.verbose('Disconnected from PostgreSQL');
+        this.logger.log('Disconnected from PostgreSQL');
     }
 }

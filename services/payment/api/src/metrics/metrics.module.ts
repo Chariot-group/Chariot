@@ -13,6 +13,10 @@ import {
     dbQueryDurationProvider,
     stripePaymentsCounterProvider,
     stripeWebhooksCounterProvider,
+    checkoutsCounterProvider,
+    codeResolutionsCounterProvider,
+    tokenCreditsCounterProvider,
+    stripeOperationDurationProvider,
 } from '@/metrics/metrics.service';
 
 @Module({
@@ -44,6 +48,10 @@ import {
         dbQueryDurationProvider,
         stripePaymentsCounterProvider,
         stripeWebhooksCounterProvider,
+        checkoutsCounterProvider,
+        codeResolutionsCounterProvider,
+        tokenCreditsCounterProvider,
+        stripeOperationDurationProvider,
     ],
     exports: [
         MetricsService,
@@ -57,6 +65,10 @@ import {
         dbQueryDurationProvider,
         stripePaymentsCounterProvider,
         stripeWebhooksCounterProvider,
+        checkoutsCounterProvider,
+        codeResolutionsCounterProvider,
+        tokenCreditsCounterProvider,
+        stripeOperationDurationProvider,
     ],
 })
 export class MetricsModule { }

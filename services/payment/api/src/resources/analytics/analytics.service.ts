@@ -103,7 +103,7 @@ export class AnalyticsService {
                     this.computeAcquisitionPerformance(dateFrom, dateTo),
                 ]);
 
-            this.logger.verbose(
+            this.logger.debug(
                 `Dashboard computed in ${Date.now() - start}ms`,
                 this.SERVICE_NAME,
             );
